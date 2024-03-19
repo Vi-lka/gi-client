@@ -1,8 +1,53 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import localFont from 'next/font/local';
+import { Roboto_Flex } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const roboto = Roboto_Flex({
+  subsets: ["cyrillic", "latin"],
+  variable: "--Roboto",
+  // Fix font load errors: https://github.com/vercel/next.js/issues/45080#issuecomment-1646678980
+  preload: false,
+  display: "auto",
+});
+
+const cera = localFont({
+  variable: "--Cera",
+  preload: false,
+  display: "auto",
+  src: [
+    {
+      path: './ceraPro/CeraPro-Thin.woff2',
+      weight: '100',
+      style: 'normal',
+    },
+    {
+      path: './ceraPro/CeraPro-Light.woff2',
+      weight: '300',
+      style: 'normal',
+    },
+    {
+      path: './ceraPro/CeraPro-Regular.woff2',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: './ceraPro/CeraPro-Medium.woff2',
+      weight: '500',
+      style: 'normal',
+    },
+    {
+      path: './ceraPro/CeraPro-Bold.woff2',
+      weight: '700',
+      style: 'normal',
+    },
+    {
+      path: './ceraPro/CeraPro-Black.woff2',
+      weight: '900',
+      style: 'normal',
+    },
+  ],
+})
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,8 +60,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html
+      lang={"ru"}
+      suppressHydrationWarning
+      className={`${roboto.variable} ${cera.variable}`}
+    >
+      <body className='font-Roboto'>{children}</body>
     </html>
   );
 }

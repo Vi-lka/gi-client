@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+  gi-client:
+    container_name: gi-client
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_URL: ${NEXT_PUBLIC_URL}
+        NEXT_PUBLIC_STRAPI_API_URL: ${NEXT_PUBLIC_STRAPI_API_URL}
+        NEXT_PUBLIC_STRAPI_DOMAIN: ${NEXT_PUBLIC_STRAPI_DOMAIN}
+        REVALIDATE_TOKEN: ${REVALIDATE_TOKEN}
+        NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN: ${NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
+    restart: always
+    volumes:
+      - client_next_cache:/app/.next/cache
+    ports:
+      - 3000:3000
+    networks:
+      - gi-net
+
+  # Add more containers below (nginx, postgres, etc.)
+
+# Define a network, which allows containers to communicate
+# with each other, by using their container name as a hostname
+networks:
+  gi-net:
+    name: gi-net
+    external: true
+
+volumes:
+  client_next_cache:
+    external: true
