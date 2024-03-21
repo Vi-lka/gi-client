@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { motion } from "framer-motion";
 import MainLogo from './MainLogo';
 import About from './About';
+import Menu from './Menu';
 
 export default function HorizontalAccordion() {
 
@@ -31,6 +32,7 @@ export default function HorizontalAccordion() {
             id: 2,
             title: "Меню",
             color: "hsl(var(--primary))",
+            children: <Menu selectedItem={selectedItem} />
         },
     ]
 

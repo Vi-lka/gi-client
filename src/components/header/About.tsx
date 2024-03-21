@@ -73,7 +73,7 @@ export default function About({
                 duration: 0.3,
             }
         },
-      }
+    }
       
     const itemVariants = {
         open: { 
@@ -144,7 +144,6 @@ export default function About({
                         {list.map((item, index) => (
                             <motion.li 
                                 key={index} 
-                                // animate={selectedItem === 1 ? "open" : "closed"}
                                 variants={itemVariants}
                                 className='flex gap-4 xl:items-start items-center'
                             >
