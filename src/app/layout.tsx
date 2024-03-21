@@ -69,7 +69,7 @@ export default function RootLayout({
     >
       <body className='font-Roboto relative bg-background'>
         <Header />
-        <main className=" h-[200vh]">{children}</main>
+        <main className="h-[200vh]">{children}</main>
         <Toaster />
       </body>
     </html>

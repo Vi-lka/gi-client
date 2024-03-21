@@ -150,7 +150,7 @@ export default function Menu({
                                 <Link
                                     key={index}
                                     href={subItem.link}
-                                    className='link-underline link-underline-sm p-1 pl-0 text-sm lg:block hidden hover:text-apricot transition-all duration-300'
+                                    className='p-1 pl-0 text-sm lg:block hidden hover:text-apricot transition-all duration-300'
                                 >
                                     {subItem.title}
                                 </Link>

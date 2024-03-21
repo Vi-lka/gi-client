@@ -3,7 +3,6 @@
 import { motion, useMotionTemplate, useMotionValue, useSpring } from "framer-motion";
 import { useRef } from "react";
 import Image from "next/image";
-import Link from "next/link";
 
 export default function MainLogo({
     selectedItem
@@ -68,42 +67,40 @@ export default function MainLogo({
             variants={variantsLogo}
             className='absolute w-full h-full top-0 flex justify-center'
         >
-            <Link href="/" className="max-w-[25rem] w-2/5 h-full">
-                <motion.div 
-                    ref={ref}
-                    className='relative w-full h-full'
+            <motion.div 
+                ref={ref}
+                className='relative max-w-[25rem] w-2/5 h-full'
+                style={{
+                  transformStyle: "preserve-3d",
+                  transform,
+                }}
+                onMouseMove={handleMouseMove}
+                onMouseLeave={handleMouseLeave}
+            >
+                <Image
+                    src="/hi-logo.svg"
+                    alt="HI"
+                    fill
+                    sizes='100vw'
+                    quality={100}
+                    className='object-contain drop-shadow-sm'
                     style={{
-                      transformStyle: "preserve-3d",
-                      transform,
-                    }}
-                    onMouseMove={handleMouseMove}
-                    onMouseLeave={handleMouseLeave}
-                >
-                    <Image
-                        src="/hi-logo.svg"
-                        alt="HI"
-                        fill
-                        sizes='100vw'
-                        quality={100}
-                        className='object-contain drop-shadow-sm'
-                        style={{
-                            transform: selectedItem === 0 ? "translateZ(50px)" : "translateZ(10px)",
-                            transformStyle: "preserve-3d",
-                          }}
-                    />
-                    <Image
-                        src="/hi-logo.svg"
-                        alt="HI"
-                        fill
-                        sizes='100vw'
-                        quality={100}
-                        className='object-contain brightness-50 opacity-60'
-                        style={{
-                            transform: selectedItem === 0 ? "translateZ(10px)" : "translateZ(1px)",
-                          }}
-                    />
-                </motion.div>
-            </Link>
+                        transform: selectedItem === 0 ? "translateZ(50px)" : "translateZ(10px)",
+                        transformStyle: "preserve-3d",
+                      }}
+                />
+                <Image
+                    src="/hi-logo.svg"
+                    alt="HI"
+                    fill
+                    sizes='100vw'
+                    quality={100}
+                    className='object-contain brightness-50 opacity-60'
+                    style={{
+                        transform: selectedItem === 0 ? "translateZ(10px)" : "translateZ(1px)",
+                      }}
+                />
+            </motion.div>
         </motion.div>
         // <div className='absolute w-full h-full'>
         //     <div className='relative w-full h-full z-10'>
