@@ -60,7 +60,7 @@ const config = {
         sm: "calc(var(--radius) - 4px)",
       },
       fontFamily: {
-        Roboto: ["var(--Roboto)"],
+        Din: ["var(--Din)"],
         Cera: ["var(--Cera)"],
       },
       keyframes: {

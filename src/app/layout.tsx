@@ -1,22 +1,42 @@
 import type { Metadata } from "next";
 import localFont from 'next/font/local';
-import { Roboto_Flex } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import Header from "@/components/header/Header";
 
-const roboto = Roboto_Flex({
-  subsets: ["cyrillic", "latin"],
-  variable: "--Roboto",
-  // Fix font load errors: https://github.com/vercel/next.js/issues/45080#issuecomment-1646678980
-  preload: false,
-  display: "auto",
-});
+const din = localFont({
+  variable: "--Din",
+  src: [
+    {
+      path: './dinPro/dinpro_light.otf',
+      weight: '300',
+      style: 'normal',
+    },
+    {
+      path: './dinPro/dinpro.otf',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: './dinPro/dinpro_medium.otf',
+      weight: '500',
+      style: 'normal',
+    },
+    {
+      path: './dinPro/dinpro_bold.otf',
+      weight: '700',
+      style: 'normal',
+    },
+    {
+      path: './dinPro/dinpro_black.otf',
+      weight: '900',
+      style: 'normal',
+    },
+  ],
+})
 
 const cera = localFont({
   variable: "--Cera",
-  preload: false,
-  display: "auto",
   src: [
     {
       path: './ceraPro/CeraPro-Thin.woff2',
@@ -65,9 +85,9 @@ export default function RootLayout({
     <html
       lang={"ru"}
       suppressHydrationWarning
-      className={`${roboto.variable} ${cera.variable}`}
+      className={`${din.variable} ${cera.variable}`}
     >
-      <body className='font-Roboto relative bg-background'>
+      <body className='font-Din relative bg-background'>
         <Header />
         <main className="h-[200vh]">{children}</main>
         <Toaster />
