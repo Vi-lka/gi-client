@@ -37,7 +37,7 @@ export default function HorizontalAccordion() {
     ]
 
     return (
-        <div className='flex flex-wrap lg:gap-6 gap-1 min-h-[85vh] transition-all' style={{minHeight: "85dvh"}}>
+        <div className='w-full left-0 flex flex-wrap lg:gap-6 gap-1 min-h-[85vh] transition-all' style={{ minHeight: "85dvh" }}>
             {items.map(item => {
                 return (
                 <motion.div 
@@ -54,7 +54,7 @@ export default function HorizontalAccordion() {
                 >
                     <h1 
                         className='font-Cera font-bold uppercase min-h-[250px] xl:text-3xl lg:text-2xl md:text-xl text-lg sm:p-3 p-2 z-20 rotate-180' 
-                        style={{textOrientation: "mixed", writingMode: "vertical-lr"}}
+                        style={{textOrientation: "mixed", writingMode: "vertical-lr", opacity: item.id === 0 ? 0 : 1}}
                     >
                         {item.title}
                     </h1>

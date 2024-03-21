@@ -107,3 +107,11 @@
 .link-underline-sm:hover {
   background-size: 100% 1px !important;
 }
+
+.fixedTop {
+  width: 100%;
+  padding: 12px 18px;
+  position: fixed;
+  top: 0;
+  background: rgb(251, 4, 235);
+}
