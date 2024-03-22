@@ -61,7 +61,7 @@ export default function CarouselComp({
         <div>
             <Carousel 
                 setApi={setApi} 
-                opts={{ skipSnaps: !!window && window.innerWidth < 640 ? false : true }} 
+                opts={{ skipSnaps: typeof window !== "undefined" && window.innerWidth < 640 ? false : true }} 
                 className="w-full"
             >
                 <CarouselContent className='lg:-ml-8 -ml-4'>
@@ -104,7 +104,7 @@ export default function CarouselComp({
             </Carousel>
             <div 
                 className="my-4 flex items-center justify-center gap-1 max-w-full mx-auto"
-                style={{ width: !!window && window.innerWidth > 1024 ? `${2 * count}%` : `${5 * count}%` }}
+                style={{ width: typeof window !== "undefined" && window.innerWidth > 1024 ? `${2 * count}%` : `${5 * count}%` }}
             >
                 {Array.from({ length: count }).map((_, index) => (
                     <div 
