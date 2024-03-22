@@ -55,21 +55,25 @@ export default function MainHeader() {
             ref={stickyHeader} 
             className={cn(
                 "bg-gradient-to-b from-background via-background to-transparent z-50",
-                sticky || pathname !== "/" ? "fixed w-full md:px-24 px-8 pt-6 pb-20 top-0 left-0" : "relative -mb-10"
+                sticky || pathname !== "/" ? "fixed w-full pt-6 md:pb-[4.5rem] pb-[4rem] top-0 left-1/2 -translate-x-1/2" : "relative -mb-10"
             )}
         >
-            <NavMenu className='w-full mx-auto md:flex hidden' />
-            <div className='md:hidden flex items-center justify-between w-full'>
-                <Link href="/">
-                    <Image 
-                        src="/hi-icon.svg"
-                        alt="HI"
-                        width={40}
-                        height={40}
-                        className='object-contain'
-                    />
-                </Link>
-                <NavSheet className="text-primary" />
+            <div className={cn(
+                sticky || pathname !== "/" ? "container md:w-5/6 w-full" : ""
+            )}>
+                <NavMenu className='w-full max-w-none mx-auto justify-between lg:flex hidden nav-menu' />
+                <div className='lg:hidden flex items-center justify-between w-full'>
+                    <Link href="/">
+                        <Image 
+                            src="/hi-icon.svg"
+                            alt="HI"
+                            width={40}
+                            height={40}
+                            className='object-contain'
+                        />
+                    </Link>
+                    <NavSheet className="text-primary" />
+                </div>
             </div>
         </div>
     )

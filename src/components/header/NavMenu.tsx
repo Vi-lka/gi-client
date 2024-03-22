@@ -14,14 +14,14 @@ export default function NavMenu({
 }) {
   return (
     <NavigationMenu delayDuration={100} className={className}>
-      <NavigationMenuList className='relative lg:gap-3 gap-2 flex-wrap justify-between items-center'>
-        <Link href="/" className='absolute -left-14'>
+      <NavigationMenuList className='relative gap-2 flex-wrap justify-between items-center'>
+        <Link href="/" className='absolute 2xl:-left-20 -left-14'>
           <Image 
             src="/hi-icon.svg"
             alt="HI"
-            width={40}
-            height={40}
-            className='object-contain'
+            width={80}
+            height={80}
+            className='object-contain 2xl:w-14 w-10'
           />
         </Link>
         <NavMenuItem url='/info'>Сведения</NavMenuItem>
@@ -59,12 +59,12 @@ function NavMenuItem({
   const pathCurrentPage = "/" + pathNestedRoutes[0];
 
   return (
-      <NavigationMenuItem>
+      <NavigationMenuItem className='!ml-0'>
           <Link href={url} legacyBehavior passHref>
               <NavigationMenuLink
                   className={cn(
                     navigationMenuTriggerStyle(),
-                    "2xl:text-base text-sm uppercase"
+                    "h-fit lg:text-base text-sm 2xl:py-2 md:py-1 2xl:px-6 md:px-3 uppercase"
                   )}
                   active={pathCurrentPage === url}
                   target={blank ? "_blank" : "_self"}

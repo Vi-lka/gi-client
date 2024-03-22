@@ -1,8 +1,9 @@
+import Entrance from "./(mainPageBlocks)/Entrance";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      Home page
-    </main>
+    <div className="flex flex-col items-center gap-12 container md:w-5/6 mx-auto lg:pt-36 pt-32">
+      <Entrance />
+    </div>
   );
 }

@@ -89,7 +89,7 @@ export default function RootLayout({
     >
       <body className='font-Din relative bg-background'>
         <Header />
-        <main className="h-[200vh]">{children}</main>
+        <main className="min-h-[200vh]">{children}</main>
         <Toaster />
       </body>
     </html>

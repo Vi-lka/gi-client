@@ -10,7 +10,7 @@ export default function Header() {
         </section>
 
         <section className='container md:w-5/6 mx-auto mt-6'>
-            <MainHeader />
+          <MainHeader />
         </section>
     </header>
   )

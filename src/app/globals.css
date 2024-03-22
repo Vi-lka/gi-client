@@ -115,3 +115,7 @@
   top: 0;
   background: rgb(251, 4, 235);
 }
+
+.nav-menu > div {
+  width: 100%;
+}

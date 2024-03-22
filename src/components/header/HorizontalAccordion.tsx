@@ -39,7 +39,13 @@ export default function HorizontalAccordion() {
     ]
 
     return (
-        <div className='w-full left-0 flex flex-wrap lg:gap-6 gap-1 min-h-[85vh] transition-all' style={{ minHeight: "85dvh", display: pathname === "/" ? "flex" : "none" }}>
+        <div 
+            className='w-full left-0 flex flex-wrap lg:gap-6 gap-1 min-h-[85vh] transition-all' 
+            style={{ 
+                minHeight: "85dvh",
+                display: pathname === "/" ? "flex" : "none"
+            }}
+        >
             {items.map(item => {
                 return (
                 <motion.div 
@@ -51,7 +57,7 @@ export default function HorizontalAccordion() {
                         backgroundColor: item.color,
                         cursor: item.id === selectedItem ? "auto" : "pointer",
                     }}
-                    className='relative flex w-fit items-center rounded-lg text-background overflow-hidden cursor-pointer'
+                    className='relative flex w-fit items-center rounded-lg text-background overflow-hidden cursor-pointer shadow-inner'
                     onClick={() => setSelectedItem(item.id)}
                 >
                     <h1 

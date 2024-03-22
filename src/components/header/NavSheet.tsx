@@ -73,11 +73,11 @@ const pathCurrentPage = (pathNestedRoutes[pathNestedRoutes.length - 1] === undef
                 active={('/' + pathCurrentPage) === url}
                 className={cn(
                   navigationMenuTriggerStyle(),
-                  "w-full h-fit text-lg"
+                  "w-full h-fit"
                 )}
                 target={blank ? "_blank" : "_self"}
               >
-                <SheetClose className="px-3 py-2 text-left w-full h-full">
+                <SheetClose className="px-3 py-2 text-base text-left w-full h-full uppercase">
                     {children}
                 </SheetClose>
               </NavigationMenuLink>

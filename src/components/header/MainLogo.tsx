@@ -66,6 +66,7 @@ export default function MainLogo({
             animate={selectedItem === 0 ? "open" : "closed"}
             variants={variantsLogo}
             className='absolute w-full h-full top-0 flex justify-center'
+            style={{ height: "100%" }}
         >
             <motion.div 
                 ref={ref}
