@@ -41,8 +41,7 @@ export default function HorizontalAccordion() {
     return (
         <div 
             className='w-full left-0 flex flex-wrap lg:gap-6 gap-1 min-h-[85vh] transition-all' 
-            style={{ 
-                minHeight: "85dvh",
+            style={{
                 display: pathname === "/" ? "flex" : "none"
             }}
         >
