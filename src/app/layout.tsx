@@ -8,27 +8,27 @@ const din = localFont({
   variable: "--Din",
   src: [
     {
-      path: './dinPro/dinpro_light.otf',
+      path: './(fonts)/dinPro/dinpro_light.otf',
       weight: '300',
       style: 'normal',
     },
     {
-      path: './dinPro/dinpro.otf',
+      path: './(fonts)/dinPro/dinpro.otf',
       weight: '400',
       style: 'normal',
     },
     {
-      path: './dinPro/dinpro_medium.otf',
+      path: './(fonts)/dinPro/dinpro_medium.otf',
       weight: '500',
       style: 'normal',
     },
     {
-      path: './dinPro/dinpro_bold.otf',
+      path: './(fonts)/dinPro/dinpro_bold.otf',
       weight: '700',
       style: 'normal',
     },
     {
-      path: './dinPro/dinpro_black.otf',
+      path: './(fonts)/dinPro/dinpro_black.otf',
       weight: '900',
       style: 'normal',
     },
@@ -39,32 +39,32 @@ const cera = localFont({
   variable: "--Cera",
   src: [
     {
-      path: './ceraPro/CeraPro-Thin.woff2',
+      path: './(fonts)/ceraPro/CeraPro-Thin.woff2',
       weight: '100',
       style: 'normal',
     },
     {
-      path: './ceraPro/CeraPro-Light.woff2',
+      path: './(fonts)/ceraPro/CeraPro-Light.woff2',
       weight: '300',
       style: 'normal',
     },
     {
-      path: './ceraPro/CeraPro-Regular.woff2',
+      path: './(fonts)/ceraPro/CeraPro-Regular.woff2',
       weight: '400',
       style: 'normal',
     },
     {
-      path: './ceraPro/CeraPro-Medium.woff2',
+      path: './(fonts)/ceraPro/CeraPro-Medium.woff2',
       weight: '500',
       style: 'normal',
     },
     {
-      path: './ceraPro/CeraPro-Bold.woff2',
+      path: './(fonts)/ceraPro/CeraPro-Bold.woff2',
       weight: '700',
       style: 'normal',
     },
     {
-      path: './ceraPro/CeraPro-Black.woff2',
+      path: './(fonts)/ceraPro/CeraPro-Black.woff2',
       weight: '900',
       style: 'normal',
     },
@@ -85,11 +85,13 @@ export default function RootLayout({
     <html
       lang={"ru"}
       suppressHydrationWarning
-      className={`${din.variable} ${cera.variable}`}
+      className={`${din.variable} ${cera.variable} scroll-smooth`}
     >
       <body className='font-Din relative bg-background'>
         <Header />
-        <main className="min-h-[200vh]">{children}</main>
+        <main className="flex flex-col items-center gap-12 container md:w-5/6 mx-auto lg:pt-36 pt-32">
+          {children}
+        </main>
         <Toaster />
       </body>
     </html>
