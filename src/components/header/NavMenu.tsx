@@ -21,7 +21,7 @@ export default function NavMenu({
             alt="HI"
             width={80}
             height={80}
-            className='object-contain 2xl:w-14 w-10'
+            className='object-contain w-10'
           />
         </Link>
         <NavMenuItem url='/info'>Сведения</NavMenuItem>

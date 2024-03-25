@@ -42,7 +42,7 @@ export function TypographyP({ className, children }: { className?: string, child
 
 export function TypographyBlockquote({ className, children }: { className?: string, children?: React.ReactNode }) {
     return (
-        <blockquote className={cn("mt-6 border-l-2 pl-6 italic", className)}>
+        <blockquote className={cn("mt-6 border-l-2 pl-6", className)}>
             {children}
         </blockquote>
     )

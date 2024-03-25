@@ -11,6 +11,7 @@ import { usePathname } from 'next/navigation'
 export default function MainHeader() {
 
     const [sticky, setSticky] = useState(false)
+    const [shadow, setShadow] = useState(false)
     const [scrollPosition, setScrollPosition] = useState(0);
     const [fixedTop, setFixedTop] = useState<number>();
 
@@ -33,29 +34,57 @@ export default function MainHeader() {
 
     useLayoutEffect(() => {
 
-        if (!sticky) setFixedTop(stickyHeader.current?.offsetTop)
-
-        const fixedHeader = () => {
-          if (fixedTop && scrollPosition > fixedTop) {
+        if (pathname !== "/") {
             setSticky(true)
-          } else {
-            setSticky(false)
-          }
+
+            const fixedHeader = () => {
+                if (scrollPosition > 22) {
+                  setShadow(true)
+                } else {
+                  setShadow(false)
+                }
+            }
+  
+            window.addEventListener('scroll', fixedHeader)
+  
+            return () => {
+                window.removeEventListener('scroll', fixedHeader);
+            };
+
+            setShadow(true)
+        } else {
+            if (!sticky) setFixedTop(stickyHeader.current?.offsetTop)
+
+            const fixedHeader = () => {
+                if (fixedTop && scrollPosition > fixedTop + 22) {
+                    setSticky(true)
+                } else {
+                    setSticky(false)
+                }
+
+                if (fixedTop && scrollPosition > fixedTop + 132) {
+                    setShadow(true)
+                } else {
+                    setShadow(false)
+                }
+            }
+
+            window.addEventListener('scroll', fixedHeader)
+
+            return () => {
+                window.removeEventListener('scroll', fixedHeader);
+            };
         }
-        window.addEventListener('scroll', fixedHeader)
 
-        return () => {
-            window.removeEventListener('scroll', fixedHeader);
-        };
-
-    }, [fixedTop, scrollPosition, sticky])
+    }, [pathname, sticky, fixedTop, scrollPosition])
 
     return (
         <div 
             ref={stickyHeader} 
             className={cn(
-                "bg-gradient-to-b from-background via-background to-transparent z-50",
-                sticky || pathname !== "/" ? "fixed w-full pt-6 md:pb-[4.5rem] pb-[4rem] top-0 left-1/2 -translate-x-1/2" : "relative -mb-10"
+                " bg-background z-50 py-6 duration-300",
+                sticky || pathname !== "/" ? "fixed w-full top-0 left-1/2 -translate-x-1/2" : "relative -mb-[88px]",
+                shadow ? "py-2 shadow-sm transition-all" : " transition-[padding]"
             )}
         >
             <div className={cn(

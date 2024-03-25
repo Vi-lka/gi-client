@@ -3,17 +3,16 @@ import ErrorHandler from '@/components/errors/ErrorHandler';
 import { TypographyH2 } from '@/components/typography';
 import { getEducationalPrograms } from '@/lib/queries';
 import React from 'react'
+import EntranceGrid from './EntranceGrid';
 
 export default async function EntranceTabs({
     searchParams,
+    id,
 }: {
     searchParams: { [key: string]: string | string[] | undefined };
+    id?: string,
 }) {
 
-    const defaultPageSize = 12;
-
-    const page = Number(searchParams["page"]) ?? 1;
-    const pageSize = Number(searchParams["pageSize"]) ?? defaultPageSize;
     const sort = searchParams["sort"] as string | undefined;
     const search = searchParams["search"] as string | undefined;
 
@@ -22,9 +21,9 @@ export default async function EntranceTabs({
         magistracyResult,
         postgraduateResult
     ] = await Promise.allSettled([
-        getEducationalPrograms({ page, pageSize, sort, search, type: "bachelor" }),
-        getEducationalPrograms({ page, pageSize, sort, search, type: "magistracy" }),
-        getEducationalPrograms({ page, pageSize, sort, search, type: "postgraduate" }),
+        getEducationalPrograms({ sort, search, type: "bachelor" }),
+        getEducationalPrograms({ sort, search, type: "magistracy" }),
+        getEducationalPrograms({ sort, search, type: "postgraduate" }),
     ]);
 
     const bachelors = bachelorsResult.status === "rejected" 
@@ -38,7 +37,7 @@ export default async function EntranceTabs({
             count: 0
         }
         : {
-            content: <div>bachelors</div>,
+            content: <EntranceGrid data={bachelorsResult.value.data} />,
             count: bachelorsResult.value.meta.pagination.total
         }
 
@@ -53,7 +52,7 @@ export default async function EntranceTabs({
             count: 0
         }
         : {
-            content: <div>magistracy</div>,
+            content: <EntranceGrid data={magistracyResult.value.data} />,
             count: magistracyResult.value.meta.pagination.total
         }
 
@@ -68,26 +67,26 @@ export default async function EntranceTabs({
             count: 0
         }
         : {
-            content: <div>postgraduate</div>,
+            content: <EntranceGrid data={postgraduateResult.value.data} />,
             count: postgraduateResult.value.meta.pagination.total
         }
 
     const tabs = [
         {
             value: "bachelor",
-            title: "bachelor",
+            title: "Бакалавриат",
             content: bachelors.content,
             count: bachelors.count
         },
         {
             value: "magistracy",
-            title: "magistracy",
+            title: "Магистратура",
             content: magistracy.content,
             count: magistracy.count
         },
         {
             value: "postgraduate",
-            title: "postgraduate",
+            title: "Аспирантура",
             content: postgraduate.content,
             count: postgraduate.count
         },
@@ -100,16 +99,22 @@ export default async function EntranceTabs({
                 place="Образовательные программы"
                 notFound
                 goBack={false}
-            />
+            >
+                <section id={id} className='lg:pt-28 pt-20'>
+                    <TypographyH2 className='font-semibold text-primary mb-6 border-none'>
+                        Образовательные программы
+                    </TypographyH2>
+                </section>
+            </ErrorHandler>
         )
     }
 
     return (
-        <div className=''>
+        <section id={id} className='lg:pt-28 pt-20'>
             <TypographyH2 className='font-semibold text-primary mb-6 border-none'>
                 Образовательные программы
             </TypographyH2>
             <TabsComp tabs={tabs} />
-        </div>
+        </section>
     )
 }

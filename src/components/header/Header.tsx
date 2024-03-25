@@ -9,7 +9,7 @@ export default function Header() {
           <HorizontalAccordion />
         </section>
 
-        <section className='container md:w-5/6 mx-auto mt-6'>
+        <section className='container md:w-5/6 mx-auto'>
           <MainHeader />
         </section>
     </header>

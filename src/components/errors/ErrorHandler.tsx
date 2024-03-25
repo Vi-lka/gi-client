@@ -13,6 +13,7 @@ type Props = {
 type TrueNotFoundProps = {
   notFound: true;
   goBack: boolean;
+  additionalInfo?: string;
 };
 
 type FalseNotFoundProps = {
@@ -24,7 +25,7 @@ export default function ErrorHandler(props: Props) {
   if ((props.error as Error).message === "NEXT_NOT_FOUND") {
     if (props.notFound)
       return (
-        <NotFound goBack={props.goBack}>
+        <NotFound goBack={props.goBack} additionalInfo={props.additionalInfo}>
           {props.children}
         </NotFound>
       );

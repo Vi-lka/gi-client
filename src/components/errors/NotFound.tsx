@@ -6,11 +6,13 @@ import { SearchX, Undo2 } from "lucide-react";
 import { Button } from "../ui/button";
 
 export default function NotFound({
-  children,
   goBack,
+  additionalInfo,
+  children,
 }: {
-  children?: React.ReactNode;
   goBack: boolean;
+  additionalInfo?: string
+  children?: React.ReactNode;
 }) {
   const router = useRouter();
 
@@ -27,13 +29,13 @@ export default function NotFound({
           </h2>
 
           <p className="text-sm font-normal">
-            Не удалось найти запрошенный ресурс
+            {additionalInfo}
           </p>
         </div>
 
         {goBack ? (
           <Button
-            className="w-full max-w-[240px] p-6 uppercase"
+            className="w-full max-w-[240px] p-6 uppercase hover:bg-background hover:text-primary"
             onClick={() => router.back()}
           >
             Вернуться
