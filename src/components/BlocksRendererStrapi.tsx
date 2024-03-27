@@ -100,9 +100,9 @@ export default function BlocksRendererStrapi({
                 case 4:
                   return <TypographyH4>{children}</TypographyH4>
                 case 5:
-                  return <article className="prose lg:prose-xl mb-3"><h5 className='font-Cera text-foreground'>{children}</h5></article>
+                  return <article className="prose lg:prose-xl"><h5 className='font-Cera text-primary'>{children}</h5></article>
                 case 6:
-                  return <article className="prose lg:prose-xl mb-3"><h6 className='font-Cera text-foreground'>{children}</h6></article>
+                  return <article className="prose lg:prose-xl"><h6 className='font-Cera text-primary'>{children}</h6></article>
                 default:
                   return <TypographyH1>{children}</TypographyH1>
               }
@@ -124,8 +124,13 @@ export default function BlocksRendererStrapi({
                 </TypographyBlockquote>
               )
             },
+            code: ({ children }) => (
+              <code className="relative rounded bg-muted/50 px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
+                {children}
+              </code>
+            ),
             link: ({ children, url }) => (
-              <Link href={url} target='__blank' className='text-primary hover:underline underline-offset-2 transition-all'>
+              <Link href={url} target='__blank' className='text-primary font-medium underline underline-offset-2 hover:underline-offset-4 transition-all'>
                 {children}
               </Link>
             ),
@@ -135,7 +140,7 @@ export default function BlocksRendererStrapi({
                 fill={false}
                 width={image.width < 1000 ? image.width : 450}
                 height={image.height < 1000 ? image.height : 450}
-                className="aspect-[5/4] object-contain w-full overflow-hidden rounded-md"
+                className="object-contain w-full overflow-hidden rounded-3xl"
                 alt={image.alternativeText ? image.alternativeText : ""}
                 priority
               />

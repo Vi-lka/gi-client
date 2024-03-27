@@ -25,7 +25,7 @@ export default async function EntrancePage({
                         notFound={false}
                     />
                 ) 
-                : entranceInfoResult.value.attributes.linkName,
+                : entranceInfoResult.value.attributes.mainInfoLinkName,
             link: "#info"
         },
         {

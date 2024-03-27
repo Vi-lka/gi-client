@@ -91,8 +91,8 @@ export type EducationalProgramsT = z.infer<typeof EducationalProgramsT>;
 //.........................About Institut.........................//
 export const EntranceInfoT  = z.object({
   attributes: z.object({
-    linkName: z.string(),
-    content: DynamicZoneT.array(),
+    mainInfoLinkName: z.string(),
+    mainInfoContent: DynamicZoneT.array(),
   }),
 })
 export type EntranceInfoT = z.infer<typeof EntranceInfoT>;

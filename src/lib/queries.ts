@@ -138,8 +138,8 @@ export const getEntranceInfo= async (): Promise<EntranceInfoT> => {
       entranceInfo {
         data {
           attributes {
-            linkName
-            content {
+            mainInfoLinkName
+            mainInfoContent {
               __typename
               ... on ComponentContentText {
                 title

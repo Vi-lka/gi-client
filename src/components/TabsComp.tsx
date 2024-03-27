@@ -51,7 +51,7 @@ export default function TabsComp(props: Props) {
             value={selectedTab.value}
             className="w-full"
         >
-            <TabsList className='w-full flex-wrap h-fit justify-evenly gap-y-1 bg-primary/10 rounded-3xl'>
+            <TabsList className='w-full flex-wrap h-fit sm:justify-around justify-center gap-y-1 bg-primary/10 rounded-3xl'>
                 {props.tabs.map((tab) => (
                     <TabsTrigger 
                         key={tab.value} 
