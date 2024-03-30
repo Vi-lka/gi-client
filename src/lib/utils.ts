@@ -18,3 +18,13 @@ export function getShortDescription(
     return array.slice(0, sliceLength).join(" ") + "...";
   } else return array.join(" ");
 }
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function splitArray<T>(arr: T[], size: number) {
+  const arr2 = arr.slice(0)
+  const arrays = [];
+  while (arr2.length > 0) {
+      arrays.push(arr2.splice(0, size));
+  }
+  return arrays;
+}

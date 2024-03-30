@@ -36,7 +36,7 @@ export default function CollectionAll({
                         return <LecturersAll key={index} />;
                     
                     case "graduates":
-                        return <GraduatesAll key={index} />
+                        return <GraduatesAll key={index} searchParams={searchParams} />
                 
                     default:
                         return null;

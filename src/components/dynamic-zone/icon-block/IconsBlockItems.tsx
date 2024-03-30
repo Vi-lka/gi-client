@@ -1,7 +1,7 @@
 "use client"
 
 import type { IconsBlockItemT } from '@/lib/types'
-import { cn } from '@/lib/utils'
+import { cn, splitArray } from '@/lib/utils'
 import React, { useEffect, useState } from 'react'
 import DynamicReactIcon from '../../DynamicReactIcon'
 import IconCustom from './IconCustom'
@@ -25,15 +25,6 @@ export default function IconsBlockItems({
         }
         return () => window.removeEventListener("resize", updateDimensions);
     }, []);
-
-    function splitArray(arr:  IconsBlockItemT[], size: number) {
-        const arr2 = arr.slice(0)
-        const arrays = [];
-        while (arr2.length > 0) {
-            arrays.push(arr2.splice(0, size));
-        }
-        return arrays;
-    }
 
     let sliceSize: number
 

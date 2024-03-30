@@ -64,6 +64,38 @@ export const EducationalProgramsT  = z.object({
 })
 export type EducationalProgramsT = z.infer<typeof EducationalProgramsT>;
 
+//.........................Graduates.........................//
+export const GraduateSingleT  = z.object({
+  id: z.string(),
+  attributes: z.object({
+    title: z.string(),
+    description: z.string().nullable(),
+    additionalInfo: z.string().nullable(), 
+    image: ImageT,
+    educational_programs: z.object({
+      data: EducationalProgramSingleT.array()
+    }),
+    oldPrograms: z.object({
+      title: z.string(),
+      type: EducationalProgramTypeEnum,
+      code: z.string().nullable(),
+      mainName: z.string().nullable(),
+      mainCode: z.string().nullable(),
+    }).array()
+  }),
+})
+export type GraduateSingleT = z.infer<typeof GraduateSingleT>;
+
+export const GraduatesT  = z.object({
+    meta: z.object({
+        pagination: z.object({
+          total: z.number(),
+        }),
+    }),
+    data: GraduateSingleT.array(),
+})
+export type GraduatesT = z.infer<typeof GraduatesT>;
+
 //.........................COMPONENTS.........................//
 export const TextCompT = z.object({
   __typename: z.literal("ComponentContentTextBlock"),
