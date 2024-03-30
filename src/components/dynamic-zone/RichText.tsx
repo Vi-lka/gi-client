@@ -2,26 +2,24 @@ import React from 'react'
 import { cn } from '@/lib/utils'
 import BlocksRendererStrapi from '../BlocksRendererStrapi'
 import { TypographyH2 } from '../typography'
+import type { TextCompT } from '@/lib/types'
 
 export default function RichText({
-    title,
-    text,
+    data,
     className,
 }: {
-    title: string | null,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    text: any,
+    data: TextCompT,
     className?: string,
 }) {
     return (
         <div className={cn("w-full", className)}>
-            {title && (
+            {data.title && (
                 <TypographyH2 className='font-semibold text-primary mb-6 border-none'>
-                    {title}
+                    {data.title}
                 </TypographyH2>
             )}
             {/* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */}
-            <BlocksRendererStrapi content={text} />
+            <BlocksRendererStrapi content={data.text} />
         </div>
     )
 }

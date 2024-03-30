@@ -17,7 +17,7 @@
     --primary-foreground: 0 0% 100%;
  
     --secondary: 30 25% 87%;
-    --secondary-foreground: 0 0% 9%;
+    --secondary-foreground: 30 4% 28%;
  
     --muted: 313 5% 67%;
     --muted-foreground: 0 0% 60%;
@@ -79,6 +79,109 @@
   }
 }
 
+@layer components {
+  .filter-background,
+  .filter-popover,
+  .filter-primary-foreground,
+  .filter-accent-foreground,
+  .filter-destructive-foreground {
+    filter: brightness(0) saturate(100%) invert(100%) sepia(100%) saturate(0%) hue-rotate(61deg) brightness(104%) contrast(104%);
+  }
+  
+  .filter-foreground {
+    filter: brightness(0) saturate(100%) invert(41%) sepia(0%) saturate(82%) hue-rotate(102deg) brightness(96%) contrast(96%);
+  }
+  
+  .filter-card,
+  .filter-ring {
+    filter: brightness(0) saturate(100%) invert(93%) sepia(99%) saturate(226%) hue-rotate(298deg) brightness(104%) contrast(92%);
+  }
+  
+  .filter-primary,
+  .filter-card-foreground,
+  .filter-popover-foreground {
+    filter: brightness(0) saturate(100%) invert(40%) sepia(6%) saturate(1256%) hue-rotate(222deg) brightness(96%) contrast(90%);
+  }
+  
+  .filter-secondary {
+    filter: brightness(0) saturate(100%) invert(86%) sepia(6%) saturate(299%) hue-rotate(345deg) brightness(103%) contrast(94%);
+  }
+  
+  .filter-secondary-foreground {
+    filter: brightness(0) saturate(100%) invert(9%) sepia(0%) saturate(6224%) hue-rotate(192deg) brightness(96%) contrast(99%);
+  }
+  
+  .filter-muted,
+  .filter-border {
+    filter: brightness(0) saturate(100%) invert(80%) sepia(0%) saturate(492%) hue-rotate(172deg) brightness(87%) contrast(90%);
+  }
+  
+  .filter-muted-foreground {
+    filter: brightness(0) saturate(100%) invert(64%) sepia(0%) saturate(144%) hue-rotate(22deg) brightness(95%) contrast(93%);
+  }
+  
+  .filter-accent {
+    filter: brightness(0) saturate(100%) invert(43%) sepia(50%) saturate(2674%) hue-rotate(342deg) brightness(87%) contrast(90%);
+  }
+  
+  .filter-destructive {
+    filter: brightness(0) saturate(100%) invert(18%) sepia(41%) saturate(5263%) hue-rotate(343deg) brightness(87%) contrast(113%);
+  }
+  
+  .filter-input {
+    filter: brightness(0) saturate(100%) invert(91%) sepia(10%) saturate(6%) hue-rotate(323deg) brightness(106%) contrast(96%);
+  }
+  
+  .filter-apricot {
+    filter: brightness(0) saturate(100%) invert(90%) sepia(10%) saturate(1128%) hue-rotate(321deg) brightness(99%) contrast(95%);
+  }
+
+  .link-underline {
+    border-bottom-width: 0;
+    background-image: linear-gradient(transparent, transparent), linear-gradient(#fff, #fff);
+    background-size: 0 3px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+  }
+  
+  .link-underline-apricot {
+    background-image: linear-gradient(transparent, transparent), linear-gradient(hsl(var(--apricot)), hsl(var(--apricot)))
+  }
+  
+  .link-underline-primary {
+    background-image: linear-gradient(transparent, transparent), linear-gradient(hsl(var(--primary)), hsl(var(--primary)))
+  }
+  
+  .link-underline:hover {
+    background-size: 100% 3px;
+    background-position: 0 100%
+  }
+  
+  .link-underline-sm {
+    background-size: 0 1px;
+  }
+  
+  .link-underline-sm:hover {
+    background-size: 100% 1px !important;
+  }
+  
+  .fixedTop {
+    width: 100%;
+    padding: 12px 18px;
+    position: fixed;
+    top: 0;
+    background: rgb(251, 4, 235);
+  }
+  
+  .nav-menu > div {
+    width: 100%;
+  }
+}
+
+/* :is(.dark .dark\:filter-card) {
+  filter: brightness(0) saturate(100%) invert(93%) sepia(99%) saturate(226%) hue-rotate(298deg) brightness(104%) contrast(92%);
+} */
+
 ol ol {
   margin-bottom: 0 !important;
 }
@@ -86,45 +189,4 @@ ol ol {
 ul ul {
   margin-bottom: 0 !important;
   margin-top: 0 !important;
-}
-
-.link-underline {
-  border-bottom-width: 0;
-  background-image: linear-gradient(transparent, transparent), linear-gradient(#fff, #fff);
-  background-size: 0 3px;
-  background-position: 0 100%;
-  background-repeat: no-repeat;
-}
-
-.link-underline-apricot {
-  background-image: linear-gradient(transparent, transparent), linear-gradient(hsl(var(--apricot)), hsl(var(--apricot)))
-}
-
-.link-underline-primary {
-  background-image: linear-gradient(transparent, transparent), linear-gradient(hsl(var(--primary)), hsl(var(--primary)))
-}
-
-.link-underline:hover {
-  background-size: 100% 3px;
-  background-position: 0 100%
-}
-
-.link-underline-sm {
-  background-size: 0 1px;
-}
-
-.link-underline-sm:hover {
-  background-size: 100% 1px !important;
-}
-
-.fixedTop {
-  width: 100%;
-  padding: 12px 18px;
-  position: fixed;
-  top: 0;
-  background: rgb(251, 4, 235);
-}
-
-.nav-menu > div {
-  width: 100%;
 }

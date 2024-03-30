@@ -1,9 +1,114 @@
 'use server'
 
 import { notFound } from "next/navigation";
-import type { EducationalProgramTypeEnum} from "./types";
-import { EntranceInfoT} from "./types";
+import type { EducationalProgramTypeEnum } from "./types";
+import { EntrancePageT } from "./types";
 import { EducationalProgramsT } from "./types";
+
+const dynamicContentQuery = `
+  __typename
+  ... on ComponentContentContacts {
+    title
+    link
+    linkTitle
+    phone
+    email
+    location
+    image {
+      data {
+        attributes {
+          url
+        }
+      }
+    }
+  }
+  ... on ComponentContentIconsBlock {
+    title
+    link
+    linkTitle
+    backgroundOn
+    isList
+    image {
+      data {
+        attributes {
+          url
+        }
+      }
+    }
+    alignImage
+    items {
+      title
+      iconReact
+      iconCustom
+      description
+    }
+    moreTitle
+    moreLink
+  }
+  ... on ComponentContentSliderPhotos {
+    title
+    link
+    linkTitle
+    photos {
+      data {
+        attributes {
+          url
+        }
+      }
+    }
+  }
+  ... on ComponentContentSliderEntity {
+    title
+    link
+    linkTitle
+    educational_programs {
+      data {
+        id
+        attributes {
+          slug
+          title
+          type
+          code
+          mainName
+          mainCode
+          image {
+            data {
+              attributes {
+                url
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  ... on ComponentContentCollectionAll {
+    title
+    link
+    linkTitle
+    entity
+  }
+  ... on ComponentContentTextBlock {
+    title
+    link
+    linkTitle
+    text
+  }
+  ... on ComponentContentTextImages {
+    title
+    link
+    linkTitle
+    text
+    alignImages
+    images {
+      data {
+        attributes {
+          url
+        }
+      }
+    }
+  }
+`
 
 async function fetchData<T>({
   query,
@@ -132,54 +237,38 @@ export const getEducationalPrograms= async ({
 };
 
 //.........................About Institut.........................//
-export const getEntranceInfo= async (): Promise<EntranceInfoT> => {
+export const getEntrancePage= async (): Promise<EntrancePageT> => {
   const query = /* GraphGL */ `
-    query EntranceInfo {
-      entranceInfo {
-        data {
-          attributes {
-            mainInfoLinkName
-            mainInfoContent {
-              __typename
-              ... on ComponentContentText {
-                title
-                text
-              }
-              ... on ComponentContentTextImages {
-                title
-                text
-                alignImages
-                images {
-                  data {
-                    attributes {
-                      url
-                    }
-                  }
-                }
-              }
-            }
+  query EntrancePage {
+    entrancePage {
+      data {
+        attributes {
+          title
+          content {
+            ${dynamicContentQuery}
           }
         }
       }
     }
+  }
   `;
   
   const json = await fetchData<{ 
     data: { 
-      entranceInfo: { 
-        data: EntranceInfoT 
+      entrancePage: { 
+        data: EntrancePageT 
       } 
     }; 
   }>({ 
     query, 
-    error: "Failed to fetch Entrance Info",
+    error: "Failed to fetch Entrance Page",
   })
   
   // await new Promise((resolve) => setTimeout(resolve, 2000))
   
-  if (json.data.entranceInfo.data === null) notFound();
+  if (json.data.entrancePage.data === null) notFound();
 
-  const entranceInfo = EntranceInfoT.parse(json.data.entranceInfo.data);
+  const entrancePage = EntrancePageT.parse(json.data.entrancePage.data);
 
-  return entranceInfo;
+  return entrancePage;
 };

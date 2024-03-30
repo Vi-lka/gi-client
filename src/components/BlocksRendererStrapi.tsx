@@ -5,7 +5,7 @@ import React from 'react'
 import { BlocksRenderer } from '@strapi/blocks-react-renderer';
 import Link from 'next/link';
 import ImageComp from './ImageComp';
-import { TypographyBlockquote, TypographyH1, TypographyH2, TypographyH3, TypographyH4, TypographyList, TypographyP } from './typography';
+import { TypographyBlockquote, TypographyH1, TypographyH2, TypographyH3, TypographyH4, TypographyH5, TypographyH6, TypographyList, TypographyP } from './typography';
 
 interface TextInlineNode {
     type: 'text';
@@ -100,9 +100,9 @@ export default function BlocksRendererStrapi({
                 case 4:
                   return <TypographyH4>{children}</TypographyH4>
                 case 5:
-                  return <article className="prose lg:prose-xl"><h5 className='font-Cera text-primary'>{children}</h5></article>
+                  return <TypographyH5>{children}</TypographyH5>
                 case 6:
-                  return <article className="prose lg:prose-xl"><h6 className='font-Cera text-primary'>{children}</h6></article>
+                  return <TypographyH6>{children}</TypographyH6>
                 default:
                   return <TypographyH1>{children}</TypographyH1>
               }

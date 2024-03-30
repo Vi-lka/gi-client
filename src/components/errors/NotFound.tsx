@@ -35,7 +35,7 @@ export default function NotFound({
 
         {goBack ? (
           <Button
-            className="w-full max-w-[240px] p-6 uppercase hover:bg-background hover:text-primary"
+            className="w-full max-w-[240px] p-6 uppercase"
             onClick={() => router.back()}
           >
             Вернуться

@@ -3,21 +3,31 @@ import type { DynamicZoneT } from '@/lib/types'
 import React from 'react'
 import RichText from './RichText'
 import RichTextImage from './RichTextImage'
+import CollectionAll from './CollectionAll'
+import IconsBlock from './icon-block/IconsBlock'
 
 export default function DynamicZone({
-  item
+  item,
+  searchParams,
 }: {
-  item: DynamicZoneT
+  item: DynamicZoneT,
+  searchParams: { [key: string]: string | string[] | undefined },
 }) {
-  return (
-    item.__typename === "ComponentContentText"
-      ? (
-        <RichText title={item.title} text={item.text} />
-      )
-    : item.__typename === "ComponentContentTextImages"
-      ? (
-        <RichTextImage title={item.title} text={item.text} alignImages={item.alignImages} images={item.images} />
-      )
-    : null
-  )
+
+  switch (item.__typename) {
+    case "ComponentContentTextBlock":
+      return <RichText data={item} />;
+
+    case "ComponentContentTextImages":
+      return <RichTextImage data={item} />;
+
+    case "ComponentContentCollectionAll":
+      return <CollectionAll data={item} searchParams={searchParams} />;
+
+    case "ComponentContentIconsBlock":
+      return <IconsBlock data={item} />
+
+    default:
+      return null;
+  }
 }

@@ -1,16 +1,17 @@
+import ImageComp from '@/components/ImageComp';
 import TabsComp from '@/components/TabsComp';
 import ErrorHandler from '@/components/errors/ErrorHandler';
-import { TypographyH2 } from '@/components/typography';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
 import { getEducationalPrograms } from '@/lib/queries';
+import type { EducationalProgramSingleT } from '@/lib/types';
+import Link from 'next/link';
 import React from 'react'
-import EntranceGrid from './EntranceGrid';
 
-export default async function EntranceTabs({
+export default async function EducationalProgramsAll({
     searchParams,
-    id,
 }: {
     searchParams: { [key: string]: string | string[] | undefined };
-    id?: string,
 }) {
 
     const sort = searchParams["sort"] as string | undefined;
@@ -37,7 +38,7 @@ export default async function EntranceTabs({
             count: 0
         }
         : {
-            content: <EntranceGrid data={bachelorsResult.value.data} />,
+            content: <EducationalProgramsGrid data={bachelorsResult.value.data} />,
             count: bachelorsResult.value.meta.pagination.total
         }
 
@@ -52,7 +53,7 @@ export default async function EntranceTabs({
             count: 0
         }
         : {
-            content: <EntranceGrid data={magistracyResult.value.data} />,
+            content: <EducationalProgramsGrid data={magistracyResult.value.data} />,
             count: magistracyResult.value.meta.pagination.total
         }
 
@@ -67,7 +68,7 @@ export default async function EntranceTabs({
             count: 0
         }
         : {
-            content: <EntranceGrid data={postgraduateResult.value.data} />,
+            content: <EducationalProgramsGrid data={postgraduateResult.value.data} />,
             count: postgraduateResult.value.meta.pagination.total
         }
 
@@ -99,22 +100,54 @@ export default async function EntranceTabs({
                 place="Образовательные программы"
                 notFound
                 goBack={false}
-            >
-                <section id={id} className='lg:pt-28 pt-20'>
-                    <TypographyH2 className='font-semibold text-primary mb-6 border-none'>
-                        Образовательные программы
-                    </TypographyH2>
-                </section>
-            </ErrorHandler>
+            />
         )
     }
 
     return (
-        <section id={id} className='lg:pt-28 pt-20'>
-            <TypographyH2 className='font-semibold text-primary mb-6 border-none'>
-                Образовательные программы
-            </TypographyH2>
-            <TabsComp tabs={tabs} />
-        </section>
+        <TabsComp tabs={tabs} />
+    )
+}
+
+function EducationalProgramsGrid({
+    data,
+}: {
+    data: EducationalProgramSingleT[]
+}) {
+    
+    return (
+        <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 auto-rows-fr lg:gap-8 gap-6">
+            {data.map(item => (
+                <Card key={item.id} className='flex border-none shadow-md rounded-3xl'>
+                    <CardContent className="w-full h-full flex flex-col xl:gap-8 gap-6 md:justify-normal justify-between p-3">
+                        <ImageComp
+                            src={item.attributes.image.data?.attributes.url}
+                            alt={item.attributes.title}
+                            fill={false}
+                            width={400}
+                            height={140}
+                            className='w-full object-cover rounded-2xl h-[30%]'
+                        />
+    
+                        <div className='flex flex-col justify-between gap-3 xl:px-8 px-5 text-primary text-base'>
+                            <div>
+                                <p>{item.attributes.mainCode}</p>
+                                <p>{item.attributes.mainName}</p>
+                            </div>
+                            <div>
+                                <p>{item.attributes.code}</p>
+                                <p className='font-bold'>{item.attributes.title}</p>
+                            </div>
+                        </div>
+    
+                        <Link href={`/entrance/${item.attributes.slug}`} className='w-fit mx-auto mb-3 md:mt-auto'>
+                            <Button className='uppercase font-medium px-10 py-5 rounded-3xl'>
+                                Подробнее
+                            </Button>
+                        </Link>
+                    </CardContent>
+                </Card> 
+            ))}
+        </div>
     )
 }

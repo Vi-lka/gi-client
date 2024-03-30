@@ -32,6 +32,22 @@ export function TypographyH4({ className, children }: { className?: string, chil
     )
 }
 
+export function TypographyH5({ className, children }: { className?: string, children?: React.ReactNode }) {
+    return (
+        <article className="prose lg:prose-xl">
+            <h5 className={cn('font-Cera text-primary', className)} >{children}</h5>
+        </article>
+    )
+}
+
+export function TypographyH6({ className, children }: { className?: string, children?: React.ReactNode }) {
+    return (
+        <article className="prose lg:prose-xl">
+            <h6 className={cn('font-Cera text-primary', className)} >{children}</h6>
+        </article>
+    )
+}
+
 export function TypographyP({ className, children }: { className?: string, children?: React.ReactNode }) {
     return (
         <p className={cn("leading-7 [&:not(:first-child)]:mt-6", className)}>
