@@ -2,8 +2,9 @@ import ImageComp from '@/components/ImageComp'
 import { TypographyH2 } from '@/components/typography'
 import type { ContactsCompT } from '@/lib/types'
 import { cn } from '@/lib/utils'
+import Link from 'next/link'
 import React from 'react'
-import { PiAt, PiMapPin, PiPhoneCallLight } from "react-icons/pi";
+import { FiAtSign, FiMapPin, FiPhoneCall } from 'react-icons/fi'
 
 export default function ContactsBlock({
   data,
@@ -21,19 +22,41 @@ export default function ContactsBlock({
           </TypographyH2>
         )}
 
-        <ul className='flex flex-col gap-3'>
-          <li className='flex items-center gap-3'>
-            <PiPhoneCallLight className='w-6 h-6' />
-            <p className='flex-1'>{data.phone}</p>
-          </li>
-          <li className='flex items-center gap-3 font-bold'>
-            <PiAt className='w-6 h-6' />
-            <p className='flex-1'>{data.email}</p>
-          </li>
-          <li className='flex items-center gap-3'>
-            <PiMapPin className='w-6 h-6' />
-            <p className='flex-1'>{data.location}</p>
-          </li>
+        <ul className='flex flex-col gap-6'>
+          {data.phone && (
+            <li className='flex items-center gap-3'>
+              <FiPhoneCall className='w-6 h-6' />
+              <Link 
+                href={`tel:${data.phone}`} 
+                className='flex-1 hover:underline underline-offset-2'
+              >
+                {data.phone}
+              </Link>
+            </li>
+          )}
+          {data.email && (
+            <li className='flex items-center gap-3'>
+              <FiAtSign className='w-6 h-6' />
+              <Link 
+                href={`mailto:${data.email}`} 
+                className='flex-1 hover:underline underline-offset-2'
+              >
+                {data.email}
+              </Link>
+            </li>
+          )}
+          {data.location && (
+            <li className='flex items-center gap-3'>
+              <FiMapPin className='w-6 h-6' />
+              <Link 
+                href={`https://maps.yandex.ru/?text=${data.location}`} 
+                target='__blank'
+                className='flex-1 hover:underline underline-offset-2'
+              >
+                {data.location}
+              </Link>
+            </li>
+          )}
         </ul>
       </div>
 

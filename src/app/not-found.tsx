@@ -10,7 +10,7 @@ export default function NotFound() {
     const router = useRouter()
 
     return (
-        <div className="mx-auto my-10 flex flex-col items-center gap-10 text-center">
+        <div className="mx-auto my-10 flex flex-col items-center justify-center gap-10 text-center min-h-[60vh]">
             <div className="flex flex-col items-center gap-4 text-center">
                 {/* <SearchX size={36} /> */}
 
@@ -24,7 +24,7 @@ export default function NotFound() {
             </div>
 
             <Button
-                className="w-full max-w-[240px] p-6 uppercase"
+                className="w-full max-w-[240px] p-6 uppercase rounded-3xl"
                 onClick={() => router.back()}
             >
                 Вернуться

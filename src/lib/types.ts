@@ -216,3 +216,31 @@ export const EntrancePageT  = z.object({
   }),
 })
 export type EntrancePageT = z.infer<typeof EntrancePageT>;
+
+//.........................Footer.........................//
+export const FooterT  = z.object({
+  title: z.string().nullable(),
+  subtitle: z.string().nullable(),
+  socialNetworks: z.object({
+    link: z.string(),
+    iconReact: z.string().nullable(),
+    iconCustom: CustomIconEnum.nullable(),
+    image: ImageT,
+    imageDark: ImageT,
+  }).array(),
+  contacts: z.object({
+    title: z.string().nullable(),
+    phone: z.string().nullable(),
+    email: z.string().nullable(),
+    location: z.string().nullable(),
+    iconReact: z.string().nullable(),
+    iconCustom: CustomIconEnum.nullable(),
+  }).array(),
+  logos: z.object({
+    link: z.string().nullable(),
+    image: ImageT,
+    imageDark: ImageT,
+  }).array(),
+  copyright: z.string().nullable(),
+})
+export type FooterT = z.infer<typeof FooterT>;

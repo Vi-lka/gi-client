@@ -2,9 +2,9 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 "use client"
 
+import { Loader2 } from "lucide-react";
 import dynamic from "next/dynamic";
 import type { IconType } from "react-icons/lib";
-import { Skeleton } from "./ui/skeleton";
 
 const DynamicReactIcon = ({
   icon,
@@ -25,7 +25,7 @@ const DynamicReactIcon = ({
         // @ts-expect-error
         return mod[icon];
       },
-      { loading: () => <Skeleton className='lg:w-20 sm:w-16 w-14 lg:h-20 sm:h-16 h-14 sm:mx-0 mx-auto rounded-full' /> }
+      { loading: () => <Loader2 className="animate-spin" /> }
     ),
     fa: dynamic(
       async () => {
@@ -33,7 +33,7 @@ const DynamicReactIcon = ({
         // @ts-expect-error
         return mod[icon];
       },
-      { loading: () => <Skeleton className='lg:w-20 sm:w-16 w-14 lg:h-20 sm:h-16 h-14 sm:mx-0 mx-auto rounded-full' /> }
+      { loading: () => <Loader2 className="animate-spin" /> }
     ),
     io: dynamic(
       async () => {
@@ -41,7 +41,7 @@ const DynamicReactIcon = ({
         // @ts-expect-error
         return mod[icon];
       },
-      { loading: () => <Skeleton className='lg:w-20 sm:w-16 w-14 lg:h-20 sm:h-16 h-14 sm:mx-0 mx-auto rounded-full' /> }
+      { loading: () => <Loader2 className="animate-spin" /> }
     ),
     rx: dynamic(
       async () => {
@@ -49,7 +49,7 @@ const DynamicReactIcon = ({
         // @ts-expect-error
         return mod[icon];
       },
-      { loading: () => <Skeleton className='lg:w-20 sm:w-16 w-14 lg:h-20 sm:h-16 h-14 sm:mx-0 mx-auto rounded-full' /> }
+      { loading: () => <Loader2 className="animate-spin" /> }
     ),
     md: dynamic(
       async () => {
@@ -57,7 +57,7 @@ const DynamicReactIcon = ({
         // @ts-expect-error
         return mod[icon];
       },
-      { loading: () => <Skeleton className='lg:w-20 sm:w-16 w-14 lg:h-20 sm:h-16 h-14 sm:mx-0 mx-auto rounded-full' /> }
+      { loading: () => <Loader2 className="animate-spin" /> }
     ),
     ti: dynamic(
       async () => {
@@ -65,7 +65,7 @@ const DynamicReactIcon = ({
         // @ts-expect-error
         return mod[icon];
       },
-      { loading: () => <Skeleton className='lg:w-20 sm:w-16 w-14 lg:h-20 sm:h-16 h-14 sm:mx-0 mx-auto rounded-full' /> }
+      { loading: () => <Loader2 className="animate-spin" /> }
     ),
     go: dynamic(
       async () => {
@@ -73,7 +73,7 @@ const DynamicReactIcon = ({
         // @ts-expect-error
         return mod[icon];
       },
-      { loading: () => <Skeleton className='lg:w-20 sm:w-16 w-14 lg:h-20 sm:h-16 h-14 sm:mx-0 mx-auto rounded-full' /> }
+      { loading: () => <Loader2 className="animate-spin" /> }
     ),
     ai: dynamic(
       async () => {
@@ -81,7 +81,7 @@ const DynamicReactIcon = ({
         // @ts-expect-error
         return mod[icon];
       },
-      { loading: () => <Skeleton className='lg:w-20 sm:w-16 w-14 lg:h-20 sm:h-16 h-14 sm:mx-0 mx-auto rounded-full' /> }
+      { loading: () => <Loader2 className="animate-spin" /> }
     ),
     bs: dynamic(
       async () => {
@@ -89,7 +89,7 @@ const DynamicReactIcon = ({
         // @ts-expect-error
         return mod[icon];
       },
-      { loading: () => <Skeleton className='lg:w-20 sm:w-16 w-14 lg:h-20 sm:h-16 h-14 sm:mx-0 mx-auto rounded-full' /> }
+      { loading: () => <Loader2 className="animate-spin" /> }
     ),
     ri: dynamic(
       async () => {
@@ -97,7 +97,7 @@ const DynamicReactIcon = ({
         // @ts-expect-error
         return mod[icon];
       },
-      { loading: () => <Skeleton className='lg:w-20 sm:w-16 w-14 lg:h-20 sm:h-16 h-14 sm:mx-0 mx-auto rounded-full' /> }
+      { loading: () => <Loader2 className="animate-spin" /> }
     ),
     gr: dynamic(
       async () => {
@@ -105,7 +105,7 @@ const DynamicReactIcon = ({
         // @ts-expect-error
         return mod[icon];
       },
-      { loading: () => <Skeleton className='lg:w-20 sm:w-16 w-14 lg:h-20 sm:h-16 h-14 sm:mx-0 mx-auto rounded-full' /> }
+      { loading: () => <Loader2 className="animate-spin" /> }
     ),
     hi: dynamic(
       async () => {
@@ -113,7 +113,7 @@ const DynamicReactIcon = ({
         // @ts-expect-error
         return mod[icon];
       },
-      { loading: () => <Skeleton className='lg:w-20 sm:w-16 w-14 lg:h-20 sm:h-16 h-14 sm:mx-0 mx-auto rounded-full' /> }
+      { loading: () => <Loader2 className="animate-spin" /> }
     ),
     sl: dynamic(
       async () => {
@@ -121,7 +121,7 @@ const DynamicReactIcon = ({
         // @ts-expect-error
         return mod[icon];
       },
-      { loading: () => <Skeleton className='lg:w-20 sm:w-16 w-14 lg:h-20 sm:h-16 h-14 sm:mx-0 mx-auto rounded-full' /> }
+      { loading: () => <Loader2 className="animate-spin" /> }
     ),
     im: dynamic(
       async () => {
@@ -129,7 +129,7 @@ const DynamicReactIcon = ({
         // @ts-expect-error
         return mod[icon];
       },
-      { loading: () => <Skeleton className='lg:w-20 sm:w-16 w-14 lg:h-20 sm:h-16 h-14 sm:mx-0 mx-auto rounded-full' /> }
+      { loading: () => <Loader2 className="animate-spin" /> }
     ),
     bi: dynamic(
       async () => {
@@ -137,7 +137,7 @@ const DynamicReactIcon = ({
         // @ts-expect-error
         return mod[icon];
       },
-      { loading: () => <Skeleton className='lg:w-20 sm:w-16 w-14 lg:h-20 sm:h-16 h-14 sm:mx-0 mx-auto rounded-full' /> }
+      { loading: () => <Loader2 className="animate-spin" /> }
     ),
     cg: dynamic(
       async () => {
@@ -145,7 +145,7 @@ const DynamicReactIcon = ({
         // @ts-expect-error
         return mod[icon];
       },
-      { loading: () => <Skeleton className='lg:w-20 sm:w-16 w-14 lg:h-20 sm:h-16 h-14 sm:mx-0 mx-auto rounded-full' /> }
+      { loading: () => <Loader2 className="animate-spin" /> }
     ),
     vsc: dynamic(
       async () => {
@@ -153,7 +153,7 @@ const DynamicReactIcon = ({
         // @ts-expect-error
         return mod[icon];
       },
-      { loading: () => <Skeleton className='lg:w-20 sm:w-16 w-14 lg:h-20 sm:h-16 h-14 sm:mx-0 mx-auto rounded-full' /> }
+      { loading: () => <Loader2 className="animate-spin" /> }
     ),
     tfi: dynamic(
       async () => {
@@ -161,7 +161,15 @@ const DynamicReactIcon = ({
         // @ts-expect-error
         return mod[icon];
       },
-      { loading: () => <Skeleton className='lg:w-20 sm:w-16 w-14 lg:h-20 sm:h-16 h-14 sm:mx-0 mx-auto rounded-full' /> }
+      { loading: () => <Loader2 className="animate-spin" /> }
+    ),
+    fi: dynamic(
+      async () => {
+        const mod = await import("react-icons/fi");
+        // @ts-expect-error
+        return mod[icon];
+      },
+      { loading: () => <Loader2 className="animate-spin" /> }
     )
   };
 

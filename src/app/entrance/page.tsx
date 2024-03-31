@@ -2,15 +2,55 @@ import Breadcrumbs from '@/components/Breadcrumbs'
 import { TypographyH1 } from '@/components/typography'
 import Link from 'next/link'
 import React from 'react'
-import { getEntrancePage } from '@/lib/queries'
+import { fetchData } from '@/lib/queries'
 import ErrorHandler from '@/components/errors/ErrorHandler'
 import DynamicZone from '@/components/dynamic-zone/DynamicZone'
+import { EntrancePageT } from '@/lib/types'
+import { notFound } from 'next/navigation'
+import { dynamicContentQuery } from '@/lib/dynamicContentQuery'
 
 export default async function EntrancePage({
     searchParams,
 }: {
     searchParams: { [key: string]: string | string[] | undefined };
 }) {
+
+    const getEntrancePage = async (): Promise<EntrancePageT> => {
+        const query = /* GraphGL */ `
+        query EntrancePage {
+          entrancePage {
+            data {
+              attributes {
+                title
+                content {
+                  ${dynamicContentQuery}
+                }
+              }
+            }
+          }
+        }
+        `;
+
+        const json = await fetchData<{ 
+            data: { 
+                entrancePage: { 
+                    data: EntrancePageT 
+                } 
+            }; 
+        }>({ 
+            query, 
+            error: "Failed to fetch Entrance Page",
+        })
+
+        // await new Promise((resolve) => setTimeout(resolve, 2000))
+
+        if (json.data.entrancePage.data === null) notFound();
+    
+        const entrancePage = EntrancePageT.parse(json.data.entrancePage.data);
+    
+        return entrancePage;
+    };
+  
 
     const [ dataResult ] = await Promise.allSettled([ getEntrancePage() ]);
     if (dataResult.status === "rejected") return (

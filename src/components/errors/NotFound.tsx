@@ -35,7 +35,7 @@ export default function NotFound({
 
         {goBack ? (
           <Button
-            className="w-full max-w-[240px] p-6 uppercase"
+            className="w-full max-w-[240px] p-6 uppercase rounded-3xl"
             onClick={() => router.back()}
           >
             Вернуться
