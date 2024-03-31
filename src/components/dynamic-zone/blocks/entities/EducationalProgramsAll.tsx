@@ -118,15 +118,15 @@ function EducationalProgramsGrid({
     return (
         <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 auto-rows-fr lg:gap-8 gap-6">
             {data.map(item => (
-                <Card key={item.id} className='flex border-none shadow-md rounded-3xl'>
+                <Card key={item.id} className='min-w-0 shrink-0 grow-0 h-full border-none shadow-md rounded-3xl'>
                     <CardContent className="w-full h-full flex flex-col xl:gap-8 gap-6 md:justify-normal justify-between p-3">
                         <ImageComp
                             src={item.attributes.image.data?.attributes.url}
                             alt={item.attributes.title}
                             fill={false}
                             width={400}
-                            height={140}
-                            className='w-full object-cover rounded-2xl h-[30%]'
+                            height={150}
+                            className='w-full object-cover rounded-2xl aspect-[2/1]'
                         />
     
                         <div className='flex flex-col justify-between gap-3 xl:px-8 px-5 text-primary text-base'>

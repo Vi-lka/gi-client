@@ -67,7 +67,7 @@ export default function Entrance() {
                                     alt="Image"
                                     width={400}
                                     height={140}
-                                    className='w-full object-cover rounded-2xl h-[30%]'
+                                    className='w-full object-cover rounded-2xl aspect-[2/1]'
                                 />
 
                                 <div className='flex flex-col justify-between gap-3 xl:px-8 px-5 text-primary xl:text-base text-sm'>
@@ -82,7 +82,7 @@ export default function Entrance() {
                                 </div>
 
                                 <Link href={`/entrance/${item.id}`} className='w-fit mx-auto mb-3 md:mt-auto'>
-                                    <Button className='uppercase font-medium px-10 py-5 rounded-full hover:bg-background hover:text-accent'>
+                                    <Button className='uppercase font-medium px-10 py-5 rounded-full'>
                                         Подробнее
                                     </Button>
                                 </Link>
