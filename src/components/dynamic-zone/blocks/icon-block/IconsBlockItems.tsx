@@ -3,8 +3,8 @@
 import type { IconsBlockItemT } from '@/lib/types'
 import { cn, splitArray } from '@/lib/utils'
 import React, { useEffect, useState } from 'react'
-import DynamicReactIcon from '../../DynamicReactIcon'
 import IconCustom from './IconCustom'
+import DynamicReactIcon from '@/components/DynamicReactIcon'
 
 export default function IconsBlockItems({
     items,

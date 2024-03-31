@@ -1,8 +1,8 @@
 import React from 'react'
 import { cn } from '@/lib/utils'
-import BlocksRendererStrapi from '../BlocksRendererStrapi'
-import { TypographyH2 } from '../typography'
 import type { TextCompT } from '@/lib/types'
+import { TypographyH2 } from '@/components/typography'
+import BlocksRendererStrapi from '@/components/BlocksRendererStrapi'
 
 export default function RichText({
     data,

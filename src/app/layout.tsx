@@ -3,6 +3,7 @@ import localFont from 'next/font/local';
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import Header from "@/components/header/Header";
+import Footer from "@/components/footer/Footer";
 
 const din = localFont({
   variable: "--Din",
@@ -87,12 +88,13 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${din.variable} ${cera.variable} scroll-smooth`}
     >
-      <body className='font-Din relative bg-background'>
+      <body className='font-Din relative flex flex-col justify-between min-h-screen bg-background'>
         <Header />
         <main className="flex flex-col items-center gap-12 container md:w-5/6 mx-auto lg:pt-36 pt-32">
           {children}
         </main>
         <Toaster />
+        <Footer />
       </body>
     </html>
   );

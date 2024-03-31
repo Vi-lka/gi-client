@@ -1,11 +1,11 @@
 import type { CollectionAllCompT } from '@/lib/types'
 import React from 'react'
-import EducationalProgramsAll from './entities/EducationalProgramsAll';
-import AdditionalEducationAll from './entities/AdditionalEducationAll';
-import LecturersAll from './entities/LecturersAll';
-import GraduatesAll from './entities/GraduatesAll';
+import EducationalProgramsAll from './EducationalProgramsAll';
+import AdditionalEducationAll from './AdditionalEducationAll';
+import LecturersAll from './LecturersAll';
+import GraduatesAll from './GraduatesAll';
 import { cn } from '@/lib/utils';
-import { TypographyH2 } from '../typography';
+import { TypographyH2 } from '@/components/typography';
 
 export default function CollectionAll({ 
     data,

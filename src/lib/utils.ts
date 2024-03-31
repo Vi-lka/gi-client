@@ -19,7 +19,6 @@ export function getShortDescription(
   } else return array.join(" ");
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function splitArray<T>(arr: T[], size: number) {
   const arr2 = arr.slice(0)
   const arrays = [];

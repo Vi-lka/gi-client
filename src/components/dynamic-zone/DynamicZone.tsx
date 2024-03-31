@@ -1,9 +1,10 @@
 import type { DynamicZoneT } from '@/lib/types'
 import React from 'react'
-import RichText from './RichText'
-import RichTextImage from './RichTextImage'
-import CollectionAll from './CollectionAll'
-import IconsBlock from './icon-block/IconsBlock'
+import RichText from './blocks/RichText';
+import RichTextImage from './blocks/RichTextImage';
+import CollectionAll from './blocks/entities/CollectionAll';
+import IconsBlock from './blocks/icon-block/IconsBlock';
+import ContactsBlock from './blocks/ContactsBlock';
 
 export default function DynamicZone({
   item,
@@ -25,6 +26,9 @@ export default function DynamicZone({
 
     case "ComponentContentIconsBlock":
       return <IconsBlock data={item} />
+    
+    case "ComponentContentContacts":
+      return <ContactsBlock data={item} />
 
     default:
       return null;

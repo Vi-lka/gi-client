@@ -1,11 +1,11 @@
 import React from 'react'
 import { cn } from '@/lib/utils'
-import BlocksRendererStrapi from '../BlocksRendererStrapi'
-import { TypographyH2 } from '../typography'
 import type { TextImagesCompT } from '@/lib/types'
-import CarouselComp from '../CarouselComp'
-import { CarouselItem } from '../ui/carousel'
-import ImageComp from '../ImageComp'
+import { TypographyH2 } from '@/components/typography'
+import BlocksRendererStrapi from '@/components/BlocksRendererStrapi'
+import CarouselComp from '@/components/CarouselComp'
+import { CarouselItem } from '@/components/ui/carousel'
+import ImageComp from '@/components/ImageComp'
 
 export default function RichText({
     data,
