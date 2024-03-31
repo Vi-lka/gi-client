@@ -224,7 +224,6 @@ export const FooterT  = z.object({
   socialNetworks: z.object({
     link: z.string(),
     iconReact: z.string().nullable(),
-    iconCustom: CustomIconEnum.nullable(),
     image: ImageT,
     imageDark: ImageT,
   }).array(),

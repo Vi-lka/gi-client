@@ -26,7 +26,6 @@ export default async function Footer() {
                   socialNetworks {
                     link
                     iconReact
-                    iconCustom
                     image {data { attributes { url } }}
                     imageDark {data { attributes { url } }}
                   }
@@ -192,17 +191,14 @@ export default async function Footer() {
 
 function SocialIcon({
     iconReact,
-    iconCustom,
     image,
     // imageDark,
 }: {
     iconReact: string | null,
-    iconCustom: CustomIconEnum | null,
     image: ImageT,
     imageDark: ImageT,
 }) {
-    if (iconCustom) return <IconCustom icon={iconCustom} className='w-fit xl:h-9 h-8 filter-primary rounded-full' />
-    else if (iconReact) return <DynamicReactIcon icon={iconReact} className="w-fit xl:h-9 h-8 text-primary rounded-full" />
+    if (iconReact) return <DynamicReactIcon icon={iconReact} className="w-fit xl:h-9 h-8 text-primary rounded-full" />
     else if (image) return (
         <ImageComp 
             src={image.data?.attributes.url} 
