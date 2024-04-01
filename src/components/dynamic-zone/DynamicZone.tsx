@@ -22,17 +22,18 @@ export default function DynamicZone({
     case "ComponentContentTextImages":
       return <RichTextImage data={item} />;
 
-    case "ComponentContentCollectionAll":
-      return <CollectionAll data={item} searchParams={searchParams} />;
-
     case "ComponentContentIconsBlock":
-      return <IconsBlock data={item} />
+      return <IconsBlock data={item} />;
     
     case "ComponentContentContacts":
-      return <ContactsBlock data={item} />
+      return <ContactsBlock data={item} />;
 
     case "ComponentContentSliderEntity":
-      return <SliderEntity data={item} />
+      return <SliderEntity data={item} />;
+
+    case "ComponentContentCollectionAll":
+      return <CollectionAll data={item} searchParams={searchParams} />;
+      
     default:
       return null;
   }

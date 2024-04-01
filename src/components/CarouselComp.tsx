@@ -65,7 +65,7 @@ export default function CarouselComp({
                 className="my-4 flex items-center justify-center gap-1 max-w-full mx-auto"
                 style={{ width: typeof window !== "undefined" && window.innerWidth > 1024 ? `${2 * count}%` : `${5 * count}%` }}
             >
-                {Array.from({ length: count }).map((_, index) => (
+                {count > 1 && Array.from({ length: count }).map((_, index) => (
                     <div 
                         key={index}
                         className={cn(
