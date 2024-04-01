@@ -5,6 +5,7 @@ import RichTextImage from './blocks/RichTextImage';
 import CollectionAll from './blocks/entities/CollectionAll';
 import IconsBlock from './blocks/icon-block/IconsBlock';
 import ContactsBlock from './blocks/ContactsBlock';
+import SliderEntity from './blocks/sliders/SliderEntity';
 
 export default function DynamicZone({
   item,
@@ -30,6 +31,8 @@ export default function DynamicZone({
     case "ComponentContentContacts":
       return <ContactsBlock data={item} />
 
+    case "ComponentContentSliderEntity":
+      return <SliderEntity data={item} />
     default:
       return null;
   }

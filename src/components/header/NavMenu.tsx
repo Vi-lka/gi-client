@@ -8,14 +8,21 @@ import { cn } from '@/lib/utils'
 import Image from 'next/image'
 
 export default function NavMenu({
+  onClick,
   className
 }: {
+  onClick?: React.MouseEventHandler<HTMLAnchorElement>
   className?: string
 }) {
+
   return (
     <NavigationMenu delayDuration={100} className={className}>
       <NavigationMenuList className='relative gap-2 flex-wrap justify-between items-center'>
-        <Link href="/" className='absolute 2xl:-left-20 -left-14'>
+        <Link 
+          href="/#top" 
+          className='absolute 2xl:-left-20 -left-14' 
+          onClick={onClick}
+        >
           <Image 
             src="/hi-icon.svg"
             alt="HI"
