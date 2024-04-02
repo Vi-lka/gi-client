@@ -1,4 +1,7 @@
 /** @type {import('next').NextConfig} */
+
+const { withSentryConfig } = require("@sentry/nextjs");
+
 const nextConfig = {
     output: "standalone",
     reactStrictMode: true,
@@ -28,23 +31,20 @@ const nextConfig = {
     },
 };
 
-module.exports = nextConfig;
-
-
-// Injected content via Sentry wizard below
-
-const { withSentryConfig } = require("@sentry/nextjs");
-
 module.exports = withSentryConfig(
-  module.exports,
+  nextConfig,
   {
     // For all available options, see:
     // https://github.com/getsentry/sentry-webpack-plugin#options
 
+    org: process.env.SENTRY_ORG,
+    project: process.env.SENTRY_PROJECT,
+  
+    // An auth token is required for uploading source maps.
+    authToken: process.env.SENTRY_AUTH_TOKEN,
+
     // Suppresses source map uploading logs during build
     silent: true,
-    org: "vi-lka",
-    project: "javascript-nextjs",
   },
   {
     // For all available options, see:
