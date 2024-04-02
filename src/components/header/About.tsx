@@ -103,7 +103,7 @@ export default function About({
                 src="/about-bg.png"
                 alt="Background"
                 fill
-                sizes='100vw'
+                sizes='90vw'
                 className={cn(
                     'object-cover w-full h-full transition-all z-30',
                     selectedItem === 1 ? "opacity-100" : "opacity-0"

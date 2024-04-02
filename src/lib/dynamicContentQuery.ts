@@ -74,6 +74,31 @@ export const dynamicContentQuery = `
         }
       }
     }
+    employees {
+      data {
+        id
+        attributes {
+          title
+          post
+          description
+          image {
+            data {
+              attributes {
+                url
+              }
+            }
+          }
+          hashtags {
+            data {
+              attributes {
+                slug
+                title
+              }
+            }
+          }
+        }
+      }
+    }
   }
   ... on ComponentContentCollectionAll {
     title
@@ -100,5 +125,16 @@ export const dynamicContentQuery = `
         }
       }
     }
+  }
+  ... on ComponentContentTextGrid {
+    title
+    link
+    linkTitle
+    items {
+      title
+      text
+    }
+    buttonTitle
+    buttonLink
   }
 `

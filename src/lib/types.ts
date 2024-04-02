@@ -1,5 +1,8 @@
 import { z } from "zod";
 
+
+
+
 //.........................IMAGES.........................//
 export const ImageT = z.object({
   data: z
@@ -23,6 +26,9 @@ data: z
 });
 export type ImagesArrayT = z.infer<typeof ImagesArrayT>;
 
+
+
+
 //.........................Custom Icon Enums.........................//
 export const CustomIconEnum = z.enum([
   "video_call",
@@ -36,6 +42,31 @@ export const CustomIconEnum = z.enum([
   "graph",
 ]);
 export type CustomIconEnum = z.infer<typeof CustomIconEnum>;
+
+
+
+
+//.........................Hashtags.........................//
+export const HashtagSingleT  = z.object({
+  attributes: z.object({
+    slug: z.string(),
+    title: z.string()
+  })
+})
+export type HashtagSingleT = z.infer<typeof HashtagSingleT>;
+
+export const HashtagsT  = z.object({
+  meta: z.object({
+    pagination: z.object({
+      total: z.number(),
+    }),
+  }),
+  data: HashtagSingleT.array(),
+})
+export type HashtagsT = z.infer<typeof HashtagsT>;
+
+
+
 
 //.........................Educational Programs.........................//
 export const EducationalProgramTypeEnum = z.enum(["bachelor", "magistracy", "postgraduate"]);
@@ -63,6 +94,37 @@ export const EducationalProgramsT  = z.object({
     data: EducationalProgramSingleT.array(),
 })
 export type EducationalProgramsT = z.infer<typeof EducationalProgramsT>;
+
+
+
+
+//.........................Employees.........................//
+export const EmployeeSingleT  = z.object({
+  id: z.string(),
+  attributes: z.object({
+    title: z.string(),
+    post: z.string().nullable(),
+    description: z.string().nullable(),
+    image: ImageT,
+    hashtags: z.object({
+      data: HashtagSingleT.array()
+    })
+  })
+})
+export type EmployeeSingleT = z.infer<typeof EmployeeSingleT>;
+
+export const EmployeesT  = z.object({
+  meta: z.object({
+      pagination: z.object({
+        total: z.number(),
+      }),
+  }),
+  data: EmployeeSingleT.array(),
+})
+export type EmployeesT = z.infer<typeof EmployeesT>;
+
+
+
 
 //.........................Graduates.........................//
 export const GraduateSingleT  = z.object({
@@ -96,6 +158,9 @@ export const GraduatesT  = z.object({
 })
 export type GraduatesT = z.infer<typeof GraduatesT>;
 
+
+
+
 //.........................COMPONENTS.........................//
 export const TextCompT = z.object({
   __typename: z.literal("ComponentContentTextBlock"),
@@ -118,6 +183,22 @@ export const TextImagesCompT = z.object({
   images: ImagesArrayT,
 })
 export type TextImagesCompT = z.infer<typeof TextImagesCompT>;
+
+export const TextGridItemT = z.object({
+  title: z.string(),
+  text: z.any(),
+})
+export type TextGridItemT = z.infer<typeof TextGridItemT>;
+export const TextGridCompT = z.object({
+  __typename: z.literal("ComponentContentTextGrid"),
+  title: z.string().nullable(),
+  link: z.string().nullable(),
+  linkTitle: z.string().nullable(),
+  items: TextGridItemT.array(),
+  buttonTitle: z.string().nullable(),
+  buttonLink: z.string().nullable(),
+})
+export type TextGridCompT = z.infer<typeof TextGridCompT>;
 
 
 export const CollectionAllEnum = z.enum([
@@ -178,6 +259,9 @@ export const SliderEntityCompT = z.object({
   linkTitle: z.string().nullable(),
   educational_programs: z.object({
     data: EducationalProgramSingleT.array()
+  }),
+  employees: z.object({
+    data: EmployeeSingleT.array()
   })
 })
 export type SliderEntityCompT = z.infer<typeof SliderEntityCompT>;
@@ -200,6 +284,7 @@ export type ErrorCompT = z.infer<typeof ErrorCompT>;
 export const DynamicZoneT = z.discriminatedUnion("__typename", [
   TextCompT,
   TextImagesCompT,
+  TextGridCompT,
   CollectionAllCompT,
   ContactsCompT,
   IconsBlockCompT,
@@ -208,7 +293,10 @@ export const DynamicZoneT = z.discriminatedUnion("__typename", [
 ])
 export type DynamicZoneT = z.infer<typeof DynamicZoneT>;
 
-//.........................Entrance Page.........................//
+
+
+
+//.........................Pages.........................//
 export const EntrancePageT  = z.object({
   attributes: z.object({
     title: z.string(),
@@ -217,13 +305,30 @@ export const EntrancePageT  = z.object({
 })
 export type EntrancePageT = z.infer<typeof EntrancePageT>;
 
-//.........................Entrance Page.........................//
 export const MainPageT  = z.object({
   attributes: z.object({
     content: DynamicZoneT.array(),
   }),
 })
 export type MainPageT = z.infer<typeof MainPageT>;
+
+export const EducationalProgramPageT  = z.object({
+  id: z.string(),
+  attributes: z.object({
+    slug: z.string(),
+    title: z.string(),
+    type: EducationalProgramTypeEnum,
+    code: z.string().nullable(),
+    mainName: z.string().nullable(),
+    mainCode: z.string().nullable(),
+    image: ImageT,
+    content: DynamicZoneT.array(),
+  }),
+})
+export type EducationalProgramPageT = z.infer<typeof EducationalProgramPageT>;
+
+
+
 
 //.........................Footer.........................//
 export const FooterT  = z.object({

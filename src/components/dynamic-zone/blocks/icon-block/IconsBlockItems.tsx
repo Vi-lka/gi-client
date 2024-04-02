@@ -26,16 +26,16 @@ export default function IconsBlockItems({
         return () => window.removeEventListener("resize", updateDimensions);
     }, []);
 
-    let sliceSize: number
+    let splitSize: number
 
-    if (isList) sliceSize = 1
-    else if (width >= 1024) sliceSize = 4
-    else if (width >= 640) sliceSize = 2
-    else sliceSize = 1
+    if (isList) splitSize = 1
+    else if (width >= 1024) splitSize = 4
+    else if (width >= 640) splitSize = 2
+    else splitSize = 1
 
     return (
         <div className='flex flex-col gap-8'>
-            {splitArray(items, sliceSize).map((arr, index) => (
+            {splitArray(items, splitSize).map((arr, index) => (
                 <div key={index} className='flex flex-col gap-2 sm:items-stretch items-center sm:text-left text-center'>
                     <IconBlockLine items={arr} type='icon' />
                     <IconBlockLine items={arr} type='title' />

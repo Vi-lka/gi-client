@@ -5,8 +5,9 @@ import RichTextImage from './blocks/RichTextImage';
 import CollectionAll from './blocks/entities/CollectionAll';
 import IconsBlock from './blocks/icon-block/IconsBlock';
 import ContactsBlock from './blocks/ContactsBlock';
-import SliderEntity from './blocks/sliders/SliderEntity';
 import SliderPhotos from './blocks/sliders/SliderPhotos';
+import SliderEntity from './blocks/sliders/SliderEntity';
+import RichTextGrid from './blocks/RichTextGrid';
 
 export default function DynamicZone({
   item,
@@ -24,6 +25,9 @@ export default function DynamicZone({
 
     case "ComponentContentTextImages":
       return <RichTextImage data={item} headingBig={headingBig} />;
+
+    case "ComponentContentTextGrid":
+      return <RichTextGrid data={item} headingBig={headingBig} />
 
     case "ComponentContentIconsBlock":
       return <IconsBlock data={item} headingBig={headingBig} />;

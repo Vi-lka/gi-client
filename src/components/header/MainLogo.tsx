@@ -83,6 +83,7 @@ export default function MainLogo({
                     alt="HI"
                     fill
                     sizes='100vw'
+                    priority
                     quality={100}
                     className='object-contain drop-shadow-sm'
                     style={{
@@ -95,6 +96,7 @@ export default function MainLogo({
                     alt="HI"
                     fill
                     sizes='100vw'
+                    priority
                     quality={100}
                     className='object-contain brightness-50 opacity-60'
                     style={{
@@ -103,17 +105,5 @@ export default function MainLogo({
                 />
             </motion.div>
         </motion.div>
-        // <div className='absolute w-full h-full'>
-        //     <div className='relative w-full h-full z-10'>
-        //         <Image
-        //             src="/hero-image.jpeg"
-        //             alt=""
-        //             fill
-        //             sizes='100vw'
-        //             quality={100}
-        //             className='rounded-md object-cover'
-        //         />
-        //     </div>
-        // </div>
     )
 }

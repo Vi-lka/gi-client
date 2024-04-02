@@ -42,7 +42,7 @@ export default async function GraduatesAll({
                                     className='object-cover rounded-full aspect-square max-h-32 lg:mx-0 mx-auto'
                                 />
                     
-                                <div className='flex flex-col justify-between gap-6 text-primary xl:text-base text-sm'>
+                                <div className='flex flex-col flex-1 justify-between gap-6 text-primary xl:text-base text-sm'>
                                     <div>
                                         <p className='font-bold mb-1'>{graduate.attributes.title}</p>
                                         <p>{graduate.attributes.description}</p>
