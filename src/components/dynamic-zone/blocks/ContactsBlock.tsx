@@ -8,16 +8,23 @@ import { FiAtSign, FiMapPin, FiPhoneCall } from 'react-icons/fi'
 
 export default function ContactsBlock({
   data,
+  headingBig,
   className,
 }: {
   data: ContactsCompT,
+  headingBig?: boolean,
   className?: string,
 }) {
   return (
     <div className={cn("w-full flex gap-8 justify-between", className)}>
       <div className='flex flex-col gap-8 xl:justify-around justify-between flex-1'>
         {data.title && (
-          <TypographyH2 className='font-semibold text-primary mb-6 border-none'>
+          <TypographyH2 
+            className={cn(
+              'font-semibold text-primary mb-6 border-none',
+              headingBig ? "text-4xl lg:text-5xl" : ""
+            )}
+          >
             {data.title}
           </TypographyH2>
         )}

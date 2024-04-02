@@ -11,9 +11,11 @@ import { Button } from '@/components/ui/button';
 
 export default function IconsBlock({
     data,
+    headingBig,
     className,
 }: {
     data: IconsBlockCompT,
+    headingBig?: boolean,
     className?: string,
 }) {
     
@@ -41,7 +43,12 @@ export default function IconsBlock({
             <div className='flex-1 mt-4'>
                 <div className='xl:px-0 sm:px-12 px-6'>
                     {data.title && (
-                        <TypographyH2 className='font-semibold text-primary mb-8 border-none'>
+                        <TypographyH2 
+                            className={cn(
+                                'font-semibold text-primary mb-8 border-none',
+                                headingBig ? "text-4xl lg:text-5xl" : ""
+                            )}
+                        >
                             {data.title}
                         </TypographyH2>
                     )}

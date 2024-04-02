@@ -7,15 +7,22 @@ import EducationalProgramsItem from './EducationalProgramsItem'
 
 export default function SliderEntity({
     data,
+    headingBig,
     className
 }: {
     data: SliderEntityCompT,
+    headingBig?: boolean,
     className?: string
 }) {
     return (
         <div className={cn("w-full", className)}>
             {data.title && (
-                <TypographyH2 className='font-semibold text-primary mb-6 border-none'>
+                <TypographyH2
+                className={cn(
+                    'font-semibold text-primary mb-6 border-none',
+                    headingBig ? "text-4xl lg:text-5xl" : ""
+                )}
+            >
                     {data.title}
                 </TypographyH2>
             )}

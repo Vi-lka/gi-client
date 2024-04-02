@@ -217,6 +217,14 @@ export const EntrancePageT  = z.object({
 })
 export type EntrancePageT = z.infer<typeof EntrancePageT>;
 
+//.........................Entrance Page.........................//
+export const MainPageT  = z.object({
+  attributes: z.object({
+    content: DynamicZoneT.array(),
+  }),
+})
+export type MainPageT = z.infer<typeof MainPageT>;
+
 //.........................Footer.........................//
 export const FooterT  = z.object({
   title: z.string().nullable(),
