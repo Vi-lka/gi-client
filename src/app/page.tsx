@@ -55,7 +55,6 @@ export default async function Home({
           notFound={false}
       />
   )
-
   
   return (
     <div className='w-full -mt-16'>

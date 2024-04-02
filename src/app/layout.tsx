@@ -4,6 +4,8 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import Hero from "@/components/header/Hero";
 import Footer from "@/components/footer/Footer";
+import { SpeedInsights } from '@vercel/speed-insights/next';
+import { Analytics } from '@vercel/analytics/react';
 
 const din = localFont({
   variable: "--Din",
@@ -97,6 +99,8 @@ export default function RootLayout({
 
         <Toaster />
         <Footer />
+        <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   );

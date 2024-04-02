@@ -9,6 +9,8 @@ import { ToastAction } from "@radix-ui/react-toast";
 import { getShortDescription } from "@/lib/utils";
 import { Button } from "../ui/button";
 
+import * as Sentry from "@sentry/nextjs";
+
 export default function ErrorToast({
   error,
   place,
@@ -16,6 +18,7 @@ export default function ErrorToast({
   error: string | ZodIssue[];
   place: string;
 }) {
+
   const { toast } = useToast();
   const router = useRouter();
 
@@ -35,7 +38,10 @@ export default function ErrorToast({
   );
 
   React.useEffect(() => {
+    Sentry.captureException(error);
+
     console.log("ErrorToast: ", messageError);
+
     toast({
       variant: "destructive",
       title: "Ошибка! Что-то пошло не так:",
@@ -55,7 +61,7 @@ export default function ErrorToast({
         </ToastAction>
       ),
     });
-  }, [messageError, place, router, toast]);
+  }, [error, messageError, place, router, toast]);
 
   return (
     <div className="mx-auto my-10 flex flex-col items-center gap-10 text-center">
