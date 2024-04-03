@@ -1,8 +1,8 @@
 version: '3'
 
 services:
-  gi-client:
-    container_name: gi-client
+  hi-client:
+    container_name: hi-client
     build:
       context: .
       dockerfile: Dockerfile
@@ -18,15 +18,15 @@ services:
     ports:
       - 3000:3000
     networks:
-      - gi-net
+      - hi-net
 
   # Add more containers below (nginx, postgres, etc.)
 
 # Define a network, which allows containers to communicate
 # with each other, by using their container name as a hostname
 networks:
-  gi-net:
-    name: gi-net
+  hi-net:
+    name: hi-net
     external: true
 
 volumes:

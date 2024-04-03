@@ -36,6 +36,8 @@ ENV REVALIDATE_TOKEN=${REVALIDATE_TOKEN}
 
 RUN pnpm install
 
+RUN pnpm i --config.arch=x64 --config.platform=linux --config.libc=musl sharp@0.32.6
+
 # Build Next.js based on the preferred package manager
 RUN pnpm build
 
