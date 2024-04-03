@@ -137,4 +137,25 @@ export const dynamicContentQuery = `
     buttonTitle
     buttonLink
   }
+  ... on ComponentContentTimeline {
+    title
+    link
+    linkTitle
+    subTitle
+    line {
+      title
+      text
+    }
+  }
+  ... on ComponentContentNumbers {
+    title
+    link
+    linkTitle
+    subTitle
+    items {
+      number
+      description
+      icon
+    }
+  }
 `

@@ -59,7 +59,7 @@ export default async function Home({
   return (
     <div className='w-full -mt-16'>
       {dataResult.value.attributes.content.map((item, index) => (
-          <section id={item.link ? item.link : undefined} key={index} className='lg:pt-28 pt-20'>
+          <section id={item.link ? item.link : undefined} key={index}>
               <DynamicZone item={item} searchParams={searchParams} headingBig />
           </section>
       ))}

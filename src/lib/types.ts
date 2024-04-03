@@ -200,7 +200,6 @@ export const TextGridCompT = z.object({
 })
 export type TextGridCompT = z.infer<typeof TextGridCompT>;
 
-
 export const CollectionAllEnum = z.enum([
   "educational-programs", 
   "additional-education", 
@@ -275,6 +274,37 @@ export const SliderPhotosCompT = z.object({
 })
 export type SliderPhotosCompT = z.infer<typeof SliderPhotosCompT>;
 
+export const TimelineItemT = z.object({
+  title: z.string().nullable(),
+  text: z.any(),
+})
+export type TimelineItemT = z.infer<typeof TimelineItemT>;
+export const TimelineCompT = z.object({
+  __typename: z.literal("ComponentContentTimeline"),
+  title: z.string().nullable(),
+  link: z.string().nullable(),
+  linkTitle: z.string().nullable(),
+  subTitle: z.string().nullable(),
+  line: TimelineItemT.array(),
+})
+export type TimelineCompT = z.infer<typeof TimelineCompT>;
+
+export const NumbersItemT = z.object({
+  number: z.string(),
+  description: z.string().nullable(),
+  icon: z.string().nullable(),
+})
+export type NumbersItemT = z.infer<typeof NumbersItemT>;
+export const NumbersCompT = z.object({
+  __typename: z.literal("ComponentContentNumbers"),
+  title: z.string().nullable(),
+  link: z.string().nullable(),
+  linkTitle: z.string().nullable(),
+  subTitle: z.string().nullable(),
+  items: NumbersItemT.array(),
+})
+export type NumbersCompT = z.infer<typeof NumbersCompT>;
+
 export const ErrorCompT = z.object({
   code: z.string(),
   message: z.string().nullable(),
@@ -290,6 +320,8 @@ export const DynamicZoneT = z.discriminatedUnion("__typename", [
   IconsBlockCompT,
   SliderEntityCompT,
   SliderPhotosCompT,
+  TimelineCompT,
+  NumbersCompT,
 ])
 export type DynamicZoneT = z.infer<typeof DynamicZoneT>;
 

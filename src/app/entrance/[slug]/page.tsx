@@ -98,7 +98,7 @@ export default async function EducationalProgramPage({
                 {dataResult.value.attributes.title}
             </TypographyH1>
 
-            <div className='flex gap-28 flex-wrap text-sm text-primary'>
+            <div className='flex gap-x-28 gap-y-3 flex-wrap text-sm text-primary'>
                 <div className=''>
                     <p>Код направления подготовки:</p>
                     <p>
@@ -128,7 +128,7 @@ export default async function EducationalProgramPage({
             </div>
 
             {dataResult.value.attributes.content.map((item, index) => (
-                <section id={item.link ? item.link : undefined} key={index} className='lg:pt-28 pt-20'>
+                <section id={item.link ? item.link : undefined} key={index}>
                     <DynamicZone item={item} searchParams={searchParams} />
                 </section>
             ))}
