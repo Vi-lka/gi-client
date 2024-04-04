@@ -11,6 +11,7 @@ import RichTextGrid from './blocks/RichTextGrid';
 import Timeline from './blocks/timeline/Timeline';
 import { cn } from '@/lib/utils';
 import Numbers from './blocks/numbers/Numbers';
+import Files from './blocks/Files';
 
 export default function DynamicZone({
   item,
@@ -48,10 +49,13 @@ export default function DynamicZone({
       return <CollectionAll data={item} headingBig={headingBig} searchParams={searchParams} className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} />;
 
     case "ComponentContentTimeline":
-      return <Timeline data={item} headingBig={headingBig} className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} />
+      return <Timeline data={item} headingBig={headingBig} className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} />;
 
     case "ComponentContentNumbers":
-      return <Numbers data={item} headingBig={headingBig} className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} />
+      return <Numbers data={item} headingBig={headingBig} className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} />;
+
+    case "ComponentContentFiles":
+      return <Files data={item} headingBig={headingBig} className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} />;
       
     default:
       return null;

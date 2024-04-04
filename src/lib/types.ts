@@ -305,6 +305,27 @@ export const NumbersCompT = z.object({
 })
 export type NumbersCompT = z.infer<typeof NumbersCompT>;
 
+export const FilesItemT = z.object({
+  title: z.string(),
+  file: z.object({
+    data: z
+      .object({
+        attributes: z.object({
+          url: z.string(),
+        }),
+      })
+  })
+})
+export type FilesItemT = z.infer<typeof FilesItemT>;
+export const FilesCompT = z.object({
+  __typename: z.literal("ComponentContentFiles"),
+  title: z.string().nullable(),
+  link: z.string().nullable(),
+  linkTitle: z.string().nullable(),
+  items: FilesItemT.array(),
+})
+export type FilesCompT = z.infer<typeof FilesCompT>;
+
 export const ErrorCompT = z.object({
   code: z.string(),
   message: z.string().nullable(),
@@ -322,6 +343,7 @@ export const DynamicZoneT = z.discriminatedUnion("__typename", [
   SliderPhotosCompT,
   TimelineCompT,
   NumbersCompT,
+  FilesCompT,
 ])
 export type DynamicZoneT = z.infer<typeof DynamicZoneT>;
 
@@ -329,6 +351,14 @@ export type DynamicZoneT = z.infer<typeof DynamicZoneT>;
 
 
 //.........................Pages.........................//
+export const JustWaitPageT  = z.object({
+  attributes: z.object({
+    title: z.string(),
+    content: DynamicZoneT.array(),
+  }),
+})
+export type JustWaitPageT = z.infer<typeof JustWaitPageT>;
+
 export const EntrancePageT  = z.object({
   attributes: z.object({
     title: z.string(),

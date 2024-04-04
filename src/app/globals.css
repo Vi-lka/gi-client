@@ -158,11 +158,11 @@
   }
   
   .link-underline-sm {
-    background-size: 0 1px;
+    background-size: 0 2px;
   }
   
   .link-underline-sm:hover {
-    background-size: 100% 1px !important;
+    background-size: 100% 2px !important;
   }
   
   .fixedTop {

@@ -158,4 +158,19 @@ export const dynamicContentQuery = `
       icon
     }
   }
+  ... on ComponentContentFiles {
+    title
+    link
+    linkTitle
+    items {
+      title
+      file {
+        data {
+          attributes {
+            url
+          }
+        }
+      }
+    }
+  }
 `
