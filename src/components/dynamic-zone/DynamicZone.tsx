@@ -12,6 +12,7 @@ import Timeline from './blocks/timeline/Timeline';
 import { cn } from '@/lib/utils';
 import Numbers from './blocks/numbers/Numbers';
 import Files from './blocks/Files';
+import FormBlock from './blocks/form-block/FormBlock';
 
 export default function DynamicZone({
   item,
@@ -56,6 +57,9 @@ export default function DynamicZone({
 
     case "ComponentContentFiles":
       return <Files data={item} headingBig={headingBig} className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} />;
+
+    case "ComponentContentFormBlock":
+      return <FormBlock data={item} headingBig={headingBig} className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} />;
       
     default:
       return null;

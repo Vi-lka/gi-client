@@ -173,4 +173,49 @@ export const dynamicContentQuery = `
       }
     }
   }
+  ... on ComponentContentFormBlock {
+    title
+    link
+    linkTitle
+    image {
+      data {
+        attributes {
+          url
+        }
+      }
+    }
+    imageDark {
+      data {
+        attributes {
+          url
+        }
+      }
+    }
+    color
+    colorDark
+    list {
+      title
+      iconCustom
+      iconReact
+      image {
+        data {
+          attributes {
+            url
+          }
+        }
+      }
+      imageDark {
+        data {
+          attributes {
+            url
+          }
+        }
+      }
+    }
+    buttonTitle
+    buttonLink
+    inNewTab
+    formTitle
+    formDescription
+  }
 `

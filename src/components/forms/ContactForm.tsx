@@ -8,6 +8,7 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from '../ui/form'
 import { Input } from '../ui/input'
 import { Button } from '../ui/button'
 import { cn } from '@/lib/utils'
+import { DialogClose } from '../ui/dialog'
 
 const phoneRegex = new RegExp(
     /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/
@@ -22,8 +23,10 @@ const formSchema = z.object({
   })
 
 export default function ContactForm({
+    dialog,
     className,
 }: {
+    dialog?: boolean
     className?: string
 }) {
 
@@ -40,6 +43,16 @@ export default function ContactForm({
     function onSubmit(values: z.infer<typeof formSchema>) {
         console.log(values)
     }
+
+    const sendButton = (
+        <Button 
+            type="submit"
+            disabled={!(form.formState.isDirty && form.formState.isValid) || form.formState.isSubmitting}
+            className='px-8 uppercase rounded-3xl lg:float-start float-end'
+        >
+            Отправить
+        </Button>
+    )
 
     return (
         <Form {...form}>
@@ -99,13 +112,14 @@ export default function ContactForm({
                         </FormItem>
                     )}
                 />
-                <Button 
-                    type="submit"
-                    disabled={!(form.formState.isDirty && form.formState.isValid) || form.formState.isSubmitting}
-                    className='px-8 uppercase rounded-3xl lg:float-start float-end'
-                >
-                    Отправить
-                </Button>
+                {dialog 
+                    ? (
+                        <DialogClose asChild>
+                            {sendButton}
+                        </DialogClose>
+                    )
+                    : sendButton
+                }
             </form>
         </Form>
     )

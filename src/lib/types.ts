@@ -326,6 +326,32 @@ export const FilesCompT = z.object({
 })
 export type FilesCompT = z.infer<typeof FilesCompT>;
 
+export const FormBlockItemT = z.object({
+  title: z.string(),
+  iconCustom: CustomIconEnum.nullable(),
+  iconReact: z.string().nullable(),
+  image: ImageT,
+  imageDark: ImageT,
+})
+export type FormBlockItemT = z.infer<typeof FormBlockItemT>;
+export const FormBlockCompT = z.object({
+  __typename: z.literal("ComponentContentFormBlock"),
+  title: z.string().nullable(),
+  link: z.string().nullable(),
+  linkTitle: z.string().nullable(),
+  image: ImageT,
+  imageDark: ImageT,
+  list: FormBlockItemT.array(),
+  color: z.string().nullable(),
+  colorDark: z.string().nullable(),
+  buttonTitle: z.string().nullable(),
+  buttonLink: z.string().nullable(),
+  inNewTab: z.boolean().nullable(),
+  formTitle: z.string().nullable(),
+  formDescription: z.string().nullable(),
+})
+export type FormBlockCompT = z.infer<typeof FormBlockCompT>;
+
 export const ErrorCompT = z.object({
   code: z.string(),
   message: z.string().nullable(),
@@ -344,6 +370,7 @@ export const DynamicZoneT = z.discriminatedUnion("__typename", [
   TimelineCompT,
   NumbersCompT,
   FilesCompT,
+  FormBlockCompT,
 ])
 export type DynamicZoneT = z.infer<typeof DynamicZoneT>;
 
