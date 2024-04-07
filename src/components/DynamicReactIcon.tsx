@@ -19,6 +19,14 @@ const DynamicReactIcon = ({
   const lib = icon.replace(/([a-z0-9])([A-Z])/g, '$1 $2').split(" ")[0].toLocaleLowerCase() as keyof typeof Icons;
 
   const Icons = {
+    tb: dynamic(
+      async () => {
+        const mod = await import("react-icons/tb");
+        // @ts-expect-error
+        return mod[icon];
+      },
+      { loading: () => <Loader2 className="animate-spin" /> }
+    ),
     si: dynamic(
       async () => {
         const mod = await import("react-icons/si");
