@@ -5,6 +5,8 @@ import { notFound } from "next/navigation";
 import ErrorHandler from "@/components/errors/ErrorHandler";
 import DynamicZone from "@/components/dynamic-zone/DynamicZone";
 
+export const dynamic = 'force-dynamic'
+
 export default async function Home({
   searchParams,
 }: {

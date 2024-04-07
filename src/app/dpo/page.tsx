@@ -9,6 +9,8 @@ import { Link } from 'lucide-react';
 import { notFound } from 'next/navigation';
 import React from 'react'
 
+export const dynamic = 'force-dynamic'
+
 export default async function DpoPage({
     searchParams,
 }: {
