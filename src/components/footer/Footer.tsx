@@ -130,7 +130,8 @@ export default async function Footer() {
                                             )}
                                             {item.location && (
                                                 <Link 
-                                                    href={`https://maps.yandex.ru/?text=${item.location}`}  
+                                                    href={`https://maps.yandex.ru/?text=${item.location}`}
+                                                    target="_blank"
                                                     className='hover:underline underline-offset-2'
                                                 >
                                                     {item.location}
@@ -148,16 +149,17 @@ export default async function Footer() {
                                     ? (
                                         <Link 
                                             key={index}
-                                            href={item.link}  
+                                            href={item.link}
+                                            target="_blank"
                                             className='hover:underline underline-offset-2'
                                         >
                                             <ImageComp 
                                                 src={item.image.data?.attributes.url}
                                                 alt='Logo'
                                                 fill={false}
-                                                width={120}
-                                                height={44}
-                                                className='object-contain xl:w-[120px] w-24'
+                                                width={140}
+                                                height={140}
+                                                className='object-contain xl:w-[140px] w-24'
                                             />
                                         </Link>
                                     )
@@ -167,9 +169,9 @@ export default async function Footer() {
                                             src={item.image.data?.attributes.url}
                                             alt='Logo'
                                             fill={false}
-                                            width={120}
-                                            height={44}
-                                            className='object-contain xl:w-[120px] w-24'
+                                            width={140}
+                                            height={140}
+                                            className='object-contain xl:w-[140px] w-24'
                                         />
                                     )
                             ))}

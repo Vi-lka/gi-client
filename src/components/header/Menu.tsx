@@ -59,7 +59,7 @@ export default function Menu({
         },
         {
             mainTitle: "Курсы Дополнительного Профессионального Образования",
-            mainLink: "/courses-dpo",
+            mainLink: "/dpo",
         },
         {
             mainTitle: "Наука",

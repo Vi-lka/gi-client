@@ -35,7 +35,7 @@ export default function NavMenu({
         <NavMenuItem url='/structure'>Структура</NavMenuItem>
         <NavMenuItem url='/education'>Обучение</NavMenuItem>
         <NavMenuItem url='/entrance'>Поступление</NavMenuItem>
-        <NavMenuItem url='/courses-dpo'>Курсы ДПО</NavMenuItem>
+        <NavMenuItem url='/dpo'>Курсы ДПО</NavMenuItem>
         <NavMenuItem url='/science'>Наука</NavMenuItem>
         <NavMenuItem url='/projects'>Проекты</NavMenuItem>
         <NavMenuItem url='/journals'>Журналы</NavMenuItem>

@@ -1,24 +1,23 @@
-import Breadcrumbs from '@/components/Breadcrumbs'
-import { TypographyH1 } from '@/components/typography'
-import Link from 'next/link'
+import Breadcrumbs from '@/components/Breadcrumbs';
+import DynamicZone from '@/components/dynamic-zone/DynamicZone';
+import ErrorHandler from '@/components/errors/ErrorHandler';
+import { TypographyH1 } from '@/components/typography';
+import { dynamicContentQuery } from '@/lib/dynamicContentQuery';
+import { fetchData } from '@/lib/queries';
+import { DpoPageT } from '@/lib/types';
+import { Link } from 'lucide-react';
+import { notFound } from 'next/navigation';
 import React from 'react'
-import { fetchData } from '@/lib/queries'
-import ErrorHandler from '@/components/errors/ErrorHandler'
-import DynamicZone from '@/components/dynamic-zone/DynamicZone'
-import { EntrancePageT } from '@/lib/types'
-import { notFound } from 'next/navigation'
-import { dynamicContentQuery } from '@/lib/dynamicContentQuery'
 
-export default async function EntrancePage({
+export default async function DpoPage({
     searchParams,
 }: {
     searchParams: { [key: string]: string | string[] | undefined };
 }) {
-
-    const getEntrancePage = async (): Promise<EntrancePageT> => {
+    const getDpoPage = async (): Promise<DpoPageT> => {
         const query = /* GraphGL */ `
-        query EntrancePage {
-          entrancePage {
+        query DpoPage {
+            dpo {
             data {
               attributes {
                 title
@@ -33,30 +32,30 @@ export default async function EntrancePage({
 
         const json = await fetchData<{ 
             data: { 
-                entrancePage: { 
-                    data: EntrancePageT 
+                dpo: { 
+                    data: DpoPageT 
                 } 
             }; 
         }>({ 
             query, 
-            error: "Failed to fetch Entrance Page",
+            error: "Failed to fetch DPO Page",
         })
 
         // await new Promise((resolve) => setTimeout(resolve, 2000))
 
-        if (json.data.entrancePage.data === null) notFound();
+        if (json.data.dpo.data === null) notFound();
     
-        const entrancePage = EntrancePageT.parse(json.data.entrancePage.data);
+        const dpoPage = DpoPageT.parse(json.data.dpo.data);
     
-        return entrancePage;
+        return dpoPage;
     };
   
 
-    const [ dataResult ] = await Promise.allSettled([ getEntrancePage() ]);
+    const [ dataResult ] = await Promise.allSettled([ getDpoPage() ]);
     if (dataResult.status === "rejected") return (
         <ErrorHandler 
             error={dataResult.reason as unknown} 
-            place="Entrance Page"
+            place="DPO Page"
             notFound={false}
         />
     )
@@ -69,7 +68,7 @@ export default async function EntrancePage({
 
     return (
         <div className='w-full'>
-            <Breadcrumbs data={[{ title: dataResult.value.attributes.title, slug: "entrance" }]} />
+            <Breadcrumbs data={[{ title: dataResult.value.attributes.title, slug: "dpo" }]} />
 
             <TypographyH1 className='font-semibold text-primary my-6'>
                 {dataResult.value.attributes.title}

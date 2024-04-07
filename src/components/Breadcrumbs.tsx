@@ -5,12 +5,13 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbP
 import { usePathname } from 'next/navigation'
 
 export default function Breadcrumbs({
-    slug,
-    title,
+    data,
     className
 }: {
-    slug?: string,
-    title?: string,
+    data?: {
+        slug: string,
+        title: string,
+    }[],
     className?: string
 }) {
 
@@ -18,11 +19,16 @@ export default function Breadcrumbs({
 
     const pathArray = pathname.split("/")
 
-    const breadcrumbs = pathArray.map(path => {
-        if (path === slug) {
+    const breadcrumbs = pathArray.map((path, index) => {
+
+        const sameSlug = data?.find(item => item.slug === path);
+
+        const pathBefore = pathArray.slice(0, index+1)
+
+        if (sameSlug) {
             return {
-                title: title,
-                href: pathname,
+                title: sameSlug.title,
+                href: pathBefore.join("/"),
             }
         } else {
             switch (path) {
@@ -30,11 +36,6 @@ export default function Breadcrumbs({
                     return {
                         title: 'Главная',
                         href: '/',
-                    }
-                case 'entrance': 
-                    return {
-                        title: 'Поступление',
-                        href: '/entrance',
                     }
                 default:
                     return {

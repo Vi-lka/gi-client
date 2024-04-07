@@ -36,7 +36,7 @@ export default function Numbers({
                 {data.items.map((item, index) => (
                     <li key={index} className='flex flex-col w-[calc(50%-1.5rem)] flex-grow [&:nth-child(odd):nth-last-of-type(1)]:items-center odd:items-end odd:text-right odd:ml-auto even:mr-auto'>
                         <h4 className='flex items-center text-primary font-bold lg:text-4xl text-3xl'>
-                            {item.number}
+                            {item.number.toLocaleString("ru-RU")}
                             {item.icon && (
                                 <DynamicReactIcon icon={item.icon} className="w-fit lg:h-6 h-5 lg:mt-2 mt-1 ml-0.5" />
                             )}

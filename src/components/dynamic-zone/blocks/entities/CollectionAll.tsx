@@ -36,7 +36,7 @@ export default function CollectionAll({
                     case "educational-programs":
                         return <EducationalProgramsAll key={index} searchParams={searchParams} />;
                     
-                    case "additional-education":
+                    case "additional-edu":
                         return <AdditionalEducationAll key={index} />;
 
                     case "lecturers":

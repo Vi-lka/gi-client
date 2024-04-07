@@ -29,7 +29,7 @@ export default function NavSheet({
               <SheetMenuItem url='/structure'>Структура</SheetMenuItem>
               <SheetMenuItem url='/education'>Обучение</SheetMenuItem>
               <SheetMenuItem url='/entrance'>Поступление</SheetMenuItem>
-              <SheetMenuItem url='/courses-dpo'>Курсы ДПО</SheetMenuItem>
+              <SheetMenuItem url='/dpo'>Курсы ДПО</SheetMenuItem>
               <SheetMenuItem url='/science'>Наука</SheetMenuItem>
               <SheetMenuItem url='/projects'>Проекты</SheetMenuItem>
               <SheetMenuItem url='/journals'>Журналы</SheetMenuItem>

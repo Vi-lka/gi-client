@@ -202,7 +202,7 @@ export type TextGridCompT = z.infer<typeof TextGridCompT>;
 
 export const CollectionAllEnum = z.enum([
   "educational-programs", 
-  "additional-education", 
+  "additional-edu", 
   "graduates",
   "lecturers",
 ]);
@@ -290,7 +290,7 @@ export const TimelineCompT = z.object({
 export type TimelineCompT = z.infer<typeof TimelineCompT>;
 
 export const NumbersItemT = z.object({
-  number: z.string(),
+  number: z.number(),
   description: z.string().nullable(),
   icon: z.string().nullable(),
 })
@@ -378,6 +378,13 @@ export type DynamicZoneT = z.infer<typeof DynamicZoneT>;
 
 
 //.........................Pages.........................//
+export const MainPageT  = z.object({
+  attributes: z.object({
+    content: DynamicZoneT.array(),
+  }),
+})
+export type MainPageT = z.infer<typeof MainPageT>;
+
 export const JustWaitPageT  = z.object({
   attributes: z.object({
     title: z.string(),
@@ -394,12 +401,13 @@ export const EntrancePageT  = z.object({
 })
 export type EntrancePageT = z.infer<typeof EntrancePageT>;
 
-export const MainPageT  = z.object({
+export const DpoPageT  = z.object({
   attributes: z.object({
+    title: z.string(),
     content: DynamicZoneT.array(),
   }),
 })
-export type MainPageT = z.infer<typeof MainPageT>;
+export type DpoPageT = z.infer<typeof DpoPageT>;
 
 export const EducationalProgramPageT  = z.object({
   id: z.string(),

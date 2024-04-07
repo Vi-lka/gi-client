@@ -70,7 +70,7 @@ export default async function JustWait({
 
     return (
         <div className='w-full'>
-            <Breadcrumbs slug='just-wait' title={dataResult.value.attributes.title} />
+            <Breadcrumbs data={[{ title: dataResult.value.attributes.title, slug: "just-wait" }]} />
 
             <TypographyH1 className='font-semibold text-primary my-6'>
                 {dataResult.value.attributes.title}

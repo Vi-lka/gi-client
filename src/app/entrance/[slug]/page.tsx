@@ -17,6 +17,37 @@ export default async function EducationalProgramPage({
     searchParams: { [key: string]: string | string[] | undefined },
 }) {
 
+    const getEntranceTitle = async (): Promise<string> => {
+        const query = /* GraphGL */ `
+        query EntranceTitle {
+          entrancePage {
+            data {
+              attributes {
+                title
+              }
+            }
+          }
+        }
+        `;
+
+        const json = await fetchData<{ 
+            data: { 
+                entrancePage: { 
+                    data: {
+                        attributes: { title: string }
+                    } | null
+                } 
+            }; 
+        }>({ 
+            query, 
+            error: "Failed to fetch Entrance Title",
+        })
+
+        if (json.data.entrancePage.data === null) notFound();
+    
+        return json.data.entrancePage.data.attributes.title;
+    };
+
     const getEducationalProgramBySlug = async (slug: string): Promise<EducationalProgramPageT> => {
         const query = /* GraphGL */ `
           query EducationalPrograms($filters: EducationalProgramFiltersInput) {
@@ -74,7 +105,18 @@ export default async function EducationalProgramPage({
     };
   
 
-    const [ dataResult ] = await Promise.allSettled([ getEducationalProgramBySlug(params.slug) ]);
+    const [ dataResult, entranceTitleResult ] = await Promise.allSettled([ 
+        getEducationalProgramBySlug(params.slug),
+        getEntranceTitle()
+    ]);
+    if (entranceTitleResult.status === "rejected") return (
+        <ErrorHandler 
+            error={entranceTitleResult.reason as unknown} 
+            place={`Entrance Title (${params.slug})`}
+            notFound
+            goBack
+        />
+    )
     if (dataResult.status === "rejected") return (
         <ErrorHandler 
             error={dataResult.reason as unknown} 
@@ -92,7 +134,10 @@ export default async function EducationalProgramPage({
 
     return (
         <div className='w-full'>
-            <Breadcrumbs title={dataResult.value.attributes.title} slug={dataResult.value.attributes.slug} />
+            <Breadcrumbs data={[
+                { title: entranceTitleResult.value, slug: "entrance" }, 
+                { title: dataResult.value.attributes.title, slug: params.slug }
+            ]}/>
 
             <TypographyH1 className='font-semibold text-primary my-6'>
                 {dataResult.value.attributes.title}
