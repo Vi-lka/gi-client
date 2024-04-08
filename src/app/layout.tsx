@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import localFont from 'next/font/local';
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
-import Hero from "@/components/header/Hero";
 import Footer from "@/components/footer/Footer";
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/react';
@@ -91,12 +90,7 @@ export default function RootLayout({
       className={`${din.variable} ${cera.variable} scroll-smooth`}
     >
       <body className='font-Din relative flex flex-col justify-between min-h-screen bg-background'>
-        <Hero />
-
-        {/* Template */}
         {children}
-        {/* Template */}
-
         <Toaster />
         <Footer />
         <SpeedInsights />

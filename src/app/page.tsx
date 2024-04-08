@@ -4,6 +4,8 @@ import { fetchData } from "@/lib/queries";
 import { notFound } from "next/navigation";
 import ErrorHandler from "@/components/errors/ErrorHandler";
 import DynamicZone from "@/components/dynamic-zone/DynamicZone";
+import Header from "@/components/header/Header";
+import Hero from "@/components/header/Hero";
 
 export const dynamic = 'force-dynamic'
 
@@ -59,12 +61,18 @@ export default async function Home({
   )
   
   return (
-    <div className='w-full -mt-16'>
-      {dataResult.value.attributes.content.map((item, index) => (
-          <section id={item.link ? item.link : undefined} key={index}>
-              <DynamicZone item={item} searchParams={searchParams} headingBig />
-          </section>
-      ))}
-    </div>
+    <>
+      <Hero />
+      <Header />
+      <main className="flex flex-col items-center gap-12 container md:w-5/6 mx-auto lg:pt-36 pt-32">
+        <div className='w-full -mt-16'>
+          {dataResult.value.attributes.content.map((item, index) => (
+              <section id={item.link ? item.link : undefined} key={index}>
+                  <DynamicZone item={item} searchParams={searchParams} headingBig />
+              </section>
+          ))}
+        </div>
+      </main>
+    </>
   );
 }
