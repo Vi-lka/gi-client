@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import MainLogo from './MainLogo';
 import About from './About';
 import Menu from './Menu';
+import { cn } from '@/lib/utils';
 
 export default function HorizontalAccordion() {
 
@@ -44,12 +45,15 @@ export default function HorizontalAccordion() {
                     key={item.id} 
                     animate={selectedItem === item.id ? "open" : "closed"}
                     variants={variantsItems}
-                    style={{ 
-                        flexGrow: item.id === 0 ? 1 : 0,
+                    style={{
                         backgroundColor: item.color,
                         cursor: item.id === selectedItem ? "auto" : "pointer",
                     }}
-                    className='relative flex w-fit items-center rounded-lg text-background overflow-hidden cursor-pointer shadow-inner'
+                    className={cn(
+                        'relative flex w-fit items-center rounded-lg text-background overflow-hidden cursor-pointer shadow-inner',
+                        selectedItem === item.id ? "w-fit" : "xl:w-[60px] lg:w-[56px] sm:w-[52px] w-[44px]", // firefox width
+                        item.id === 0 ? "flex-grow" : "flex-grow-0",
+                    )}
                     onClick={() => setSelectedItem(item.id)}
                 >
                     <h1 
