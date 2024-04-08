@@ -1,7 +1,6 @@
 import { notFound } from "next/navigation";
 import type { EducationalProgramTypeEnum} from "./types";
-import { GraduatesT } from "./types";
-import { EducationalProgramsT } from "./types";
+import { EducationalProgramsT, DpoCoursesT, GraduatesT } from "./types";
 
 export async function fetchData<T>({
   query,
@@ -44,7 +43,7 @@ export async function fetchData<T>({
 }
 
 //.........................Educational Programs.........................//
-export const getEducationalPrograms= async ({
+export const getEducationalPrograms = async ({
   page,
   pageSize,
   type = "",
@@ -128,6 +127,80 @@ export const getEducationalPrograms= async ({
 
   return educationalPrograms;
 };
+
+//.........................Dpo Courses.........................//
+export const getDpoCourses = async ({
+  page,
+  pageSize,
+  sort = "order:asc",
+  search,
+}: {
+  page?: number;
+  pageSize?: number;
+  sort?: string;
+  search?: string;
+}): Promise<DpoCoursesT> => {
+  const query = /* GraphGL */ `
+    query DpoCourses($filters: DpoCourseFiltersInput, $sort: [String], $pagination: PaginationArg) {
+      dpoCourses(filters: $filters, sort: $sort, pagination: $pagination) {
+        meta {
+          pagination {
+            total
+          }
+        }
+        data {
+          id
+          attributes {
+            title
+            slug
+            dateStart
+            dateEnd
+            location
+            hours
+            price
+            image {
+              data {
+                attributes {
+                  url
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  `;
+  
+  const json = await fetchData<{ data: { dpoCourses: DpoCoursesT }; }>({ 
+    query, 
+    error: "Failed to fetch Dpo Courses", 
+    variables: {
+      sort,
+      pagination: { page, pageSize },
+      filters: {
+        or: [{
+          title: {
+            containsi: search
+          }
+        }]
+      }
+    }
+  })
+  
+  // await new Promise((resolve) => setTimeout(resolve, 2000))
+  
+  if (
+    json.data.dpoCourses.meta.pagination.total === 0 ||
+    json.data.dpoCourses.data.length === 0
+  ) {
+    notFound();
+  }
+
+  const dpoCourses = DpoCoursesT.parse(json.data.dpoCourses);
+
+  return dpoCourses;
+};
+
 
 //.........................Graduates.........................//
 export const getGraduates= async ({

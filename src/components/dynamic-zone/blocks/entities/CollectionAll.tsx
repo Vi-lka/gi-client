@@ -1,7 +1,7 @@
 import type { CollectionAllCompT } from '@/lib/types'
 import React from 'react'
 import EducationalProgramsAll from './EducationalProgramsAll';
-import AdditionalEducationAll from './AdditionalEducationAll';
+import DpoCoursesAll from './DpoCoursesAll';
 import LecturersAll from './LecturersAll';
 import GraduatesAll from './GraduatesAll';
 import { cn } from '@/lib/utils';
@@ -36,8 +36,8 @@ export default function CollectionAll({
                     case "educational-programs":
                         return <EducationalProgramsAll key={index} searchParams={searchParams} />;
                     
-                    case "additional-edu":
-                        return <AdditionalEducationAll key={index} />;
+                    case "dpo-courses":
+                        return <DpoCoursesAll key={index} searchParams={searchParams} />;
 
                     case "lecturers":
                         return <LecturersAll key={index} />;

@@ -2,6 +2,7 @@ import ImageComp from '@/components/ImageComp'
 import { Card, CardContent } from '@/components/ui/card'
 import { CarouselItem } from '@/components/ui/carousel'
 import type { EmployeeSingleT } from '@/lib/types'
+import { cn } from '@/lib/utils'
 import React from 'react'
 
 export default function EmployeesItem({
@@ -10,7 +11,7 @@ export default function EmployeesItem({
     arr: EmployeeSingleT[]
 }) {
     return (
-        <CarouselItem className='md:basis-1/2 lg:pl-8 pl-4 grid grid-rows-3 gap-8'>
+        <CarouselItem className='md:basis-1/2 lg:pl-8 pl-4 grid lg:grid-rows-3 sm:grid-rows-2 grid-rows-1 gap-8'>
             {arr.map(employee => (
                 <Card key={"employee" + employee.id} className='h-full border-none shadow-md rounded-3xl'>
                     <CardContent className="w-full h-full flex lg:flex-row flex-col lg:items-center xl:gap-8 gap-6 p-6">
@@ -29,24 +30,18 @@ export default function EmployeesItem({
                                 <p className='font-semibold xl:text-sm text-xs'>{employee.attributes.post}</p>
                             </div>
                             <p>{employee.attributes.description}</p>
-                            <p className='inline-flex flex-wrap'>
-                                {employee.attributes.hashtags.data.map((hashtag) => (
-                                    <>
-                                        <span
-                                            key={hashtag.attributes.slug}
-                                            className="text-accent cursor-pointer hover:underline transition-all"
-                                        >
+                            <div className='inline-flex flex-wrap'>
+                                {employee.attributes.hashtags.data.map((hashtag, index) => (
+                                    <p key={hashtag.attributes.slug}>
+                                        <span className="text-accent cursor-pointer hover:underline transition-all">
                                             #{hashtag.attributes.title}
                                         </span>
-                                        <span 
-                                            key={hashtag.attributes.slug + "-span"}
-                                            className='last:hidden'
-                                        >
+                                        <span className={cn(index === employee.attributes.hashtags.data.length - 1 ? "hidden" : "")}>
                                             ,&nbsp;
                                         </span>
-                                    </>
+                                    </p>
                                 ))}
-                            </p>
+                            </div>
                         </div>
                     </CardContent>
                 </Card>

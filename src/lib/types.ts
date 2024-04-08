@@ -97,6 +97,34 @@ export type EducationalProgramsT = z.infer<typeof EducationalProgramsT>;
 
 
 
+//.........................Dpo Courses.........................//
+export const DpoCoursesSingleT  = z.object({
+  id: z.string(),
+  attributes: z.object({
+    slug: z.string(),
+    title: z.string(),
+    dateStart: z.coerce.date().nullable(),
+    dateEnd: z.coerce.date().nullable(),
+    location: z.string().nullable(),
+    hours: z.number().nullable(),
+    price: z.string().nullable(),
+    image: ImageT,
+  }),
+})
+export type DpoCoursesSingleT = z.infer<typeof DpoCoursesSingleT>;
+
+export const DpoCoursesT  = z.object({
+    meta: z.object({
+        pagination: z.object({
+          total: z.number(),
+        }),
+    }),
+    data: DpoCoursesSingleT.array(),
+})
+export type DpoCoursesT = z.infer<typeof DpoCoursesT>;
+
+
+
 
 //.........................Employees.........................//
 export const EmployeeSingleT  = z.object({
@@ -202,7 +230,7 @@ export type TextGridCompT = z.infer<typeof TextGridCompT>;
 
 export const CollectionAllEnum = z.enum([
   "educational-programs", 
-  "additional-edu", 
+  "dpo-courses", 
   "graduates",
   "lecturers",
 ]);

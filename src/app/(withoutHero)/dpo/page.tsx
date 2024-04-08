@@ -5,7 +5,7 @@ import { TypographyH1 } from '@/components/typography';
 import { dynamicContentQuery } from '@/lib/dynamicContentQuery';
 import { fetchData } from '@/lib/queries';
 import { DpoPageT } from '@/lib/types';
-import { Link } from 'lucide-react';
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import React from 'react'
 
