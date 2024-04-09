@@ -49,8 +49,8 @@ export const EmailTemplate = ({
             <Section className="mt-[32px]">
               <Img
                 src={`${baseUrl}/hi-logo-full.png`}
-                width="40"
-                height="37"
+                width="174"
+                height="70"
                 alt="HI Icon"
                 className="my-0 mx-auto"
               />
