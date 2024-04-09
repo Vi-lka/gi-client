@@ -195,6 +195,7 @@ export const dynamicContentQuery = `
     colorDark
     list {
       title
+      description
       iconCustom
       iconReact
       image {
@@ -212,6 +213,7 @@ export const dynamicContentQuery = `
         }
       }
     }
+    largeTitles
     buttonTitle
     buttonLink
     inNewTab

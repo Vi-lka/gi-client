@@ -2,63 +2,35 @@
 
 import React from 'react'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Form, FormControl, FormField, FormItem, FormMessage } from '../ui/form'
-import { Input } from '../ui/input'
-import { Button } from '../ui/button'
 import { cn } from '@/lib/utils'
-import { DialogClose } from '../ui/dialog'
-
-const phoneRegex = new RegExp(
-    /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/
-);
-
-const formSchema = z.object({
-    username: z.string().min(2, {
-      message: "Введите не менее 2х символов",
-    }),
-    email: z.string().email({ message: "Не верно введен email" }),
-    phone: z.string().regex(phoneRegex, 'Не верно введен номер телефона'),
-  })
+import SubmitButton from './SubmitButton'
+import { InputField } from './InputField'
+import type { z } from 'zod'
+import { ContactFormT } from "@/lib/types"
 
 export default function ContactForm({
-    dialog,
+    handleAction,
     className,
 }: {
-    dialog?: boolean
-    className?: string
+    handleAction: (formData: FormData) => void,
+    className?: string,
 }) {
-
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
+    const form = useForm<z.infer<typeof ContactFormT>>({
+        resolver: zodResolver(ContactFormT),
         defaultValues: {
             username: "",
             email: "",
-            phone: "",
+            phone: ""
         },
         mode: 'onBlur',
     })
 
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        console.log(values)
-    }
-
-    const sendButton = (
-        <Button 
-            type="submit"
-            disabled={!(form.formState.isDirty && form.formState.isValid) || form.formState.isSubmitting}
-            className='px-8 uppercase rounded-3xl lg:float-start float-end'
-        >
-            Отправить
-        </Button>
-    )
-
     return (
         <Form {...form}>
             <form 
-                // eslint-disable-next-line @typescript-eslint/no-misused-promises
-                onSubmit={form.handleSubmit(onSubmit)} 
+                action={handleAction}
                 className={cn("space-y-6", className)}
             >
                 <FormField
@@ -67,7 +39,7 @@ export default function ContactForm({
                     render={({ field }) => (
                         <FormItem>
                             <FormControl>
-                                <Input 
+                                <InputField 
                                     placeholder="ФИО"
                                     disabled={form.formState.isSubmitting}
                                     className='bg-input rounded-3xl border-border shadow-sm'
@@ -84,7 +56,7 @@ export default function ContactForm({
                     render={({ field }) => (
                         <FormItem>
                             <FormControl>
-                                <Input 
+                                <InputField 
                                     placeholder="E-mail"
                                     disabled={form.formState.isSubmitting}
                                     className='bg-input rounded-3xl border-border shadow-sm'
@@ -101,7 +73,7 @@ export default function ContactForm({
                     render={({ field }) => (
                         <FormItem>
                             <FormControl>
-                                <Input 
+                                <InputField 
                                     placeholder="Телефон"
                                     disabled={form.formState.isSubmitting}
                                     className='bg-input rounded-3xl border-border shadow-sm'
@@ -112,14 +84,12 @@ export default function ContactForm({
                         </FormItem>
                     )}
                 />
-                {dialog 
-                    ? (
-                        <DialogClose asChild>
-                            {sendButton}
-                        </DialogClose>
-                    )
-                    : sendButton
-                }
+                <SubmitButton 
+                    disabled={!(form.formState.isDirty && form.formState.isValid) || form.formState.isSubmitting}
+                    className='px-8 lg:float-start float-end'
+                >
+                    Отправить
+                </SubmitButton>
             </form>
         </Form>
     )

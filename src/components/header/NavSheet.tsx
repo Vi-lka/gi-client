@@ -7,7 +7,7 @@ import { ScrollArea } from '../ui/scroll-area'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
-import { TbMenuDeep } from "react-icons/tb";
+import { CgMenuRight } from "react-icons/cg";
 
 export default function NavSheet({
   className
@@ -18,7 +18,7 @@ export default function NavSheet({
   return (
     <Sheet>
       <SheetTrigger>
-        <TbMenuDeep className={cn("h-[2.5rem] w-[2.5rem]", className)} />
+        <CgMenuRight className={cn("h-[2.5rem] w-[2.5rem]", className)} />
       </SheetTrigger>
 
       <SheetContent>

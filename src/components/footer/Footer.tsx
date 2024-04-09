@@ -5,11 +5,11 @@ import { notFound } from 'next/navigation';
 import React from 'react'
 import ErrorHandler from '../errors/ErrorHandler';
 import { TypographyH2 } from '../typography';
-import ContactForm from '../forms/ContactForm';
 import IconCustom from '../IconCustom';
 import DynamicReactIcon from '../DynamicReactIcon';
 import ImageComp from '../ImageComp';
 import Link from 'next/link';
+import FormFooter from './FormFooter';
 
 export const revalidate = 3600;
 
@@ -91,7 +91,7 @@ export default async function Footer() {
 
                 <div className="flex lg:flex-row flex-col items-start justify-between xl:gap-28 lg:gap-20 sm:gap-12 gap-8 flex-wrap">
                     <section className="lg:w-1/4 w-full">
-                        <ContactForm className='w-full' />
+                        <FormFooter formTitle={dataResult.value.title} formDescription={dataResult.value.subtitle} />
                     </section>
 
                     <section className='flex-1 lg:w-auto w-full'>

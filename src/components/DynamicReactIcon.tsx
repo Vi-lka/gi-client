@@ -127,6 +127,12 @@ const DynamicReactIcon = ({
       async () => {
         const mod = await import("react-icons/hi");
         // @ts-expect-error
+        if (!mod[icon]) {
+          const mod2 = await import("react-icons/hi2");
+        // @ts-expect-error
+          return mod2[icon]
+        }
+        // @ts-expect-error
         return mod[icon];
       },
       { loading: () => <Loader2 className="animate-spin" /> }

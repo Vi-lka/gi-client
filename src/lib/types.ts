@@ -1,6 +1,25 @@
 import { z } from "zod";
 
 
+//.........................FORMS.........................//
+const phoneRegex = new RegExp(
+  /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/
+);
+
+export const ContactFormT = z.object({
+  place: z.string().optional(),
+  path: z.string().optional(),
+  username: z.string().min(2, {
+    message: "Введите не менее 2х символов",
+  }),
+  email: z.string().email({ message: "Не верно введен email" }),
+  phone: z.string().regex(phoneRegex, 'Не верно введен номер телефона'),
+  formTitle: z.string().nullable().optional(),
+  formDescription: z.string().nullable().optional(),
+})
+export type ContactFormT = z.infer<typeof ContactFormT>;
+
+
 
 
 //.........................IMAGES.........................//
@@ -356,6 +375,7 @@ export type FilesCompT = z.infer<typeof FilesCompT>;
 
 export const FormBlockItemT = z.object({
   title: z.string(),
+  description: z.string().nullable(),
   iconCustom: CustomIconEnum.nullable(),
   iconReact: z.string().nullable(),
   image: ImageT,
@@ -370,6 +390,7 @@ export const FormBlockCompT = z.object({
   image: ImageT,
   imageDark: ImageT,
   list: FormBlockItemT.array(),
+  largeTitles: z.boolean().nullable(),
   color: z.string().nullable(),
   colorDark: z.string().nullable(),
   buttonTitle: z.string().nullable(),
@@ -429,14 +450,6 @@ export const EntrancePageT  = z.object({
 })
 export type EntrancePageT = z.infer<typeof EntrancePageT>;
 
-export const DpoPageT  = z.object({
-  attributes: z.object({
-    title: z.string(),
-    content: DynamicZoneT.array(),
-  }),
-})
-export type DpoPageT = z.infer<typeof DpoPageT>;
-
 export const EducationalProgramPageT  = z.object({
   id: z.string(),
   attributes: z.object({
@@ -451,6 +464,30 @@ export const EducationalProgramPageT  = z.object({
   }),
 })
 export type EducationalProgramPageT = z.infer<typeof EducationalProgramPageT>;
+
+export const DpoPageT  = z.object({
+  attributes: z.object({
+    title: z.string(),
+    content: DynamicZoneT.array(),
+  }),
+})
+export type DpoPageT = z.infer<typeof DpoPageT>;
+
+export const DpoCoursePageT  = z.object({
+  id: z.string(),
+  attributes: z.object({
+    slug: z.string(),
+    title: z.string(),
+    dateStart: z.coerce.date().nullable(),
+    dateEnd: z.coerce.date().nullable(),
+    location: z.string().nullable(),
+    hours: z.number().nullable(),
+    price: z.string().nullable(),
+    image: ImageT,
+    content: DynamicZoneT.array(),
+  }),
+})
+export type DpoCoursePageT = z.infer<typeof DpoCoursePageT>;
 
 
 
