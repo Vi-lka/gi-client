@@ -26,7 +26,7 @@ interface EmailTemplateProps {
 
 const baseUrl = process.env.NEXT_PUBLIC_URL
   ? `${process.env.NEXT_PUBLIC_URL}`
-  : "https://hi.sfu-kras.ru/";
+  : "https://hi.sfu-kras.ru";
 
 export const EmailTemplate = ({
   place,
@@ -48,7 +48,7 @@ export const EmailTemplate = ({
           <Container className="border border-solid border-[#eaeaea] rounded my-[40px] mx-auto p-[20px] max-w-[465px]">
             <Section className="mt-[32px]">
               <Img
-                src={`${baseUrl}/hi-icon.svg`}
+                src={`${baseUrl}/hi-logo-full.png`}
                 width="40"
                 height="37"
                 alt="HI Icon"
