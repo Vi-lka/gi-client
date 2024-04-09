@@ -373,6 +373,20 @@ export const FilesCompT = z.object({
 })
 export type FilesCompT = z.infer<typeof FilesCompT>;
 
+export const AccordionItemT = z.object({
+  title: z.string(),
+  text: z.any(),
+})
+export type AccordionItemT = z.infer<typeof AccordionItemT>;
+export const AccordionCompT = z.object({
+  __typename: z.literal("ComponentContentAccordion"),
+  title: z.string().nullable(),
+  link: z.string().nullable(),
+  linkTitle: z.string().nullable(),
+  items: AccordionItemT.array(),
+})
+export type AccordionCompT = z.infer<typeof AccordionCompT>;
+
 export const FormBlockItemT = z.object({
   title: z.string(),
   description: z.string().nullable(),
@@ -419,6 +433,7 @@ export const DynamicZoneT = z.discriminatedUnion("__typename", [
   TimelineCompT,
   NumbersCompT,
   FilesCompT,
+  AccordionCompT,
   FormBlockCompT,
 ])
 export type DynamicZoneT = z.infer<typeof DynamicZoneT>;

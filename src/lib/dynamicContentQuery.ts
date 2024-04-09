@@ -173,6 +173,15 @@ export const dynamicContentQuery = `
       }
     }
   }
+  ... on ComponentContentAccordion {
+    title
+    link
+    linkTitle
+    items {
+      title
+      text
+    }
+  }
   ... on ComponentContentFormBlock {
     title
     link

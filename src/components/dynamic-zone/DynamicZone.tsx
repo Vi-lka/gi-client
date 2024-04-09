@@ -15,6 +15,7 @@ import Files from './blocks/Files';
 import FormBlock from './blocks/form-block/FormBlock';
 import { ClientHydration } from '../ClientHydration';
 import SliderLoading from '../loadings/SliderLoading';
+import AccordionBlock from './blocks/AccordionBlock';
 
 export default function DynamicZone({
   item,
@@ -41,13 +42,6 @@ export default function DynamicZone({
     
     case "ComponentContentContacts":
       return <ContactsBlock data={item} headingBig={headingBig} className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} />;
-
-    case "ComponentContentSliderEntity":
-      return (
-        <ClientHydration fallback={<SliderLoading className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} />}>
-          <SliderEntity data={item} headingBig={headingBig} className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} />
-        </ClientHydration>
-      );
     
     case "ComponentContentSliderPhotos":
       return <SliderPhotos data={item} headingBig={headingBig} className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} />;
@@ -64,8 +58,18 @@ export default function DynamicZone({
     case "ComponentContentFiles":
       return <Files data={item} headingBig={headingBig} className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} />;
 
+    case "ComponentContentAccordion":
+      return <AccordionBlock data={item} headingBig={headingBig} className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} />
+
     case "ComponentContentFormBlock":
       return <FormBlock data={item} headingBig={headingBig} className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} />;
+
+    case "ComponentContentSliderEntity":
+      return (
+        <ClientHydration fallback={<SliderLoading className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} />}>
+          <SliderEntity data={item} headingBig={headingBig} className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} />
+        </ClientHydration>
+      );
       
     default:
       return null;
