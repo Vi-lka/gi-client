@@ -1,3 +1,4 @@
+import Anchors from '@/components/Anchors';
 import Breadcrumbs from '@/components/Breadcrumbs'
 import DynamicZone from '@/components/dynamic-zone/DynamicZone';
 import ErrorHandler from '@/components/errors/ErrorHandler';
@@ -5,7 +6,6 @@ import { TypographyH1 } from '@/components/typography'
 import { dynamicContentQuery } from '@/lib/dynamicContentQuery';
 import { fetchData } from '@/lib/queries';
 import { EducationalProgramPageT } from '@/lib/types';
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import React from 'react'
 
@@ -128,12 +128,6 @@ export default async function EducationalProgramPage({
         />
     )
 
-    const anchors = dataResult.value.attributes.content.map(item => {
-        const label = item.linkTitle
-        const link = item.link !== null ? "#" + item.link : null
-        return { label, link }
-    })
-
     return (
         <div className='w-full'>
             <Breadcrumbs data={[
@@ -160,19 +154,7 @@ export default async function EducationalProgramPage({
                 </div>
             </div>
 
-            <div className='flex flex-wrap gap-y-3 lg:gap-x-6 gap-x-3 mt-6'>
-                {anchors.map((anchor, index) => {
-                    if (typeof anchor.label === "string" && typeof anchor.link === "string") return (
-                        <Link 
-                            key={index}
-                            href={anchor.link}
-                            className="h-fit text-sm 2xl:py-2 py-1 2xl:px-6 md:px-3 group inline-flex w-max items-center justify-center rounded-full bg-card text-primary px-4 font-semibold transition-colors hover:bg-primary hover:text-background focus:bg-primary focus:text-background focus:outline-none"
-                        >
-                            {anchor.label}
-                        </Link>
-                    )
-                })}
-            </div>
+            <Anchors data={dataResult.value.attributes.content} />
 
             {dataResult.value.attributes.content.map((item, index) => (
                 <section id={item.link ? item.link : undefined} key={index}>
