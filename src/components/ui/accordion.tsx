@@ -2,9 +2,9 @@
 
 import * as React from "react"
 import * as AccordionPrimitive from "@radix-ui/react-accordion"
-import { ChevronDownIcon } from "@radix-ui/react-icons"
 
 import { cn } from "@/lib/utils"
+import { ChevronDownIcon } from "lucide-react"
 
 const Accordion = AccordionPrimitive.Root
 
@@ -14,7 +14,7 @@ const AccordionItem = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <AccordionPrimitive.Item
     ref={ref}
-    className={cn("border-b-2 pb-0 border-transparent hover:pb-3 hover:border-foreground [&[data-state=open]]:pb-3 transition-all duration-300", className)}
+    className={cn("pb-0 border-b border-transparent hover:border-muted-foreground hover:pb-3 [&[data-state=open]]:border-muted-foreground [&[data-state=open]]:pb-3 transition-all duration-300", className)}
     {...props}
   />
 ))
@@ -28,13 +28,14 @@ const AccordionTrigger = React.forwardRef<
     <AccordionPrimitive.Trigger
       ref={ref}
       className={cn(
-        "flex flex-1 items-center justify-between py-2 text-sm font-medium [&[data-state=open]>svg]:rotate-180",
+        "flex flex-1 items-center justify-between py-2 text-sm font-medium",
+        "[&[data-state=open]>svg]:rotate-180",
         className
       )}
       {...props}
     >
       {children}
-      <ChevronDownIcon className="h-6 w-6 shrink-0 text-muted-foreground transition-transform duration-300" />
+      <ChevronDownIcon className="h-7 w-7 bg-primary p-0.5 rounded-3xl shrink-0 object-cover text-background transition-all duration-300" />
     </AccordionPrimitive.Trigger>
   </AccordionPrimitive.Header>
 ))
