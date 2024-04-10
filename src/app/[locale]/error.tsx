@@ -8,14 +8,19 @@ import { useEffect } from 'react'
 import * as Sentry from "@sentry/nextjs";
 import { ToastAction } from '@/components/ui/toast'
 import { useRouter } from '@/navigation'
+import { unstable_setRequestLocale } from 'next-intl/server'
  
 export default function Error({
   error,
   reset,
+  params: { locale },
 }: {
   error: Error & { digest?: string }
-  reset: () => void
+  reset: () => void,
+  params: { locale: string },
 }) {
+
+    unstable_setRequestLocale(locale);
 
     const { toast } = useToast();
     const router = useRouter();

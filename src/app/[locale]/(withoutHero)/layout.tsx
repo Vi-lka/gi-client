@@ -1,11 +1,16 @@
 import Header from '@/components/header/Header';
+import { unstable_setRequestLocale } from 'next-intl/server';
 import React from 'react'
 
 export default function Layout({
+    params: { locale },
     children,
 }: Readonly<{
+    params: { locale: string },
     children: React.ReactNode;
 }>) {
+    unstable_setRequestLocale(locale);
+
     return (
         <div className=''>
             <Header />
