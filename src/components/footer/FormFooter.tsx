@@ -11,9 +11,17 @@ import { usePathname } from '@/navigation';
 export default function FormFooter({
     formTitle,
     formDescription,
+    sendMessage,
 }: {
     formTitle: string | null,
     formDescription: string | null,
+    sendMessage: {
+        success: {
+            title: string,
+            description: string
+        },
+        error: string
+    }
 }) {
     const { toast } = useToast();
 
@@ -27,20 +35,20 @@ export default function FormFooter({
     useEffect(() => {
         if (sendEmailState.success) {
             toast({
-                title: "Успешно!",
-                description: "Email отправлен.",
+                title: sendMessage.success.title,
+                description: sendMessage.success.description,
                 className: "font-Din text-background dark:text-foreground bg-lime-600 dark:bg-lime-800 border-none",
             });
         }
         if (sendEmailState.error) {
             toast({
                 variant: "destructive",
-                title: "Oшибка!",
+                title: sendMessage.error,
                 description: <p>{getShortDescription(sendEmailState.error, 50)}</p>,
                 className: "font-Din",
             });
         }
-    }, [sendEmailState.error, sendEmailState.success, toast])
+    }, [sendEmailState.error, sendEmailState.success, toast, sendMessage])
 
     const handleAction = (formData: FormData) => {
         sendEmailAction({
