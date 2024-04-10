@@ -1,5 +1,3 @@
-export const dynamic = 'force-dynamic'
-
 import Header from '@/components/header/Header';
 import { Button } from '@/components/ui/button'
 import { Link } from '@/navigation';

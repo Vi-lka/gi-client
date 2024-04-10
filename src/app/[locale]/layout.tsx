@@ -4,8 +4,8 @@ import { Toaster } from "@/components/ui/toaster";
 import Footer from "@/components/footer/Footer";
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/react';
-import { locales } from "@/navigation";
-import { unstable_setRequestLocale } from "next-intl/server";
+
+export const dynamic = 'force-dynamic'
 
 const din = localFont({
   variable: "--Din",
@@ -79,10 +79,6 @@ export const metadata: Metadata = {
   description: "Поступай в Гуманитарный!",
 };
 
-export function generateStaticParams() {
-  return locales.map((locale) => ({locale}));
-}
-
 export default function RootLayout({
   children,
   params: { locale },
@@ -90,9 +86,6 @@ export default function RootLayout({
   children: React.ReactNode;
   params: { locale: string };
 }>) {
-
-  unstable_setRequestLocale(locale);
-
   return (
     <html
       lang={locale}
