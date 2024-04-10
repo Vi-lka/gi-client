@@ -7,7 +7,7 @@ import { CircleAlert, Repeat, Undo2 } from 'lucide-react'
 import { useEffect } from 'react'
 import * as Sentry from "@sentry/nextjs";
 import { ToastAction } from '@/components/ui/toast'
-import { useRouter } from 'next/navigation'
+import { useRouter } from '@/navigation'
  
 export default function Error({
   error,

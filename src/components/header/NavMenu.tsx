@@ -1,11 +1,12 @@
 "use client"
 
 import React from 'react'
-import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, navigationMenuTriggerStyle } from '../ui/navigation-menu'
-import { usePathname } from 'next/navigation'
-import Link from 'next/link'
+import { NavigationMenu, NavigationMenuItem, NavigationMenuList, navigationMenuTriggerStyle } from '../ui/navigation-menu'
 import { cn } from '@/lib/utils'
 import Image from 'next/image'
+import { Link } from '@/navigation'
+import { useSelectedLayoutSegment } from 'next/navigation'
+import MoreMenu from './MoreMenu'
 
 export default function NavMenu({
   onClick,
@@ -31,14 +32,19 @@ export default function NavMenu({
             className='object-contain w-10'
           />
         </Link>
-        <NavMenuItem url='/info'>Сведения</NavMenuItem>
-        <NavMenuItem url='/structure'>Структура</NavMenuItem>
-        <NavMenuItem url='/education'>Обучение</NavMenuItem>
-        <NavMenuItem url='/entrance'>Поступление</NavMenuItem>
-        <NavMenuItem url='/dpo'>Курсы ДПО</NavMenuItem>
-        <NavMenuItem url='/science'>Наука</NavMenuItem>
-        <NavMenuItem url='/projects'>Проекты</NavMenuItem>
-        <NavMenuItem url='/journals'>Журналы</NavMenuItem>
+
+        <NavMenuItem href='/info'>Сведения</NavMenuItem>
+        <NavMenuItem href='/structure'>Структура</NavMenuItem>
+        <NavMenuItem href='/education'>Обучение</NavMenuItem>
+        <NavMenuItem href='/entrance'>Поступление</NavMenuItem>
+        <NavMenuItem href='/dpo'>Курсы ДПО</NavMenuItem>
+        <NavMenuItem href='/science'>Наука</NavMenuItem>
+        <NavMenuItem href='/projects'>Проекты</NavMenuItem>
+        <NavMenuItem href='/journals'>Журналы</NavMenuItem>
+
+        <div className='absolute 2xl:-right-20 -right-14 h-full flex items-center'>
+          <MoreMenu />
+        </div>
       </NavigationMenuList>
     </NavigationMenu>
   )
@@ -46,38 +52,30 @@ export default function NavMenu({
 
 function NavMenuItem({
   children,
-  url,
+  href,
   blank,
 }: {
   children: React.ReactNode,
-  url: string,
+  href: string,
   blank?: boolean,
 }) {
-  const pathName = usePathname();
-
-  // Remove query parameters
-  const pathWithoutQuery = pathName.split("?")[0];
-
-  // Ex:"/my/nested/path" --> ["my", "nested", "path"]
-  const pathNestedRoutes = pathWithoutQuery
-    .split("/")
-    .filter((v) => v.length > 0);
-
-  const pathCurrentPage = "/" + pathNestedRoutes[0];
+  const selectedLayoutSegment = useSelectedLayoutSegment();
+  const pathname = selectedLayoutSegment ? `/${selectedLayoutSegment}` : '/';
+  const isActive = pathname === href;
 
   return (
       <NavigationMenuItem className='!ml-0'>
-          <Link href={url} legacyBehavior passHref>
-              <NavigationMenuLink
-                  className={cn(
-                    navigationMenuTriggerStyle(),
-                    "h-fit lg:text-base text-sm 2xl:py-2 md:py-1 2xl:px-6 md:px-3 uppercase"
-                  )}
-                  active={pathCurrentPage === url}
-                  target={blank ? "_blank" : "_self"}
-              >
-                  {children}
-              </NavigationMenuLink>
+          <Link 
+            aria-current={isActive ? 'page' : undefined}
+            href={href}
+            target={blank ? "_blank" : "_self"}
+            // style={{fontWeight: isActive ? 'bold' : 'normal'}}
+            className={cn(
+              navigationMenuTriggerStyle(),
+              "h-fit lg:text-base text-sm 2xl:py-2 md:py-1 2xl:px-6 md:px-3 uppercase"
+            )}
+          >
+            {children}
           </Link>
       </NavigationMenuItem>
   );

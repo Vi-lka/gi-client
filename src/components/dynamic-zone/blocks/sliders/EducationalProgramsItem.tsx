@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { CarouselItem } from '@/components/ui/carousel'
 import type { EducationalProgramSingleT } from '@/lib/types'
-import Link from 'next/link'
+import { Link } from '@/navigation'
 import React from 'react'
 
 export default function EducationalProgramsItem({

@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from './ui/breadcrumb'
-import { usePathname } from 'next/navigation'
+import { usePathname } from '@/navigation'
 
 export default function Breadcrumbs({
     data,

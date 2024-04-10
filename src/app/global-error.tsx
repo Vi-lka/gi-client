@@ -7,7 +7,7 @@ import { CircleAlert, Repeat, Undo2 } from 'lucide-react'
 import { useEffect } from 'react'
 import * as Sentry from "@sentry/nextjs";
 import { ToastAction } from '@/components/ui/toast'
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/router'
  
 export default function GlobalError({
   error,
@@ -27,7 +27,7 @@ export default function GlobalError({
     
         toast({
           variant: "destructive",
-          title: "Ошибка! Что-то пошло не так:",
+          title: "Error!",
           description: (
             <p>
               {getShortDescription(error.message)}
@@ -37,7 +37,7 @@ export default function GlobalError({
           action: (
             <ToastAction
               className="px-2 py-6 text-sm"
-              altText={"Попробовать снова"}
+              altText={"Undo"}
               onClick={() => reset()}
             >
               <Repeat className="h-8 w-8" />
@@ -54,7 +54,7 @@ export default function GlobalError({
                   <CircleAlert size={36} />
 
                   <h2 className="font-Cera text-3xl font-bold uppercase">
-                      Ошибка, Что-то пошло не так :(
+                      Error
                   </h2>
                       
                   <p className="text-sm font-normal">
@@ -66,7 +66,6 @@ export default function GlobalError({
                   className="w-full max-w-[240px] p-6 uppercase hover:bg-background hover:text-primary rounded-3xl"
                   onClick={() => router.back()}
               >
-                  Вернуться
                   <Undo2 className="ml-1" size={18} />
               </Button>
           </div>

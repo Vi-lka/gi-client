@@ -1,8 +1,7 @@
 "use client"
 
 import React from 'react'
-import Link from 'next/link'
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 import {
     ChevronLeftIcon,
     ChevronRightIcon,
@@ -14,6 +13,7 @@ import {
 import { cn } from '@/lib/utils'
 import { Button } from './ui/button';
 import { Input } from './ui/input';
+import { Link, usePathname, useRouter } from '@/navigation';
 
 export default function PaginationControls({ 
     length,

@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { useRouter } from "next/navigation";
 import { CircleAlert, Repeat, Undo2 } from "lucide-react";
 import type { ZodIssue } from "zod";
 import { useToast } from "../ui/use-toast";
@@ -10,6 +9,7 @@ import { getShortDescription } from "@/lib/utils";
 import { Button } from "../ui/button";
 
 import * as Sentry from "@sentry/nextjs";
+import { useRouter } from "@/navigation";
 
 export default function ErrorToast({
   error,

@@ -5,7 +5,7 @@ import Image from "next/image";
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
 import { Button } from '../ui/button';
-import Link from 'next/link';
+import { Link } from '@/navigation';
 
 export default function About({
     selectedItem

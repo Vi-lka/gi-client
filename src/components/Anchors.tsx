@@ -1,5 +1,5 @@
 import type { DynamicZoneT } from '@/lib/types'
-import Link from 'next/link'
+import { Link } from '@/navigation'
 import React from 'react'
 
 export default function Anchors({

@@ -3,7 +3,6 @@ import ErrorHandler from '@/components/errors/ErrorHandler';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { getDpoCourses } from '@/lib/queries';
-import Link from 'next/link';
 import React from 'react'
 import { format } from "date-fns";
 import { ru } from "date-fns/locale";
@@ -11,6 +10,7 @@ import { declOfNum } from '@/lib/utils';
 import { CalendarDays, Clock3, MapPin } from 'lucide-react';
 import { MdOutlineCurrencyRuble } from 'react-icons/md';
 import PaginationControls from '@/components/PaginationControls';
+import { Link } from '@/navigation';
 
 const DEFAULT_PAGE_SIZE = 12;
 

@@ -1,9 +1,9 @@
 "use client";
 
 import React from "react";
-import { useRouter } from "next/navigation";
 import { SearchX, Undo2 } from "lucide-react";
 import { Button } from "../ui/button";
+import { useRouter } from "@/navigation";
 
 export default function NotFound({
   goBack,

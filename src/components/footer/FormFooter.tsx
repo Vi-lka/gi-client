@@ -3,10 +3,10 @@
 import React, { useEffect } from 'react'
 import ContactForm from '../forms/ContactForm'
 import { useToast } from '../ui/use-toast';
-import { usePathname } from 'next/navigation';
 import { useFormState } from 'react-dom';
-import { sendEmail } from '@/app/actions';
+import { sendEmail } from '@/app/[locale]/actions';
 import { getShortDescription } from '@/lib/utils';
+import { usePathname } from '@/navigation';
 
 export default function FormFooter({
     formTitle,

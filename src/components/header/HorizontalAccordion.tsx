@@ -50,7 +50,7 @@ export default function HorizontalAccordion() {
                         cursor: item.id === selectedItem ? "auto" : "pointer",
                     }}
                     className={cn(
-                        'relative flex w-fit items-center rounded-lg text-background overflow-hidden cursor-pointer shadow-inner',
+                        'relative flex w-fit items-center rounded-2xl text-background overflow-hidden cursor-pointer shadow-inner',
                         selectedItem === item.id ? "w-fit" : "xl:w-[60px] lg:w-[56px] sm:w-[52px] w-[44px]", // firefox width
                         item.id === 0 ? "flex-grow" : "flex-grow-0",
                     )}

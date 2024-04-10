@@ -1,13 +1,12 @@
 "use client"
 
-import { sendEmail } from '@/app/actions';
+import { sendEmail } from '@/app/[locale]/actions';
 import ContactForm from '@/components/forms/ContactForm';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { useToast } from '@/components/ui/use-toast';
 import { cn, getShortDescription } from '@/lib/utils';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { Link, usePathname } from '@/navigation';
 import React, { useEffect, useState } from 'react'
 import { useFormState } from 'react-dom';
 

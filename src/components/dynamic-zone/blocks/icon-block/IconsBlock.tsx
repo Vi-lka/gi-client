@@ -1,13 +1,13 @@
 import React from 'react';
 import type { IconsBlockCompT } from '@/lib/types';
 import { cn } from '@/lib/utils';
-import Link from 'next/link';
 import IconsBlockItems from './IconsBlockItems';
 import Loading from './Loading';
 import ImageComp from '@/components/ImageComp';
 import { TypographyH2 } from '@/components/typography';
 import { ClientHydration } from '@/components/ClientHydration';
 import { Button } from '@/components/ui/button';
+import { Link } from '@/navigation';
 
 export default function IconsBlock({
     data,
