@@ -30,25 +30,25 @@ export default function RichText({
             )}
             <div className={cn(
                 'flex', 
-                data.images.data.length > 1 ? "items-center xl:gap-16 gap-6" : "items-stretch gap-6",
-                data.alignImages === "right" ? "xl:flex-row flex-col-reverse" : "xl:flex-row-reverse flex-col-reverse"
+                data.images.data.length > 1 ? "items-center lg:gap-16 gap-6" : "items-stretch gap-6",
+                data.alignImages === "right" ? "lg:flex-row flex-col-reverse" : "lg:flex-row-reverse flex-col-reverse"
             )}>
-                <div className='xl:w-1/2 w-full'>
+                <div className='lg:w-1/2 w-full h-fit'>
                     {/* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */}
                     <BlocksRendererStrapi content={data.text} />
                 </div>
                 {data.images.data.length > 1 
                     ? (
-                        <CarouselComp classNameContainer='xl:w-1/2 w-full' className='xl:-ml-8 -ml-4 items-center'>
+                        <CarouselComp classNameContainer='lg:w-1/2 w-full' className='lg:-ml-8 -ml-4 items-center'>
                             {data.images.data.map((image, index) => (
-                                <CarouselItem key={index} className='h-fit xl:pl-8 pl-4 flex items-center'>
+                                <CarouselItem key={index} className='h-fit lg:pl-8 pl-4 flex items-center'>
                                     <div className='relative w-full h-fit'>
                                         <ImageComp 
                                             src={image.attributes.url}
                                             alt=""
                                             fill
                                             sizes='(max-width: 1024px) 100vw, 50vw'
-                                            className='!xl:absolute !relative object-contain rounded-3xl overflow-hidden !h-fit'
+                                            className='!lg:absolute !relative object-contain rounded-3xl overflow-hidden !h-fit'
                                         />
                                     </div>
                                 </CarouselItem>
@@ -56,13 +56,13 @@ export default function RichText({
                         </CarouselComp>
                     )
                     : (
-                        <div className='relative xl:w-1/2 w-full xl:h-auto h-fit rounded-3xl overflow-hidden'>
+                        <div className='relative lg:w-1/2 w-full lg:h-auto h-fit rounded-3xl overflow-hidden'>
                             <ImageComp 
                                 src={data.images.data[0].attributes.url}
                                 alt=""
                                 fill
                                 sizes='(max-width: 1280px) 100vw, 50vw'
-                                className='!xl:absolute !relative object-cover xl:max-h-none max-h-96'
+                                className='!lg:absolute !relative object-cover lg:max-h-none max-h-96'
                             />
                         </div>
                     )
