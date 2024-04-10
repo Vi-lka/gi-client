@@ -7,6 +7,7 @@ import NavSheet from './NavSheet'
 import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import { usePathname } from 'next/navigation'
+import MoreMenu from './MoreMenu'
 
 export default function Header() {
 
@@ -96,6 +97,7 @@ export default function Header() {
                 sticky || pathname !== "/" ? "container md:w-5/6 w-full" : ""
             )}>
                 <NavMenu onClick={handleScrollToTop} className='w-full max-w-none mx-auto justify-between lg:flex hidden nav-menu' />
+
                 <div className='lg:hidden flex items-center justify-between w-full'>
                     <Link href="/" onClick={handleScrollToTop}>
                         <Image 
@@ -106,7 +108,10 @@ export default function Header() {
                             className='object-contain'
                         />
                     </Link>
-                    <NavSheet className="text-primary" />
+                    <div className='flex items-center gap-3'>
+                        <MoreMenu />
+                        <NavSheet className="text-primary" />
+                    </div>
                 </div>
             </div>
         </div>
