@@ -2,14 +2,17 @@
 
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import NavMenu from './NavMenu'
-import Link from 'next/link'
 import NavSheet from './NavSheet'
 import Image from 'next/image'
 import { cn } from '@/lib/utils'
-import { usePathname } from 'next/navigation'
 import MoreMenu from './MoreMenu'
+import { usePathname } from '@/lib/hooks/usePathname'
+import Link from '../Link'
+import { useLocale } from '@/lib/hooks/useLocale'
 
 export default function Header() {
+
+    const locale = useLocale()
 
     const [sticky, setSticky] = useState(false)
     const [shadow, setShadow] = useState(false)
@@ -99,7 +102,7 @@ export default function Header() {
                 <NavMenu onClick={handleScrollToTop} className='w-full max-w-none mx-auto justify-between lg:flex hidden nav-menu' />
 
                 <div className='lg:hidden flex items-center justify-between w-full'>
-                    <Link href="/" onClick={handleScrollToTop}>
+                    <Link locale={locale} href="/" onClick={handleScrollToTop}>
                         <Image 
                             src="/hi-icon.svg"
                             alt="HI"

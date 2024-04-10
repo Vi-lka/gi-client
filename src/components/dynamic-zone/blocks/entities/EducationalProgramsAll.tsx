@@ -1,11 +1,12 @@
 import ImageComp from '@/components/ImageComp';
+import Link from '@/components/Link';
 import TabsComp from '@/components/TabsComp';
 import ErrorHandler from '@/components/errors/ErrorHandler';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { getEducationalPrograms } from '@/lib/queries';
 import type { EducationalProgramSingleT } from '@/lib/types';
-import Link from 'next/link';
+import { headers } from 'next/headers';
 import React from 'react'
 
 export default async function EducationalProgramsAll({
@@ -13,6 +14,9 @@ export default async function EducationalProgramsAll({
 }: {
     searchParams: { [key: string]: string | string[] | undefined };
 }) {
+
+    const headersList = headers();
+    const header_locale = headersList.get('x-locale') || "";
 
     const sort = searchParams["sort"] as string | undefined;
     const search = searchParams["search"] as string | undefined;
@@ -38,7 +42,7 @@ export default async function EducationalProgramsAll({
             count: 0
         }
         : {
-            content: <EducationalProgramsGrid data={bachelorsResult.value.data} />,
+            content: <EducationalProgramsGrid locale={header_locale} data={bachelorsResult.value.data} />,
             count: bachelorsResult.value.meta.pagination.total
         }
 
@@ -53,7 +57,7 @@ export default async function EducationalProgramsAll({
             count: 0
         }
         : {
-            content: <EducationalProgramsGrid data={magistracyResult.value.data} />,
+            content: <EducationalProgramsGrid locale={header_locale} data={magistracyResult.value.data} />,
             count: magistracyResult.value.meta.pagination.total
         }
 
@@ -68,7 +72,7 @@ export default async function EducationalProgramsAll({
             count: 0
         }
         : {
-            content: <EducationalProgramsGrid data={postgraduateResult.value.data} />,
+            content: <EducationalProgramsGrid locale={header_locale} data={postgraduateResult.value.data} />,
             count: postgraduateResult.value.meta.pagination.total
         }
 
@@ -110,9 +114,11 @@ export default async function EducationalProgramsAll({
 }
 
 function EducationalProgramsGrid({
+    locale,
     data,
 }: {
-    data: EducationalProgramSingleT[]
+    locale: string,
+    data: EducationalProgramSingleT[],
 }) {
     
     return (
@@ -140,7 +146,7 @@ function EducationalProgramsGrid({
                             </div>
                         </div>
     
-                        <Link href={`/entrance/${item.attributes.slug}`} className='w-fit mx-auto mb-3 md:mt-auto'>
+                        <Link locale={locale} href={`/entrance/${item.attributes.slug}`} className='w-fit mx-auto mb-3 md:mt-auto'>
                             <Button className='uppercase font-medium px-10 py-5 rounded-3xl'>
                                 Подробнее
                             </Button>

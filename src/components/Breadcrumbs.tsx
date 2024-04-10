@@ -2,8 +2,9 @@
 
 import React from 'react'
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from './ui/breadcrumb'
-import { usePathname } from 'next/navigation'
-
+import { usePathname } from '@/lib/hooks/usePathname'
+import { useLocale } from '@/lib/hooks/useLocale'
+import Link from './Link'
 export default function Breadcrumbs({
     data,
     className
@@ -14,6 +15,8 @@ export default function Breadcrumbs({
     }[],
     className?: string
 }) {
+
+    const locale = useLocale()
 
     const pathname = usePathname()
 
@@ -54,8 +57,11 @@ export default function Breadcrumbs({
                         {index !== breadcrumbs.length - 1
                             ?
                             <>
-
-                                <BreadcrumbLink href={crumb.href}>{crumb.title}</BreadcrumbLink>
+                                <BreadcrumbLink asChild>
+                                    <Link locale={locale} href={crumb.href}>
+                                        {crumb.title}
+                                    </Link>
+                                </BreadcrumbLink>
                                 <BreadcrumbSeparator />
                             </> 
                             :  // last element

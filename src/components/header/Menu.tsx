@@ -1,15 +1,18 @@
 "use client"
 
+import { useLocale } from '@/lib/hooks/useLocale'
 import { motion } from 'framer-motion'
 import { Languages } from 'lucide-react'
-import Link from 'next/link'
 import React from 'react'
+import Link from '../Link'
 
 export default function Menu({
     selectedItem
 }: {
     selectedItem: number
 }) {
+
+    const locale = useLocale()
 
     const links = [
         {
@@ -138,12 +141,12 @@ export default function Menu({
                         className='w-fit'
                     >
                         <div className='flex flex-wrap sm:gap-8 gap-6 items-center'>
-                            <Link href={item.mainLink} className='link-underline py-1 pr-3 font-Cera font-bold uppercase xl:text-2xl lg:text-xl sm:text-base text-sm hover:text-apricot transition-all duration-300'>
+                            <Link locale={locale} href={item.mainLink} className='link-underline py-1 pr-3 font-Cera font-bold uppercase xl:text-2xl lg:text-xl sm:text-base text-sm hover:text-apricot transition-all duration-300'>
                                 {item.mainTitle}
                             </Link>
                             {item.secondLink && item.secondTitle 
                                 ? (
-                                <Link href={item.secondLink} className='link-underline py-1 pr-3 font-Cera font-bold uppercase xl:text-2xl lg:text-xl sm:text-base text-sm hover:text-apricot transition-all duration-300'>
+                                <Link locale={locale} href={item.secondLink} className='link-underline py-1 pr-3 font-Cera font-bold uppercase xl:text-2xl lg:text-xl sm:text-base text-sm hover:text-apricot transition-all duration-300'>
                                     {item.secondTitle}
                                 </Link>
                                 )
@@ -154,6 +157,7 @@ export default function Menu({
                             {item.subLinks?.map((subItem, index) => (
                                 <Link
                                     key={index}
+                                    locale={locale}
                                     href={subItem.link}
                                     className='p-1 pl-0 text-sm lg:block hidden hover:text-apricot transition-all duration-300'
                                 >

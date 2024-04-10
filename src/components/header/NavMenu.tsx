@@ -2,11 +2,12 @@
 
 import React from 'react'
 import { NavigationMenu, NavigationMenuItem, NavigationMenuList, navigationMenuTriggerStyle } from '../ui/navigation-menu'
-import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import Image from 'next/image'
 import { useSelectedLayoutSegment } from 'next/navigation'
 import MoreMenu from './MoreMenu'
+import Link from '../Link'
+import { useLocale } from '@/lib/hooks/useLocale'
 
 export default function NavMenu({
   onClick,
@@ -16,10 +17,13 @@ export default function NavMenu({
   className?: string
 }) {
 
+  const locale = useLocale()
+
   return (
     <NavigationMenu delayDuration={100} className={className}>
       <NavigationMenuList className='relative gap-2 flex-wrap justify-between items-center'>
         <Link 
+          locale={locale}
           href="/#top" 
           className='absolute 2xl:-left-20 -left-14' 
           onClick={onClick}
@@ -33,16 +37,16 @@ export default function NavMenu({
           />
         </Link>
 
-        <NavMenuItem href='/info'>Сведения</NavMenuItem>
-        <NavMenuItem href='/structure'>Структура</NavMenuItem>
-        <NavMenuItem href='/education'>Обучение</NavMenuItem>
-        <NavMenuItem href='/entrance'>Поступление</NavMenuItem>
-        <NavMenuItem href='/dpo'>Курсы ДПО</NavMenuItem>
-        <NavMenuItem href='/science'>Наука</NavMenuItem>
-        <NavMenuItem href='/projects'>Проекты</NavMenuItem>
-        <NavMenuItem href='/journals'>Журналы</NavMenuItem>
+        <NavMenuItem locale={locale} href='/info'>Сведения</NavMenuItem>
+        <NavMenuItem locale={locale} href='/structure'>Структура</NavMenuItem>
+        <NavMenuItem locale={locale} href='/education'>Обучение</NavMenuItem>
+        <NavMenuItem locale={locale} href='/entrance'>Поступление</NavMenuItem>
+        <NavMenuItem locale={locale} href='/dpo'>Курсы ДПО</NavMenuItem>
+        <NavMenuItem locale={locale} href='/science'>Наука</NavMenuItem>
+        <NavMenuItem locale={locale} href='/projects'>Проекты</NavMenuItem>
+        <NavMenuItem locale={locale} href='/journals'>Журналы</NavMenuItem>
 
-        <div className='absolute 2xl:-right-20 -right-14 h-full flex items-center'>
+        <div className='absolute 2xl:-right-20 -right-16 h-full flex items-center'>
           <MoreMenu />
         </div>
       </NavigationMenuList>
@@ -51,10 +55,12 @@ export default function NavMenu({
 }
 
 function NavMenuItem({
+  locale,
   children,
   href,
   blank,
 }: {
+  locale: string,
   children: React.ReactNode,
   href: string,
   blank?: boolean,
@@ -67,6 +73,7 @@ function NavMenuItem({
     <NavigationMenuItem className='!ml-0'>
       <Link 
         aria-current={isActive ? 'page' : undefined}
+        locale={locale}
         href={href}
         target={blank ? "_blank" : "_self"}
         // style={{fontWeight: isActive ? 'bold' : 'normal'}}
