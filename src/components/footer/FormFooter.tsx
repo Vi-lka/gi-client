@@ -8,21 +8,31 @@ import { sendEmail } from '@/app/[locale]/actions';
 import { getShortDescription } from '@/lib/utils';
 import { usePathname } from 'next/navigation';
 
+type Props = {
+    formTitle: string | null,
+    formDescription: string | null,
+    dict: {
+        form: {
+            name: string,
+            email: string,
+            phone: string,
+            send: string
+        },
+        sendMessage: {
+            success: {
+                title: string,
+                description: string
+            },
+            error: string
+        }
+    }
+}
+
 export default function FormFooter({
     formTitle,
     formDescription,
-    sendMessage,
-}: {
-    formTitle: string | null,
-    formDescription: string | null,
-    sendMessage: {
-        success: {
-            title: string,
-            description: string
-        },
-        error: string
-    }
-}) {
+    dict,
+}: Props) {
     const { toast } = useToast();
 
     const pathname = usePathname();
@@ -35,20 +45,20 @@ export default function FormFooter({
     useEffect(() => {
         if (sendEmailState.success) {
             toast({
-                title: sendMessage.success.title,
-                description: sendMessage.success.description,
+                title: dict.sendMessage.success.title,
+                description: dict.sendMessage.success.description,
                 className: "font-Din text-background dark:text-foreground bg-lime-600 dark:bg-lime-800 border-none",
             });
         }
         if (sendEmailState.error) {
             toast({
                 variant: "destructive",
-                title: sendMessage.error,
+                title: dict.sendMessage.error,
                 description: <p>{getShortDescription(sendEmailState.error, 50)}</p>,
                 className: "font-Din",
             });
         }
-    }, [sendEmailState.error, sendEmailState.success, toast, sendMessage])
+    }, [sendEmailState.error, sendEmailState.success, toast, dict.sendMessage])
 
     const handleAction = (formData: FormData) => {
         sendEmailAction({
@@ -63,6 +73,6 @@ export default function FormFooter({
     }
 
     return (
-        <ContactForm handleAction={handleAction} className='w-full' />
+        <ContactForm dict={dict.form} handleAction={handleAction} className='w-full' />
     )
 }

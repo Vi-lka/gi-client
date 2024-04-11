@@ -1,5 +1,18 @@
 {
-  "footer": {
+  "Hero": {
+    "tabs": {
+      "main": "Главная",
+      "about": "Об институте",
+      "menu": "Меню"
+    }
+  },
+  "ContactForm": {
+    "form": {
+      "name": "ФИО",
+      "email": "E-mail",
+      "phone": "Телефон",
+      "send": "Отправить"
+    },
     "sendMessage": {
       "success": {
         "title": "Успешно!",

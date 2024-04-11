@@ -6,8 +6,10 @@ import { cn } from '@/lib/utils'
 import Image from 'next/image'
 import React from 'react'
 import ButtonForm from './ButtonForm'
+import { headers } from 'next/headers'
+import { getDictionary } from '@/lib/getDictionary'
 
-export default function FormBlock({
+export default async function FormBlock({
     data,
     headingBig,
     className,
@@ -16,6 +18,13 @@ export default function FormBlock({
     headingBig?: boolean,
     className?: string,
 }) {
+
+
+    const headersList = headers();
+    const header_locale = headersList.get('x-locale') || "";
+    
+    const dict = await getDictionary(header_locale);
+
     return (
         <div className={cn("w-full", className)}>
             {data.title && (
@@ -57,6 +66,7 @@ export default function FormBlock({
                     ))}
                 </ul>
                 <ButtonForm 
+                    dict={dict.ContactForm}
                     buttonTitle={data.buttonTitle}
                     buttonLink={data.buttonLink}
                     inNewTab={data.inNewTab}

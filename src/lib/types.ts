@@ -50,6 +50,10 @@ export type ImagesArrayT = z.infer<typeof ImagesArrayT>;
 
 //.........................Custom Icon Enums.........................//
 export const CustomIconEnum = z.enum([
+  "deal",
+  "science",
+  "idea",
+  "healthy_mind",
   "video_call",
   "presentation",
   "man_desktop",
@@ -503,6 +507,17 @@ export const DpoCoursePageT  = z.object({
   }),
 })
 export type DpoCoursePageT = z.infer<typeof DpoCoursePageT>;
+
+
+
+//.........................Hero.........................//
+export const HeroAboutT  = z.object({
+  icons: ImagesArrayT,
+  items: IconsBlockItemT.array(),
+  link: z.string().nullable(),
+  linkTitle: z.string().nullable(),
+})
+export type HeroAboutT = z.infer<typeof HeroAboutT>;
 
 
 

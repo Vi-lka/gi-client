@@ -19,11 +19,13 @@ export default async function Footer() {
 
     const headersList = headers();
     const header_locale = headersList.get('x-locale') || "";
+    
+    const dict = await getDictionary(header_locale);
 
-    const getFooter = async (): Promise<FooterT> => {
+    const getFooter = async (locale: string): Promise<FooterT> => {
         const query = /* GraphGL */ `
-        query Footer {
-            footer {
+        query Footer($locale: I18NLocaleCode) {
+            footer(locale: $locale) {
               data {
                 attributes {
                   title
@@ -58,6 +60,9 @@ export default async function Footer() {
         }>({ 
             query, 
             error: "Failed to fetch Footer",
+            variables: {
+                locale
+            }
         })
 
         // await new Promise((resolve) => setTimeout(resolve, 2000))
@@ -69,7 +74,7 @@ export default async function Footer() {
         return footer;
     };
 
-    const [ dataResult ] = await Promise.allSettled([ getFooter() ]);
+    const [ dataResult ] = await Promise.allSettled([ getFooter(header_locale) ]);
     if (dataResult.status === "rejected") return (
         <ErrorHandler 
             error={dataResult.reason as unknown} 
@@ -77,9 +82,6 @@ export default async function Footer() {
             notFound={false}
         />
     )
-
-    const dict = await getDictionary(header_locale);
-
     const year = new Date().getFullYear();
 
     return (
@@ -101,7 +103,7 @@ export default async function Footer() {
                         <FormFooter 
                             formTitle={dataResult.value.title} 
                             formDescription={dataResult.value.subtitle}
-                            sendMessage={dict.footer.sendMessage}
+                            dict={dict.ContactForm}
                         />
                     </section>
 

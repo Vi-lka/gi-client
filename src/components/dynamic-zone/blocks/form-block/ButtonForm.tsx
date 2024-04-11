@@ -11,21 +11,39 @@ import { usePathname } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 import { useFormState } from 'react-dom';
 
-export default function ButtonForm({
-    buttonTitle,
-    buttonLink,
-    inNewTab,
-    listLength,
-    formTitle,
-    formDescription,
-}: {
+type Props = {
+    dict: {
+        form: {
+            name: string,
+            email: string,
+            phone: string,
+            send: string
+        },
+        sendMessage: {
+            success: {
+                title: string,
+                description: string
+            },
+            error: string
+        }
+    },
     buttonTitle: string | null,
     buttonLink: string | null,
     inNewTab: boolean | null,
     listLength: number,
     formTitle: string | null,
     formDescription: string | null,
-}) {
+}
+
+export default function ButtonForm({
+    dict,
+    buttonTitle,
+    buttonLink,
+    inNewTab,
+    listLength,
+    formTitle,
+    formDescription,
+}: Props) {
     const [open, setOpen] = useState(false);
 
     const { toast } = useToast();
@@ -40,8 +58,8 @@ export default function ButtonForm({
     useEffect(() => {
         if (sendEmailState.success) {
             toast({
-                title: "Успешно!",
-                description: "Email отправлен.",
+                title: dict.sendMessage.success.title,
+                description: dict.sendMessage.success.description,
                 className: "font-Din text-background dark:text-foreground bg-lime-600 dark:bg-lime-800 border-none",
             });
             setOpen(false)
@@ -49,13 +67,13 @@ export default function ButtonForm({
         if (sendEmailState.error) {
             toast({
                 variant: "destructive",
-                title: "Oшибка!",
+                title: dict.sendMessage.error,
                 description: <p>{getShortDescription(sendEmailState.error, 50)}</p>,
                 className: "font-Din",
             });
             setOpen(false)
         }
-    }, [sendEmailState.error, sendEmailState.success, toast])
+    }, [sendEmailState.error, sendEmailState.success, toast, dict.sendMessage])
 
     const handleAction = (formData: FormData) => {
         sendEmailAction({
@@ -101,7 +119,7 @@ export default function ButtonForm({
                     <DialogTitle>{formTitle}</DialogTitle>
                     <DialogDescription>{formDescription}</DialogDescription>
                 </DialogHeader>
-                <ContactForm handleAction={handleAction} />
+                <ContactForm dict={dict.form} handleAction={handleAction} />
             </DialogContent>
         </Dialog>
     )

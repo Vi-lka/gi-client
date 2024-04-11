@@ -11,9 +11,16 @@ import type { z } from 'zod'
 import { ContactFormT } from "@/lib/types"
 
 export default function ContactForm({
+    dict,
     handleAction,
     className,
 }: {
+    dict: {
+        name: string,
+        email: string,
+        phone: string,
+        send: string
+    },
     handleAction: (formData: FormData) => void,
     className?: string,
 }) {
@@ -40,7 +47,7 @@ export default function ContactForm({
                         <FormItem>
                             <FormControl>
                                 <InputField 
-                                    placeholder="ФИО"
+                                    placeholder={dict.name}
                                     disabled={form.formState.isSubmitting}
                                     className='bg-input rounded-3xl border-border shadow-sm'
                                     {...field}
@@ -57,7 +64,7 @@ export default function ContactForm({
                         <FormItem>
                             <FormControl>
                                 <InputField 
-                                    placeholder="E-mail"
+                                    placeholder={dict.email}
                                     disabled={form.formState.isSubmitting}
                                     className='bg-input rounded-3xl border-border shadow-sm'
                                     {...field}
@@ -74,7 +81,7 @@ export default function ContactForm({
                         <FormItem>
                             <FormControl>
                                 <InputField 
-                                    placeholder="Телефон"
+                                    placeholder={dict.phone}
                                     disabled={form.formState.isSubmitting}
                                     className='bg-input rounded-3xl border-border shadow-sm'
                                     {...field}
@@ -88,7 +95,7 @@ export default function ContactForm({
                     disabled={!(form.formState.isDirty && form.formState.isValid) || form.formState.isSubmitting}
                     className='px-8 lg:float-start float-end'
                 >
-                    Отправить
+                    {dict.send}
                 </SubmitButton>
             </form>
         </Form>

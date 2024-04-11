@@ -1,5 +1,18 @@
 {
-  "footer": {
+  "Hero": {
+    "tabs": {
+      "main": "Main",
+      "about": "About",
+      "menu": "Menu"
+    }
+  },
+  "ContactForm": {
+    "form": {
+      "name": "Name",
+      "email": "E-mail",
+      "phone": "Phone",
+      "send": "Send"
+    },
     "sendMessage": {
       "success": {
         "title": "Success!",

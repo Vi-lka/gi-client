@@ -6,8 +6,20 @@ import MainLogo from './MainLogo';
 import About from './About';
 import Menu from './Menu';
 import { cn } from '@/lib/utils';
+import type { HeroAboutT } from '@/lib/types';
 
-export default function HorizontalAccordion() {
+type Props = {
+    dict: {
+        tabs: {
+          main: string,
+          about: string,
+          menu: string,
+        }
+    },
+    data: HeroAboutT
+}
+
+export default function HorizontalAccordion({ dict, data }: Props) {
 
     const [selectedItem, setSelectedItem] = useState(0);
 
@@ -19,19 +31,19 @@ export default function HorizontalAccordion() {
     const items = [
         {
             id: 0,
-            title: "Главная",
+            title: dict.tabs.main,
             color: "hsl(var(--apricot))",
             children: <MainLogo selectedItem={selectedItem} />
         },
         {
             id: 1,
-            title: "Об институте",
+            title: dict.tabs.about,
             color: "hsl(var(--accent))",
-            children: <About selectedItem={selectedItem} />
+            children: <About data={data} selectedItem={selectedItem} />
         },
         {
             id: 2,
-            title: "Меню",
+            title: dict.tabs.menu,
             color: "hsl(var(--primary))",
             children: <Menu selectedItem={selectedItem} />
         },

@@ -1,10 +1,10 @@
 "use client"
 
+import Link from '@/components/Link'
+import LocaleSwitcher from '@/components/LocaleSwitcher'
 import { useLocale } from '@/lib/hooks/useLocale'
 import { motion } from 'framer-motion'
 import React from 'react'
-import Link from '../Link'
-import LocaleSwitcher from '../LocaleSwitcher'
 
 export default function Menu({
     selectedItem

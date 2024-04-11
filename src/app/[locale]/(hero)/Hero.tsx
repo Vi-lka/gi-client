@@ -1,0 +1,85 @@
+import React from 'react'
+import HorizontalAccordion from './HorizontalAccordion'
+import { headers } from 'next/headers';
+import { getDictionary } from '@/lib/getDictionary';
+import { HeroAboutT } from '@/lib/types';
+import { fetchData } from '@/lib/queries';
+import { notFound } from 'next/navigation';
+import ErrorHandler from '@/components/errors/ErrorHandler';
+
+export const dynamic = 'force-dynamic'
+
+export default async function Hero() {
+
+  const headersList = headers();
+  const header_locale = headersList.get('x-locale') || "";
+
+  const dict = await getDictionary(header_locale);
+
+  const getHeroAbout = async (locale: string): Promise<HeroAboutT> => {
+    const query = /* GraphGL */ `
+      query HeroAbout($locale: I18NLocaleCode) {
+        heroAbout(locale: $locale) {
+          data {
+            attributes {
+              icons {
+                data {
+                  attributes {
+                    url
+                  }
+                }
+              }
+              items {
+                title
+                iconReact
+                iconCustom
+                description
+              }
+              link
+              linkTitle
+            }
+          }
+        }
+      }
+    `;
+
+    const json = await fetchData<{ 
+        data: { 
+          heroAbout: { 
+                data: {
+                    attributes: HeroAboutT 
+                } | null
+            } 
+        }; 
+    }>({ 
+        query, 
+        error: "Failed to fetch Hero About",
+        variables: {
+            locale
+        }
+    })
+
+    // await new Promise((resolve) => setTimeout(resolve, 2000))
+
+    if (json.data.heroAbout.data === null) notFound();
+
+    const heroAbout = HeroAboutT.parse(json.data.heroAbout.data.attributes);
+
+    return heroAbout;
+  };
+
+  const [ dataResult ] = await Promise.allSettled([ getHeroAbout(header_locale) ]);
+  if (dataResult.status === "rejected") return (
+      <ErrorHandler 
+          error={dataResult.reason as unknown} 
+          place="Hero About"
+          notFound={false}
+      />
+  )
+
+  return (
+    <section id="top" className='relative 2xl:max-w-[2000px] xl:max-w-[1400px] lg:max-w-[1280px] md:max-w-[1024px] sm:max-w-[768px] w-11/12 mx-auto mt-6 z-50'>
+      <HorizontalAccordion data={dataResult.value} dict={dict.Hero} /> 
+    </section>
+  )
+}

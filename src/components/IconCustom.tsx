@@ -9,6 +9,10 @@ import Presentation from '@/components/icons/Presentation';
 import VideoCall from '@/components/icons/VideoCall';
 import type { CustomIconEnum } from '@/lib/types';
 import React from 'react'
+import Deal from './icons/Deal';
+import Science from './icons/Science';
+import Idea from './icons/Idea';
+import HealthyMind from './icons/HealthyMind';
 
 export default function IconCustom({
     icon,
@@ -28,6 +32,10 @@ export default function IconCustom({
         "deadline": <Deadline key='deadline' className={className} />,
         "authentication": <Authentication key='authentication' className={className} />,
         "graph": <Graph key='graph' className={className} />,
+        "deal": <Deal key='deal' className={className} />,
+        "science": <Science key='science' className={className} />,
+        "idea": <Idea key='idea' className={className} />,
+        "healthy_mind": <HealthyMind key='healthy_mind' className={className} />
     };
 
     return (
