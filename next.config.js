@@ -1,9 +1,6 @@
 /** @type {import('next').NextConfig} */
 
 const { withSentryConfig } = require("@sentry/nextjs");
-const createNextIntlPlugin = require('next-intl/plugin');
-
-const withNextIntl = createNextIntlPlugin();
 
 const nextConfig = {
     output: "standalone",
@@ -35,7 +32,7 @@ const nextConfig = {
 };
 
 module.exports = withSentryConfig(
-  withNextIntl(nextConfig),
+  nextConfig,
   {
     // For all available options, see:
     // https://github.com/getsentry/sentry-webpack-plugin#options

@@ -1,9 +1,0 @@
-{
-  "FormContact": {
-    "success": {
-      "title": "Успешно!",
-      "description": "Email отправлен"
-    },
-    "error": "Ошибка!"
-  }
-}

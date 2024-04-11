@@ -5,7 +5,7 @@ import React from 'react'
 import { BlocksRenderer } from '@strapi/blocks-react-renderer';
 import ImageComp from './ImageComp';
 import { TypographyBlockquote, TypographyH1, TypographyH2, TypographyH3, TypographyH4, TypographyH5, TypographyH6, TypographyList, TypographyP } from './typography';
-import { Link } from '@/navigation';
+import Link from 'next/link';
 
 interface TextInlineNode {
     type: 'text';

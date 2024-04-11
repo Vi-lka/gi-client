@@ -3,7 +3,7 @@ import { TypographyH2, TypographyH4 } from '@/components/typography'
 import { Button } from '@/components/ui/button'
 import type { TextGridCompT } from '@/lib/types'
 import { cn } from '@/lib/utils'
-import { Link } from '@/navigation'
+import Link from 'next/link'
 import React from 'react'
 
 export default function RichTextGrid({

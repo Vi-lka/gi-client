@@ -9,7 +9,7 @@ import { getShortDescription } from "@/lib/utils";
 import { Button } from "../ui/button";
 
 import * as Sentry from "@sentry/nextjs";
-import { useRouter } from "@/navigation";
+import { useRouter } from "next/navigation";
 
 export default function ErrorToast({
   error,

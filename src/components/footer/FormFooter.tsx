@@ -6,7 +6,7 @@ import { useToast } from '../ui/use-toast';
 import { useFormState } from 'react-dom';
 import { sendEmail } from '@/app/[locale]/actions';
 import { getShortDescription } from '@/lib/utils';
-import { usePathname } from '@/navigation';
+import { usePathname } from 'next/navigation';
 
 export default function FormFooter({
     formTitle,

@@ -3,7 +3,7 @@
 import React from "react";
 import { SearchX, Undo2 } from "lucide-react";
 import { Button } from "../ui/button";
-import { useRouter } from "@/navigation";
+import { useRouter } from "next/navigation";
 
 export default function NotFound({
   goBack,
