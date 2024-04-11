@@ -2,9 +2,9 @@
 
 import { useLocale } from '@/lib/hooks/useLocale'
 import { motion } from 'framer-motion'
-import { Languages } from 'lucide-react'
 import React from 'react'
 import Link from '../Link'
+import LocaleSwitcher from '../LocaleSwitcher'
 
 export default function Menu({
     selectedItem
@@ -131,8 +131,7 @@ export default function Menu({
                 className='relative w-full h-full flex flex-col lg:gap-4 sm:gap-8 gap-3 justify-center xl:pl-[10vw] xl:pr-16 pl-14 pr-6 2xl:py-12 py-6 z-50'
             >
                 <div className='absolute lg:top-6 top-3 lg:right-6 right-3 z-[100]'>
-                    {/* <LocaleSwitcher className="lg:w-12 sm:w-11 w-9 sm:text-lg px-0 sm:py-5 py-4 text-background hover:bg-background focus:bg-background hover:text-primary focus:text-primary" /> */}
-                    <Languages className="lg:w-12 sm:w-11 w-9 sm:text-lg px-0 sm:py-5 py-4 text-background hover:bg-background focus:bg-background hover:text-primary focus:text-primary" />
+                    <LocaleSwitcher className="lg:w-12 sm:w-11 w-9 sm:text-lg px-0 sm:py-5 py-4 text-background hover:bg-background focus:bg-background hover:text-primary focus:text-primary" />
                 </div>
                 {links.map((item, index) => (
                     <motion.div 

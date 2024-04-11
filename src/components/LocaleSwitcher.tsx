@@ -1,10 +1,12 @@
 "use client"
 
 import * as React from "react";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "./ui/dropdown-menu";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
 import { Button } from "./ui/button";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { localesCodes } from "@/static/locales";
+import Link from "./Link";
 
 export default function LocaleSwitcher({
     className,
@@ -23,7 +25,7 @@ export default function LocaleSwitcher({
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="center" className="w-fit rounded-2xl min-w-[50px] z-[100]">
-                {/* {locales.map((locale, index) => (
+                {localesCodes.map((locale, index) => (
                     <Link
                         key={index}
                         href="/" 
@@ -39,7 +41,7 @@ export default function LocaleSwitcher({
                             {locale === "ru" ? "ру" : locale}
                         </DropdownMenuItem>
                     </Link>
-                ))} */}
+                ))}
             </DropdownMenuContent>
         </DropdownMenu>
     );

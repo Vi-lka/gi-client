@@ -4,5 +4,5 @@ type Messages = typeof ru;
  
 declare global {
   // Use type safe message keys with `next-intl`
-  interface Dictionary {}
+  interface Dictionary extends Messages {}
 }

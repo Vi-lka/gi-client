@@ -1,0 +1,11 @@
+{
+  "footer": {
+    "sendMessage": {
+      "success": {
+        "title": "Success!",
+        "description": "The email has been sent"
+      },
+      "error": "Error!"
+    }
+  }
+}

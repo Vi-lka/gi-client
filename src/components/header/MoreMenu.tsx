@@ -5,6 +5,9 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuPortal
 import { Button } from '../ui/button'
 import { usePathname } from "next/navigation";
 import { MoreHorizontal, Search, Sun } from 'lucide-react'
+import { localesCodes } from '@/static/locales';
+import Link from '../Link';
+import { cn } from '@/lib/utils';
 
 export default function MoreMenu() {
 
@@ -32,8 +35,7 @@ export default function MoreMenu() {
           </DropdownMenuSubTrigger>
           <DropdownMenuPortal>
             <DropdownMenuSubContent sideOffset={6} alignOffset={-6} className="w-fit rounded-2xl min-w-[50px] z-[100]">
-                Hi!
-              {/* {locales.map((locale, index) => (
+              {localesCodes.map((locale, index) => (
                   <Link
                       key={index}
                       href="/" 
@@ -49,7 +51,7 @@ export default function MoreMenu() {
                           {locale === "ru" ? "ру" : locale}
                       </DropdownMenuItem>
                   </Link>
-              ))} */}
+              ))}
             </DropdownMenuSubContent>
           </DropdownMenuPortal>
         </DropdownMenuSub>
