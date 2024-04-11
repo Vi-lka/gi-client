@@ -1,28 +1,75 @@
-import createMiddleware from 'next-intl/middleware';
-import { locales } from './navigation';
- 
-export default createMiddleware({
-  // A list of all locales that are supported
-  locales: locales,
- 
-  // Used when no locale matches
-  defaultLocale: 'en'
-});
- 
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import { match as matchLocale } from "@formatjs/intl-localematcher";
+import Negotiator from "negotiator";
+
+import { localesCodes } from "./static/locales";
+
+const defaultLocale = "ru";
+
+function getLocale(request: NextRequest) {
+  // Negotiator expects plain object so we need to transform headers
+  const negotiatorHeaders: Record<string, string> = {};
+  request.headers.forEach((value, key) => (negotiatorHeaders[key] = value));
+
+  // Use negotiator and intl-localematcher to get best locale
+  const languages = new Negotiator({ headers: negotiatorHeaders }).languages();
+
+  return matchLocale(languages, localesCodes, defaultLocale);
+}
+
+export function middleware(request: NextRequest) {
+  const pathname = request.nextUrl.pathname;
+
+  // `/_next/` and `/api/` are ignored by the watcher, but we need to ignore files in `public` manually.
+  // If you have one
+  if (
+    [
+      "/manifest.json",
+      "/favicon.ico",
+      // Your other files in `public`
+    ].includes(pathname)
+  )
+    return;
+
+  // Check if there is any supported locale in the pathname
+  const pathnameIsMissingLocale = localesCodes.every(
+    (locale) =>
+      !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`,
+  );
+
+  // Redirect if there is no locale
+  if (pathnameIsMissingLocale) {
+    const locale = getLocale(request);
+
+    // e.g. incoming request is /products
+    // The new URL is now /en-US/products
+    return NextResponse.redirect(
+      new URL(`/${locale}/${pathname}`, request.url),
+    );
+  } else {
+    // Store current request url in a custom header, which you can read later
+    const requestHeaders = new Headers(request.headers);
+    const splitHeaderUrlBy = process.env.NEXT_PUBLIC_URL ? process.env.NEXT_PUBLIC_URL : "http://localhost:3000"
+    const pathname = request.url.split(splitHeaderUrlBy)[1]
+
+    const locale = pathname.split("/")[1]
+
+    requestHeaders.set('x-url', request.url);
+    requestHeaders.set('x-locale', locale);
+
+    return NextResponse.next({
+      request: {
+        // Apply new request headers
+        headers: requestHeaders,
+      }
+    })
+  }
+}
+
 export const config = {
+  // Matcher ignoring `/_next/` and `/api/`
   matcher: [
-    // Enable a redirect to a matching locale at the root
-    '/',
-
-    // Set a cookie to remember the previous locale for
-    // all requests that have a locale prefix
-    '/(ru|en)/:path*',
-
-    // Match all pathnames except for
-    // - … if they start with `/api`, `/_next` or `/_vercel`
-    // - … the ones containing a dot (e.g. `favicon.ico`)
-    // Enable redirects that add missing locales
-    // (e.g. `/pathnames` -> `/en/pathnames`)
-    '/((?!api|_next|_vercel|.*\\..*).*)'
-  ]
+    "/((?!api|_next/static|_next/image|.*\\..*|favicon.ico|robots.txt|sitemap.xml|manifest.json|opengraph-image.png|opengraph-image.alt.txt|images/).*)",
+  ],
 };

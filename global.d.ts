@@ -1,8 +1,8 @@
-import type en from './messages/en.json';
+import type ru from "./src/static/dictionaries/ru.json";
  
-type Messages = typeof en;
+type Messages = typeof ru;
  
 declare global {
   // Use type safe message keys with `next-intl`
-  interface IntlMessages extends Messages {}
+  interface Dictionary {}
 }

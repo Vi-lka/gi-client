@@ -1,11 +1,15 @@
+"use client"
+
+import Link from '@/components/Link';
 import Header from '@/components/header/Header';
 import { Button } from '@/components/ui/button'
-import { Link } from '@/navigation';
+import { useLocale } from '@/lib/hooks/useLocale';
 import { SquareArrowOutUpRight } from 'lucide-react';
 // import { Undo2 } from 'lucide-react'
 import React from 'react'
 
 export default function NotFound() {
+    const locale = useLocale()
 
     // const router = useRouter()
 
@@ -25,11 +29,11 @@ export default function NotFound() {
                     </p>
 
                     <p className="text-lg">
-                        Возможно, вы сможете найти нужный вам материал на <Link href="/just-wait" className='text-primary font-bold hover:underline'>временной странице</Link>.
+                        Возможно, вы сможете найти нужный вам материал на <Link locale={locale} href="/just-wait" className='text-primary font-bold hover:underline'>временной странице</Link>.
                     </p>
                 </div>
 
-                <Link href="/just-wait">
+                <Link locale={locale} href={`/just-wait`}>
                     <Button className="w-full max-w-[240px] p-6 uppercase rounded-3xl">
                         Временная страница
                         <SquareArrowOutUpRight className="ml-1" size={18} />

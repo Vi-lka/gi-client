@@ -1,7 +1,7 @@
 "use client"
 
 import React from 'react'
-import { useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import {
     ChevronLeftIcon,
     ChevronRightIcon,
@@ -13,7 +13,9 @@ import {
 import { cn } from '@/lib/utils'
 import { Button } from './ui/button';
 import { Input } from './ui/input';
-import { Link, usePathname, useRouter } from '@/navigation';
+import Link from './Link';
+import { usePathname } from '@/lib/hooks/usePathname';
+import { useLocale } from '@/lib/hooks/useLocale';
 
 export default function PaginationControls({ 
     length,
@@ -31,6 +33,7 @@ export default function PaginationControls({
   const [isPendingMore, startTransitionMore] = React.useTransition()
   const [isPendingPage, startTransitionPage] = React.useTransition()
 
+  const locale = useLocale()
   const router = useRouter()
   const searchParams = useSearchParams()
   const pathname = usePathname()
@@ -164,7 +167,7 @@ export default function PaginationControls({
                   onClick={() => handlePageParams('1')}
                 >
                   {/* For SEO */}
-                  <Link href={`${pathname}/?${pageParam}=1&${perParam}=${per}`} className="hidden">Перейти на первую страницу</Link>
+                  <Link locale={locale} href={`${pathname}/?${pageParam}=1&${perParam}=${per}`} className="hidden">Перейти на первую страницу</Link>
                   <span className="sr-only">Перейти на первую страницу</span>
                   <ChevronsLeft className="h-4 w-4" />
                 </Button>
@@ -177,7 +180,7 @@ export default function PaginationControls({
                   onClick={() => handlePageParams((Number(page) - 1).toString())}
                 >
                   {/* For SEO */}
-                  <Link href={`${pathname}/?${pageParam}=${Number(page) - 1}&${perParam}=${per}`} className="hidden">Перейти на предыдущую страницу</Link>
+                  <Link locale={locale} href={`${pathname}/?${pageParam}=${Number(page) - 1}&${perParam}=${per}`} className="hidden">Перейти на предыдущую страницу</Link>
                   <span className="sr-only">Перейти на предыдущую страницу</span>
                   <ChevronLeftIcon className="h-4 w-4" />
                 </Button>
@@ -190,7 +193,7 @@ export default function PaginationControls({
                   onClick={() => handlePageParams((Number(page) + 1).toString())}
                 >
                   {/* For SEO */}
-                  <Link href={`${pathname}/?${pageParam}=${Number(page) + 1}&${perParam}=${per}`} className='hidden'>Перейти на следующую страницу</Link>
+                  <Link locale={locale} href={`${pathname}/?${pageParam}=${Number(page) + 1}&${perParam}=${per}`} className='hidden'>Перейти на следующую страницу</Link>
                   <span className="sr-only">Перейти на следующую страницу</span>
                   <ChevronRightIcon className="h-4 w-4" />
                 </Button>
@@ -203,7 +206,7 @@ export default function PaginationControls({
                   onClick={() => handlePageParams(max_page.toString())}
                 >
                   {/* For SEO */}
-                  <Link href={`${pathname}/?${pageParam}=${max_page}&${perParam}=${per}`} className='hidden'>Перейти на последнюю страницу</Link>
+                  <Link locale={locale} href={`${pathname}/?${pageParam}=${max_page}&${perParam}=${per}`} className='hidden'>Перейти на последнюю страницу</Link>
                   <span className="sr-only">Перейти на последнюю страницу</span>
                   <ChevronsRight className="h-4 w-4" />
                 </Button>

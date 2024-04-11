@@ -1,14 +1,16 @@
 import ImageComp from '@/components/ImageComp'
+import Link from '@/components/Link'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { CarouselItem } from '@/components/ui/carousel'
 import type { EducationalProgramSingleT } from '@/lib/types'
-import { Link } from '@/navigation'
 import React from 'react'
 
 export default function EducationalProgramsItem({
+    locale,
     item
 }: {
+    locale: string
     item: EducationalProgramSingleT
 }) {
     return (
@@ -35,7 +37,7 @@ export default function EducationalProgramsItem({
                         </div>
                     </div>
 
-                    <Link href={`/entrance/${item.attributes.slug}`} className='w-fit mx-auto mb-3 md:mt-auto'>
+                    <Link locale={locale} href={`/entrance/${item.attributes.slug}`} className='w-fit mx-auto mb-3 md:mt-auto'>
                         <Button className='uppercase font-medium px-10 py-5 rounded-3xl'>
                             Подробнее
                         </Button>

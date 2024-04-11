@@ -7,6 +7,7 @@ import { cn, splitArray } from '@/lib/utils'
 import React, { useEffect, useState } from 'react'
 import EducationalProgramsItem from './EducationalProgramsItem'
 import EmployeesItem from './EmployeesItem'
+import { useLocale } from '@/lib/hooks/useLocale'
 
 export default function SliderEntity({
     data,
@@ -17,6 +18,8 @@ export default function SliderEntity({
     headingBig?: boolean,
     className?: string
 }) {
+
+    const locale = useLocale()
 
     const [width, setWidth] = useState(window?.innerWidth);
 
@@ -51,7 +54,7 @@ export default function SliderEntity({
             {data.educational_programs.data.length > 0 && (
                 <CarouselComp className='lg:-ml-8 -ml-4'>
                     {data.educational_programs.data.map(item => (
-                        <EducationalProgramsItem key={item.id} item={item} />
+                        <EducationalProgramsItem key={item.id} locale={locale} item={item} />
                     ))}
                 </CarouselComp>
             )}

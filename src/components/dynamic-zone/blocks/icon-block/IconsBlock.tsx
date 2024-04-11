@@ -7,7 +7,8 @@ import ImageComp from '@/components/ImageComp';
 import { TypographyH2 } from '@/components/typography';
 import { ClientHydration } from '@/components/ClientHydration';
 import { Button } from '@/components/ui/button';
-import { Link } from '@/navigation';
+import Link from '@/components/Link';
+import { headers } from 'next/headers';
 
 export default function IconsBlock({
     data,
@@ -18,6 +19,9 @@ export default function IconsBlock({
     headingBig?: boolean,
     className?: string,
 }) {
+
+    const headersList = headers();
+    const header_locale = headersList.get('x-locale') || "";
     
     return (
         <div className={cn("", className)}>
@@ -59,7 +63,7 @@ export default function IconsBlock({
                     </div>
 
                     {data.moreLink && (
-                        <Link href={data.moreLink} target='__blank' className='float-end xl:mt-2 mt-8'>
+                        <Link locale={header_locale} href={data.moreLink} target='__blank' className='float-end xl:mt-2 mt-8'>
                             <Button className='uppercase rounded-3xl font-medium px-10 py-5'>{data.moreTitle}</Button>
                         </Link>
                     )}

@@ -5,13 +5,16 @@ import Image from "next/image";
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
 import { Button } from '../ui/button';
-import { Link } from '@/navigation';
+import Link from '../Link';
+import { useLocale } from '@/lib/hooks/useLocale';
 
 export default function About({
     selectedItem
 }: {
     selectedItem: number
 }) {
+
+    const locale = useLocale()
 
     const list = [
         {
@@ -190,7 +193,7 @@ export default function About({
                             },
                         }}
                     >
-                        <Link href="/structure">
+                        <Link locale={locale} href="/structure">
                             <Button 
                                 variant="outline" 
                                 className='uppercase rounded-full font-medium lg:text-sm text-xs lg:py-4 px-8 py-3 mt-[5vh] lg:ml-16'

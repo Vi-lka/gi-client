@@ -6,14 +6,17 @@ import { NavigationMenu, NavigationMenuList, navigationMenuTriggerStyle } from '
 import { ScrollArea } from '../ui/scroll-area'
 import { cn } from '@/lib/utils'
 import { CgMenuRight } from "react-icons/cg";
-import { Link } from '@/navigation'
 import { useSelectedLayoutSegment } from 'next/navigation'
+import { useLocale } from '@/lib/hooks/useLocale'
+import Link from '../Link'
 
 export default function NavSheet({
   className
 }: {
   className?: string
 }) {
+
+  const locale = useLocale()
 
   return (
     <Sheet>
@@ -25,14 +28,14 @@ export default function NavSheet({
         <NavigationMenu orientation="vertical" className="mx-auto">
           <NavigationMenuList className="flex flex-col items-center">
             <ScrollArea className="font-Raleway mt-[2vh] h-[90vh] w-full p-1">
-              <SheetMenuItem href='/info'>Сведения</SheetMenuItem>
-              <SheetMenuItem href='/structure'>Структура</SheetMenuItem>
-              <SheetMenuItem href='/education'>Обучение</SheetMenuItem>
-              <SheetMenuItem href='/entrance'>Поступление</SheetMenuItem>
-              <SheetMenuItem href='/dpo'>Курсы ДПО</SheetMenuItem>
-              <SheetMenuItem href='/science'>Наука</SheetMenuItem>
-              <SheetMenuItem href='/projects'>Проекты</SheetMenuItem>
-              <SheetMenuItem href='/journals'>Журналы</SheetMenuItem>
+              <SheetMenuItem locale={locale} href='/info'>Сведения</SheetMenuItem>
+              <SheetMenuItem locale={locale} href='/structure'>Структура</SheetMenuItem>
+              <SheetMenuItem locale={locale} href='/education'>Обучение</SheetMenuItem>
+              <SheetMenuItem locale={locale} href='/entrance'>Поступление</SheetMenuItem>
+              <SheetMenuItem locale={locale} href='/dpo'>Курсы ДПО</SheetMenuItem>
+              <SheetMenuItem locale={locale} href='/science'>Наука</SheetMenuItem>
+              <SheetMenuItem locale={locale} href='/projects'>Проекты</SheetMenuItem>
+              <SheetMenuItem locale={locale} href='/journals'>Журналы</SheetMenuItem>
             </ScrollArea>
           </NavigationMenuList>
         </NavigationMenu>
@@ -43,10 +46,12 @@ export default function NavSheet({
 
 
 function SheetMenuItem({
+  locale,
   children,
   href,
   blank = false,
 }: {
+  locale: string,
   children: React.ReactNode,
   href: string,
   blank?: boolean,
@@ -60,6 +65,7 @@ function SheetMenuItem({
       <ul className="flex flex-col justify-center w-full">
         <li>
           <Link 
+            locale={locale}
             aria-current={isActive ? 'page' : undefined}
             href={href}
             target={blank ? "_blank" : "_self"}

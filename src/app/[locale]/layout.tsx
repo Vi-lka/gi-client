@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
 import localFont from 'next/font/local';
+import "../globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import Footer from "@/components/footer/Footer";
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/react';
-
-export const dynamic = 'force-dynamic'
 
 const din = localFont({
   variable: "--Din",
@@ -81,14 +80,12 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-  params: { locale },
 }: Readonly<{
   children: React.ReactNode;
-  params: { locale: string };
 }>) {
   return (
     <html
-      lang={locale}
+      lang={"ru"}
       suppressHydrationWarning
       className={`${din.variable} ${cera.variable} scroll-smooth`}
     >

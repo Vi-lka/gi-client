@@ -3,9 +3,7 @@
 import React from 'react'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuPortal, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from '../ui/dropdown-menu'
 import { Button } from '../ui/button'
-import { Link, locales } from "@/navigation";
 import { usePathname } from "next/navigation";
-import { cn } from "@/lib/utils";
 import { MoreHorizontal, Search, Sun } from 'lucide-react'
 
 export default function MoreMenu() {
@@ -34,7 +32,8 @@ export default function MoreMenu() {
           </DropdownMenuSubTrigger>
           <DropdownMenuPortal>
             <DropdownMenuSubContent sideOffset={6} alignOffset={-6} className="w-fit rounded-2xl min-w-[50px] z-[100]">
-              {locales.map((locale, index) => (
+                Hi!
+              {/* {locales.map((locale, index) => (
                   <Link
                       key={index}
                       href="/" 
@@ -50,7 +49,7 @@ export default function MoreMenu() {
                           {locale === "ru" ? "ру" : locale}
                       </DropdownMenuItem>
                   </Link>
-              ))}
+              ))} */}
             </DropdownMenuSubContent>
           </DropdownMenuPortal>
         </DropdownMenuSub>

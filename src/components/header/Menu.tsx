@@ -1,15 +1,18 @@
 "use client"
 
-import { Link } from '@/navigation'
+import { useLocale } from '@/lib/hooks/useLocale'
 import { motion } from 'framer-motion'
+import { Languages } from 'lucide-react'
 import React from 'react'
-import LocaleSwitcher from '../LocaleSwitcher'
+import Link from '../Link'
 
 export default function Menu({
     selectedItem
 }: {
     selectedItem: number
 }) {
+
+    const locale = useLocale()
 
     const links = [
         {
@@ -128,7 +131,8 @@ export default function Menu({
                 className='relative w-full h-full flex flex-col lg:gap-4 sm:gap-8 gap-3 justify-center xl:pl-[10vw] xl:pr-16 pl-14 pr-6 2xl:py-12 py-6 z-50'
             >
                 <div className='absolute lg:top-6 top-3 lg:right-6 right-3 z-[100]'>
-                    <LocaleSwitcher className="lg:w-12 sm:w-11 w-9 sm:text-lg px-0 sm:py-5 py-4 text-background hover:bg-background focus:bg-background hover:text-primary focus:text-primary" />
+                    {/* <LocaleSwitcher className="lg:w-12 sm:w-11 w-9 sm:text-lg px-0 sm:py-5 py-4 text-background hover:bg-background focus:bg-background hover:text-primary focus:text-primary" /> */}
+                    <Languages className="lg:w-12 sm:w-11 w-9 sm:text-lg px-0 sm:py-5 py-4 text-background hover:bg-background focus:bg-background hover:text-primary focus:text-primary" />
                 </div>
                 {links.map((item, index) => (
                     <motion.div 
@@ -137,12 +141,12 @@ export default function Menu({
                         className='w-fit'
                     >
                         <div className='flex flex-wrap sm:gap-8 gap-6 items-center'>
-                            <Link href={item.mainLink} className='link-underline py-1 pr-3 font-Cera font-bold uppercase xl:text-2xl lg:text-xl sm:text-base text-sm hover:text-apricot transition-all duration-300'>
+                            <Link locale={locale} href={item.mainLink} className='link-underline py-1 pr-3 font-Cera font-bold uppercase xl:text-2xl lg:text-xl sm:text-base text-sm hover:text-apricot transition-all duration-300'>
                                 {item.mainTitle}
                             </Link>
                             {item.secondLink && item.secondTitle 
                                 ? (
-                                <Link href={item.secondLink} className='link-underline py-1 pr-3 font-Cera font-bold uppercase xl:text-2xl lg:text-xl sm:text-base text-sm hover:text-apricot transition-all duration-300'>
+                                <Link locale={locale} href={item.secondLink} className='link-underline py-1 pr-3 font-Cera font-bold uppercase xl:text-2xl lg:text-xl sm:text-base text-sm hover:text-apricot transition-all duration-300'>
                                     {item.secondTitle}
                                 </Link>
                                 )
@@ -153,6 +157,7 @@ export default function Menu({
                             {item.subLinks?.map((subItem, index) => (
                                 <Link
                                     key={index}
+                                    locale={locale}
                                     href={subItem.link}
                                     className='p-1 pl-0 text-sm lg:block hidden hover:text-apricot transition-all duration-300'
                                 >

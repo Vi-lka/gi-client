@@ -10,7 +10,8 @@ import { declOfNum } from '@/lib/utils';
 import { CalendarDays, Clock3, MapPin } from 'lucide-react';
 import { MdOutlineCurrencyRuble } from 'react-icons/md';
 import PaginationControls from '@/components/PaginationControls';
-import { Link } from '@/navigation';
+import Link from '@/components/Link';
+import { headers } from 'next/headers';
 
 const DEFAULT_PAGE_SIZE = 12;
 
@@ -19,6 +20,9 @@ export default async function DpoCoursesAll({
 }: {
     searchParams: { [key: string]: string | string[] | undefined };
 }) {
+
+    const headersList = headers();
+    const header_locale = headersList.get('x-locale') || "";
 
     const sort = searchParams["sort"] as string | undefined;
     const search = searchParams["search"] as string | undefined;
@@ -96,7 +100,7 @@ export default async function DpoCoursesAll({
                                         )}
                                     </ul>
                                         
-                                    <Link href={`/dpo/${item.attributes.slug}`} className='w-fit sm:ml-auto sm:mr-0 ml-auto mr-auto'>
+                                    <Link locale={header_locale} href={`/dpo/${item.attributes.slug}`} className='w-fit sm:ml-auto sm:mr-0 ml-auto mr-auto'>
                                         <Button className='uppercase font-medium px-10 py-5 rounded-3xl'>
                                             Подробнее
                                         </Button>
