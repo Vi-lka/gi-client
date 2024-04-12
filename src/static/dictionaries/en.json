@@ -1,4 +1,11 @@
 {
+  "JustWaitPage": {
+    "title": "This section of the site is still under development.",
+    "description": "You may be able to find the material you need on the ",
+    "descriptionLink": "temporary page",
+    "temporaryPage": "Temporary page",
+    "sorry": "We apologize for the inconvenience!"
+  },
   "Header": {
     "nav": {
       "info": "Information",
@@ -31,6 +38,17 @@
         "description": "The email has been sent"
       },
       "error": "Error!"
+    }
+  },
+  "NotFound": {
+    "title": "Not found"
+  },
+  "Error": {
+    "title": "Error",
+    "goBack": "Go Back",
+    "toast": {
+      "title": "Error! Something went wrong:",
+      "tryAgain": "Try Again"
     }
   }
 }

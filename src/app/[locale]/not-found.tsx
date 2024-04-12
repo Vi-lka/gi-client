@@ -1,15 +1,18 @@
 import Link from '@/components/Link';
 import Header from '@/components/header/Header';
 import { Button } from '@/components/ui/button'
+import { getDictionary } from '@/lib/getDictionary';
 import { SquareArrowOutUpRight } from 'lucide-react';
 import { headers } from 'next/headers';
 // import { Undo2 } from 'lucide-react'
 import React from 'react'
 
-export default function NotFound() {
+export default async function NotFound() {
 
     const headersList = headers();
     const header_locale = headersList.get('x-locale') || "";
+
+    const dict = await getDictionary(header_locale)
 
     return (
         <>
@@ -23,23 +26,23 @@ export default function NotFound() {
                     </h2> */}
 
                     <p className="text-xl font-semibold">
-                        Этот раздел сайта все еще в разработке.
+                        {dict.JustWaitPage.title}
                     </p>
 
                     <p className="text-lg">
-                        Возможно, вы сможете найти нужный вам материал на <Link locale={header_locale} href="/just-wait" className='text-primary font-bold hover:underline'>временной странице</Link>.
+                        {dict.JustWaitPage.description} <Link locale={header_locale} href="/just-wait" className='text-primary font-bold hover:underline'>{dict.JustWaitPage.descriptionLink}</Link>.
                     </p>
                 </div>
 
                 <Link locale={header_locale} href={`/just-wait`}>
                     <Button className="w-full max-w-[240px] p-6 uppercase rounded-3xl">
-                        Временная страница
+                        {dict.JustWaitPage.temporaryPage}
                         <SquareArrowOutUpRight className="ml-1" size={18} />
                     </Button>
                 </Link>
 
                 <p className='text-lg'>
-                    Приносим извинения за неудобства!
+                    {dict.JustWaitPage.sorry}
                 </p>
 
                 {/* <Button

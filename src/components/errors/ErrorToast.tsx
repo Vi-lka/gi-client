@@ -10,6 +10,7 @@ import { Button } from "../ui/button";
 
 import * as Sentry from "@sentry/nextjs";
 import { useRouter } from "next/navigation";
+import { useDictionary } from "../providers/DictionaryProvider";
 
 export default function ErrorToast({
   error,
@@ -18,6 +19,7 @@ export default function ErrorToast({
   error: string | ZodIssue[];
   place: string;
 }) {
+  const dict = useDictionary()
 
   const { toast } = useToast();
   const router = useRouter();
@@ -44,7 +46,7 @@ export default function ErrorToast({
 
     toast({
       variant: "destructive",
-      title: "Ошибка! Что-то пошло не так:",
+      title: dict.Error.toast.title,
       description: (
         <p>
           В {place}: {getShortDescription(messageError)}
@@ -54,14 +56,14 @@ export default function ErrorToast({
       action: (
         <ToastAction
           className="px-2 py-6 text-sm"
-          altText={"Попробовать снова"}
+          altText={dict.Error.toast.tryAgain}
           onClick={() => router.refresh()}
         >
           <Repeat className="h-8 w-8" />
         </ToastAction>
       ),
     });
-  }, [error, messageError, place, router, toast]);
+  }, [error, messageError, place, router, toast, dict.Error.toast]);
 
   return (
     <div className="mx-auto my-10 flex flex-col items-center gap-10 text-center">
@@ -69,7 +71,7 @@ export default function ErrorToast({
         <CircleAlert size={36} />
     
         <h2 className="font-Cera text-3xl font-bold uppercase">
-          Ошибка
+          {dict.Error.title}
         </h2>
     
         <p className="text-sm font-normal">
@@ -81,7 +83,7 @@ export default function ErrorToast({
         className="w-full max-w-[240px] p-6 uppercase hover:bg-background hover:text-primary rounded-3xl"
         onClick={() => router.back()}
       >
-        Вернуться
+        {dict.Error.goBack}
         <Undo2 className="ml-1" size={18} />
       </Button>
     </div>

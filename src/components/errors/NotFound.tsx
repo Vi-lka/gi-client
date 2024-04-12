@@ -4,6 +4,7 @@ import React from "react";
 import { SearchX, Undo2 } from "lucide-react";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
+import { useDictionary } from "../providers/DictionaryProvider";
 
 export default function NotFound({
   goBack,
@@ -14,6 +15,8 @@ export default function NotFound({
   additionalInfo?: string
   children?: React.ReactNode;
 }) {
+  const dict = useDictionary()
+
   const router = useRouter();
 
   return (
@@ -25,7 +28,7 @@ export default function NotFound({
           <SearchX size={36} />
 
           <h2 className="font-Cera text-3xl font-bold uppercase">
-            Не найдено
+            {dict.NotFound.title}
           </h2>
 
           <p className="text-sm font-normal">
@@ -38,7 +41,7 @@ export default function NotFound({
             className="w-full max-w-[240px] p-6 uppercase rounded-3xl"
             onClick={() => router.back()}
           >
-            Вернуться
+            {dict.Error.goBack}
             <Undo2 className="ml-1" size={18} />
           </Button>
         ) : null}
