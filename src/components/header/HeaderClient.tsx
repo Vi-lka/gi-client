@@ -104,10 +104,35 @@ export default function HeaderClient({
                 )}
             >
                 <div className={cn(
+                    "relative",
                     sticky || pathname !== "/" ? "container md:w-5/6 w-full" : ""
                 )}>
-                    <NavMenu navBar={navBar} links={links} onClick={handleScrollToTop} className='w-full max-w-none mx-auto justify-between lg:flex hidden nav-menu' />
+                    {/* Desktop */}
+                    <div className='relative lg:flex hidden'>
+                        <Link 
+                          locale={locale}
+                          href="/#top" 
+                          className='absolute top-1/2 -translate-y-1/2 2xl:-left-20 -left-14' 
+                          onClick={handleScrollToTop}
+                        >
+                          <Image 
+                            src="/hi-icon.svg"
+                            alt="HI"
+                            width={80}
+                            height={80}
+                            className='object-contain w-10'
+                          />
+                        </Link>
 
+                        <NavMenu navBar={navBar} links={links} className='w-full max-w-none mx-auto justify-between lg:flex hidden nav-menu' />
+
+                        <div className='absolute top-1/2 -translate-y-1/2 2xl:-right-20 -right-16 h-full flex items-center'>
+                          <MoreMenu />
+                        </div>
+                    </div>
+                    {/* Desktop */}
+
+                    {/* Mobile */}
                     <div className='lg:hidden flex items-center justify-between w-full'>
                         <Link locale={locale} href="/" onClick={handleScrollToTop}>
                             <Image 
@@ -118,11 +143,13 @@ export default function HeaderClient({
                                 className='object-contain'
                             />
                         </Link>
+
                         <div className='flex items-center gap-3'>
                             <MoreMenu />
-                            <NavSheet className="text-primary" />
+                            <NavSheet links={links} className="text-primary" />
                         </div>
                     </div>
+                    {/* Mobile */}
                 </div>
             </div>
         </header>

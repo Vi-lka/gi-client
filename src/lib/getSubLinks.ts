@@ -44,3 +44,32 @@ export default function getSubLinks(params: {
         }
     }
 }
+
+export function getLinkTitle(
+    params: { 
+        title: string;
+        navBarConfig: {
+            navBarTitle: string | null;
+            navBarDescription: string | null;
+            navBarImage: {
+                data: {
+                    attributes: {
+                        url: string;
+                    };
+                } | null;
+            };
+        } | null;
+    } | undefined,
+    dictTitle: string,
+): string  {
+
+    let title: string
+
+    if (params) {
+        title = (params.navBarConfig && params.navBarConfig.navBarTitle) ? params.navBarConfig.navBarTitle : params.title 
+    } else {
+        title = dictTitle
+    }
+
+    return title
+}

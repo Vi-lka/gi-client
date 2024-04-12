@@ -9,14 +9,23 @@ import { CgMenuRight } from "react-icons/cg";
 import { useSelectedLayoutSegment } from 'next/navigation'
 import { useLocale } from '@/lib/hooks/useLocale'
 import Link from '../Link'
+import type { LinksT } from '@/lib/types'
+import { useDictionary } from '../providers/DictionaryProvider'
+import { getLinkTitle } from '@/lib/getSubLinks'
 
 export default function NavSheet({
+  links,
   className
 }: {
+  links: LinksT,
   className?: string
 }) {
+  const dict = useDictionary()
 
   const locale = useLocale()
+
+  const entranceTitle = getLinkTitle(links.entrancePage.data?.attributes, dict.Header.nav.entrance)
+  const dpoTitle = getLinkTitle(links.dpo.data?.attributes, dict.Header.nav.dpo)
 
   return (
     <Sheet>
@@ -28,14 +37,14 @@ export default function NavSheet({
         <NavigationMenu orientation="vertical" className="mx-auto">
           <NavigationMenuList className="flex flex-col items-center">
             <ScrollArea className="font-Raleway mt-[2vh] h-[90vh] w-full p-1">
-              <SheetMenuItem locale={locale} href='/info'>Сведения</SheetMenuItem>
-              <SheetMenuItem locale={locale} href='/structure'>Структура</SheetMenuItem>
-              <SheetMenuItem locale={locale} href='/education'>Обучение</SheetMenuItem>
-              <SheetMenuItem locale={locale} href='/entrance'>Поступление</SheetMenuItem>
-              <SheetMenuItem locale={locale} href='/dpo'>Курсы ДПО</SheetMenuItem>
-              <SheetMenuItem locale={locale} href='/science'>Наука</SheetMenuItem>
-              <SheetMenuItem locale={locale} href='/projects'>Проекты</SheetMenuItem>
-              <SheetMenuItem locale={locale} href='/journals'>Журналы</SheetMenuItem>
+              <SheetMenuItem locale={locale} href='/info'>{dict.Header.nav.info}</SheetMenuItem>
+              <SheetMenuItem locale={locale} href='/structure'>{dict.Header.nav.structure}</SheetMenuItem>
+              <SheetMenuItem locale={locale} href='/education'>{dict.Header.nav.education}</SheetMenuItem>
+              <SheetMenuItem locale={locale} href='/entrance'>{entranceTitle}</SheetMenuItem>
+              <SheetMenuItem locale={locale} href='/dpo'>{dpoTitle}</SheetMenuItem>
+              <SheetMenuItem locale={locale} href='/science'>{dict.Header.nav.science}</SheetMenuItem>
+              <SheetMenuItem locale={locale} href='/projects'>{dict.Header.nav.projects}</SheetMenuItem>
+              <SheetMenuItem locale={locale} href='/journals'>{dict.Header.nav.journals}</SheetMenuItem>
             </ScrollArea>
           </NavigationMenuList>
         </NavigationMenu>
@@ -62,25 +71,23 @@ function SheetMenuItem({
 
   return (
     <div className="mb-1 mt-3 flex w-full gap-1 py-2">
-      <ul className="flex flex-col justify-center w-full">
-        <li>
-          <Link 
-            locale={locale}
-            aria-current={isActive ? 'page' : undefined}
-            href={href}
-            target={blank ? "_blank" : "_self"}
-            // style={{fontWeight: isActive ? 'bold' : 'normal'}}
-            className={cn(
-              navigationMenuTriggerStyle(),
-              "w-full h-fit"
-            )}
-          >
-            <SheetClose className="px-3 py-2 text-base text-left w-full h-full uppercase">
-                {children}
-            </SheetClose>
-          </Link>
-        </li>
-      </ul>
+      <li className='flex justify-center w-full'>
+        <Link 
+          locale={locale}
+          aria-current={isActive ? 'page' : undefined}
+          href={href}
+          target={blank ? "_blank" : "_self"}
+          // style={{fontWeight: isActive ? 'bold' : 'normal'}}
+          className={cn(
+            navigationMenuTriggerStyle(),
+            "w-full h-fit"
+          )}
+        >
+          <SheetClose className="px-3 py-2 text-base text-left w-full h-full uppercase">
+              {children}
+          </SheetClose>
+        </Link>
+      </li>
     </div>
   );
 }
