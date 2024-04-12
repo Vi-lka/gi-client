@@ -9,21 +9,17 @@ import SubmitButton from './SubmitButton'
 import { InputField } from './InputField'
 import type { z } from 'zod'
 import { ContactFormT } from "@/lib/types"
+import { useDictionary } from '../providers/DictionaryProvider'
 
 export default function ContactForm({
-    dict,
     handleAction,
     className,
 }: {
-    dict: {
-        name: string,
-        email: string,
-        phone: string,
-        send: string
-    },
     handleAction: (formData: FormData) => void,
     className?: string,
 }) {
+    const dict = useDictionary()
+
     const form = useForm<z.infer<typeof ContactFormT>>({
         resolver: zodResolver(ContactFormT),
         defaultValues: {
@@ -47,7 +43,7 @@ export default function ContactForm({
                         <FormItem>
                             <FormControl>
                                 <InputField 
-                                    placeholder={dict.name}
+                                    placeholder={dict.ContactForm.form.name}
                                     disabled={form.formState.isSubmitting}
                                     className='bg-input rounded-3xl border-border shadow-sm'
                                     {...field}
@@ -64,7 +60,7 @@ export default function ContactForm({
                         <FormItem>
                             <FormControl>
                                 <InputField 
-                                    placeholder={dict.email}
+                                    placeholder={dict.ContactForm.form.email}
                                     disabled={form.formState.isSubmitting}
                                     className='bg-input rounded-3xl border-border shadow-sm'
                                     {...field}
@@ -81,7 +77,7 @@ export default function ContactForm({
                         <FormItem>
                             <FormControl>
                                 <InputField 
-                                    placeholder={dict.phone}
+                                    placeholder={dict.ContactForm.form.phone}
                                     disabled={form.formState.isSubmitting}
                                     className='bg-input rounded-3xl border-border shadow-sm'
                                     {...field}
@@ -95,7 +91,7 @@ export default function ContactForm({
                     disabled={!(form.formState.isDirty && form.formState.isValid) || form.formState.isSubmitting}
                     className='px-8 lg:float-start float-end'
                 >
-                    {dict.send}
+                    {dict.ContactForm.form.send}
                 </SubmitButton>
             </form>
         </Form>

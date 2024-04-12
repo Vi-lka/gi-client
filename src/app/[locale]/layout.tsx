@@ -5,6 +5,8 @@ import { Toaster } from "@/components/ui/toaster";
 import Footer from "@/components/footer/Footer";
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/react';
+import { getDictionary } from "@/lib/getDictionary";
+import DictionaryProvider from "@/components/providers/DictionaryProvider";
 
 const din = localFont({
   variable: "--Din",
@@ -78,11 +80,16 @@ export const metadata: Metadata = {
   description: "Поступай в Гуманитарный!",
 };
 
-export default function Layout({
+export default async function Layout({
+  params,
   children,
 }: Readonly<{
+  params: { locale: string },
   children: React.ReactNode;
 }>) {
+
+  const dict = await getDictionary(params.locale);
+
   return (
     <html
       lang={"ru"}
@@ -90,9 +97,11 @@ export default function Layout({
       className={`${din.variable} ${cera.variable} scroll-smooth`}
     >
       <body className='font-Din relative flex flex-col justify-between min-h-screen bg-background'>
-        {children}
-        <Toaster />
-        <Footer />
+        <DictionaryProvider dictionary={dict}>
+          {children}
+          <Toaster />
+          <Footer />
+        </DictionaryProvider>
         <SpeedInsights />
         <Analytics />
       </body>

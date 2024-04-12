@@ -1,4 +1,16 @@
 {
+  "Header": {
+    "nav": {
+      "info": "Information",
+      "structure": "Structure",
+      "education": "Education",
+      "entrance": "Entrance",
+      "dpo": "Courses",
+      "science": "Science",
+      "projects": "Projects",
+      "journals": "Journals"
+    }
+  },
   "Hero": {
     "tabs": {
       "main": "Main",

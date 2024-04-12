@@ -2,6 +2,7 @@
 
 import Link from '@/components/Link'
 import LocaleSwitcher from '@/components/LocaleSwitcher'
+import { useDictionary } from '@/components/providers/DictionaryProvider'
 import getSubLinks from '@/lib/getSubLinks'
 import { useLocale } from '@/lib/hooks/useLocale'
 import type { LinksT, NavBarT } from '@/lib/types'
@@ -18,11 +19,12 @@ export default function Menu({
     },
     selectedItem: number
 }) {
+    const dict = useDictionary()
 
     const locale = useLocale()
 
-    const entranceTitle = data.links.entrancePage.data ? data.links.entrancePage.data.attributes.title : "Поступление"
-    const dpoTitle = data.links.dpo.data ? data.links.dpo.data.attributes.title : "Курсы Дополнительного Профессионального Образования"
+    const entranceTitle = data.links.entrancePage.data ? data.links.entrancePage.data.attributes.title : dict.Header.nav.entrance
+    const dpoTitle = data.links.dpo.data ? data.links.dpo.data.attributes.title : dict.Header.nav.dpo
 
     const entranceLinks = getSubLinks({
         title: entranceTitle,
@@ -39,7 +41,7 @@ export default function Menu({
 
     const links = [
         {
-            title: "Сведения",
+            title: dict.Header.nav.info,
             link: "/info",
             subLinks: [
                 { title: "Новости", link: "/info/news" },
@@ -48,7 +50,7 @@ export default function Menu({
             ]
         },
         {
-            title: "Структура института",
+            title: dict.Header.nav.structure,
             link: "/structure",
             subLinks: [
                 { title: "Кафедры", link: "/structure/departments" },
@@ -59,7 +61,7 @@ export default function Menu({
             ]
         },
         {
-            title: "Обучение",
+            title: dict.Header.nav.education,
             link: "/education",
             subLinks: [
                 { title: "Календарный график", link: "/education/schedule" },
@@ -74,7 +76,7 @@ export default function Menu({
         entranceLinks,
         dpoLinks,
         {
-            title: "Наука",
+            title: dict.Header.nav.science,
             link: "/science",
             subLinks: [
                 { title: "Научные показатели", link: "/science/indicators" },
@@ -84,10 +86,10 @@ export default function Menu({
             ]
         },
         {
-            title: "Проекты",
+            title: dict.Header.nav.projects,
             link: "/projects",
             subLinks: [],
-            secondTitle: "Журналы",
+            secondTitle: dict.Header.nav.journals,
             secondLink: "/journals",
         },
     ]

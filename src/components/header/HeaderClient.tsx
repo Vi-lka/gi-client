@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
-import NavMenu from './NavMenu'
+import NavMenu from './nav-menu/NavMenu'
 import NavSheet from './NavSheet'
 import Image from 'next/image'
 import { cn } from '@/lib/utils'

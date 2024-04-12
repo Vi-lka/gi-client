@@ -1,7 +1,6 @@
 import React from 'react'
 import HorizontalAccordion from './HorizontalAccordion'
 import { headers } from 'next/headers';
-import { getDictionary } from '@/lib/getDictionary';
 import { HeroAboutT } from '@/lib/types';
 import { fetchData, getLinks, getNavBar } from '@/lib/queries';
 import { notFound } from 'next/navigation';
@@ -13,8 +12,6 @@ export default async function Hero() {
 
   const headersList = headers();
   const header_locale = headersList.get('x-locale') || "";
-
-  const dict = await getDictionary(header_locale);
 
   const getHeroAbout = async (locale: string): Promise<HeroAboutT> => {
     const query = /* GraphGL */ `
@@ -88,7 +85,6 @@ export default async function Hero() {
   return (
     <section id="top" className='relative 2xl:max-w-[2000px] xl:max-w-[1400px] lg:max-w-[1280px] md:max-w-[1024px] sm:max-w-[768px] w-11/12 mx-auto mt-6 z-50'>
       <HorizontalAccordion 
-        dict={dict.Hero} 
         aboutData={aboutResult.status !== "rejected" ? aboutResult.value : null} 
         menuData={{
           navBar: navBarResult.status !== "rejected" ? navBarResult.value : null,

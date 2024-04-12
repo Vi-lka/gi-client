@@ -10,7 +10,6 @@ import DynamicReactIcon from '../DynamicReactIcon';
 import ImageComp from '../ImageComp';
 import Link from 'next/link';
 import FormFooter from './FormFooter';
-import { getDictionary } from '@/lib/getDictionary';
 import { headers } from 'next/headers';
 
 export const dynamic = 'force-dynamic'
@@ -19,8 +18,6 @@ export default async function Footer() {
 
     const headersList = headers();
     const header_locale = headersList.get('x-locale') || "";
-    
-    const dict = await getDictionary(header_locale);
 
     const getFooter = async (locale: string): Promise<FooterT> => {
         const query = /* GraphGL */ `
@@ -103,7 +100,6 @@ export default async function Footer() {
                         <FormFooter 
                             formTitle={dataResult.value.title} 
                             formDescription={dataResult.value.subtitle}
-                            dict={dict.ContactForm}
                         />
                     </section>
 

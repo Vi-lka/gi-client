@@ -7,15 +7,9 @@ import About from './About';
 import Menu from './Menu';
 import { cn } from '@/lib/utils';
 import type { HeroAboutT, LinksT, NavBarT } from '@/lib/types';
+import { useDictionary } from '@/components/providers/DictionaryProvider';
 
 type Props = {
-    dict: {
-        tabs: {
-          main: string,
-          about: string,
-          menu: string,
-        }
-    },
     aboutData: HeroAboutT | null,
     menuData: {
         navBar: NavBarT | null,
@@ -23,7 +17,11 @@ type Props = {
     }
 }
 
-export default function HorizontalAccordion({ dict, aboutData, menuData }: Props) {
+export default function HorizontalAccordion({ 
+    aboutData, 
+    menuData 
+}: Props) {
+    const dict = useDictionary()
 
     const [selectedItem, setSelectedItem] = useState(0);
 
@@ -35,19 +33,19 @@ export default function HorizontalAccordion({ dict, aboutData, menuData }: Props
     const items = [
         {
             id: 0,
-            title: dict.tabs.main,
+            title: dict.Hero.tabs.main,
             color: "hsl(var(--apricot))",
             children: <MainLogo selectedItem={selectedItem} />
         },
         {
             id: 1,
-            title: dict.tabs.about,
+            title: dict.Hero.tabs.about,
             color: "hsl(var(--accent))",
             children: aboutData ? <About data={aboutData} selectedItem={selectedItem} /> : null
         },
         {
             id: 2,
-            title: dict.tabs.menu,
+            title: dict.Hero.tabs.menu,
             color: "hsl(var(--primary))",
             children: <Menu data={{ navBar: menuData.navBar, links: menuData.links }} selectedItem={selectedItem} />
         },

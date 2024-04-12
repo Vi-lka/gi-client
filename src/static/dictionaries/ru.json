@@ -1,4 +1,16 @@
 {
+  "Header": {
+    "nav": {
+      "info": "Сведения",
+      "structure": "Структура",
+      "education": "Обучение",
+      "entrance": "Поступление",
+      "dpo": "Курсы ДПО",
+      "science": "Наука",
+      "projects": "Проекты",
+      "journals": "Журналы"
+    }
+  },
   "Hero": {
     "tabs": {
       "main": "Главная",
