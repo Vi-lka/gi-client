@@ -68,7 +68,7 @@ export default async function DpoCoursesAll({
                                     <ul className='flex flex-col gap-3 lg:mr-6'>
                                         {(item.attributes.dateStart || item.attributes.dateEnd) && (
                                             <li className='flex items-center gap-2 font-medium'>
-                                                <CalendarDays className='w-fit h-5' />
+                                                <CalendarDays className='w-auto h-5' />
                                                 <p>
                                                     {item.attributes.dateStart && (
                                                         format(item.attributes.dateStart, "P", { locale: ru })
@@ -82,19 +82,19 @@ export default async function DpoCoursesAll({
                                         )}
                                         {item.attributes.location && (
                                             <li className='flex items-center gap-2 font-medium'>
-                                                <MapPin className='w-fit h-5' />
+                                                <MapPin className='w-auto h-5' />
                                                 {item.attributes.location}
                                             </li>
                                         )}
                                         {item.attributes.hours && (
                                             <li className='flex items-center gap-2 font-medium'>
-                                                <Clock3 className='w-fit h-5' />
+                                                <Clock3 className='w-auto h-5' />
                                                 {item.attributes.hours.toString() + declOfNum(item.attributes.hours, [' час', ' часа', ' часов'])}
                                             </li>
                                         )}
                                         {item.attributes.price && (
                                             <li className='flex items-center gap-2 font-medium'>
-                                                <MdOutlineCurrencyRuble className='w-fit h-5' />
+                                                <MdOutlineCurrencyRuble className='w-auto h-5' />
                                                 {item.attributes.price}
                                             </li>
                                         )}
