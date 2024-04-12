@@ -213,7 +213,7 @@ function SocialIcon({
     image: ImageT,
     imageDark: ImageT,
 }) {
-    if (iconReact) return <DynamicReactIcon icon={iconReact} className="w-fit xl:h-9 h-8 text-primary rounded-full" />
+    if (iconReact) return <DynamicReactIcon icon={iconReact} className="w-auto xl:h-9 h-8 text-primary rounded-full" />
     else if (image) return (
         <ImageComp 
             src={image.data?.attributes.url} 
@@ -233,7 +233,7 @@ function ContactsIcon({
     iconReact: string | null,
     iconCustom: CustomIconEnum | null,
 }) {
-    if (iconCustom) return <IconCustom icon={iconCustom} className='w-fit h-6 filter-primary' />
-    else if (iconReact) return <DynamicReactIcon icon={iconReact} className="w-fit h-6 text-primary" />
+    if (iconCustom) return <IconCustom icon={iconCustom} className='w-auto h-6 filter-primary' />
+    else if (iconReact) return <DynamicReactIcon icon={iconReact} className="w-auto h-6 text-primary" />
     else return null
 }

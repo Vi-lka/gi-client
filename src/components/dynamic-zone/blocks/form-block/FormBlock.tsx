@@ -87,8 +87,8 @@ function FormBlockIcon({
     item: FormBlockItemT,
     className?: string
 }) {
-    if (item.iconCustom) return <IconCustom icon={item.iconCustom} className={cn('w-fit lg:h-11 sm:h-10 h-9 filter-background', className)} />
-    else if (item.iconReact) return <DynamicReactIcon icon={item.iconReact} className={cn("w-fit lg:h-11 sm:h-10 h-9 text-background", className)} />
+    if (item.iconCustom) return <IconCustom icon={item.iconCustom} className={cn('h-auto lg:w-11 sm:w-10 w-9 filter-background', className)} />
+    else if (item.iconReact) return <DynamicReactIcon icon={item.iconReact} className={cn("h-auto lg:w-11 sm:w-10 w-9 text-background", className)} />
     else if (item.image.data) return (
         <Image
             src={item.image.data.attributes.url}

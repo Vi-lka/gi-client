@@ -159,6 +159,6 @@ export default function About({
 }
 
 function IconAbout({ item }: { item: IconsBlockItemT }) {
-    if (item.iconCustom) return <IconCustom icon={item.iconCustom} className='lg:w-14 sm:w-10 w-8 h-fit filter-background' />
-    else if (item.iconReact) return <DynamicReactIcon icon={item.iconReact} className="lg:w-14 sm:w-10 w-8 h-fit text-background" />
+    if (item.iconCustom) return <IconCustom icon={item.iconCustom} className='lg:w-14 sm:w-10 w-8 h-auto filter-background' />
+    else if (item.iconReact) return <DynamicReactIcon icon={item.iconReact} className="lg:w-14 sm:w-10 w-8 h-auto text-background" />
 }

@@ -5,7 +5,7 @@ import Negotiator from "negotiator";
 
 import { localesCodes } from "./static/locales";
 
-const defaultLocale = "ru";
+const defaultLocale = "en";
 
 function getLocale(request: NextRequest) {
   // Negotiator expects plain object so we need to transform headers

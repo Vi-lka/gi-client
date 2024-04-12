@@ -2,21 +2,11 @@
 
 import Link from '@/components/Link'
 import LocaleSwitcher from '@/components/LocaleSwitcher'
+import getSubLinks from '@/lib/getSubLinks'
 import { useLocale } from '@/lib/hooks/useLocale'
 import type { LinksT, NavBarT } from '@/lib/types'
 import { motion } from 'framer-motion'
 import React from 'react'
-
-type LinkT = {
-    title: string,
-    link: string,
-    subLinks: {
-        title: string | null,
-        link: string | null
-    }[],
-    secondTitle?: string,
-    secondLink?: string,
-}
 
 export default function Menu({
     data,
@@ -47,7 +37,7 @@ export default function Menu({
         linksData: data.links.dpo.data?.attributes.content
     })
 
-    const links: LinkT[] = [
+    const links = [
         {
             title: "Сведения",
             link: "/info",
@@ -189,38 +179,4 @@ export default function Menu({
             </motion.div>
         </div>
     )
-}
-
-
-function getSubLinks(params: {
-    title: string,
-    link: string,
-    navBarData: {
-        title: string | null,
-        link: string | null
-    }[] | undefined,
-    linksData: {
-        title: string | null;
-        link: string | null;
-        linkTitle: string | null;
-    }[] | undefined
-}): LinkT  {
-    if (params.navBarData) {
-        return {
-            title: params.title,
-            link: params.link,
-            subLinks: params.navBarData
-        }
-    } else {
-        return {
-            title: params.title,
-            link: params.link,
-            subLinks: params.linksData
-                ? params.linksData.map(item => ({
-                    title: item.linkTitle, 
-                    link: item.link ? `${params.link}#${item.link}` : null
-                }))
-                : []
-        }
-    }
 }

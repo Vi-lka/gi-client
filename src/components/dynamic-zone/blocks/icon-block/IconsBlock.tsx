@@ -44,8 +44,10 @@ export default function IconsBlock({
                     </div>
                 )}
 
-                <div className='flex-1 mt-4'>
-                    <div className='xl:px-0 sm:px-12 px-6'>
+                <div className='flex-1 mt-4 xl:w-auto w-full'>
+                    <div className={cn(
+                        data.backgroundOn ? "xl:px-0 sm:px-12 px-6" : "",
+                    )}>
                         {data.title && (
                             <TypographyH2 
                                 className={cn(

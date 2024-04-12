@@ -550,29 +550,31 @@ export type NavBarT = z.infer<typeof NavBarT>;
 
 
 //.........................Links.........................//
+export const LinksItemT = z.object({
+  title: z.string(),
+  navBarConfig: z.object({
+    navBarTitle: z.string().nullable(),
+    navBarDescription: z.string().nullable(),
+    navBarImage: ImageT,
+  }).nullable(),
+  content: z.object({
+    title: z.string().nullable(),
+    link: z.string().nullable(),
+    linkTitle: z.string().nullable(),
+    linkDescription: z.string().nullable(),
+  }).array()
+})
+export type LinksItemT = z.infer<typeof LinksItemT>;
+
 export const LinksT  = z.object({
   entrancePage: z.object({
     data: z.object({
-      attributes: z.object({
-        title: z.string(),
-        content: z.object({
-          title: z.string().nullable(),
-          link: z.string().nullable(),
-          linkTitle: z.string().nullable(),
-        }).array()
-      })
+      attributes: LinksItemT
     }).nullable()
   }),
   dpo: z.object({
     data: z.object({
-      attributes: z.object({
-        title: z.string(),
-        content: z.object({
-          title: z.string().nullable(),
-          link: z.string().nullable(),
-          linkTitle: z.string().nullable(),
-        }).array()
-      })
+      attributes: LinksItemT
     }).nullable()
   })
 })

@@ -235,6 +235,7 @@ const sameFields = `
   title
   link
   linkTitle
+  linkDescription
 `
 export const dynamicContentLinksQuery = `
   ... on ComponentContentContacts {

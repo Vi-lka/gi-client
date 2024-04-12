@@ -38,7 +38,7 @@ export default function Numbers({
                         <h4 className='flex items-center text-primary font-bold lg:text-4xl text-3xl'>
                             {item.number.toLocaleString("ru-RU")}
                             {item.icon && (
-                                <DynamicReactIcon icon={item.icon} className="w-fit lg:h-6 h-5 lg:mt-2 mt-1 ml-0.5" />
+                                <DynamicReactIcon icon={item.icon} className="w-auto lg:h-6 h-5 lg:mt-2 mt-1 ml-0.5" />
                             )}
                         </h4>
                         <p className='max-w-80 whitespace-pre-wrap mt-1'>{item.description}</p>

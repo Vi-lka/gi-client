@@ -4,8 +4,8 @@ import type { ContactsCompT } from '@/lib/types'
 import { cn } from '@/lib/utils'
 import Link from 'next/link'
 import React from 'react'
-import { BsTelephone } from 'react-icons/bs'
 import { AtSign, MapPin } from 'lucide-react'
+import { FiPhone } from 'react-icons/fi'
 
 export default function ContactsBlock({
   data,
@@ -33,7 +33,7 @@ export default function ContactsBlock({
         <ul className='flex flex-col gap-6'>
           {data.phone && (
             <li className='flex items-center gap-3'>
-              <BsTelephone className='w-6 h-6' />
+              <FiPhone className='w-6 h-6' />
               <Link 
                 href={`tel:${data.phone}`} 
                 className='flex-1 hover:underline underline-offset-2'
