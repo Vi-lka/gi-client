@@ -230,3 +230,50 @@ export const dynamicContentQuery = `
     formDescription
   }
 `
+
+const sameFields = `
+  title
+  link
+  linkTitle
+`
+export const dynamicContentLinksQuery = `
+  ... on ComponentContentContacts {
+    ${sameFields}
+  }
+  ... on ComponentContentIconsBlock {
+    ${sameFields}
+  }
+  ... on ComponentContentSliderPhotos {
+    ${sameFields}
+  }
+  ... on ComponentContentSliderEntity {
+    ${sameFields}
+  }
+  ... on ComponentContentCollectionAll {
+    ${sameFields}
+  }
+  ... on ComponentContentTextBlock {
+    ${sameFields}
+  }
+  ... on ComponentContentTextImages {
+    ${sameFields}
+  }
+  ... on ComponentContentTextGrid {
+    ${sameFields}
+  }
+  ... on ComponentContentTimeline {
+    ${sameFields}
+  }
+  ... on ComponentContentNumbers {
+    ${sameFields}
+  }
+  ... on ComponentContentFiles {
+    ${sameFields}
+  }
+  ... on ComponentContentAccordion {
+    ${sameFields}
+  }
+  ... on ComponentContentFormBlock {
+    ${sameFields}
+  }
+`

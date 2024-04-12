@@ -510,6 +510,76 @@ export type DpoCoursePageT = z.infer<typeof DpoCoursePageT>;
 
 
 
+
+//.........................NavBar.........................//
+export const SubLinkT = z.object({
+  title: z.string(),
+  link: z.string(),
+})
+export type SubLinkT = z.infer<typeof SubLinkT>;
+
+export const NavBarT  = z.object({
+  info: z.object({
+    subLinks: SubLinkT.array()
+  }).nullable(),
+  structure: z.object({
+    subLinks: SubLinkT.array()
+  }).nullable(),
+  education: z.object({
+    subLinks: SubLinkT.array()
+  }).nullable(),
+  entrance: z.object({
+    subLinks: SubLinkT.array()
+  }).nullable(),
+  dpo: z.object({
+    subLinks: SubLinkT.array()
+  }).nullable(),
+  science: z.object({
+    subLinks: SubLinkT.array()
+  }).nullable(),
+  projects: z.object({
+    subLinks: SubLinkT.array()
+  }).nullable(),
+  journals: z.object({
+    subLinks: SubLinkT.array()
+  }).nullable(),
+})
+export type NavBarT = z.infer<typeof NavBarT>;
+
+
+
+
+//.........................Links.........................//
+export const LinksT  = z.object({
+  entrancePage: z.object({
+    data: z.object({
+      attributes: z.object({
+        title: z.string(),
+        content: z.object({
+          title: z.string().nullable(),
+          link: z.string().nullable(),
+          linkTitle: z.string().nullable(),
+        }).array()
+      })
+    }).nullable()
+  }),
+  dpo: z.object({
+    data: z.object({
+      attributes: z.object({
+        title: z.string(),
+        content: z.object({
+          title: z.string().nullable(),
+          link: z.string().nullable(),
+          linkTitle: z.string().nullable(),
+        }).array()
+      })
+    }).nullable()
+  })
+})
+export type LinksT = z.infer<typeof LinksT>;
+
+
+
 //.........................Hero.........................//
 export const HeroAboutT  = z.object({
   icons: ImagesArrayT,

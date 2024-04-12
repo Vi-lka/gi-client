@@ -3,21 +3,54 @@
 import Link from '@/components/Link'
 import LocaleSwitcher from '@/components/LocaleSwitcher'
 import { useLocale } from '@/lib/hooks/useLocale'
+import type { LinksT, NavBarT } from '@/lib/types'
 import { motion } from 'framer-motion'
 import React from 'react'
 
+type LinkT = {
+    title: string,
+    link: string,
+    subLinks: {
+        title: string | null,
+        link: string | null
+    }[],
+    secondTitle?: string,
+    secondLink?: string,
+}
+
 export default function Menu({
+    data,
     selectedItem
 }: {
+    data: {
+        navBar: NavBarT | null,
+        links: LinksT
+    },
     selectedItem: number
 }) {
 
     const locale = useLocale()
 
-    const links = [
+    const entranceTitle = data.links.entrancePage.data ? data.links.entrancePage.data.attributes.title : "Поступление"
+    const dpoTitle = data.links.dpo.data ? data.links.dpo.data.attributes.title : "Курсы Дополнительного Профессионального Образования"
+
+    const entranceLinks = getSubLinks({
+        title: entranceTitle,
+        link: "/entrance",
+        navBarData: data.navBar?.entrance?.subLinks,
+        linksData: data.links.entrancePage.data?.attributes.content
+    })
+    const dpoLinks = getSubLinks({
+        title: dpoTitle,
+        link: "/dpo",
+        navBarData: data.navBar?.dpo?.subLinks,
+        linksData: data.links.dpo.data?.attributes.content
+    })
+
+    const links: LinkT[] = [
         {
-            mainTitle: "Сведения",
-            mainLink: "/info",
+            title: "Сведения",
+            link: "/info",
             subLinks: [
                 { title: "Новости", link: "/info/news" },
                 { title: "Документы", link: "/info/docs" },
@@ -25,8 +58,8 @@ export default function Menu({
             ]
         },
         {
-            mainTitle: "Структура института",
-            mainLink: "/structure",
+            title: "Структура института",
+            link: "/structure",
             subLinks: [
                 { title: "Кафедры", link: "/structure/departments" },
                 { title: "Научные подразделения", link: "/structure/scientific-departments" },
@@ -36,8 +69,8 @@ export default function Menu({
             ]
         },
         {
-            mainTitle: "Обучение",
-            mainLink: "/education",
+            title: "Обучение",
+            link: "/education",
             subLinks: [
                 { title: "Календарный график", link: "/education/schedule" },
                 { title: "Стипендии и премии", link: "/education/scholarships-awards" },
@@ -48,26 +81,11 @@ export default function Menu({
                 { title: "Правовые документы", link: "/education/law" },
             ]
         },
+        entranceLinks,
+        dpoLinks,
         {
-            mainTitle: "Поступление",
-            mainLink: "/entrance",
-            subLinks: [
-                { title: "Направления бакалавриата", link: "/entrance/bachelor" },
-                { title: "Направления магистратуры", link: "/entrance/magistracy" },
-                { title: "Направления аспирантуры", link: "/entrance/postgraduate" },
-                { title: "Об институте", link: "/entrance/about" },
-                { title: "Выпускники", link: "/entrance/graduates" },
-                { title: "Дополнительная информация", link: "/entrance/additional-info" },
-                { title: "Контакты", link: "/entrance/contacts" },
-            ]
-        },
-        {
-            mainTitle: "Курсы Дополнительного Профессионального Образования",
-            mainLink: "/dpo",
-        },
-        {
-            mainTitle: "Наука",
-            mainLink: "/science",
+            title: "Наука",
+            link: "/science",
             subLinks: [
                 { title: "Научные показатели", link: "/science/indicators" },
                 { title: "Исследовательские коллективы", link: "/science/research-teams" },
@@ -76,8 +94,9 @@ export default function Menu({
             ]
         },
         {
-            mainTitle: "Проекты",
-            mainLink: "/projects",
+            title: "Проекты",
+            link: "/projects",
+            subLinks: [],
             secondTitle: "Журналы",
             secondLink: "/journals",
         },
@@ -140,8 +159,8 @@ export default function Menu({
                         className='w-fit'
                     >
                         <div className='flex flex-wrap sm:gap-8 gap-6 items-center'>
-                            <Link locale={locale} href={item.mainLink} className='link-underline py-1 pr-3 font-Cera font-bold uppercase xl:text-2xl lg:text-xl sm:text-base text-sm hover:text-apricot transition-all duration-300'>
-                                {item.mainTitle}
+                            <Link locale={locale} href={item.link} className='link-underline py-1 pr-3 font-Cera font-bold uppercase xl:text-2xl lg:text-xl sm:text-base text-sm hover:text-apricot transition-all duration-300'>
+                                {item.title}
                             </Link>
                             {item.secondLink && item.secondTitle 
                                 ? (
@@ -154,6 +173,7 @@ export default function Menu({
                         </div>
                         <div className='flex flex-wrap gap-x-6 gap-y-[2px] mt-0.5'>
                             {item.subLinks?.map((subItem, index) => (
+                                (subItem.link && subItem.title) &&
                                 <Link
                                     key={index}
                                     locale={locale}
@@ -169,4 +189,38 @@ export default function Menu({
             </motion.div>
         </div>
     )
+}
+
+
+function getSubLinks(params: {
+    title: string,
+    link: string,
+    navBarData: {
+        title: string | null,
+        link: string | null
+    }[] | undefined,
+    linksData: {
+        title: string | null;
+        link: string | null;
+        linkTitle: string | null;
+    }[] | undefined
+}): LinkT  {
+    if (params.navBarData) {
+        return {
+            title: params.title,
+            link: params.link,
+            subLinks: params.navBarData
+        }
+    } else {
+        return {
+            title: params.title,
+            link: params.link,
+            subLinks: params.linksData
+                ? params.linksData.map(item => ({
+                    title: item.linkTitle, 
+                    link: item.link ? `${params.link}#${item.link}` : null
+                }))
+                : []
+        }
+    }
 }

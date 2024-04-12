@@ -6,7 +6,7 @@ import MainLogo from './MainLogo';
 import About from './About';
 import Menu from './Menu';
 import { cn } from '@/lib/utils';
-import type { HeroAboutT } from '@/lib/types';
+import type { HeroAboutT, LinksT, NavBarT } from '@/lib/types';
 
 type Props = {
     dict: {
@@ -16,10 +16,14 @@ type Props = {
           menu: string,
         }
     },
-    data: HeroAboutT
+    aboutData: HeroAboutT | null,
+    menuData: {
+        navBar: NavBarT | null,
+        links: LinksT
+    }
 }
 
-export default function HorizontalAccordion({ dict, data }: Props) {
+export default function HorizontalAccordion({ dict, aboutData, menuData }: Props) {
 
     const [selectedItem, setSelectedItem] = useState(0);
 
@@ -39,13 +43,13 @@ export default function HorizontalAccordion({ dict, data }: Props) {
             id: 1,
             title: dict.tabs.about,
             color: "hsl(var(--accent))",
-            children: <About data={data} selectedItem={selectedItem} />
+            children: aboutData ? <About data={aboutData} selectedItem={selectedItem} /> : null
         },
         {
             id: 2,
             title: dict.tabs.menu,
             color: "hsl(var(--primary))",
-            children: <Menu selectedItem={selectedItem} />
+            children: <Menu data={{ navBar: menuData.navBar, links: menuData.links }} selectedItem={selectedItem} />
         },
     ]
 
