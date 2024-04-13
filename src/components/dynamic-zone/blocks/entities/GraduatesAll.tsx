@@ -4,7 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { CarouselItem } from '@/components/ui/carousel';
 import { getGraduates } from '@/lib/queries';
 import React from 'react';
-import { splitArray } from '@/lib/utils';
+import { cn, splitArray } from '@/lib/utils';
 import ImageComp from '@/components/ImageComp';
 import { headers } from 'next/headers';
 
@@ -33,7 +33,14 @@ export default async function GraduatesAll({
     return (
         <CarouselComp className='lg:-ml-8 -ml-4'>
             {splitArray(dataResult.value.data, 3).map((arr, index) => (
-                <CarouselItem key={index} className='md:basis-1/2 lg:pl-8 pl-4 grid grid-rows-3 gap-8'>
+                <CarouselItem 
+                    key={index} 
+                    className={cn(
+                        'md:basis-1/2 lg:pl-8 pl-4 grid grid-rows-3 gap-8',
+                        dataResult.value.meta.pagination.total === 1 && "grid-rows-1",
+                        dataResult.value.meta.pagination.total === 2 && "grid-rows-2"
+                    )}
+                >
                     {arr.map(graduate => (
                         <Card key={graduate.id} className='h-full border-none shadow-md rounded-3xl'>
                             <CardContent className="w-full h-full flex lg:flex-row flex-col lg:items-center xl:gap-8 gap-6 p-6">

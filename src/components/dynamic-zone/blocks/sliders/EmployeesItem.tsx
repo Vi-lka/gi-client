@@ -6,12 +6,19 @@ import { cn } from '@/lib/utils'
 import React from 'react'
 
 export default function EmployeesItem({
-    arr
+    arr,
+    className
 }: {
-    arr: EmployeeSingleT[]
+    arr: EmployeeSingleT[],
+    className?: string,
 }) {
     return (
-        <CarouselItem className='md:basis-1/2 lg:pl-8 pl-4 grid lg:grid-rows-3 sm:grid-rows-2 grid-rows-1 gap-8'>
+        <CarouselItem 
+            className={cn(
+                'md:basis-1/2 lg:pl-8 pl-4 grid lg:grid-rows-3 sm:grid-rows-2 grid-rows-1 gap-8',
+                className
+            )}
+        >
             {arr.map(employee => (
                 <Card key={"employee" + employee.id} className='h-full border-none shadow-md rounded-3xl'>
                     <CardContent className="w-full h-full flex lg:flex-row flex-col lg:items-center xl:gap-8 gap-6 p-6">

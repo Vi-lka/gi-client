@@ -62,7 +62,14 @@ export default function SliderEntity({
                 <>
                     <CarouselComp className='lg:-ml-8 -ml-4'>
                         {splitArray(data.employees.data, splitSize).map((arr, index) => (
-                            <EmployeesItem key={index} arr={arr} />
+                            <EmployeesItem 
+                                key={index} 
+                                arr={arr} 
+                                className={cn(
+                                    data.employees.data.length === 1 && "lg:grid-rows-1 sm:grid-rows-1",
+                                    data.employees.data.length === 2 && "lg:grid-rows-2 sm:grid-rows-2"
+                                )}
+                            />
                         ))}
                     </CarouselComp>
                 </>

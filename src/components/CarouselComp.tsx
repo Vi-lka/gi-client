@@ -61,26 +61,28 @@ export default function CarouselComp({
                 <CarouselPrevious variant="ghost" className='md:scale-150 hover:bg-primary disabled:opacity-0 transition-all' />
                 <CarouselNext variant="ghost" className='md:scale-150 hover:bg-primary disabled:opacity-0 transition-all' />
             </Carousel>
-            <div 
-                className="my-4 flex items-center justify-center gap-1 max-w-full mx-auto"
-                style={{ width: typeof window !== "undefined" && window.innerWidth > 1024 ? `${2 * count}%` : `${5 * count}%` }}
-            >
-                {count > 1 && Array.from({ length: count }).map((_, index) => (
-                    <div 
-                        key={index}
-                        className={cn(
-                            "transition-all duration-500 h-1 max-w-32 min-w-1 rounded-full cursor-pointer",
-                            (index + 1) === current 
-                                ? "bg-primary"
-                                : " bg-primary/30"
-                        )}
-                        style={{
-                            width: calcWidth({index, current, count}) + "%"
-                        }}
-                        onClick={() => api?.scrollTo(index)}
-                    />
-                ))}
-            </div>
+            {count > 1 && (
+                <div 
+                    className="my-4 flex items-center justify-center gap-1 max-w-full mx-auto"
+                    style={{ width: typeof window !== "undefined" && window.innerWidth > 1024 ? `${2 * count}%` : `${5 * count}%` }}
+                >
+                    {Array.from({ length: count }).map((_, index) => (
+                        <div 
+                            key={index}
+                            className={cn(
+                                "transition-all duration-500 h-1 max-w-32 min-w-1 rounded-full cursor-pointer",
+                                (index + 1) === current 
+                                    ? "bg-primary"
+                                    : " bg-primary/30"
+                            )}
+                            style={{
+                                width: calcWidth({index, current, count}) + "%"
+                            }}
+                            onClick={() => api?.scrollTo(index)}
+                        />
+                    ))}
+                </div>
+            )}
         </div>
     )
 }
