@@ -24,7 +24,7 @@ export default function NavSheet({
 
   const locale = useLocale()
 
-  const entranceTitle = getLinkTitle(links.entrancePage.data?.attributes, dict.Header.nav.entrance)
+  const entranceTitle = getLinkTitle(links.entrancePage.data?.attributes, dict.Header.nav.admission)
   const dpoTitle = getLinkTitle(links.dpo.data?.attributes, dict.Header.nav.dpo)
 
   return (

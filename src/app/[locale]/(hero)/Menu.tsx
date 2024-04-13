@@ -28,7 +28,7 @@ export default function Menu({
 
     const entranceLinks = getSubLinks({
         title: entranceTitle,
-        link: "/entrance",
+        link: "/admission",
         navBarData: data.navBar?.entrance?.subLinks,
         linksData: data.links.entrancePage.data?.attributes.content
     })

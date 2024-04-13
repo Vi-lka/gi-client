@@ -8,10 +8,11 @@
   },
   "Header": {
     "nav": {
+      "main": "Home",
       "info": "Information",
       "structure": "Structure",
       "education": "Education",
-      "entrance": "Entrance",
+      "admission": "Admission",
       "dpo": "Courses",
       "science": "Science",
       "projects": "Projects",
@@ -23,6 +24,21 @@
       "main": "Main",
       "about": "About",
       "menu": "Menu"
+    }
+  },
+  "Entities": {
+    "EducationalPrograms": {
+      "title": "Educational Programs",
+      "code": "Profile Code",
+      "mainCode": "Code",
+      "bachelor": "Bachelor",
+      "magistracy": "Magistracy",
+      "postgraduate": "Postgraduate"
+    },
+    "DPO": {
+      "hour": "hour",
+      "hours": "hours",
+      "hoursSecond": "hours"
     }
   },
   "ContactForm": {
@@ -40,6 +56,11 @@
       "error": "Error!"
     }
   },
+  "Buttons": {
+    "more": "More",
+    "tryAgain": "Try Again",
+    "goBack": "Go Back"
+  },
   "NotFound": {
     "title": "Not found"
   },
@@ -49,6 +70,11 @@
     "toast": {
       "title": "Error! Something went wrong:",
       "tryAgain": "Try Again"
+    },
+    "zod": {
+      "email": "Invalid email address",
+      "phone": "Invalid phone number",
+      "min2symbols": "Must be 2 or more characters long"
     }
   }
 }

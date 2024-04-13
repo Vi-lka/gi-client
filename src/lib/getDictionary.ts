@@ -1,6 +1,6 @@
 import 'server-only'
 
-interface DictionariesType {
+export interface DictionariesType {
   ru: () => Promise<Dictionary>;
   en: () => Promise<Dictionary>;
 }

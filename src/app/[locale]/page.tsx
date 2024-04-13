@@ -6,18 +6,17 @@ import ErrorHandler from "@/components/errors/ErrorHandler";
 import DynamicZone from "@/components/dynamic-zone/DynamicZone";
 import Header from "@/components/header/Header";
 import Hero from "./(hero)/Hero";
-import { headers } from "next/headers";
 
 export const dynamic = 'force-dynamic'
 
 export default async function Home({
+  params: { locale },
   searchParams,
 }: {
+  params: { locale: string },
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
 
-  const headersList = headers();
-  const header_locale = headersList.get('x-locale') || "";
 
   const getMainPage = async (locale: string): Promise<MainPageT> => {
       const query = /* GraphGL */ `
@@ -58,7 +57,7 @@ export default async function Home({
   };
 
 
-  const [ dataResult ] = await Promise.allSettled([ getMainPage(header_locale) ]);
+  const [ dataResult ] = await Promise.allSettled([ getMainPage(locale) ]);
   
   return (
     <>

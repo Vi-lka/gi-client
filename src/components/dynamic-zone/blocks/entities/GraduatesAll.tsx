@@ -6,19 +6,23 @@ import { getGraduates } from '@/lib/queries';
 import React from 'react';
 import { splitArray } from '@/lib/utils';
 import ImageComp from '@/components/ImageComp';
+import { headers } from 'next/headers';
 
 export default async function GraduatesAll({
     searchParams,
 }: {
     searchParams: { [key: string]: string | string[] | undefined };
 }) {
+    const headersList = headers();
+    const locale = headersList.get('x-locale') || "";
+
     const search = searchParams["search"] as string | undefined;
 
-    const [ dataResult ] = await Promise.allSettled([ getGraduates({ search }) ]);
+    const [ dataResult ] = await Promise.allSettled([ getGraduates({ locale, search }) ]);
     if (dataResult.status === "rejected") return (
         <ErrorHandler 
             error={dataResult.reason as unknown} 
-            place="Entrance Page"
+            place="Graduates All"
             notFound
             goBack={false}
         />

@@ -5,13 +5,15 @@ import { Card, CardContent } from '@/components/ui/card';
 import { getDpoCourses } from '@/lib/queries';
 import React from 'react'
 import { format } from "date-fns";
-import { ru } from "date-fns/locale";
+import { ru, enUS } from "date-fns/locale";
 import { declOfNum } from '@/lib/utils';
 import { CalendarDays, Clock3, MapPin } from 'lucide-react';
 import { MdOutlineCurrencyRuble } from 'react-icons/md';
 import PaginationControls from '@/components/PaginationControls';
 import Link from '@/components/Link';
 import { headers } from 'next/headers';
+import type { DictionariesType} from '@/lib/getDictionary';
+import { getDictionary } from '@/lib/getDictionary';
 
 const DEFAULT_PAGE_SIZE = 12;
 
@@ -22,7 +24,9 @@ export default async function DpoCoursesAll({
 }) {
 
     const headersList = headers();
-    const header_locale = headersList.get('x-locale') || "";
+    const locale = headersList.get('x-locale') || "";
+
+    const dict = await getDictionary(locale)
 
     const sort = searchParams["sort"] as string | undefined;
     const search = searchParams["search"] as string | undefined;
@@ -32,6 +36,7 @@ export default async function DpoCoursesAll({
 
     const [ dataResult ] = await Promise.allSettled([ 
         getDpoCourses({ 
+            locale,
             sort, 
             search, 
             page: Number(page), 
@@ -41,15 +46,35 @@ export default async function DpoCoursesAll({
     if (dataResult.status === "rejected") return (
         <ErrorHandler
             error={dataResult.reason as unknown}
-            place="Курсы ДПО"
+            place="Additional Courses"
             notFound
             goBack={false}
         />
     )
 
+    function getDateLocale(locale: keyof DictionariesType) {
+        switch (locale) {
+            case "ru":
+                return ru;
+            
+            case "en":
+                return enUS;
+        
+            default:
+                return enUS;
+        }
+    }
+
+    function formatDate(date: Date, locale: string) {
+        const str = format(date, "P", { 
+            locale: getDateLocale(locale as keyof DictionariesType)
+        })
+        return str
+    }
+
     return (
         <>
-            <div id="dpo-courses" className="grid lg:grid-cols-2 grid-cols-1 lg:auto-rows-fr lg:gap-8 gap-6">
+            <div className="grid lg:grid-cols-2 grid-cols-1 lg:auto-rows-fr lg:gap-8 gap-6">
                 {dataResult.value.data.map(item => (
                     <Card key={item.id} className='min-w-0 h-full border-none shadow-md rounded-3xl'>
                         <CardContent className="w-full h-full flex lg:flex-row flex-col xl:gap-8 gap-6 justify-between p-3">
@@ -70,13 +95,9 @@ export default async function DpoCoursesAll({
                                             <li className='flex items-center gap-2 font-medium'>
                                                 <CalendarDays className='w-auto h-5' />
                                                 <p>
-                                                    {item.attributes.dateStart && (
-                                                        format(item.attributes.dateStart, "P", { locale: ru })
-                                                    )}
+                                                    {item.attributes.dateStart && formatDate(item.attributes.dateStart, locale)}
                                                     {item.attributes.dateStart && item.attributes.dateEnd && " - "}
-                                                    {item.attributes.dateEnd && (
-                                                        format(item.attributes.dateEnd, "P", { locale: ru })
-                                                    )}
+                                                    {item.attributes.dateEnd && formatDate(item.attributes.dateEnd, locale)}
                                                 </p>
                                             </li>
                                         )}
@@ -89,7 +110,13 @@ export default async function DpoCoursesAll({
                                         {item.attributes.hours && (
                                             <li className='flex items-center gap-2 font-medium'>
                                                 <Clock3 className='w-auto h-5' />
-                                                {item.attributes.hours.toString() + declOfNum(item.attributes.hours, [' час', ' часа', ' часов'])}
+                                                {
+                                                    item.attributes.hours.toString() 
+                                                    + 
+                                                    " " 
+                                                    + 
+                                                    declOfNum(item.attributes.hours, [dict.Entities.DPO.hour, dict.Entities.DPO.hours, dict.Entities.DPO.hoursSecond])
+                                                }
                                             </li>
                                         )}
                                         {item.attributes.price && (
@@ -100,9 +127,9 @@ export default async function DpoCoursesAll({
                                         )}
                                     </ul>
                                         
-                                    <Link locale={header_locale} href={`/dpo/${item.attributes.slug}`} className='w-fit sm:ml-auto sm:mr-0 ml-auto mr-auto'>
+                                    <Link locale={locale} href={`/dpo/${item.attributes.slug}`} className='w-fit sm:ml-auto sm:mr-0 ml-auto mr-auto'>
                                         <Button className='uppercase font-medium px-10 py-5 rounded-3xl'>
-                                            Подробнее
+                                            {dict.Buttons.more}
                                         </Button>
                                     </Link>
                                 </div>

@@ -13,6 +13,7 @@ import {
 
 import { cn } from "@/lib/utils"
 import { Label } from "@/components/ui/label"
+import { useDictionary } from "../providers/DictionaryProvider";
 
 const Form = FormProvider
 
@@ -145,6 +146,7 @@ const FormMessage = React.forwardRef<
   HTMLParagraphElement,
   React.HTMLAttributes<HTMLParagraphElement>
 >(({ className, children, ...props }, ref) => {
+  const dict = useDictionary()
   const { error, formMessageId } = useFormField()
   const body = error ? String(error?.message) : children
 
@@ -159,7 +161,7 @@ const FormMessage = React.forwardRef<
       className={cn("text-[0.8rem] font-medium text-destructive", className)}
       {...props}
     >
-      {body}
+      {dict.Error.zod[body as keyof typeof dict.Error.zod]}
     </p>
   )
 })

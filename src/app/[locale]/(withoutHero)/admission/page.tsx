@@ -11,16 +11,18 @@ import Anchors from '@/components/Anchors'
 
 export const dynamic = 'force-dynamic'
 
-export default async function EntrancePage({
+export default async function AdmissionPage({
+    params: { locale },
     searchParams,
 }: {
+    params: { locale: string },
     searchParams: { [key: string]: string | string[] | undefined };
 }) {
 
     const getEntrancePage = async (): Promise<EntrancePageT> => {
         const query = /* GraphGL */ `
-        query EntrancePage {
-          entrancePage {
+        query EntrancePage($locale: I18NLocaleCode) {
+          entrancePage(locale: $locale) {
             data {
               attributes {
                 title
@@ -41,7 +43,10 @@ export default async function EntrancePage({
             }; 
         }>({ 
             query, 
-            error: "Failed to fetch Entrance Page",
+            error: "Failed to fetch Admission Page",
+            variables: {
+                locale
+            }
         })
 
         // await new Promise((resolve) => setTimeout(resolve, 2000))
@@ -58,14 +63,14 @@ export default async function EntrancePage({
     if (dataResult.status === "rejected") return (
         <ErrorHandler 
             error={dataResult.reason as unknown} 
-            place="Entrance Page"
+            place="Admission Page"
             notFound={false}
         />
     )
 
     return (
         <div className='w-full'>
-            <Breadcrumbs data={[{ title: dataResult.value.attributes.title, slug: "entrance" }]} />
+            <Breadcrumbs data={[{ title: dataResult.value.attributes.title, slug: "admission" }]} />
 
             <TypographyH1 className='font-semibold text-primary my-6'>
                 {dataResult.value.attributes.title}

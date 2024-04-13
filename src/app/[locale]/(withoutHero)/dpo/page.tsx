@@ -12,14 +12,16 @@ import React from 'react'
 export const dynamic = 'force-dynamic'
 
 export default async function DpoPage({
+    params: { locale },
     searchParams,
 }: {
+    params: { locale: string },
     searchParams: { [key: string]: string | string[] | undefined };
 }) {
     const getDpoPage = async (): Promise<DpoPageT> => {
         const query = /* GraphGL */ `
-        query DpoPage {
-            dpo {
+        query DpoPage($locale: I18NLocaleCode) {
+            dpo(locale: $locale) {
             data {
               attributes {
                 title
@@ -41,6 +43,9 @@ export default async function DpoPage({
         }>({ 
             query, 
             error: "Failed to fetch DPO Page",
+            variables: {
+                locale
+            }
         })
 
         // await new Promise((resolve) => setTimeout(resolve, 2000))

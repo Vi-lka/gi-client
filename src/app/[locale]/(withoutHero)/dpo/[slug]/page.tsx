@@ -15,14 +15,14 @@ export default async function DpoCoursePage({
     params,
     searchParams,
 }: { 
-    params: { slug: string },
+    params: { locale: string, slug: string },
     searchParams: { [key: string]: string | string[] | undefined },
 }) {
 
-    const getDpoTitle = async (): Promise<string> => {
+    const getDpoTitle = async (locale: string): Promise<string> => {
         const query = /* GraphGL */ `
-        query DpoTitle {
-            dpo {
+        query DpoTitle($locale: I18NLocaleCode) {
+            dpo(locale: $locale) {
             data {
               attributes {
                 title
@@ -43,6 +43,9 @@ export default async function DpoCoursePage({
         }>({ 
             query, 
             error: "Failed to fetch DPO Title",
+            variables: {
+                locale
+            }
         })
 
         if (json.data.dpo.data === null) notFound();
@@ -50,10 +53,10 @@ export default async function DpoCoursePage({
         return json.data.dpo.data.attributes.title;
     };
 
-    const getDpoCourseBySlug = async (slug: string): Promise<DpoCoursePageT> => {
+    const getDpoCourseBySlug = async (locale: string, slug: string): Promise<DpoCoursePageT> => {
         const query = /* GraphGL */ `
-          query DpoCourse($filters: DpoCourseFiltersInput,) {
-            dpoCourses(filters: $filters) {
+          query DpoCourse($locale: I18NLocaleCode, $filters: DpoCourseFiltersInput,) {
+            dpoCourses(locale: $locale, filters: $filters) {
               data {
                 id
                 attributes {
@@ -90,6 +93,7 @@ export default async function DpoCoursePage({
             query, 
             error: `Failed to fetch DPO Course: ${slug}`, 
             variables: {
+                locale,
                 filters: {
                     slug: {
                         eqi: slug
@@ -108,8 +112,8 @@ export default async function DpoCoursePage({
     };
 
     const [ dataResult, dpoTitleResult ] = await Promise.allSettled([ 
-        getDpoCourseBySlug(params.slug),
-        getDpoTitle()
+        getDpoCourseBySlug(params.locale, params.slug),
+        getDpoTitle(params.locale)
     ]);
     if (dpoTitleResult.status === "rejected") return (
         <ErrorHandler 

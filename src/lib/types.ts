@@ -10,10 +10,10 @@ export const ContactFormT = z.object({
   place: z.string().optional(),
   path: z.string().optional(),
   username: z.string().min(2, {
-    message: "Введите не менее 2х символов",
+    message: "min2symbols",
   }),
-  email: z.string().email({ message: "Не верно введен email" }),
-  phone: z.string().regex(phoneRegex, 'Не верно введен номер телефона'),
+  email: z.string().email({ message: "email" }),
+  phone: z.string().regex(phoneRegex, 'phone'),
   formTitle: z.string().nullable().optional(),
   formDescription: z.string().nullable().optional(),
 })
@@ -528,7 +528,7 @@ export const NavBarT  = z.object({
   education: z.object({
     subLinks: SubLinkT.array()
   }).nullable(),
-  entrance: z.object({
+  admission: z.object({
     subLinks: SubLinkT.array()
   }).nullable(),
   dpo: z.object({

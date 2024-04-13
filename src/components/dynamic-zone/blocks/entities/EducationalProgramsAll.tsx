@@ -4,6 +4,7 @@ import TabsComp from '@/components/TabsComp';
 import ErrorHandler from '@/components/errors/ErrorHandler';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import { getDictionary } from '@/lib/getDictionary';
 import { getEducationalPrograms } from '@/lib/queries';
 import type { EducationalProgramSingleT } from '@/lib/types';
 import { headers } from 'next/headers';
@@ -16,7 +17,9 @@ export default async function EducationalProgramsAll({
 }) {
 
     const headersList = headers();
-    const header_locale = headersList.get('x-locale') || "";
+    const locale = headersList.get('x-locale') || "";
+
+    const dict = await getDictionary(locale)
 
     const sort = searchParams["sort"] as string | undefined;
     const search = searchParams["search"] as string | undefined;
@@ -26,9 +29,9 @@ export default async function EducationalProgramsAll({
         magistracyResult,
         postgraduateResult
     ] = await Promise.allSettled([
-        getEducationalPrograms({ sort, search, type: "bachelor" }),
-        getEducationalPrograms({ sort, search, type: "magistracy" }),
-        getEducationalPrograms({ sort, search, type: "postgraduate" }),
+        getEducationalPrograms({ locale, sort, search, type: "bachelor" }),
+        getEducationalPrograms({ locale, sort, search, type: "magistracy" }),
+        getEducationalPrograms({ locale, sort, search, type: "postgraduate" }),
     ]);
 
     const bachelors = bachelorsResult.status === "rejected" 
@@ -36,13 +39,13 @@ export default async function EducationalProgramsAll({
             content:
                 <ErrorHandler
                     error={bachelorsResult.reason as unknown}
-                    place="Бакалавриат"
+                    place="Bachelor"
                     notFound={false}
                 />,
             count: 0
         }
         : {
-            content: <EducationalProgramsGrid locale={header_locale} data={bachelorsResult.value.data} />,
+            content: <EducationalProgramsGrid locale={locale} buttonTitle={dict.Buttons.more} data={bachelorsResult.value.data} />,
             count: bachelorsResult.value.meta.pagination.total
         }
 
@@ -51,13 +54,13 @@ export default async function EducationalProgramsAll({
             content:
                 <ErrorHandler
                     error={magistracyResult.reason as unknown}
-                    place="Магистратура"
+                    place="Magistracy"
                     notFound={false}
                 />,
             count: 0
         }
         : {
-            content: <EducationalProgramsGrid locale={header_locale} data={magistracyResult.value.data} />,
+            content: <EducationalProgramsGrid locale={locale} buttonTitle={dict.Buttons.more} data={magistracyResult.value.data} />,
             count: magistracyResult.value.meta.pagination.total
         }
 
@@ -66,32 +69,32 @@ export default async function EducationalProgramsAll({
             content:
                 <ErrorHandler
                     error={postgraduateResult.reason as unknown}
-                    place="Аспирантура"
+                    place="Postgraduate"
                     notFound={false}
                 />,
             count: 0
         }
         : {
-            content: <EducationalProgramsGrid locale={header_locale} data={postgraduateResult.value.data} />,
+            content: <EducationalProgramsGrid locale={locale} buttonTitle={dict.Buttons.more} data={postgraduateResult.value.data} />,
             count: postgraduateResult.value.meta.pagination.total
         }
 
     const tabs = [
         {
             value: "bachelor",
-            title: "Бакалавриат",
+            title: dict.Entities.EducationalPrograms.bachelor,
             content: bachelors.content,
             count: bachelors.count
         },
         {
             value: "magistracy",
-            title: "Магистратура",
+            title: dict.Entities.EducationalPrograms.magistracy,
             content: magistracy.content,
             count: magistracy.count
         },
         {
             value: "postgraduate",
-            title: "Аспирантура",
+            title: dict.Entities.EducationalPrograms.postgraduate,
             content: postgraduate.content,
             count: postgraduate.count
         },
@@ -101,7 +104,7 @@ export default async function EducationalProgramsAll({
         return (
             <ErrorHandler
                 error={Error("NEXT_NOT_FOUND")}
-                place="Образовательные программы"
+                place={dict.Entities.EducationalPrograms.title}
                 notFound
                 goBack={false}
             />
@@ -116,9 +119,11 @@ export default async function EducationalProgramsAll({
 function EducationalProgramsGrid({
     locale,
     data,
+    buttonTitle
 }: {
     locale: string,
     data: EducationalProgramSingleT[],
+    buttonTitle: string,
 }) {
     
     return (
@@ -146,9 +151,9 @@ function EducationalProgramsGrid({
                             </div>
                         </div>
     
-                        <Link locale={locale} href={`/entrance/${item.attributes.slug}`} className='w-fit mx-auto mb-3 md:mt-auto'>
+                        <Link locale={locale} href={`/admission/${item.attributes.slug}`} className='w-fit mx-auto mb-3 md:mt-auto'>
                             <Button className='uppercase font-medium px-10 py-5 rounded-3xl'>
-                                Подробнее
+                                {buttonTitle}
                             </Button>
                         </Link>
                     </CardContent>

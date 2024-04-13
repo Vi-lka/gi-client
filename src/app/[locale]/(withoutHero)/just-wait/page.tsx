@@ -12,15 +12,17 @@ import React from 'react'
 export const dynamic = 'force-dynamic'
 
 export default async function JustWait({
+    params: { locale },
     searchParams,
 }: {
+    params: { locale: string },
     searchParams: { [key: string]: string | string[] | undefined };
 }) {
 
-    const getJustWaitPage = async (): Promise<JustWaitPageT> => {
+    const getJustWaitPage = async (locale: string): Promise<JustWaitPageT> => {
         const query = /* GraphGL */ `
-        query JustWaitPage {
-            justWait {
+        query JustWaitPage($locale: I18NLocaleCode) {
+            justWait(locale: $locale) {
             data {
               attributes {
                 title
@@ -42,6 +44,9 @@ export default async function JustWait({
         }>({ 
             query, 
             error: "Failed to fetch Just Wait Page",
+            variables: {
+                locale
+            }
         })
 
         // await new Promise((resolve) => setTimeout(resolve, 2000))
@@ -54,7 +59,7 @@ export default async function JustWait({
     };
   
 
-    const [ dataResult ] = await Promise.allSettled([ getJustWaitPage() ]);
+    const [ dataResult ] = await Promise.allSettled([ getJustWaitPage(locale) ]);
     if (dataResult.status === "rejected") return (
         <ErrorHandler 
             error={dataResult.reason as unknown} 

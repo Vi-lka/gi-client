@@ -90,7 +90,7 @@ export default function TabsComp(props: Props) {
                                     {selectedTab.content}
                                 </TabsContent>
                             )
-                            : "😋"
+                            : "🗿"
                         }
                     </motion.div>
                 {/* ))} */}

@@ -5,6 +5,7 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbP
 import { usePathname } from '@/lib/hooks/usePathname'
 import { useLocale } from '@/lib/hooks/useLocale'
 import Link from './Link'
+import { useDictionary } from './providers/DictionaryProvider'
 export default function Breadcrumbs({
     data,
     className
@@ -15,6 +16,7 @@ export default function Breadcrumbs({
     }[],
     className?: string
 }) {
+    const dict = useDictionary()
 
     const locale = useLocale()
 
@@ -37,7 +39,7 @@ export default function Breadcrumbs({
             switch (path) {
                 case '':
                     return {
-                        title: 'Главная',
+                        title: dict.Header.nav.main,
                         href: '/',
                     }
                 default:

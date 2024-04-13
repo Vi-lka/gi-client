@@ -4,6 +4,7 @@ import DynamicZone from '@/components/dynamic-zone/DynamicZone';
 import ErrorHandler from '@/components/errors/ErrorHandler';
 import { TypographyH1 } from '@/components/typography'
 import { dynamicContentQuery } from '@/lib/dynamicContentQuery';
+import { getDictionary } from '@/lib/getDictionary';
 import { fetchData } from '@/lib/queries';
 import { EducationalProgramPageT } from '@/lib/types';
 import { notFound } from 'next/navigation';
@@ -15,14 +16,16 @@ export default async function EducationalProgramPage({
     params,
     searchParams,
 }: { 
-    params: { slug: string },
+    params: { locale: string, slug: string },
     searchParams: { [key: string]: string | string[] | undefined },
 }) {
 
-    const getEntranceTitle = async (): Promise<string> => {
+    const dict = await getDictionary(params.locale)
+
+    const getEntranceTitle = async (locale: string): Promise<string> => {
         const query = /* GraphGL */ `
-        query EntranceTitle {
-          entrancePage {
+        query EntranceTitle($locale: I18NLocaleCode) {
+          entrancePage(locale: $locale) {
             data {
               attributes {
                 title
@@ -43,6 +46,9 @@ export default async function EducationalProgramPage({
         }>({ 
             query, 
             error: "Failed to fetch Entrance Title",
+            variables: {
+                locale
+            }
         })
 
         if (json.data.entrancePage.data === null) notFound();
@@ -50,10 +56,10 @@ export default async function EducationalProgramPage({
         return json.data.entrancePage.data.attributes.title;
     };
 
-    const getEducationalProgramBySlug = async (slug: string): Promise<EducationalProgramPageT> => {
+    const getEducationalProgramBySlug = async (locale: string, slug: string): Promise<EducationalProgramPageT> => {
         const query = /* GraphGL */ `
-          query EducationalPrograms($filters: EducationalProgramFiltersInput) {
-            educationalPrograms(filters: $filters) {
+          query EducationalPrograms($locale: I18NLocaleCode, $filters: EducationalProgramFiltersInput) {
+            educationalPrograms(locale: $locale, filters: $filters) {
               data {
                 id
                 attributes {
@@ -89,6 +95,7 @@ export default async function EducationalProgramPage({
             query, 
             error: `Failed to fetch Educational Program: ${slug}`, 
             variables: {
+                locale,
                 filters: {
                     slug: {
                         eqi: slug
@@ -108,8 +115,8 @@ export default async function EducationalProgramPage({
   
 
     const [ dataResult, entranceTitleResult ] = await Promise.allSettled([ 
-        getEducationalProgramBySlug(params.slug),
-        getEntranceTitle()
+        getEducationalProgramBySlug(params.locale, params.slug),
+        getEntranceTitle(params.locale)
     ]);
     if (entranceTitleResult.status === "rejected") return (
         <ErrorHandler 
@@ -131,7 +138,7 @@ export default async function EducationalProgramPage({
     return (
         <div className='w-full'>
             <Breadcrumbs data={[
-                { title: entranceTitleResult.value, slug: "entrance" }, 
+                { title: entranceTitleResult.value, slug: "admission" }, 
                 { title: dataResult.value.attributes.title, slug: params.slug }
             ]}/>
 
@@ -141,13 +148,13 @@ export default async function EducationalProgramPage({
 
             <div className='flex gap-x-28 gap-y-3 flex-wrap text-sm text-primary'>
                 <div className=''>
-                    <p>Код направления подготовки:</p>
+                    <p>{dict.Entities.EducationalPrograms.mainCode}:</p>
                     <p>
                         {dataResult.value.attributes.mainCode} <span className="font-semibold">{dataResult.value.attributes.mainName}</span>
                     </p>
                 </div>
                 <div className=''>
-                    <p>Код профиля:</p>
+                    <p>{dict.Entities.EducationalPrograms.code}:</p>
                     <p>
                         {dataResult.value.attributes.code} <span className="font-semibold">{dataResult.value.attributes.title}</span>
                     </p>

@@ -46,12 +46,14 @@ export async function fetchData<T>({
 
 //.........................Educational Programs.........................//
 export const getEducationalPrograms = async ({
+  locale,
   page,
   pageSize,
   type = "",
   sort = "order:asc",
   search,
 }: {
+  locale: string,
   page?: number;
   pageSize?: number;
   type?: EducationalProgramTypeEnum | ""
@@ -59,8 +61,8 @@ export const getEducationalPrograms = async ({
   search?: string;
 }): Promise<EducationalProgramsT> => {
   const query = /* GraphGL */ `
-    query EducationalPrograms($sort: [String], $pagination: PaginationArg, $filters: EducationalProgramFiltersInput) {
-      educationalPrograms(sort: $sort, pagination: $pagination, filters: $filters) {
+    query EducationalPrograms($locale: I18NLocaleCode, $sort: [String], $pagination: PaginationArg, $filters: EducationalProgramFiltersInput) {
+      educationalPrograms(locale: $locale, sort: $sort, pagination: $pagination, filters: $filters) {
         meta {
           pagination {
             total
@@ -92,6 +94,7 @@ export const getEducationalPrograms = async ({
     query, 
     error: "Failed to fetch Educational Programs", 
     variables: {
+      locale,
       sort,
       pagination: { page, pageSize },
       filters: {
@@ -132,19 +135,21 @@ export const getEducationalPrograms = async ({
 
 //.........................Dpo Courses.........................//
 export const getDpoCourses = async ({
+  locale,
   page,
   pageSize,
   sort = "order:asc",
   search,
 }: {
+  locale: string,
   page?: number;
   pageSize?: number;
   sort?: string;
   search?: string;
 }): Promise<DpoCoursesT> => {
   const query = /* GraphGL */ `
-    query DpoCourses($filters: DpoCourseFiltersInput, $sort: [String], $pagination: PaginationArg) {
-      dpoCourses(filters: $filters, sort: $sort, pagination: $pagination) {
+    query DpoCourses($locale: I18NLocaleCode, $filters: DpoCourseFiltersInput, $sort: [String], $pagination: PaginationArg) {
+      dpoCourses(locale: $locale, filters: $filters, sort: $sort, pagination: $pagination) {
         meta {
           pagination {
             total
@@ -177,6 +182,7 @@ export const getDpoCourses = async ({
     query, 
     error: "Failed to fetch Dpo Courses", 
     variables: {
+      locale,
       sort,
       pagination: { page, pageSize },
       filters: {
@@ -206,19 +212,21 @@ export const getDpoCourses = async ({
 
 //.........................Graduates.........................//
 export const getGraduates= async ({
+  locale,
   page,
   pageSize,
   type,
   search,
 }: {
+  locale: string,
   page?: number;
   pageSize?: number;
   type?: EducationalProgramTypeEnum | ""
   search?: string;
 }): Promise<GraduatesT> => {
   const query = /* GraphGL */ `
-  query Graduates($pagination: PaginationArg, $filters: GraduateFiltersInput) {
-    graduates(pagination: $pagination, filters: $filters) {
+  query Graduates($locale: I18NLocaleCode, $pagination: PaginationArg, $filters: GraduateFiltersInput) {
+    graduates(locale: $locale, pagination: $pagination, filters: $filters) {
       meta {
         pagination {
           total
@@ -274,6 +282,7 @@ export const getGraduates= async ({
     query, 
     error: "Failed to fetch Graduates", 
     variables: {
+      locale,
       pagination: { page, pageSize },
       filters: {
         or: [{
@@ -358,7 +367,7 @@ export const getNavBar = async (locale: string): Promise<NavBarT | null> => {
           info { ${sameFields} }
           structure { ${sameFields} }
           education { ${sameFields} }
-          entrance { ${sameFields} }
+          admission { ${sameFields} }
           dpo { ${sameFields} }
           science { ${sameFields} }
           projects { ${sameFields} }
