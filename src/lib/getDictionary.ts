@@ -1,3 +1,4 @@
+import { localesCodes } from '@/static/locales';
 import 'server-only'
 
 export interface DictionariesType {
@@ -5,7 +6,7 @@ export interface DictionariesType {
   en: () => Promise<Dictionary>;
 }
 
-const dictionaries = {
+const dictionaries: DictionariesType = {
   ru: () =>
     import("../static/dictionaries/ru.json").then(
       (module) => module.default,
@@ -14,7 +15,14 @@ const dictionaries = {
     import("../static/dictionaries/en.json").then(
       (module) => module.default,
     ),
-} as DictionariesType;
+};
 
-export const getDictionary = async (locale: string) =>
-  dictionaries[locale as keyof DictionariesType]();
+export const getDictionary = async (locale: string) => {
+  const key = localesCodes.includes(locale) 
+    ? locale as keyof DictionariesType 
+    : "en" as keyof DictionariesType
+
+  const dictionary = dictionaries[key];
+
+  return dictionary();
+}
