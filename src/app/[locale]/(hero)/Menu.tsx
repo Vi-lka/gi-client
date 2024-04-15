@@ -23,13 +23,13 @@ export default function Menu({
 
     const locale = useLocale()
 
-    const entranceTitle = data.links.entrancePage.data ? data.links.entrancePage.data.attributes.title : dict.Header.nav.entrance
+    const entranceTitle = data.links.entrancePage.data ? data.links.entrancePage.data.attributes.title : dict.Header.nav.admission
     const dpoTitle = data.links.dpo.data ? data.links.dpo.data.attributes.title : dict.Header.nav.dpo
 
     const entranceLinks = getSubLinks({
         title: entranceTitle,
         link: "/admission",
-        navBarData: data.navBar?.entrance?.subLinks,
+        navBarData: data.navBar?.admission?.subLinks,
         linksData: data.links.entrancePage.data?.attributes.content
     })
     const dpoLinks = getSubLinks({

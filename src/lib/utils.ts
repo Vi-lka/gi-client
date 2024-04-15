@@ -19,6 +19,23 @@ export function getShortDescription(
   } else return array.join(" ");
 }
 
+export function calcWidth({index, current, count}: {index: number, current: number, count: number}) {
+  const per = (100 / count) / count
+  let perCount = 0
+
+  if (index === (current - 1)) {
+      Array.from({ length: count }).forEach((_, i) => {
+          perCount = perCount + Math.abs(index - i)
+      })
+
+      return per * count + per * perCount
+  } else {
+      perCount = Math.abs((current - 1) - index)
+
+      return per * count - per * perCount
+  }
+}
+
 export function splitArray<T>(arr: T[], size: number) {
   const arr2 = arr.slice(0)
   const arrays = [];

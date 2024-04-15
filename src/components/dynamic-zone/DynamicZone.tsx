@@ -13,8 +13,6 @@ import { cn } from '@/lib/utils';
 import Numbers from './blocks/numbers/Numbers';
 import Files from './blocks/Files';
 import FormBlock from './blocks/form-block/FormBlock';
-import { ClientHydration } from '../ClientHydration';
-import SliderLoading from '../loadings/SliderLoading';
 import AccordionBlock from './blocks/AccordionBlock';
 
 export default function DynamicZone({
@@ -65,11 +63,7 @@ export default function DynamicZone({
       return <FormBlock data={item} headingBig={headingBig} className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} />;
 
     case "ComponentContentSliderEntity":
-      return (
-        <ClientHydration fallback={<SliderLoading className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} />}>
-          <SliderEntity data={item} headingBig={headingBig} className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} />
-        </ClientHydration>
-      );
+      return <SliderEntity data={item} headingBig={headingBig} className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} />
       
     default:
       return null;

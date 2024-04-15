@@ -3,7 +3,7 @@
 import React from 'react'
 import type { CarouselApi} from './ui/carousel';
 import { Carousel, CarouselContent, CarouselNext, CarouselPrevious } from './ui/carousel'
-import { cn } from '@/lib/utils';
+import { calcWidth, cn } from '@/lib/utils';
 
 export default function CarouselComp({
     children,
@@ -30,23 +30,6 @@ export default function CarouselComp({
             setCurrent(api.selectedScrollSnap() + 1)
         })
     }, [api])
-
-    function calcWidth({index, current, count}: {index: number, current: number, count: number}) {
-        const per = (100 / count) / count
-        let perCount = 0
-
-        if (index === (current - 1)) {
-            Array.from({ length: count }).forEach((_, i) => {
-                perCount = perCount + Math.abs(index - i)
-            })
-
-            return per * count + per * perCount
-        } else {
-            perCount = Math.abs((current - 1) - index)
-
-            return per * count - per * perCount
-        }
-    }
 
     return (
         <div className={classNameContainer}>
