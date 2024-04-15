@@ -2,13 +2,13 @@ import React from 'react';
 import type { IconsBlockCompT } from '@/lib/types';
 import { cn } from '@/lib/utils';
 import IconsBlockItems from './IconsBlockItems';
-import Loading from './Loading';
 import ImageComp from '@/components/ImageComp';
 import { TypographyH2 } from '@/components/typography';
 import { ClientHydration } from '@/components/ClientHydration';
 import { Button } from '@/components/ui/button';
 import Link from '@/components/Link';
 import { headers } from 'next/headers';
+import IconsBlockLoading from '@/components/loadings/IconsBlockLoading';
 
 export default function IconsBlock({
     data,
@@ -59,7 +59,7 @@ export default function IconsBlock({
                             </TypographyH2>
                         )}
 
-                        <ClientHydration fallback={<Loading isList={data.isList} />}>
+                        <ClientHydration fallback={<IconsBlockLoading isList={data.isList} />}>
                             <IconsBlockItems items={data.items} isList={data.isList}/>
                         </ClientHydration>
                     </div>

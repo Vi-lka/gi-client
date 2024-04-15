@@ -2,7 +2,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { cn } from '@/lib/utils'
 import React from 'react'
 
-export default function Loading({
+export default function IconsBlockLoading({
     isList
 }: {
     isList: boolean

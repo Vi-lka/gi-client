@@ -65,8 +65,8 @@ function IconBlockLine({
                 : {gridTemplateColumns: `repeat(${items.length}, minmax(0, 1fr))`}
             }
         >
-            {items.map(item => (
-                <li key={item.title}>
+            {items.map((item, index) => (
+                <li key={item.title + "-" + index}>
                     <IconBlockItem item={item} type={type} />
                 </li>
             ))}
