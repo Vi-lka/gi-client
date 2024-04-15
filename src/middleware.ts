@@ -42,10 +42,12 @@ export function middleware(request: NextRequest) {
   if (pathnameIsMissingLocale) {
     const locale = getLocale(request);
 
+    console.log(pathname)
+
     // e.g. incoming request is /products
     // The new URL is now /en-US/products
     return NextResponse.redirect(
-      new URL(`/${locale}/${pathname}`, request.url),
+      new URL(`/${locale}${pathname}`, request.url),
     );
   } else {
     // Store current request url in a custom header, which you can read later
