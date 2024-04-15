@@ -23,7 +23,7 @@ export const sendEmail = async (prevState: State, formData: ContactFormT) => {
     const resend = new Resend(process.env.RESEND_API_KEY)
     await resend.emails.send({
       from: "onboarding@resend.dev",
-      to: "hi@sfu-kras.ru",
+      to: "vitalya.permyakov155@gmail.com",
       subject: "Запрос на Сайте Гуманитарного Института",
       html: render(EmailTemplate({ place, path, username, email, phone, formTitle, formDescription })),
       headers: {
