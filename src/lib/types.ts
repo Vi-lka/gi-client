@@ -508,6 +508,34 @@ export const DpoCoursePageT  = z.object({
 })
 export type DpoCoursePageT = z.infer<typeof DpoCoursePageT>;
 
+export const AdditionalPageSingleT  = z.object({
+  id: z.string(),
+  attributes: z.object({
+    slug: z.string(),
+    title: z.string(),
+    additional_pages: z.object({
+      data: z.object({
+        attributes: z.object({
+          slug: z.string(),
+          title: z.string(),
+        })
+      }).array()
+    }),
+    content: DynamicZoneT.array(),
+  }),
+})
+export type AdditionalPageSingleT = z.infer<typeof AdditionalPageSingleT>;
+
+export const AdditionalPagesT = z.object({
+  meta: z.object({
+    pagination: z.object({
+      total: z.number(),
+    }),
+  }),
+  data: AdditionalPageSingleT.array(),
+})
+export type AdditionalPagesT = z.infer<typeof AdditionalPagesT>;
+
 
 
 

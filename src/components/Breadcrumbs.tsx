@@ -45,7 +45,7 @@ export default function Breadcrumbs({
                 default:
                     return {
                         title: path,
-                        href: path,
+                        href: "/" + path,
                     }
             }
         }
