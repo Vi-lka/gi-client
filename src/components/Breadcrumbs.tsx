@@ -6,6 +6,7 @@ import { usePathname } from '@/lib/hooks/usePathname'
 import { useLocale } from '@/lib/hooks/useLocale'
 import Link from './Link'
 import { useDictionary } from './providers/DictionaryProvider'
+import { uniqArray } from '@/lib/utils'
 export default function Breadcrumbs({
     data,
     className
@@ -51,12 +52,14 @@ export default function Breadcrumbs({
         }
     })
 
+    const uniqBreadcrumbs = uniqArray(breadcrumbs)
+
     return (
         <Breadcrumb className={className}>
             <BreadcrumbList>
-                {breadcrumbs.map((crumb, index) => (
+                {uniqBreadcrumbs.map((crumb, index) => (
                     <BreadcrumbItem key={index}>
-                        {index !== breadcrumbs.length - 1
+                        {index !== uniqBreadcrumbs.length - 1
                             ?
                             <>
                                 <BreadcrumbLink asChild>
