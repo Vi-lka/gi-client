@@ -48,15 +48,14 @@ export function middleware(request: NextRequest) {
       new URL(`/${locale}/${pathname}`, request.url),
     );
   } else {
-    // Store current request url in a custom header, which you can read later
-    const requestHeaders = new Headers(request.headers);
-    const splitHeaderUrlBy = process.env.NEXT_PUBLIC_URL ? process.env.NEXT_PUBLIC_URL : "http://localhost:3000"
-    const pathname = request.url.split(splitHeaderUrlBy)[1]
+    console.log(request)
 
-    const locale = pathname.split("/")[1]
+    const requestHeaders = new Headers(request.headers);
+
+    const locale = request.cookies.get("NEXT_LOCALE")?.value
 
     requestHeaders.set('x-url', request.url);
-    requestHeaders.set('x-locale', locale);
+    requestHeaders.set('x-locale', locale ? locale : defaultLocale);
 
     return NextResponse.next({
       request: {
