@@ -7,6 +7,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/react';
 import { getDictionary } from "@/lib/getDictionary";
 import DictionaryProvider from "@/components/providers/DictionaryProvider";
+import Script from "next/script";
 
 const din = localFont({
   variable: "--Din",
@@ -104,6 +105,25 @@ export default async function Layout({
         </DictionaryProvider>
         <SpeedInsights />
         <Analytics />
+        <Script
+          id="globalThis-polyfill"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              !function(t) {
+                function e() {
+                  var e = this || self;
+                  e.globalThis = e;
+                  delete t.prototype._T_;
+                }
+                "object" != typeof globalThis && (this ? e() : (t.defineProperty(t.prototype, "_T_", {
+                  configurable: true,
+                  get: e
+                }), _T_));
+              }(Object);
+          `,
+          }}
+        ></Script>
       </body>
     </html>
   );
