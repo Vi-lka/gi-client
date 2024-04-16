@@ -6,8 +6,8 @@ import Footer from "@/components/footer/Footer";
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/react';
 import { getDictionary } from "@/lib/getDictionary";
-import DictionaryProvider from "@/components/providers/DictionaryProvider";
 import Script from "next/script";
+import Providers from "@/components/providers/Providers";
 
 const din = localFont({
   variable: "--Din",
@@ -98,11 +98,11 @@ export default async function Layout({
       className={`${din.variable} ${cera.variable} scroll-smooth`}
     >
       <body className='font-Din relative flex flex-col justify-between min-h-screen bg-background'>
-        <DictionaryProvider dictionary={dict}>
+        <Providers dictionary={dict}>
           {children}
           <Toaster />
           <Footer />
-        </DictionaryProvider>
+        </Providers>
         <SpeedInsights />
         <Analytics />
         <Script

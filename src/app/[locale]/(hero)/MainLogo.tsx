@@ -3,6 +3,7 @@
 import { motion, useMotionTemplate, useMotionValue, useSpring } from "framer-motion";
 import { useRef } from "react";
 import Image from "next/image";
+import HiLogoSvg from "./HiLogoSvg";
 
 export default function MainLogo({
     selectedItem
@@ -78,18 +79,12 @@ export default function MainLogo({
                 onMouseMove={handleMouseMove}
                 onMouseLeave={handleMouseLeave}
             >
-                <Image
-                    src="/hi-logo.svg"
-                    alt="HI"
-                    fill
-                    sizes='100vw'
-                    priority
-                    quality={100}
-                    className='object-contain drop-shadow-sm'
+                <HiLogoSvg 
+                    className="w-full h-full object-contain drop-shadow-sm dark:[&>path]:fill-foreground brightness-[.95]"
                     style={{
                         transform: selectedItem === 0 ? "translateZ(50px)" : "translateZ(10px)",
                         transformStyle: "preserve-3d",
-                      }}
+                    }}
                 />
                 <Image
                     src="/hi-logo.svg"
@@ -98,7 +93,7 @@ export default function MainLogo({
                     sizes='100vw'
                     priority
                     quality={100}
-                    className='object-contain brightness-50 opacity-60'
+                    className='object-contain brightness-50 opacity-60 dark:brightness-0'
                     style={{
                         transform: selectedItem === 0 ? "translateZ(10px)" : "translateZ(1px)",
                       }}

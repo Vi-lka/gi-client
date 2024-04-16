@@ -34,19 +34,19 @@ export default function HorizontalAccordion({
         {
             id: 0,
             title: dict.Hero.tabs.main,
-            color: "hsl(var(--apricot))",
+            color: "bg-apricot",
             children: <MainLogo selectedItem={selectedItem} />
         },
         {
             id: 1,
             title: dict.Hero.tabs.about,
-            color: "hsl(var(--accent))",
+            color: "bg-accent dark:bg-secondary",
             children: aboutData ? <About data={aboutData} selectedItem={selectedItem} /> : null
         },
         {
             id: 2,
             title: dict.Hero.tabs.menu,
-            color: "hsl(var(--primary))",
+            color: "bg-primary",
             children: <Menu data={{ navBar: menuData.navBar, links: menuData.links }} selectedItem={selectedItem} />
         },
     ]
@@ -60,18 +60,21 @@ export default function HorizontalAccordion({
                     animate={selectedItem === item.id ? "open" : "closed"}
                     variants={variantsItems}
                     style={{
-                        backgroundColor: item.color,
                         cursor: item.id === selectedItem ? "auto" : "pointer",
                     }}
                     className={cn(
                         'relative flex w-fit items-center rounded-2xl text-background overflow-hidden cursor-pointer shadow-inner',
                         selectedItem === item.id ? "w-fit" : "xl:w-[60px] lg:w-[56px] sm:w-[52px] w-[44px]", // firefox width
                         item.id === 0 ? "flex-grow" : "flex-grow-0",
+                        item.color
                     )}
                     onClick={() => setSelectedItem(item.id)}
                 >
                     <h1 
-                        className='font-Cera font-bold uppercase min-h-[250px] xl:text-3xl lg:text-2xl md:text-xl text-lg sm:p-3 p-2 z-20 rotate-180' 
+                        className={cn(
+                            'font-Cera font-bold uppercase min-h-[250px] xl:text-3xl lg:text-2xl md:text-xl text-lg sm:p-3 p-2 z-20 rotate-180',
+                            item.id === 1 ? "dark:text-foreground" : "dark:text-background"
+                        )} 
                         style={{textOrientation: "mixed", writingMode: "vertical-lr", opacity: item.id === 0 ? 0 : 1}}
                     >
                         {item.title}

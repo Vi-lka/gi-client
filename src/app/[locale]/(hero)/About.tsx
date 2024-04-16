@@ -66,7 +66,7 @@ export default function About({
                 fill
                 sizes='90vw'
                 className={cn(
-                    'object-cover w-full h-full transition-all z-30',
+                    'object-cover w-full h-full transition-all z-30 dark:grayscale',
                     selectedItem === 1 ? "opacity-100" : "opacity-0"
                 )}
             />
@@ -87,7 +87,7 @@ export default function About({
                             alt=""
                             width={154}
                             height={62}
-                            className='object-contain xl:w-[154px] md:w-24 w-20'
+                            className='object-contain xl:w-[154px] md:w-24 w-20 dark:grayscale'
                         />
                     ))}
                 </motion.div>
@@ -105,7 +105,7 @@ export default function About({
                                 className='flex gap-4 xl:items-start items-center'
                             >
                                 <IconAbout item={item} />
-                                <div className='flex-1'>
+                                <div className='flex-1 dark:text-foreground'>
                                     <h3 className='uppercase font-bold 2xl:text-lg lg:text-sm text-xs'>
                                         {item.title}
                                     </h3>
@@ -145,7 +145,7 @@ export default function About({
                             <Link href={data.link}>
                                 <Button 
                                     variant="outline" 
-                                    className='uppercase rounded-full font-medium lg:text-sm text-xs lg:py-4 px-8 py-3 mt-[5vh] lg:ml-16 hover:bg-transparent focus:bg-transparent'
+                                    className='uppercase rounded-full font-medium lg:text-sm text-xs lg:py-4 px-8 py-3 mt-[5vh] lg:ml-16 dark:bg-primary dark:text-background dark:hover:text-primary dark:hover:bg-transparent dark:hover:border-primary'
                                 >
                                     {data.linkTitle}
                                 </Button>
