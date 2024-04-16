@@ -31,16 +31,24 @@ export default function getSubLinks(params: {
             subLinks: params.navBarData
         }
     } else {
-        return {
-            title: params.title,
-            link: params.link,
-            subLinks: params.linksData
-                ? params.linksData.map(item => ({
+
+        const linksData = params.linksData && params.linksData.length > 0
+            ? params.linksData.map(item => {
+                
+                return ({
                     title: item.linkTitle, 
                     link: item.link ? `${params.link}#${item.link}` : null,
                     linkDescription: item.linkDescription
-                }))
-                : []
+                })
+            })
+            : []
+
+        const subLinks = linksData.filter((item) => (item.title !== null) && (item.link !== null));
+
+        return {
+            title: params.title,
+            link: params.link,
+            subLinks
         }
     }
 }
