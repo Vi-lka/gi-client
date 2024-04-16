@@ -35,7 +35,7 @@ export default function RichTextGrid({
                                 {item.title}
                             </TypographyH4>
                         )}
-                        <article className=" prose prose-p:!my-0 prose-p:text-sm prose-headings:text-foreground">
+                        <article className="prose prose-p:!my-0 prose-p:text-sm text-foreground prose-headings:text-foreground">
                             {/* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */}
                             <BlocksRendererStrapi content={item.text} />
                         </article>

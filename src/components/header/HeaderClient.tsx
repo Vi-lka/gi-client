@@ -120,7 +120,7 @@ export default function HeaderClient({
                             alt="HI"
                             width={80}
                             height={80}
-                            className='object-contain w-10'
+                            className='object-contain w-10 dark:grayscale'
                           />
                         </Link>
 
@@ -140,7 +140,7 @@ export default function HeaderClient({
                                 alt="HI"
                                 width={40}
                                 height={40}
-                                className='object-contain'
+                                className='object-contain dark:grayscale'
                             />
                         </Link>
 

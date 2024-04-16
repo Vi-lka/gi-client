@@ -3,6 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import { useTheme } from "next-themes";
+import { cn, grayscale } from "@/lib/utils";
 
 type Props = {
   src: string | undefined;
@@ -41,6 +42,7 @@ export default function ImageComp(props: Props) {
 
   return (
     <Image
+      id="imageComp"
       src={image}
       fill={props.fill}
       sizes={sizes}
@@ -49,7 +51,10 @@ export default function ImageComp(props: Props) {
       quality={props.quality}
       placeholder={placeholderSvg(width, height, theme)}
       onError={() => setImage(placeholderImage)}
-      className={props.className}
+      className={cn(
+        props.className,
+        grayscale,
+      )}
       alt={props.alt}
       priority={props.priority}
       onLoad={props.onLoad}

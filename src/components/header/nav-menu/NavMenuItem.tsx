@@ -2,10 +2,10 @@
 
 import Link from "@/components/Link";
 import { NavigationMenuContent, NavigationMenuItem, NavigationMenuTrigger, navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
-import Image from 'next/image'
 import { cn } from "@/lib/utils";
 import type { ImageT } from "@/lib/types";
 import { useSelectedLayoutSegment } from "next/navigation";
+import ImageComp from "@/components/ImageComp";
 
 export default function NavMenuItem({
   locale,
@@ -49,17 +49,18 @@ export default function NavMenuItem({
       <NavigationMenuContent className='flex w-[90%] md:w-full'>
         {image?.data && (
           <div className='relative w-[20%] m-4 mr-0 rounded-xl overflow-hidden'>
-            <Image 
+            <ImageComp 
               src={image.data.attributes.url}
               alt=''
+              fill={false}
               width={400}
               height={400}
               className={cn(
-                'object-cover w-full h-full',
-                description ? "brightness-50 contrast-125" : ""
+                'object-cover w-full h-full dark:brightness-75',
+                description ? "brightness-50 contrast-125" : "",
               )}
             />
-            <p className="absolute bottom-0 font-medium text-sm leading-tight text-background p-4">
+            <p className="absolute bottom-0 font-medium text-sm leading-tight text-background dark:text-foreground p-4">
               {description}
             </p>
           </div>
@@ -129,7 +130,7 @@ function ListItem({
         )}
       >
         <p className="text-base font-medium">{title}</p>
-        <p className="w-full text-left line-clamp-3 text-sm leading-snug font-normal text-muted-foreground">
+        <p className="w-full text-left line-clamp-3 text-sm leading-snug font-normal text-muted-foreground hover:text-background">
           {children}
         </p>
       </Link>
