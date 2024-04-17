@@ -6,11 +6,20 @@ import { TypographyH2 } from '@/components/typography'
 import type { FormBlockCompT, FormBlockItemT } from '@/lib/types'
 import { cn } from '@/lib/utils'
 import React from 'react'
-import ButtonForm from './ButtonForm'
 import ImageComp from '@/components/ImageComp'
 import { useTheme } from 'next-themes'
 import { ClientHydration } from '@/components/ClientHydration'
 import { Skeleton } from '@/components/ui/skeleton'
+import Link from 'next/link';
+import { Button } from '@/components/ui/button'
+import dynamic from 'next/dynamic'
+ 
+const ButtonForm = dynamic(
+  () => import('./ButtonForm'),
+  {
+    loading: () => <Skeleton className='h-[50px] lg:w-1/5 w-full z-10'/>,
+  }
+)
 
 export default function FormBlock({
     data,
@@ -102,16 +111,31 @@ export default function FormBlock({
                         </li>
                     ))}
                 </ul>
-                {/* <ClientHydration fallback={<Skeleton className='min-w-8 self-start lg:h-11 sm:h-10 h-9 aspect-square'/>}> */}
-                    <ButtonForm
-                        buttonTitle={data.buttonTitle}
-                        buttonLink={data.buttonLink}
-                        inNewTab={data.inNewTab}
-                        listLength={data.list.length}
-                        formTitle={data.formTitle}
-                        formDescription={data.formDescription}
-                    />
-                {/* </ClientHydration> */}
+                {(data.buttonTitle && data.buttonLink) 
+                    ? (
+                        <Link 
+                            href={data.buttonLink} 
+                            target={data.inNewTab ? "_blank" : "_self"} 
+                            passHref 
+                            className={cn(
+                                'w-full z-10',
+                                data.list.length === 4 ? "lg:w-1/4" : "lg:w-1/5"
+                            )}
+                        >
+                            <Button className='w-full p-6 uppercase rounded-3xl text-primary bg-background border hover:border-background hover:text-background dark:text-background dark:bg-primary dark:hover:text-primary dark:hover:bg-transparent dark:hover:border-primary'>
+                                {data.buttonTitle}
+                            </Button>
+                        </Link>
+                    )
+                    : (
+                        <ButtonForm
+                            buttonTitle={data.buttonTitle}
+                            listLength={data.list.length}
+                            formTitle={data.formTitle}
+                            formDescription={data.formDescription}
+                        />
+                    )
+                }
             </div>
         </div>
     )

@@ -7,15 +7,12 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { useToast } from '@/components/ui/use-toast';
 import { cn, getShortDescription } from '@/lib/utils';
-import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 import { useFormState } from 'react-dom';
 
 type Props = {
     buttonTitle: string | null,
-    buttonLink: string | null,
-    inNewTab: boolean | null,
     listLength: number,
     formTitle: string | null,
     formDescription: string | null,
@@ -23,8 +20,6 @@ type Props = {
 
 export default function ButtonForm({
     buttonTitle,
-    buttonLink,
-    inNewTab,
     listLength,
     formTitle,
     formDescription,
@@ -74,24 +69,7 @@ export default function ButtonForm({
         })
     }
 
-    if (!buttonTitle) return null;
-
-    if (buttonLink && buttonLink.length > 1) return (
-        <Link 
-            href={buttonLink} 
-            target={inNewTab ? "_blank" : "_self"} 
-            passHref 
-            className={cn(
-                'w-full z-10',
-                listLength === 4 ? "lg:w-1/4" : "lg:w-1/5"
-            )}
-        >
-            <Button className='w-full p-6 uppercase rounded-3xl text-primary bg-background border hover:border-background hover:text-background dark:text-background dark:bg-primary dark:hover:text-primary dark:hover:bg-transparent dark:hover:border-primary'>
-                {buttonTitle}
-            </Button>
-        </Link>
-    )
-    else return (
+    return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
                 <Button className={cn(
