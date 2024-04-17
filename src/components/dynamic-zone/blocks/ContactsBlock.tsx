@@ -6,6 +6,8 @@ import Link from 'next/link'
 import React from 'react'
 import { AtSign, MapPin } from 'lucide-react'
 import { FiPhone } from 'react-icons/fi'
+import { ClientHydration } from '@/components/ClientHydration'
+import { Skeleton } from '@/components/ui/skeleton'
 
 export default function ContactsBlock({
   data,
@@ -70,13 +72,15 @@ export default function ContactsBlock({
 
       {data.image.data && (
         <div className='relative w-2/5 lg:block hidden aspect-video'>
-          <ImageComp
-            src={data.image.data.attributes.url}
-            alt=""
-            fill
-            sizes='(max-width: 1024px) 100vw, 50vw'
-            className='object-cover rounded-3xl overflow-hidden'
-          />
+          <ClientHydration fallback={<Skeleton className='w-full h-full'/>}>
+            <ImageComp
+              src={data.image.data.attributes.url}
+              alt=""
+              fill
+              sizes='(max-width: 1024px) 100vw, 50vw'
+              className='object-cover rounded-3xl overflow-hidden'
+            />
+          </ClientHydration>
         </div>
       )}
     </div>

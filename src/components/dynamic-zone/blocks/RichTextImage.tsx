@@ -6,6 +6,9 @@ import BlocksRendererStrapi from '@/components/BlocksRendererStrapi'
 import CarouselComp from '@/components/CarouselComp'
 import { CarouselItem } from '@/components/ui/carousel'
 import ImageComp from '@/components/ImageComp'
+import { ClientHydration } from '@/components/ClientHydration'
+import { Skeleton } from '@/components/ui/skeleton'
+import CarouselLoading from '@/components/loadings/CarouselLoading'
 
 export default function RichText({
     data,
@@ -39,31 +42,35 @@ export default function RichText({
                 </div>
                 {data.images.data.length > 1 
                     ? (
-                        <CarouselComp classNameContainer='lg:w-1/2 w-full' className='lg:-ml-8 -ml-4 items-center'>
-                            {data.images.data.map((image, index) => (
-                                <CarouselItem key={index} className='h-fit lg:pl-8 pl-4 flex items-center'>
-                                    <div className='relative w-full h-fit'>
-                                        <ImageComp 
-                                            src={image.attributes.url}
-                                            alt=""
-                                            fill
-                                            sizes='(max-width: 1024px) 100vw, 50vw'
-                                            className='!lg:absolute !relative object-contain rounded-3xl overflow-hidden !h-fit'
-                                        />
-                                    </div>
-                                </CarouselItem>
-                            ))}
-                        </CarouselComp>
+                        <ClientHydration fallback={<CarouselLoading className='lg:w-1/2 w-full lg:aspect-[8/6] max-h-96 lg:mb-0 mb-6'/>}>
+                            <CarouselComp classNameContainer='lg:w-1/2 w-full' className='lg:-ml-8 -ml-4 items-center'>
+                                {data.images.data.map((image, index) => (
+                                    <CarouselItem key={index} className='h-fit lg:pl-8 pl-4 flex items-center'>
+                                        <div className='relative w-full h-fit'>
+                                                <ImageComp 
+                                                    src={image.attributes.url}
+                                                    alt=""
+                                                    fill
+                                                    sizes='(max-width: 1024px) 100vw, 50vw'
+                                                    className='!lg:absolute !relative object-contain rounded-3xl overflow-hidden !h-fit'
+                                                />
+                                        </div>
+                                    </CarouselItem>
+                                ))}
+                            </CarouselComp>
+                        </ClientHydration>
                     )
                     : (
                         <div className='relative lg:w-1/2 w-full lg:h-auto h-fit rounded-3xl overflow-hidden'>
-                            <ImageComp 
-                                src={data.images.data[0].attributes.url}
-                                alt=""
-                                fill
-                                sizes='(max-width: 1280px) 100vw, 50vw'
-                                className='!lg:absolute !relative object-cover lg:max-h-none max-h-96'
-                            />
+                            <ClientHydration fallback={<Skeleton className='w-full h-full lg:max-h-none max-h-96'/>}>
+                                <ImageComp 
+                                    src={data.images.data[0].attributes.url}
+                                    alt=""
+                                    fill
+                                    sizes='(max-width: 1280px) 100vw, 50vw'
+                                    className='!lg:absolute !relative object-cover lg:max-h-none max-h-96'
+                                />
+                            </ClientHydration>
                         </div>
                     )
                 }

@@ -9,7 +9,7 @@ export default function SliderLoading({
 }) {
 
     return (
-        <div className={cn('w-full relative lg:aspect-video sm:aspect-[4/3] aspect-[5/6]', className)}>
+        <div className={cn('w-full relative xl:aspect-[19/8] lg:aspect-[20/9] sm:aspect-[22/15] aspect-[5/6]', className)}>
             <div className='w-full h-full grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 lg:gap-8 gap-4'>
                 <Skeleton className='w-full h-full' />
                 <Skeleton className='w-full h-full lg:block hidden' />

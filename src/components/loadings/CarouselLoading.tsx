@@ -2,24 +2,15 @@ import { calcWidth, cn } from '@/lib/utils'
 import React from 'react'
 import { Skeleton } from '../ui/skeleton'
 
-export default function SplitSliderLoading({
+export default function CarouselLoading({
     className
 }: {
     className?: string
 }) {
     return (
-        <div className={cn('w-full relative lg:aspect-video sm:aspect-[10/9] aspect-[39/40]', className)}>
-            <div className='w-full h-full grid md:grid-cols-2 grid-cols-1 lg:gap-8 gap-4'>
-                <div className='w-full h-full grid lg:grid-rows-3 sm:grid-rows-2 grid-rows-1 lg:gap-8 gap-4'>
-                    <Skeleton className='w-full h-full' />
-                    <Skeleton className='w-full h-full lg:block hidden' />
-                    <Skeleton className='w-full h-full sm:block hidden' />
-                </div>
-                <div className='w-full h-full  hidden md:grid lg:grid-rows-3 sm:grid-rows-2 grid-rows-1 lg:gap-8 gap-4'>
-                    <Skeleton className='w-full h-full' />
-                    <Skeleton className='w-full h-full lg:block hidden' />
-                    <Skeleton className='w-full h-full sm:block hidden' />
-                </div>
+        <div className={cn('w-full relative aspect-video', className)}>
+            <div className='w-full h-full grid grid-cols-1 lg:gap-8 gap-4'>
+                <Skeleton className='w-full h-full' />
             </div>
             <Skeleton className="absolute md:w-8 md:h-8 w-6 h-6 rounded-full md:-left-12 -left-7 top-1/2 -translate-y-1/2" />
             <Skeleton className="absolute md:w-8 md:h-8 w-6 h-6 rounded-full md:-right-12 -right-7 top-1/2 -translate-y-1/2"/>

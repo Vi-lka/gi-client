@@ -1,6 +1,6 @@
 "use client"
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuPortal, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from '../ui/dropdown-menu'
 import { Button } from '../ui/button'
 import { usePathname } from "next/navigation";
@@ -18,6 +18,18 @@ export default function MoreMenu() {
   const themes = ["light", "dark"]
 
   const localeCurrent = pathname.split("/")[1];
+
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  if(!mounted) return (
+    <Button variant="ghost" className='lg:px-3.5 px-2 text-primary hover:text-primary focus:text-primary lg:border border-transparent hover:border-border focus:border-border hover:bg-transparent focus:bg-transparent rounded-3xl duration-300'>
+      <MoreHorizontal className="w-8 h-8 lg:rotate-0 rotate-90" />
+    </Button>
+  )
 
   return (
     <DropdownMenu>

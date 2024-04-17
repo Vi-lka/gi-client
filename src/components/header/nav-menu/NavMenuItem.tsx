@@ -6,6 +6,8 @@ import { cn } from "@/lib/utils";
 import type { ImageT } from "@/lib/types";
 import { useSelectedLayoutSegment } from "next/navigation";
 import ImageComp from "@/components/ImageComp";
+import { ClientHydration } from "@/components/ClientHydration";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function NavMenuItem({
   locale,
@@ -49,17 +51,19 @@ export default function NavMenuItem({
       <NavigationMenuContent className='flex w-[90%] md:w-full'>
         {image?.data && (
           <div className='relative w-[20%] m-4 mr-0 rounded-xl overflow-hidden'>
-            <ImageComp 
-              src={image.data.attributes.url}
-              alt=''
-              fill={false}
-              width={400}
-              height={400}
-              className={cn(
-                'object-cover w-full h-full dark:brightness-75',
-                description ? "brightness-50 contrast-125" : "",
-              )}
-            />
+            <ClientHydration fallback={<Skeleton className='w-full h-full'/>}>
+              <ImageComp 
+                src={image.data.attributes.url}
+                alt=''
+                fill={false}
+                width={400}
+                height={400}
+                className={cn(
+                  'object-cover w-full h-full dark:brightness-75',
+                  description ? "brightness-50 contrast-125" : "",
+                )}
+              />
+            </ClientHydration>
             <p className="absolute bottom-0 font-medium text-sm leading-tight text-background dark:text-foreground p-4">
               {description}
             </p>

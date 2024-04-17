@@ -6,6 +6,8 @@ import { BlocksRenderer } from '@strapi/blocks-react-renderer';
 import ImageComp from './ImageComp';
 import { TypographyBlockquote, TypographyH1, TypographyH2, TypographyH3, TypographyH4, TypographyH5, TypographyH6, TypographyList, TypographyP } from './typography';
 import Link from 'next/link';
+import { ClientHydration } from './ClientHydration';
+import { Skeleton } from './ui/skeleton';
 
 interface TextInlineNode {
     type: 'text';
@@ -135,15 +137,17 @@ export default function BlocksRendererStrapi({
               </Link>
             ),
             image: ({ image }) => (
-              <ImageComp
-                src={"/uploads/" + image.hash + image.ext}
-                fill={false}
-                width={image.width < 1000 ? image.width : 450}
-                height={image.height < 1000 ? image.height : 450}
-                className="object-contain w-full overflow-hidden rounded-3xl"
-                alt={image.alternativeText ? image.alternativeText : ""}
-                priority
-              />
+              <ClientHydration fallback={<Skeleton style={{ height: image.height < 1000 ? image.height : 450}} className='object-contain w-full' />}>
+                <ImageComp
+                  src={"/uploads/" + image.hash + image.ext}
+                  fill={false}
+                  width={image.width < 1000 ? image.width : 450}
+                  height={image.height < 1000 ? image.height : 450}
+                  className="object-contain w-full overflow-hidden rounded-3xl"
+                  alt={image.alternativeText ? image.alternativeText : ""}
+                  priority
+                />
+              </ClientHydration>
             )
         }}
     />

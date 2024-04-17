@@ -12,6 +12,8 @@ import Link from 'next/link';
 import FormFooter from './FormFooter';
 import { headers } from 'next/headers';
 import { cn } from '@/lib/utils';
+import { ClientHydration } from '../ClientHydration';
+import { Skeleton } from '../ui/skeleton';
 
 export const dynamic = 'force-dynamic'
 
@@ -163,52 +165,56 @@ export default async function Footer() {
                                             target="_blank"
                                             className='hover:underline underline-offset-2'
                                         >
-                                            <ImageComp 
-                                                src={item.image.data?.attributes.url}
-                                                alt='Logo'
-                                                fill={false}
-                                                width={140}
-                                                height={140}
-                                                className={cn(
-                                                    'object-contain xl:w-[140px] w-24',
-                                                    item.imageDark.data ? "dark:hidden" : "dark:!filter-background"
-                                                )}
-                                            />
-                                            {item.imageDark.data && (
+                                            <ClientHydration fallback={<Skeleton className='aspect-video xl:w-[140px] w-24 rounded-2xl' />}>
                                                 <ImageComp 
-                                                    src={item.imageDark.data.attributes.url}
+                                                    src={item.image.data?.attributes.url}
                                                     alt='Logo'
                                                     fill={false}
                                                     width={140}
                                                     height={140}
-                                                    className='object-contain xl:w-[140px] w-24 hidden dark:block'
+                                                    className={cn(
+                                                        'object-contain xl:w-[140px] w-24',
+                                                        item.imageDark.data ? "dark:hidden" : "dark:!filter-background"
+                                                    )}
                                                 />
-                                            )}
+                                                {item.imageDark.data && (
+                                                    <ImageComp 
+                                                        src={item.imageDark.data.attributes.url}
+                                                        alt='Logo'
+                                                        fill={false}
+                                                        width={140}
+                                                        height={140}
+                                                        className='object-contain xl:w-[140px] w-24 hidden dark:block'
+                                                    />
+                                                )}
+                                            </ClientHydration>
                                         </Link>
                                     )
                                     : (
                                         <div key={index}>
-                                            <ImageComp 
-                                                src={item.image.data?.attributes.url}
-                                                alt='Logo'
-                                                fill={false}
-                                                width={140}
-                                                height={140}
-                                                className={cn(
-                                                    'object-contain xl:w-[140px] w-24',
-                                                    item.imageDark.data ? "dark:hidden" : "dark:!filter-background"
-                                                )}
-                                            />
-                                            {item.imageDark.data && (
+                                            <ClientHydration fallback={<Skeleton className='aspect-video xl:w-[140px] w-24 rounded-2xl' />}>
                                                 <ImageComp 
-                                                    src={item.imageDark.data.attributes.url}
+                                                    src={item.image.data?.attributes.url}
                                                     alt='Logo'
                                                     fill={false}
                                                     width={140}
                                                     height={140}
-                                                    className='object-contain xl:w-[140px] w-24 hidden dark:block'
+                                                    className={cn(
+                                                        'object-contain xl:w-[140px] w-24',
+                                                        item.imageDark.data ? "dark:hidden" : "dark:!filter-background"
+                                                    )}
                                                 />
-                                            )}
+                                                {item.imageDark.data && (
+                                                    <ImageComp 
+                                                        src={item.imageDark.data.attributes.url}
+                                                        alt='Logo'
+                                                        fill={false}
+                                                        width={140}
+                                                        height={140}
+                                                        className='object-contain xl:w-[140px] w-24 hidden dark:block'
+                                                    />
+                                                )}
+                                            </ClientHydration>
                                         </div>
                                     )
                             ))}
@@ -239,7 +245,7 @@ function SocialIcon({
 }) {
     if (iconReact) return <DynamicReactIcon icon={iconReact} className="w-auto xl:h-9 h-8 text-primary rounded-full" />
     else if (image.data) return (
-        <div>
+        <ClientHydration fallback={<Skeleton className='aspect-square w-fit xl:h-9 h-8' />}>
             <ImageComp 
                 src={image.data.attributes.url} 
                 alt='Social Network Icon' 
@@ -261,7 +267,7 @@ function SocialIcon({
                     className='object-contain w-fit xl:h-9 h-8 rounded-full hidden dark:block'
                 />
             )}
-        </div>
+        </ClientHydration>
     )
 }
 

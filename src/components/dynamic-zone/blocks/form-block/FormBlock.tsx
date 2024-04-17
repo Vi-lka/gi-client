@@ -9,6 +9,8 @@ import React from 'react'
 import ButtonForm from './ButtonForm'
 import ImageComp from '@/components/ImageComp'
 import { useTheme } from 'next-themes'
+import { ClientHydration } from '@/components/ClientHydration'
+import { Skeleton } from '@/components/ui/skeleton'
 
 export default function FormBlock({
     data,
@@ -37,7 +39,7 @@ export default function FormBlock({
 
             <div 
                 className={cn(
-                    'flex relative lg:flex-row flex-col items-center lg:gap-6 gap-10 xl:p-16 lg:p-12 p-8 rounded-3xl overflow-hidden',
+                    'w-full flex relative lg:flex-row flex-col items-center lg:gap-6 gap-10 xl:p-16 lg:p-12 p-8 rounded-3xl overflow-hidden',
                     (data.image.data || data.imageDark.data) && "dark:border",
                     data.image.data 
                         ? "bg-background" 
@@ -54,25 +56,32 @@ export default function FormBlock({
                 }}
             >
                 {data.image.data && (
-                    <ImageComp 
-                        src={data.image.data.attributes.url}
-                        alt=''
-                        fill
-                        sizes='90vw'
-                        className={cn(
-                            'object-cover z-0 !brightness-50 !contrast-125', 
-                            data.imageDark.data ? "dark:hidden" : "dark:!brightness-[0.4]"
-                        )}
-                    />
+                    <ClientHydration fallback={<Skeleton className={cn(
+                        'absolute top-0 left-0 w-full h-full', 
+                        data.imageDark.data ? "dark:hidden" : ""
+                    )}/>}>
+                        <ImageComp 
+                            src={data.image.data.attributes.url}
+                            alt=''
+                            fill
+                            sizes='90vw'
+                            className={cn(
+                                'object-cover z-0 !brightness-50 !contrast-125', 
+                                data.imageDark.data ? "dark:hidden" : "dark:!brightness-[0.4]"
+                            )}
+                        />
+                    </ClientHydration>
                 )}
                 {data.imageDark.data && (
-                    <ImageComp 
-                        src={data.imageDark.data.attributes.url}
-                        alt=''
-                        fill
-                        sizes='90vw'
-                        className='object-cover z-0 !brightness-[0.4] !contrast-125 hidden dark:block'
-                    />
+                    <ClientHydration fallback={<Skeleton className='absolute top-0 left-0 w-full h-full hidden dark:block'/>}>
+                        <ImageComp 
+                            src={data.imageDark.data.attributes.url}
+                            alt=''
+                            fill
+                            sizes='90vw'
+                            className='object-cover z-0 !brightness-[0.4] !contrast-125 hidden dark:block'
+                        />
+                    </ClientHydration>
                 )}
                 <ul className={cn(
                     "grid xl:gap-8 xl:gap-y-14 lg:gap-y-10 gap-6 items-center text-background dark:text-foreground w-full z-10",
@@ -80,7 +89,9 @@ export default function FormBlock({
                 )}>
                     {data.list.map((item, index) => (
                         <li key={index} className='flex flex-wrap items-center gap-3 self-start'>
-                            <FormBlockIcon item={item} className='min-w-8 self-start' />
+                            <ClientHydration fallback={<Skeleton className='min-w-8 self-start lg:h-11 sm:h-10 h-9 aspect-square'/>}>
+                                <FormBlockIcon item={item} className='min-w-8 self-start' />
+                            </ClientHydration>
                             <p className={cn(
                                 'flex-1 font-semibold break-words',
                                 data.largeTitles ? "2xl:text-4xl xl:text-3xl text-2xl" : "2xl:text-[1.4rem] xl:text-xl text-lg"
@@ -91,14 +102,16 @@ export default function FormBlock({
                         </li>
                     ))}
                 </ul>
-                <ButtonForm
-                    buttonTitle={data.buttonTitle}
-                    buttonLink={data.buttonLink}
-                    inNewTab={data.inNewTab}
-                    listLength={data.list.length}
-                    formTitle={data.formTitle}
-                    formDescription={data.formDescription}
-                />
+                {/* <ClientHydration fallback={<Skeleton className='min-w-8 self-start lg:h-11 sm:h-10 h-9 aspect-square'/>}> */}
+                    <ButtonForm
+                        buttonTitle={data.buttonTitle}
+                        buttonLink={data.buttonLink}
+                        inNewTab={data.inNewTab}
+                        listLength={data.list.length}
+                        formTitle={data.formTitle}
+                        formDescription={data.formDescription}
+                    />
+                {/* </ClientHydration> */}
             </div>
         </div>
     )

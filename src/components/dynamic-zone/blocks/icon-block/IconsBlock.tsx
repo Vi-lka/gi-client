@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import Link from '@/components/Link';
 import { headers } from 'next/headers';
 import IconsBlockLoading from '@/components/loadings/IconsBlockLoading';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export default function IconsBlock({
     data,
@@ -34,13 +35,15 @@ export default function IconsBlock({
             )}>
                 {data.image.data && (
                     <div className='relative xl:w-1/3 w-full xl:h-auto h-fit rounded-3xl overflow-hidden'>
-                        <ImageComp 
-                            src={data.image.data.attributes.url}
-                            alt=""
-                            fill
-                            sizes='(max-width: 1024px) 100vw, 40vw'
-                            className='!xl:absolute !relative object-cover xl:max-h-none max-h-96'
-                        />
+                        <ClientHydration fallback={<Skeleton className='w-full h-full xl:max-h-none max-h-96 xl:aspect-auto aspect-video'/>}>
+                            <ImageComp 
+                                src={data.image.data.attributes.url}
+                                alt=""
+                                fill
+                                sizes='(max-width: 1024px) 100vw, 40vw'
+                                className='!xl:absolute !relative object-cover xl:max-h-none max-h-96'
+                            />
+                        </ClientHydration>
                     </div>
                 )}
 

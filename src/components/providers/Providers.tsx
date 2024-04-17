@@ -12,15 +12,15 @@ export default function Providers({
     children: React.ReactNode
 }) {
     return (
-        <DictionaryProvider dictionary={dictionary}>
-            <ThemeProvider
-                attribute="class" 
-                defaultTheme="system"
-                enableSystem
-                disableTransitionOnChange
-            >
+        <ThemeProvider
+            attribute="class" 
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+        >
+            <DictionaryProvider dictionary={dictionary}>
                 {children}
-            </ThemeProvider>
-        </DictionaryProvider>
+            </DictionaryProvider>
+        </ThemeProvider>
     )
 }
