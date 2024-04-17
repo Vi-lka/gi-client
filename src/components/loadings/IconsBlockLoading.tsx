@@ -3,14 +3,17 @@ import { cn } from '@/lib/utils'
 import React from 'react'
 
 export default function IconsBlockLoading({
-    isList
+    isList,
+    className
 }: {
-    isList: boolean
+    isList: boolean,
+    className?: string
 }) {
     return (
         <div className={cn(
             'grid gap-8',
             isList ? 'grid-cols-1' : 'lg:grid-cols-4 sm:grid-cols-2 grid-cols-1',
+            className,
         )}>
             {Array.from({ length: 4 }).map((_, i) => (
                 <div key={i} className='flex flex-col gap-2'>

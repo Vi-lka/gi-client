@@ -1,75 +1,80 @@
 import type { DynamicZoneT } from '@/lib/types'
 import React from 'react'
-import SliderEntity from './blocks/sliders/SliderEntity';
-import Timeline from './blocks/timeline/Timeline';
 import { cn } from '@/lib/utils';
-import Numbers from './blocks/numbers/Numbers';
-import Files from './blocks/Files';
-import FormBlock from './blocks/form-block/FormBlock';
-import AccordionBlock from './blocks/AccordionBlock';
 import dynamic from 'next/dynamic';
 import { Skeleton } from '../ui/skeleton';
 import CarouselLoading from '../loadings/CarouselLoading';
 import { Loader2 } from 'lucide-react';
+import IconsBlockLoading from '../loadings/IconsBlockLoading';
+import TextLoading from '../loadings/TextLoading';
+import TextImageLoading from '../loadings/TextImageLoading';
+import TextGridLoading from '../loadings/TextGridLoading';
+import ContactsBlockLoading from '../loadings/ContactsBlockLoading';
+import TimelineLoading from '../loadings/TimelineLoading';
+import NumbersLoading from '../loadings/NumbersLoading';
+import ListLoading from '../loadings/ListLoading';
+import "./blocks/timeline/timeline.css"
  
 const RichText = dynamic(
-  () => import('./blocks/RichText'), {loading: () => <Skeleton className='w-full aspect-square'/>}
+  () => import('./blocks/RichText'), {loading: () => <TextLoading />}
 )
+
 const RichTextImage = dynamic(
-  () => import('./blocks/RichTextImage'),
-  {loading: () => (
-    <div className='w-full lg:flex-row flex-col items-center lg:gap-16 gap-6'>
-      <Skeleton className='lg:w-1/2 w-full aspect-[1/2]'/>
-      <Skeleton className='lg:w-1/2 w-full aspect-[1/2]'/>
-    </div>
-  )}
+  () => import('./blocks/RichTextImage'), {loading: () => <TextImageLoading />}
 )
+
 const RichTextGrid = dynamic(
-  () => import('./blocks/RichTextGrid'),
-  {loading: () => (
-    <div className='w-full grid grid-cols-1 md:grid-cols-2 gap-8'>
-      {Array.from({ length: 4 }).map((_, index) => (
-        <div key={index}>
-          <Skeleton className='w-full h-7'/>
-          <Skeleton className='w-full aspect-square'/>
-        </div>
-      ))}
-    </div>
-  )}
+  () => import('./blocks/RichTextGrid'), {loading: () => <TextGridLoading />}
 )
-const IconsBlock = dynamic(
-  () => import('./blocks/icon-block/IconsBlock'),
-  {loading: () => (
-    <Skeleton className='w-full aspect-video flex items-center justify-center'>
-      <Loader2 className='animate-spin'/>
-    </Skeleton>
-  )}
-)
+
 const ContactsBlock = dynamic(
-  () => import('./blocks/ContactsBlock'),
-  {loading: () => (
-    <div className='w-full flex gap-8 justify-between'>
-      <div className='max-w-80'>
-        <Skeleton className='w-full h-7'/>
-        <Skeleton className='w-full h-7'/>
-        <Skeleton className='w-full h-7'/>
-      </div>
-      <Skeleton className='w-2/5 lg:block hidden aspect-video'/>
-    </div>
-  )}
+  () => import('./blocks/ContactsBlock'), {loading: () => <ContactsBlockLoading />}
 )
+
+const Timeline = dynamic(
+  () => import('./blocks/timeline/Timeline'), {loading: () => <TimelineLoading />}
+)
+
+const Numbers = dynamic(
+  () => import('./blocks/numbers/Numbers'), {loading: () => <NumbersLoading />}
+)
+
+const Files = dynamic(
+  () => import('./blocks/Files'), {loading: () => <ListLoading />}
+)
+
+const AccordionBlock = dynamic(
+  () => import('./blocks/AccordionBlock'), {loading: () => <ListLoading />}
+)
+
+const IconsBlock = dynamic(
+  () => import('./blocks/icon-block/IconsBlock'), {loading: () => <IconsBlockLoading isList={false} className='w-full'/>}
+)
+
 const SliderPhotos = dynamic(
   () => import('./blocks/sliders/SliderPhotos'), {loading: () => <CarouselLoading className='w-full h-full sm:aspect-[2/1] aspect-square'/>}
 )
 
+const SliderEntity = dynamic(
+  () => import('./blocks/sliders/SliderEntity'), {loading: () => <CarouselLoading className='w-full h-full sm:aspect-[2/1] aspect-square'/>}
+)
+
 const CollectionAll = dynamic(
-  () => import('./blocks/entities/CollectionAll'),
-  {loading: () => (
+  () => import('./blocks/entities/CollectionAll'), {loading: () => (
     <Skeleton className='w-full aspect-square flex items-center justify-center'>
       <Loader2 className='animate-spin'/>
     </Skeleton>
   )}
 )
+
+const FormBlock = dynamic(
+  () => import('./blocks/form-block/FormBlock'), {loading: () => (
+    <Skeleton className='w-full aspect-[4/1] flex items-center justify-center'>
+      <Loader2 className='animate-spin'/>
+    </Skeleton>
+  )}
+)
+
 
 export default function DynamicZone({
   item,
