@@ -5,8 +5,8 @@ import { CarouselItem } from '@/components/ui/carousel'
 import { EmployeeSingleT, GraduateSingleT } from '@/lib/types'
 import { cn, splitArray } from '@/lib/utils'
 import React, { useEffect, useState } from 'react'
-import EmployeesItem from './EmployeesItem'
-import GraduatesItem from './GraduatesItem'
+import EmployeesItem from './entities/EmployeesItem'
+import GraduatesItem from './entities/GraduatesItem'
 
 export default function SplitSlider({
     data,

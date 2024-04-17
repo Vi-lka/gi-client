@@ -1,3 +1,6 @@
+import { dpo_courses, educationalPrograms, employees, graduates } from "./contentQueries"
+
+//.........................dynamicContentQuery.........................//
 export const dynamicContentQuery = `
   __typename
   ... on ComponentContentContacts {
@@ -54,51 +57,10 @@ export const dynamicContentQuery = `
     title
     link
     linkTitle
-    educational_programs {
-      data {
-        id
-        attributes {
-          slug
-          title
-          type
-          code
-          mainName
-          mainCode
-          image {
-            data {
-              attributes {
-                url
-              }
-            }
-          }
-        }
-      }
-    }
-    employees {
-      data {
-        id
-        attributes {
-          title
-          post
-          description
-          image {
-            data {
-              attributes {
-                url
-              }
-            }
-          }
-          hashtags {
-            data {
-              attributes {
-                slug
-                title
-              }
-            }
-          }
-        }
-      }
-    }
+    ${educationalPrograms}
+    ${employees}
+    ${graduates}
+    ${dpo_courses}
   }
   ... on ComponentContentCollectionAll {
     title
@@ -231,6 +193,7 @@ export const dynamicContentQuery = `
   }
 `
 
+//.........................LINKS.........................//
 const sameFields = `
   title
   link

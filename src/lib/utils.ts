@@ -1,6 +1,9 @@
 import {  clsx } from "clsx"
 import type {ClassValue} from "clsx";
 import { twMerge } from "tailwind-merge"
+import type { DictionariesType } from "./getDictionary";
+import { format } from "date-fns";
+import { ru, enUS } from "date-fns/locale";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -52,6 +55,26 @@ export function declOfNum(number: number, titles: string[]) {
 
 export function uniqArray<T>(arr: T[]) {
   return Array.from(new Set(arr));
+}
+
+export function getDateLocale(locale: keyof DictionariesType) {
+  switch (locale) {
+      case "ru":
+          return ru;
+      
+      case "en":
+          return enUS;
+  
+      default:
+          return enUS;
+  }
+}
+
+export function formatDate(date: Date, locale: string) {
+  const str = format(date, "P", { 
+      locale: getDateLocale(locale as keyof DictionariesType)
+  })
+  return str
 }
 
 export const grayscale = "lg:dark:grayscale-[60%] lg:dark:contrast-[1.2] dark:grayscale-[30%] dark:contrast-[1.05] dark:hover:grayscale-0 dark:hover:contrast-100 transition-[filter] duration-200 ease-in"

@@ -3,11 +3,12 @@ import { TypographyH2 } from '@/components/typography'
 import type { SliderEntityCompT } from '@/lib/types'
 import { cn } from '@/lib/utils'
 import React from 'react'
-import EducationalProgramsItem from './EducationalProgramsItem'
+import EducationalProgramsItem from './entities/EducationalProgramsItem'
 import SplitSlider from './SplitSlider'
 import { headers } from 'next/headers'
 import { ClientHydration } from '@/components/ClientHydration'
 import SplitSliderLoading from '@/components/loadings/SplitSliderLoading'
+import DpoCoursesItem from './entities/DpoCoursesItem'
 
 export default function SliderEntity({
     data,
@@ -41,9 +42,21 @@ export default function SliderEntity({
                     ))}
                 </CarouselComp>
             )}
+            {data.dpo_courses.data.length > 0 && (
+                <CarouselComp className='lg:-ml-8 -ml-4'>
+                    {data.dpo_courses.data.map(item => (
+                        <DpoCoursesItem key={item.id} locale={locale} item={item} />
+                    ))}
+                </CarouselComp>
+            )}
             {data.employees.data.length > 0 && (
                 <ClientHydration fallback={<SplitSliderLoading />}>
                     <SplitSlider data={data.employees.data} />
+                </ClientHydration>
+            )}
+            {data.graduates.data.length > 0 && (
+                <ClientHydration fallback={<SplitSliderLoading />}>
+                    <SplitSlider data={data.graduates.data} />
                 </ClientHydration>
             )}
         </div>

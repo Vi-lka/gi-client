@@ -312,6 +312,12 @@ export const SliderEntityCompT = z.object({
   }),
   employees: z.object({
     data: EmployeeSingleT.array()
+  }),
+  graduates: z.object({
+    data: GraduateSingleT.array()
+  }),
+  dpo_courses: z.object({
+    data: DpoCoursesSingleT.array()
   })
 })
 export type SliderEntityCompT = z.infer<typeof SliderEntityCompT>;

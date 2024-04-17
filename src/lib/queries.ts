@@ -3,6 +3,7 @@ import type { EducationalProgramTypeEnum } from "./types";
 import { LinksT, NavBarT} from "./types";
 import { EducationalProgramsT, DpoCoursesT, GraduatesT } from "./types";
 import { dynamicContentLinksQuery } from "./dynamicContentQuery";
+import { educationalPrograms } from "./contentQueries";
 
 export async function fetchData<T>({
   query,
@@ -245,26 +246,7 @@ export const getGraduates= async ({
               }
             }
           }
-          educational_programs {
-            data {
-              id
-              attributes {
-                slug
-                title
-                code
-                mainName
-                mainCode
-                type
-                image {
-                  data {
-                    attributes {
-                      url
-                    }
-                  }
-                }
-              }
-            }
-          }
+          ${educationalPrograms}
           oldPrograms {
             title
             code

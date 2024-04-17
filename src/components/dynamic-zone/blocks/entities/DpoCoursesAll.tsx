@@ -4,15 +4,12 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { getDpoCourses } from '@/lib/queries';
 import React from 'react'
-import { format } from "date-fns";
-import { ru, enUS } from "date-fns/locale";
-import { declOfNum } from '@/lib/utils';
+import { declOfNum, formatDate } from '@/lib/utils';
 import { CalendarDays, Clock3, MapPin } from 'lucide-react';
 import { MdOutlineCurrencyRuble } from 'react-icons/md';
 import PaginationControls from '@/components/PaginationControls';
 import Link from '@/components/Link';
 import { headers } from 'next/headers';
-import type { DictionariesType} from '@/lib/getDictionary';
 import { getDictionary } from '@/lib/getDictionary';
 
 const DEFAULT_PAGE_SIZE = 12;
@@ -51,26 +48,6 @@ export default async function DpoCoursesAll({
             goBack={false}
         />
     )
-
-    function getDateLocale(locale: keyof DictionariesType) {
-        switch (locale) {
-            case "ru":
-                return ru;
-            
-            case "en":
-                return enUS;
-        
-            default:
-                return enUS;
-        }
-    }
-
-    function formatDate(date: Date, locale: string) {
-        const str = format(date, "P", { 
-            locale: getDateLocale(locale as keyof DictionariesType)
-        })
-        return str
-    }
 
     return (
         <>
