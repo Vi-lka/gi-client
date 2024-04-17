@@ -41,7 +41,7 @@ export default function Numbers({
                                 <DynamicReactIcon icon={item.icon} className="w-auto lg:h-6 h-5 lg:mt-2 mt-1 ml-0.5" />
                             )}
                         </h4>
-                        <p className='max-w-80 whitespace-pre-wrap mt-1'>{item.description}</p>
+                        <p className='max-w-80 whitespace-pre-wrap mt-1 dark:text-muted-foreground'>{item.description}</p>
                     </li>
                 ))}
             </ul>

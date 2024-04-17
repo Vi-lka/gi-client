@@ -90,10 +90,10 @@ export default async function DpoCoursesAll({
                             <div className='lg:w-[55%] w-full flex flex-col gap-6 justify-between text-primary'>
                                 <h4 className='xl:text-xl lg:text-lg sm:text-xl text-lg font-bold lg:mr-6'>{item.attributes.title}</h4>
                                 <div className='w-full flex flex-col gap-6 justify-end'>
-                                    <ul className='flex flex-col gap-3 lg:mr-6'>
+                                    <ul className='flex flex-col gap-3 lg:mr-6 text-foreground dark:text-muted-foreground'>
                                         {(item.attributes.dateStart || item.attributes.dateEnd) && (
                                             <li className='flex items-center gap-2 font-medium'>
-                                                <CalendarDays className='w-auto h-5' />
+                                                <CalendarDays className='w-auto h-5 ' />
                                                 <p>
                                                     {item.attributes.dateStart && formatDate(item.attributes.dateStart, locale)}
                                                     {item.attributes.dateStart && item.attributes.dateEnd && " - "}
@@ -103,13 +103,13 @@ export default async function DpoCoursesAll({
                                         )}
                                         {item.attributes.location && (
                                             <li className='flex items-center gap-2 font-medium'>
-                                                <MapPin className='w-auto h-5' />
+                                                <MapPin className='w-auto h-5 ' />
                                                 {item.attributes.location}
                                             </li>
                                         )}
                                         {item.attributes.hours && (
                                             <li className='flex items-center gap-2 font-medium'>
-                                                <Clock3 className='w-auto h-5' />
+                                                <Clock3 className='w-auto h-5 ' />
                                                 {
                                                     item.attributes.hours.toString() 
                                                     + 
@@ -121,7 +121,7 @@ export default async function DpoCoursesAll({
                                         )}
                                         {item.attributes.price && (
                                             <li className='flex items-center gap-2 font-medium'>
-                                                <MdOutlineCurrencyRuble className='w-auto h-5' />
+                                                <MdOutlineCurrencyRuble className='w-auto h-5 ' />
                                                 {item.attributes.price}
                                             </li>
                                         )}

@@ -83,13 +83,13 @@ function IconBlockItem({
 }) {
     switch (type) {
         case "icon":
-            if (item.iconCustom) return <IconCustom icon={item.iconCustom} className='w-auto lg:h-20 sm:h-16 h-14 filter-secondary-foreground' />
+            if (item.iconCustom) return <IconCustom icon={item.iconCustom} className='w-auto lg:h-20 sm:h-16 h-14 filter-secondary-foreground dark:filter-background' />
             else if (item.iconReact) return <DynamicReactIcon icon={item.iconReact} className="w-auto lg:h-20 sm:h-16 h-14 text-secondary-foreground" />
             else return null
 
         case "title":
             return <h3 className='font-semibold text-sm'>{item.title}</h3>
         case "description":
-            return <p className='text-sm'>{item.description}</p>
+            return <p className='text-sm text-foreground dark:text-muted-foreground'>{item.description}</p>
     }
 }

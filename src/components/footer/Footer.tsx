@@ -11,6 +11,7 @@ import ImageComp from '../ImageComp';
 import Link from 'next/link';
 import FormFooter from './FormFooter';
 import { headers } from 'next/headers';
+import { cn } from '@/lib/utils';
 
 export const dynamic = 'force-dynamic'
 
@@ -168,20 +169,47 @@ export default async function Footer() {
                                                 fill={false}
                                                 width={140}
                                                 height={140}
-                                                className='object-contain xl:w-[140px] w-24'
+                                                className={cn(
+                                                    'object-contain xl:w-[140px] w-24',
+                                                    item.imageDark.data ? "dark:hidden" : "dark:!filter-background"
+                                                )}
                                             />
+                                            {item.imageDark.data && (
+                                                <ImageComp 
+                                                    src={item.imageDark.data.attributes.url}
+                                                    alt='Logo'
+                                                    fill={false}
+                                                    width={140}
+                                                    height={140}
+                                                    className='object-contain xl:w-[140px] w-24 hidden dark:block'
+                                                />
+                                            )}
                                         </Link>
                                     )
                                     : (
-                                        <ImageComp 
-                                            key={index}
-                                            src={item.image.data?.attributes.url}
-                                            alt='Logo'
-                                            fill={false}
-                                            width={140}
-                                            height={140}
-                                            className='object-contain xl:w-[140px] w-24'
-                                        />
+                                        <div key={index}>
+                                            <ImageComp 
+                                                src={item.image.data?.attributes.url}
+                                                alt='Logo'
+                                                fill={false}
+                                                width={140}
+                                                height={140}
+                                                className={cn(
+                                                    'object-contain xl:w-[140px] w-24',
+                                                    item.imageDark.data ? "dark:hidden" : "dark:!filter-background"
+                                                )}
+                                            />
+                                            {item.imageDark.data && (
+                                                <ImageComp 
+                                                    src={item.imageDark.data.attributes.url}
+                                                    alt='Logo'
+                                                    fill={false}
+                                                    width={140}
+                                                    height={140}
+                                                    className='object-contain xl:w-[140px] w-24 hidden dark:block'
+                                                />
+                                            )}
+                                        </div>
                                     )
                             ))}
                         </div>
@@ -203,22 +231,37 @@ export default async function Footer() {
 function SocialIcon({
     iconReact,
     image,
-    // imageDark,
+    imageDark,
 }: {
     iconReact: string | null,
     image: ImageT,
     imageDark: ImageT,
 }) {
     if (iconReact) return <DynamicReactIcon icon={iconReact} className="w-auto xl:h-9 h-8 text-primary rounded-full" />
-    else if (image) return (
-        <ImageComp 
-            src={image.data?.attributes.url} 
-            alt='Social Network Icon' 
-            fill={false} 
-            width={80} 
-            height={80} 
-            className='object-contain w-fit xl:h-9 h-8 rounded-full'
-        />
+    else if (image.data) return (
+        <div>
+            <ImageComp 
+                src={image.data.attributes.url} 
+                alt='Social Network Icon' 
+                fill={false} 
+                width={80} 
+                height={80} 
+                className={cn(
+                    'object-contain w-fit xl:h-9 h-8 rounded-full',
+                    imageDark.data ? "dark:hidden" : "dark:!filter-background"
+                )}
+            />
+            {imageDark.data && (
+                <ImageComp 
+                    src={imageDark.data.attributes.url} 
+                    alt='Social Network Icon' 
+                    fill={false} 
+                    width={80} 
+                    height={80} 
+                    className='object-contain w-fit xl:h-9 h-8 rounded-full hidden dark:block'
+                />
+            )}
+        </div>
     )
 }
 

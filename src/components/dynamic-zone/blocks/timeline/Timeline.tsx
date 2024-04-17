@@ -45,7 +45,7 @@ export default function Timeline({
                             )}
                             <article 
                                 className={cn(
-                                    "prose prose-p:!my-0 prose-p:text-sm prose-headings:text-foreground",
+                                    "prose prose-p:!my-0 prose-p:text-sm text-foreground dark:text-muted-foreground prose-headings:text-foreground",
                                     item.title ? "px-6" : ""
                                 )}
                             >

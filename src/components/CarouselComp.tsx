@@ -41,8 +41,8 @@ export default function CarouselComp({
                 <CarouselContent className={className}>
                     {children}
                 </CarouselContent>
-                <CarouselPrevious variant="ghost" className='md:scale-150 hover:bg-primary disabled:opacity-0 transition-all' />
-                <CarouselNext variant="ghost" className='md:scale-150 hover:bg-primary disabled:opacity-0 transition-all' />
+                <CarouselPrevious variant="ghost" className='md:scale-150 hover:bg-primary dark:hover:text-background disabled:opacity-0 transition-all' />
+                <CarouselNext variant="ghost" className='md:scale-150 hover:bg-primary dark:hover:text-background disabled:opacity-0 transition-all' />
             </Carousel>
             {count > 1 && (
                 <div 

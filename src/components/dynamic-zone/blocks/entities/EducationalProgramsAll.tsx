@@ -141,7 +141,7 @@ function EducationalProgramsGrid({
                         />
     
                         <div className='flex flex-col justify-between gap-3 xl:px-8 px-5 text-primary text-base'>
-                            <div>
+                            <div className=' dark:text-muted-foreground'>
                                 <p>{item.attributes.mainCode}</p>
                                 <p>{item.attributes.mainName}</p>
                             </div>

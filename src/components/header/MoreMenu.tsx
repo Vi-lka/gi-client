@@ -13,7 +13,7 @@ import { useTheme } from 'next-themes';
 export default function MoreMenu() {
 
   const pathname = usePathname();
-  const { theme, setTheme } = useTheme()
+  const { resolvedTheme, setTheme } = useTheme()
 
   const themes = ["light", "dark"]
 
@@ -34,7 +34,7 @@ export default function MoreMenu() {
 
         <DropdownMenuSub>
           <DropdownMenuSubTrigger icon={false} className='flex aspect-square justify-center font-medium uppercase text-base sm:text-sm rounded-xl'>
-            {theme === "light"
+            {resolvedTheme === "light"
               ? <Sun className='w-5 h-5' /> 
               : <Moon className='w-5 h-5' /> 
             }
@@ -52,7 +52,7 @@ export default function MoreMenu() {
                   >
                       <DropdownMenuItem className={cn(
                           "font-Din w-full justify-center cursor-pointer sm:text-sm text-base uppercase font-normal rounded-xl",
-                          item === theme ? "bg-primary text-background" : "",
+                          item === resolvedTheme ? "bg-primary text-background" : "",
                       )}>
                         {item === "light"
                           ? <Sun className='w-5 h-5' /> 

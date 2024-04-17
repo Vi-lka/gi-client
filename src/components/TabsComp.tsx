@@ -67,7 +67,7 @@ export default function TabsComp(props: Props) {
                                 transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                             />
                         )}
-                        {tab.title} <sup className='ml-0.5'>{tab.count}</sup>
+                        {tab.title} <sup className='ml-0.5 text-muted-foreground'>{tab.count}</sup>
                     </TabsTrigger>
                 ))}
             </TabsList>

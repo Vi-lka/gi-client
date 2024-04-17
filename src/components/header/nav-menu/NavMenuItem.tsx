@@ -40,7 +40,7 @@ export default function NavMenuItem({
           // style={{fontWeight: isActive ? 'bold' : 'normal'}}
           className={cn(
             navigationMenuTriggerStyle(),
-            "h-fit lg:text-base text-sm 2xl:py-2 md:py-1 2xl:px-6 md:px-3 uppercase"
+            "h-fit lg:text-base text-sm 2xl:py-2 md:py-1 2xl:px-6 md:px-3 uppercase dark:border dark:border-solid dark:border-border"
           )}
         >
           {children}
@@ -97,7 +97,7 @@ export default function NavMenuItem({
         // style={{fontWeight: isActive ? 'bold' : 'normal'}}
         className={cn(
           navigationMenuTriggerStyle(),
-          "h-fit lg:text-base text-sm 2xl:py-2 md:py-1 2xl:px-6 md:px-3 uppercase"
+          "h-fit lg:text-base text-sm 2xl:py-2 md:py-1 2xl:px-6 md:px-3 uppercase dark:border dark:border-solid dark:border-border"
         )}
       >
         {children}
@@ -125,12 +125,12 @@ function ListItem({
         locale={locale}
         href={href}
         className={cn(
-          "",
+          "group",
           className
         )}
       >
         <p className="text-base font-medium">{title}</p>
-        <p className="w-full text-left line-clamp-3 text-sm leading-snug font-normal text-muted-foreground hover:text-background">
+        <p className="w-full text-left line-clamp-3 text-sm leading-snug font-normal text-muted-foreground group-hover:text-background">
           {children}
         </p>
       </Link>

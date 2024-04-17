@@ -82,11 +82,11 @@ export default function ButtonForm({
             target={inNewTab ? "_blank" : "_self"} 
             passHref 
             className={cn(
-                'w-full',
+                'w-full z-10',
                 listLength === 4 ? "lg:w-1/4" : "lg:w-1/5"
             )}
         >
-            <Button className='w-full p-6 uppercase rounded-3xl text-primary bg-background border hover:border-background hover:text-background z-10'>
+            <Button className='w-full p-6 uppercase rounded-3xl text-primary bg-background border hover:border-background hover:text-background dark:text-background dark:bg-primary dark:hover:text-primary dark:hover:bg-transparent dark:hover:border-primary'>
                 {buttonTitle}
             </Button>
         </Link>
@@ -96,6 +96,7 @@ export default function ButtonForm({
             <DialogTrigger asChild>
                 <Button className={cn(
                     'w-full p-6 uppercase rounded-3xl text-primary bg-background border hover:border-background hover:text-background z-10',
+                    "dark:text-background dark:bg-primary dark:hover:text-primary dark:hover:bg-transparent dark:hover:border-primary",
                     listLength === 4 ? "lg:w-1/4" : "lg:w-1/5 "
                 )}>
                     {buttonTitle}

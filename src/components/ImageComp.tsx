@@ -3,7 +3,6 @@
 import React from "react";
 import Image from "next/image";
 import { useTheme } from "next-themes";
-import { cn, grayscale } from "@/lib/utils";
 
 type Props = {
   src: string | undefined;
@@ -26,7 +25,7 @@ type NotFill = {
 
 export default function ImageComp(props: Props) {
   const placeholderImage = "/hero-image.jpeg";
-  const { theme } = useTheme();
+  const { resolvedTheme } = useTheme();
 
   const [image, setImage] = React.useState(
     !!props.src ? props.src : placeholderImage,
@@ -49,12 +48,9 @@ export default function ImageComp(props: Props) {
       width={width}
       height={height}
       quality={props.quality}
-      placeholder={placeholderSvg(width, height, theme)}
+      placeholder={placeholderSvg(width, height, resolvedTheme)}
       onError={() => setImage(placeholderImage)}
-      className={cn(
-        props.className,
-        grayscale,
-      )}
+      className={props.className}
       alt={props.alt}
       priority={props.priority}
       onLoad={props.onLoad}

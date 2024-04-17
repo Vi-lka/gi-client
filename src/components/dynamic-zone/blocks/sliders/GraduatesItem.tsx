@@ -25,7 +25,7 @@ export default function GraduatesItem({
                         <p className='font-bold mb-1'>{graduate.attributes.title}</p>
                         <p>{graduate.attributes.description}</p>
                     </div>
-                    <p>{graduate.attributes.additionalInfo}</p>
+                    <p className='dark:text-muted-foreground'>{graduate.attributes.additionalInfo}</p>
                 </div>
             </CardContent>
         </Card>

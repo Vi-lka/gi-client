@@ -1,11 +1,14 @@
+"use client"
+
 import DynamicReactIcon from '@/components/DynamicReactIcon'
 import IconCustom from '@/components/IconCustom'
 import { TypographyH2 } from '@/components/typography'
 import type { FormBlockCompT, FormBlockItemT } from '@/lib/types'
 import { cn } from '@/lib/utils'
-import Image from 'next/image'
 import React from 'react'
 import ButtonForm from './ButtonForm'
+import ImageComp from '@/components/ImageComp'
+import { useTheme } from 'next-themes'
 
 export default function FormBlock({
     data,
@@ -16,6 +19,8 @@ export default function FormBlock({
     headingBig?: boolean,
     className?: string,
 }) {
+
+    const { resolvedTheme } = useTheme()
 
     return (
         <div className={cn("w-full", className)}>
@@ -30,18 +35,47 @@ export default function FormBlock({
                 </TypographyH2>
             )}
 
-            <div className='flex relative lg:flex-row flex-col items-center lg:gap-6 gap-10 xl:p-16 lg:p-12 p-8 rounded-3xl overflow-hidden' style={{backgroundColor: data.color ? data.color : "hsl(var(--primary))"}}>
+            <div 
+                className={cn(
+                    'flex relative lg:flex-row flex-col items-center lg:gap-6 gap-10 xl:p-16 lg:p-12 p-8 rounded-3xl overflow-hidden',
+                    (data.image.data || data.imageDark.data) && "dark:border",
+                    data.image.data 
+                        ? "bg-background" 
+                        : data.color 
+                            ? ""
+                            : "bg-primary dark:bg-accent"
+                )} 
+                style={{
+                    backgroundColor: (resolvedTheme === "dark" && data.colorDark)
+                        ? data.colorDark 
+                        : data.color
+                            ? data.color
+                            : ""
+                }}
+            >
                 {data.image.data && (
-                    <Image 
+                    <ImageComp 
                         src={data.image.data.attributes.url}
                         alt=''
                         fill
                         sizes='90vw'
-                        className='object-cover z-0 brightness-50 contrast-125'
+                        className={cn(
+                            'object-cover z-0 !brightness-50 !contrast-125', 
+                            data.imageDark.data ? "dark:hidden" : "dark:!brightness-[0.4]"
+                        )}
+                    />
+                )}
+                {data.imageDark.data && (
+                    <ImageComp 
+                        src={data.imageDark.data.attributes.url}
+                        alt=''
+                        fill
+                        sizes='90vw'
+                        className='object-cover z-0 !brightness-[0.4] !contrast-125 hidden dark:block'
                     />
                 )}
                 <ul className={cn(
-                    "grid xl:gap-8 xl:gap-y-14 lg:gap-y-10 gap-6 items-center text-background w-full z-10",
+                    "grid xl:gap-8 xl:gap-y-14 lg:gap-y-10 gap-6 items-center text-background dark:text-foreground w-full z-10",
                     data.list.length === 4 ? "lg:grid-cols-2 grid-cols-1 lg:w-3/4" : "xl:grid-cols-3 md:grid-cols-2 grid-cols-1 lg:w-4/5"
                 )}>
                     {data.list.map((item, index) => (
@@ -52,7 +86,7 @@ export default function FormBlock({
                                 data.largeTitles ? "2xl:text-4xl xl:text-3xl text-2xl" : "2xl:text-[1.4rem] xl:text-xl text-lg"
                             )}>
                                 {item.title}
-                                <span className='block font-light text-sm'>{item.description}</span>
+                                <span className='block font-light text-sm mt-0.5'>{item.description}</span>
                             </p>
                         </li>
                     ))}
@@ -79,15 +113,35 @@ function FormBlockIcon({
     className?: string
 }) {
     if (item.iconCustom) return <IconCustom icon={item.iconCustom} className={cn('h-auto lg:w-11 sm:w-10 w-9 filter-background', className)} />
-    else if (item.iconReact) return <DynamicReactIcon icon={item.iconReact} className={cn("h-auto lg:w-11 sm:w-10 w-9 text-background", className)} />
+    else if (item.iconReact) return <DynamicReactIcon icon={item.iconReact} className={cn("h-auto lg:w-11 sm:w-10 w-9 text-background dark:text-foreground", className)} />
     else if (item.image.data) return (
-        <Image
-            src={item.image.data.attributes.url}
-            alt=''
-            width={48}
-            height={48}
-            className={cn('lg:h-11 sm:h-10 h-9 aspect-square object-cover', className)}
-        />
+        <div>
+            <ImageComp
+                src={item.image.data.attributes.url}
+                alt='Icon'
+                fill={false}
+                width={48}
+                height={48}
+                className={cn(
+                    'lg:h-11 sm:h-10 h-9 aspect-square object-contain', 
+                    className,
+                    item.imageDark.data ? "dark:hidden" : "dark:!filter-background"
+                )}
+            />
+            {item.imageDark.data && (
+                <ImageComp 
+                    src={item.imageDark.data.attributes.url} 
+                    alt='Icon'
+                    fill={false}
+                    width={48}
+                    height={48}
+                    className={cn(
+                        'lg:h-11 sm:h-10 h-9 aspect-square object-contain hidden dark:block', 
+                        className,
+                    )}
+                />
+            )}
+        </div>
     )
     else return null
 }

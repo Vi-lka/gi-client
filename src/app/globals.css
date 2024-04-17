@@ -57,7 +57,7 @@
     --muted: 240 4% 30%;
     --muted-foreground: 0 0% 63.9%;
 
-    --accent: 263 70% 50%;
+    --accent: 263 84% 52%;
     --accent-foreground: 264 12% 92%;
 
     --destructive: 0 62.8% 30.6%;
@@ -67,7 +67,7 @@
     --input: 266 9% 9%;
     --ring: 240 4.9% 83.9%;
 
-    --apricot: 263 70% 50%;
+    --apricot: 263 84% 52%;
 
   }
 }
@@ -82,11 +82,28 @@
 }
 
 @layer components {
-  section:hover #imageComp {
+  :is(.dark #imageComp) {
     --tw-grayscale: grayscale(15%);
+    filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+    --tw-contrast: contrast(1.05);
+    filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+    transition-property: filter;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+    transition-duration: 200ms;
+    transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
+  }
+
+  :is(.dark #imageComp:hover) {
+    --tw-grayscale: grayscale(5%);
     filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
     --tw-contrast: contrast(1);
     filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+    transition-property: filter;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+    transition-duration: 200ms;
+    transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
   }
 
   .filter-background,
@@ -143,6 +160,10 @@
   
   .filter-apricot {
     filter: brightness(0) saturate(100%) invert(90%) sepia(10%) saturate(1128%) hue-rotate(321deg) brightness(99%) contrast(95%);
+  }
+
+  .filter-violet {
+    filter: brightness(0) saturate(100%) invert(16%) sepia(96%) saturate(3246%) hue-rotate(260deg) brightness(92%) contrast(98%);
   }
 
   .link-underline {
