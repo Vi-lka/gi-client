@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { match as matchLocale } from "@formatjs/intl-localematcher";
 import Negotiator from "negotiator";
-import * as Sentry from "@sentry/nextjs";
 
 import { localesCodes } from "./static/locales";
 
@@ -21,9 +20,6 @@ function getLocale(request: NextRequest) {
   try {
     locale = matchLocale(languages, localesCodes, defaultLocale)
   } catch (error) {
-    console.log("matchLocale Error: ", error)
-    Sentry.captureException(error);
-
     locale = defaultLocale
   }
 
