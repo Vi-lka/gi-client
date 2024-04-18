@@ -515,7 +515,6 @@ export const DpoCoursePageT  = z.object({
   attributes: z.object({
     slug: z.string(),
     title: z.string(),
-    description: z.string().nullable(),
     dateStart: z.coerce.date().nullable(),
     dateEnd: z.coerce.date().nullable(),
     location: z.string().nullable(),
