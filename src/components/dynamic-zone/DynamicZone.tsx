@@ -88,43 +88,109 @@ export default function DynamicZone({
 
   switch (item.__typename) {
     case "ComponentContentTextBlock":
-      return <RichText data={item} headingBig={headingBig} className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} />;
+      return <RichText 
+              key={`key-${item.__typename}-${item.link}`} 
+              data={item} 
+              headingBig={headingBig} 
+              className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} 
+            />;
 
     case "ComponentContentTextImages":
-      return <RichTextImage data={item} headingBig={headingBig} className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} />;
+      return <RichTextImage 
+              key={`key-${item.__typename}-${item.link}`} 
+              data={item} 
+              headingBig={headingBig} 
+              className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} 
+            />;
 
     case "ComponentContentTextGrid":
-      return <RichTextGrid data={item} headingBig={headingBig} className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} />
+      return <RichTextGrid 
+              key={`key-${item.__typename}-${item.link}`} 
+              data={item} 
+              headingBig={headingBig} 
+              className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} 
+            />
 
     case "ComponentContentIconsBlock":
-      return <IconsBlock data={item} headingBig={headingBig} className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} />;
+      return <IconsBlock 
+              key={`key-${item.__typename}-${item.link}`} 
+              data={item} 
+              headingBig={headingBig} 
+              className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} 
+            />;
     
     case "ComponentContentContacts":
-      return <ContactsBlock data={item} headingBig={headingBig} className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} />;
+      return <ContactsBlock 
+              key={`key-${item.__typename}-${item.link}`} 
+              data={item} 
+              headingBig={headingBig} 
+              className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} 
+            />;
     
     case "ComponentContentSliderPhotos":
-      return <SliderPhotos data={item} headingBig={headingBig} className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} />;
+      return <SliderPhotos 
+              key={`key-${item.__typename}-${item.link}`} 
+              data={item} 
+              headingBig={headingBig} 
+              className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} 
+            />;
 
     case "ComponentContentCollectionAll":
-      return <CollectionAll data={item} headingBig={headingBig} searchParams={searchParams} className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} />;
+      return <CollectionAll 
+              key={`key-${item.__typename}-${item.link}`} 
+              data={item} 
+              headingBig={headingBig} 
+              searchParams={searchParams} 
+              className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} 
+            />;
 
     case "ComponentContentTimeline":
-      return <Timeline data={item} headingBig={headingBig} className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} />;
+      return <Timeline 
+              key={`key-${item.__typename}-${item.link}`} 
+              data={item} 
+              headingBig={headingBig} 
+              className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} 
+            />;
 
     case "ComponentContentNumbers":
-      return <Numbers data={item} headingBig={headingBig} className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} />;
+      return <Numbers 
+              key={`key-${item.__typename}-${item.link}`} 
+              data={item} 
+              headingBig={headingBig} 
+              className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} 
+            />;
 
     case "ComponentContentFiles":
-      return <Files data={item} headingBig={headingBig} className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} />;
+      return <Files 
+              key={`key-${item.__typename}-${item.link}`} 
+              data={item} 
+              headingBig={headingBig} 
+              className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} 
+            />;
 
     case "ComponentContentAccordion":
-      return <AccordionBlock data={item} headingBig={headingBig} className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} />
+      return <AccordionBlock 
+              key={`key-${item.__typename}-${item.link}`} 
+              data={item} 
+              headingBig={headingBig} 
+              className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} 
+            />
 
     case "ComponentContentFormBlock":
-      return <FormBlock data={item} headingBig={headingBig} className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} />;
+      return <FormBlock 
+              key={`key-${item.__typename}-${item.link}`} 
+              data={item} 
+              headingBig={headingBig} 
+              className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} 
+            />;
 
     case "ComponentContentSliderEntity":
-      return <SliderEntity data={item} headingBig={headingBig} className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} />
+      return <SliderEntity 
+              key={`key-${item.__typename}-${item.link}`} 
+              data={item} 
+              headingBig={headingBig} 
+              className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} 
+            />
       
     default:
       return null;

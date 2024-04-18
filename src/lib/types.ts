@@ -154,12 +154,23 @@ export const EmployeeSingleT  = z.object({
   id: z.string(),
   attributes: z.object({
     title: z.string(),
-    post: z.string().nullable(),
-    description: z.string().nullable(),
     image: ImageT,
+    meta: z.object({
+      post: z.string().nullable(),
+      degree: z.string().nullable(),
+      degreeShort: z.string().nullable(),
+      rank: z.string().nullable(),
+      rankShort: z.string().nullable(),
+    }).nullable(),
+    description: z.string().nullable(),
+    email: z.string().nullable(),
+    phone: z.string().nullable(),
+    location: z.string().nullable(),
     hashtags: z.object({
       data: HashtagSingleT.array()
-    })
+    }),
+    showContacts: z.boolean(),
+    showHashtags: z.boolean()
   })
 })
 export type EmployeeSingleT = z.infer<typeof EmployeeSingleT>;
@@ -255,7 +266,7 @@ export const CollectionAllEnum = z.enum([
   "educational-programs", 
   "dpo-courses", 
   "graduates",
-  "lecturers",
+  "employees",
 ]);
 export type CollectionAllEnum = z.infer<typeof CollectionAllEnum>;
 export const CollectionAllCompT = z.object({

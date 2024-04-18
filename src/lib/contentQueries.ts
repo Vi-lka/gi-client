@@ -28,7 +28,13 @@ export const employees = `
       id
       attributes {
         title
-        post
+        meta {
+          post
+          degree
+          degreeShort
+          rank
+          rankShort
+        }
         description
         image {
           data {
@@ -37,6 +43,9 @@ export const employees = `
             }
           }
         }
+        email
+        phone
+        location
         hashtags {
           data {
             attributes {
@@ -45,6 +54,8 @@ export const employees = `
             }
           }
         }
+        showContacts
+        showHashtags
       }
     }
   }

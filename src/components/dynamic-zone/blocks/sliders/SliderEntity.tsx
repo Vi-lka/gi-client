@@ -3,12 +3,12 @@ import { TypographyH2 } from '@/components/typography'
 import type { SliderEntityCompT } from '@/lib/types'
 import { cn } from '@/lib/utils'
 import React from 'react'
-import EducationalProgramsItem from './entities/EducationalProgramsItem'
+import EducationalProgramsItem from '../../entities-cards/EducationalProgramsItem'
 import SplitSlider from './SplitSlider'
 import { headers } from 'next/headers'
 import { ClientHydration } from '@/components/ClientHydration'
 import SplitSliderLoading from '@/components/loadings/SplitSliderLoading'
-import DpoCoursesItem from './entities/DpoCoursesItem'
+import DpoCoursesItem from '../../entities-cards/DpoCoursesItem'
 
 export default function SliderEntity({
     data,

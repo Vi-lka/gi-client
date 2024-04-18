@@ -85,13 +85,13 @@ export default function PaginationControls({
       if (value.length > 0) {
         params.set(pageParam, value);
         startTransitionPage(() => {
-          router.push(`${pathname}?${params.toString()}`, { scroll: false });
+          router.push(`${locale}${pathname}?${params.toString()}`, { scroll: false });
         });
       } else {
         params.delete(pageParam);
       }
     },
-    [pageParam, pathname, router],
+    [locale, pageParam, pathname, router],
   );
 
   const handlePageSizeParams = React.useCallback(
@@ -100,13 +100,13 @@ export default function PaginationControls({
       if (value.length > 0) {
         params.set(perParam, value);
         startTransitionMore(() => {
-          router.push(`${pathname}?${params.toString()}`, { scroll: false });
+          router.push(`${locale}${pathname}?${params.toString()}`, { scroll: false });
         });
       } else {
         params.delete(perParam);
       }
     },
-    [pathname, perParam, router],
+    [locale, pathname, perParam, router],
   );
 
   return (

@@ -145,7 +145,7 @@ export default function About({
                             <Link href={data.link}>
                                 <Button 
                                     variant="outline" 
-                                    className='uppercase rounded-full font-medium lg:text-sm text-xs lg:py-4 px-8 py-3 mt-[5vh] lg:ml-16 dark:bg-primary dark:text-background dark:hover:text-primary dark:hover:bg-transparent dark:hover:border-primary'
+                                    className='uppercase rounded-full font-medium lg:text-sm text-xs lg:py-4 px-8 py-3 mt-[5vh] lg:ml-16 hover:bg-transparent dark:bg-primary dark:text-background dark:hover:text-primary dark:hover:bg-transparent dark:hover:border-primary'
                                 >
                                     {data.linkTitle}
                                 </Button>

@@ -53,7 +53,7 @@ export default async function DpoCoursesAll({
 
     return (
         <>
-            <div className="grid lg:grid-cols-2 grid-cols-1 lg:auto-rows-fr lg:gap-8 gap-6">
+            <div id="dpo-courses" className="grid lg:grid-cols-2 grid-cols-1 lg:auto-rows-fr lg:gap-8 gap-6">
                 {dataResult.value.data.map(item => (
                     <Card key={item.id} className='min-w-0 h-full border-none shadow-md rounded-3xl'>
                         <CardContent className="w-full h-full flex lg:flex-row flex-col xl:gap-8 gap-6 justify-between p-3">

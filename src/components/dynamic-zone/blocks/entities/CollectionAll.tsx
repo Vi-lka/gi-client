@@ -2,7 +2,7 @@ import type { CollectionAllCompT } from '@/lib/types'
 import React from 'react'
 import EducationalProgramsAll from './EducationalProgramsAll';
 import DpoCoursesAll from './DpoCoursesAll';
-import LecturersAll from './LecturersAll';
+import EmployeesAll from './EmployeesAll';
 import GraduatesAll from './GraduatesAll';
 import { cn } from '@/lib/utils';
 import { TypographyH2 } from '@/components/typography';
@@ -39,8 +39,8 @@ export default function CollectionAll({
                     case "dpo-courses":
                         return <DpoCoursesAll key={index} searchParams={searchParams} />;
 
-                    case "lecturers":
-                        return <LecturersAll key={index} />;
+                    case "employees":
+                        return <EmployeesAll key={index} searchParams={searchParams} />;
                     
                     case "graduates":
                         return <GraduatesAll key={index} searchParams={searchParams} />
