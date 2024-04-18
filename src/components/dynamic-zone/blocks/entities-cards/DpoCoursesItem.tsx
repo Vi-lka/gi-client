@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
 import type { DpoCoursesSingleT } from '@/lib/types'
-import { declOfNum, formatDate } from '@/lib/utils'
+import { declOfNum, formatDate, getShortText } from '@/lib/utils'
 import { CalendarDays, Clock3, MapPin } from 'lucide-react'
 import React from 'react'
 import { MdOutlineCurrencyRuble } from 'react-icons/md'
@@ -34,12 +34,20 @@ export default function DpoCoursesItem({
                 </ClientHydration>
                 
                 <div className='flex-1 lg:w-[55%] w-full flex flex-col gap-6 justify-between text-primary'>
-                    <h4 className='xl:text-xl lg:text-lg sm:text-xl text-lg font-bold lg:mr-6'>
-                        {item.attributes.title}
-                    </h4>
+                    <div className='lg:mr-6'>
+                        <h4 className='xl:text-xl lg:text-lg sm:text-xl text-lg font-bold line-clamp-3'>
+                            {getShortText(item.attributes.title, 6)}
+                        </h4>
+
+                        {item.attributes.description && (
+                            <p className='text-xs text-foreground dark:text-muted-foreground line-clamp-6 mt-3'>
+                                {getShortText(item.attributes.description, 40)}
+                            </p>
+                        )}
+                    </div>
 
                     <div className='w-full flex flex-col gap-6 justify-end'>
-                        <ul className='flex flex-col gap-3 lg:mr-6 text-foreground dark:text-muted-foreground'>
+                        <ul className='flex flex-col gap-3 lg:mr-6 text-primary'>
                             {(item.attributes.dateStart || item.attributes.dateEnd) && (
                                 <li className='flex items-center gap-2 font-medium'>
                                     <CalendarDays className='w-auto h-5 ' />

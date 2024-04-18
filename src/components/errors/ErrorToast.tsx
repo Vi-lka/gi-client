@@ -5,7 +5,7 @@ import { CircleAlert, Repeat, Undo2 } from "lucide-react";
 import type { ZodIssue } from "zod";
 import { useToast } from "../ui/use-toast";
 import { ToastAction } from "@radix-ui/react-toast";
-import { getShortDescription } from "@/lib/utils";
+import { getShortText } from "@/lib/utils";
 import { Button } from "../ui/button";
 
 import * as Sentry from "@sentry/nextjs";
@@ -49,7 +49,7 @@ export default function ErrorToast({
       title: dict.Error.toast.title,
       description: (
         <p>
-          В {place}: {getShortDescription(messageError)}
+          В {place}: {getShortText(messageError)}
         </p>
       ),
       className: "font-Raleway",
@@ -75,7 +75,7 @@ export default function ErrorToast({
         </h2>
     
         <p className="text-sm font-normal">
-          {getShortDescription(messageError)}
+          {getShortText(messageError)}
         </p>
       </div>
     

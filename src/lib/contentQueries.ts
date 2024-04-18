@@ -96,6 +96,7 @@ export const dpo_courses = `
       attributes {
         title
         slug
+        description
         dateStart
         dateEnd
         location

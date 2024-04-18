@@ -162,6 +162,7 @@ export const getDpoCourses = async ({
           attributes {
             title
             slug
+            description
             dateStart
             dateEnd
             location

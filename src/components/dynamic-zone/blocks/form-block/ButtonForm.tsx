@@ -6,7 +6,7 @@ import { useDictionary } from '@/components/providers/DictionaryProvider';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { useToast } from '@/components/ui/use-toast';
-import { cn, getShortDescription } from '@/lib/utils';
+import { cn, getShortText } from '@/lib/utils';
 import { usePathname } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 import { useFormState } from 'react-dom';
@@ -50,7 +50,7 @@ export default function ButtonForm({
             toast({
                 variant: "destructive",
                 title: dict.ContactForm.sendMessage.error,
-                description: <p>{getShortDescription(sendEmailState.error, 50)}</p>,
+                description: <p>{getShortText(sendEmailState.error, 50)}</p>,
                 className: "font-Din",
             });
             setOpen(false)

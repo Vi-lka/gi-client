@@ -1,7 +1,7 @@
 'use client'
  
 import { Button } from '@/components/ui/button'
-import { getShortDescription } from '@/lib/utils'
+import { getShortText } from '@/lib/utils'
 import { CircleAlert, Repeat } from 'lucide-react'
 import { useEffect } from 'react'
 import * as Sentry from "@sentry/nextjs";
@@ -33,7 +33,7 @@ export default function GlobalError({
                   </h2>
                       
                   <p className="text-sm font-normal">
-                      {getShortDescription(error.message)}
+                      {getShortText(error.message)}
                   </p>
               </div>
                       

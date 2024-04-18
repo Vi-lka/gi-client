@@ -9,7 +9,7 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export function getShortDescription(
+export function getShortText(
   description: string,
   length?: number,
 ) {

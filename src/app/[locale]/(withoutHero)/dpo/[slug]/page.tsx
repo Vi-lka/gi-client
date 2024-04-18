@@ -62,6 +62,7 @@ export default async function DpoCoursePage({
                 attributes {
                   title
                   slug
+                  description
                   dateStart
                   dateEnd
                   location

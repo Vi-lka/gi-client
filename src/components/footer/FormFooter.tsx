@@ -5,7 +5,7 @@ import ContactForm from '../forms/ContactForm'
 import { useToast } from '../ui/use-toast';
 import { useFormState } from 'react-dom';
 import { sendEmail } from '@/app/[locale]/actions';
-import { getShortDescription } from '@/lib/utils';
+import { getShortText } from '@/lib/utils';
 import { usePathname } from 'next/navigation';
 import { useDictionary } from '../providers/DictionaryProvider';
 
@@ -41,7 +41,7 @@ export default function FormFooter({
             toast({
                 variant: "destructive",
                 title: dict.ContactForm.sendMessage.error,
-                description: <p>{getShortDescription(sendEmailState.error, 50)}</p>,
+                description: <p>{getShortText(sendEmailState.error, 50)}</p>,
                 className: "font-Din",
             });
         }
