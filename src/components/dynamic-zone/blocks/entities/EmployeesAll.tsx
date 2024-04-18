@@ -3,7 +3,7 @@ import ErrorHandler from '@/components/errors/ErrorHandler';
 import { getEmployees } from '@/lib/queries';
 import { headers } from 'next/headers';
 import React from 'react'
-import EmployeesItem from '../../entities-cards/EmployeesItem';
+import EmployeesItem from '../entities-cards/EmployeesItem';
 
 const DEFAULT_PAGE_SIZE = 12;
 
@@ -44,7 +44,7 @@ export default async function EmployeesAll({
         <>
             <div id="employees" className="grid md:grid-cols-2 grid-cols-1 auto-rows-auto lg:gap-8 gap-6">
                 {dataResult.value.data.map(employee => (
-                    <EmployeesItem key={employee.id} employee={employee} />
+                    <EmployeesItem key={"employee" + employee.id} employee={employee} />
                 ))}
             </div>
             <div className="mt-6">

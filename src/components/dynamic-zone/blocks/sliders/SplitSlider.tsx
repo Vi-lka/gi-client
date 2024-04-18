@@ -5,8 +5,8 @@ import { CarouselItem } from '@/components/ui/carousel'
 import { EmployeeSingleT, GraduateSingleT } from '@/lib/types'
 import { cn, splitArray } from '@/lib/utils'
 import React, { useEffect, useState } from 'react'
-import EmployeesItem from '../../entities-cards/EmployeesItem'
-import GraduatesItem from '../../entities-cards/GraduatesItem'
+import EmployeesItem from '../entities-cards/EmployeesItem'
+import GraduatesItem from '../entities-cards/GraduatesItem'
 
 export default function SplitSlider({
     data,
@@ -52,7 +52,7 @@ export default function SplitSlider({
                     )}
                 >
                     {arr.map(employee => (
-                        <EmployeesItem key={employee.id} employee={employee} />
+                        <EmployeesItem key={"employee" + employee.id} employee={employee} />
                     ))}
                 </CarouselItem>
             ))}
@@ -71,7 +71,7 @@ export default function SplitSlider({
                     )}
                 >
                     {arr.map(graduate => (
-                        <GraduatesItem key={graduate.id} graduate={graduate} />
+                        <GraduatesItem key={"graduate" + graduate.id} graduate={graduate} />
                     ))}
                 </CarouselItem>
             ))}
