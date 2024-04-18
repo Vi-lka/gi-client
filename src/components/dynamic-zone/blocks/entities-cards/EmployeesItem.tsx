@@ -48,7 +48,7 @@ export default function EmployeesItem({
                     <div>
                         <p className='font-bold text-lg'>{employee.attributes.title}</p>
                         {employee.attributes.meta && (
-                            <p className='font-semibold text-sm mt-2'>
+                            <p className='font-normal text-sm mt-2'>
                                 {post}<span className='font-normal'>{post_between} {degree_rank}</span>
                             </p>
                         )}
@@ -90,7 +90,7 @@ export default function EmployeesItem({
                         <ul className='inline-flex flex-wrap gap-2'>
                             {employee.attributes.hashtags.data.map(hashtag => (
                                 <li key={hashtag.attributes.slug} className='text-sm'>
-                                    <Badge className='hover:bg-transparent hover:text-accent dark:bg-accent dark:text-primary dark:hover:bg-primary dark:hover:text-accent border border-border cursor-pointer transition-all'>
+                                    <Badge className='hover:bg-transparent hover:text-primary dark:bg-accent dark:text-primary dark:hover:bg-transparent border border-border cursor-pointer transition-all'>
                                         #{hashtag.attributes.title}
                                     </Badge>
                                 </li>
