@@ -8,6 +8,7 @@ import { Analytics } from '@vercel/analytics/react';
 import { getDictionary } from "@/lib/getDictionary";
 import Script from "next/script";
 import Providers from "@/components/providers/Providers";
+import { ViewTransitions } from 'next-view-transitions'
 
 const din = localFont({
   variable: "--Din",
@@ -92,6 +93,7 @@ export default async function Layout({
   const dict = await getDictionary(params.locale);
 
   return (
+    <ViewTransitions>
     <html
       lang={"ru"}
       suppressHydrationWarning
@@ -126,5 +128,6 @@ export default async function Layout({
         ></Script>
       </body>
     </html>
+    </ViewTransitions>
   );
 }
