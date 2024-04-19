@@ -61,17 +61,23 @@ const SliderEntity = dynamic(
 
 const CollectionAll = dynamic(
   () => import('./blocks/entities/CollectionAll'), {loading: () => (
-    <Skeleton className='w-full aspect-square flex items-center justify-center'>
-      <Loader2 className='animate-spin'/>
-    </Skeleton>
+    <div className='w-full lg:pt-28 pt-20'>
+      <Skeleton className='lg:w-1/2 w-2/3 lg:h-10 h-9 mb-6'/>
+
+      <Skeleton className='w-full aspect-square flex items-center justify-center'>
+        <Loader2 className='animate-spin'/>
+      </Skeleton>
+    </div>
   )}
 )
 
 const FormBlock = dynamic(
   () => import('./blocks/form-block/FormBlock'), {loading: () => (
-    <Skeleton className='w-full aspect-[4/1] flex items-center justify-center'>
-      <Loader2 className='animate-spin'/>
-    </Skeleton>
+    <div className='w-full lg:pt-14 pt-10'>
+      <Skeleton className='w-full aspect-[4/1] flex items-center justify-center'>
+        <Loader2 className='animate-spin'/>
+      </Skeleton>
+    </div>
   )}
 )
 
