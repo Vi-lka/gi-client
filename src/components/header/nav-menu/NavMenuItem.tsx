@@ -3,11 +3,11 @@
 import Link from "@/components/Link";
 import { NavigationMenuContent, NavigationMenuItem, NavigationMenuTrigger, navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
-import type { ImageT } from "@/lib/types";
 import { useSelectedLayoutSegment } from "next/navigation";
 import ImageComp from "@/components/ImageComp";
 import { ClientHydration } from "@/components/ClientHydration";
 import { Skeleton } from "@/components/ui/skeleton";
+import type { ImageT } from "@/lib/types/components";
 
 export default function NavMenuItem({
   locale,

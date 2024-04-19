@@ -1,11 +1,11 @@
-import { MainPageT } from "@/lib/types";
 import { dynamicContentQuery } from "@/lib/dynamicContentQuery";
-import { fetchData } from "@/lib/queries";
 import { notFound } from "next/navigation";
 import ErrorHandler from "@/components/errors/ErrorHandler";
 import DynamicZone from "@/components/dynamic-zone/DynamicZone";
 import Header from "@/components/header/Header";
 import Hero from "./(hero)/Hero";
+import { MainPageT } from "@/lib/types/pages";
+import fetchData from "@/lib/queries/fetchData";
 
 export const dynamic = 'force-dynamic'
 

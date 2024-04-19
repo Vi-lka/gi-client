@@ -1,6 +1,6 @@
 import DynamicReactIcon from '@/components/DynamicReactIcon'
 import { TypographyH2, TypographyH3 } from '@/components/typography'
-import type { NumbersCompT } from '@/lib/types'
+import type { NumbersCompT } from '@/lib/types/components'
 import { cn } from '@/lib/utils'
 import React from 'react'
 

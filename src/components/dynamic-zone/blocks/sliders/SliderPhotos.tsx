@@ -5,7 +5,7 @@ import CarouselLoading from '@/components/loadings/CarouselLoading'
 import { TypographyH2 } from '@/components/typography'
 import { Card, CardContent } from '@/components/ui/card'
 import { CarouselItem } from '@/components/ui/carousel'
-import type { SliderPhotosCompT } from '@/lib/types'
+import type { SliderPhotosCompT } from '@/lib/types/components'
 import { cn } from '@/lib/utils'
 import React from 'react'
 

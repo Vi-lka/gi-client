@@ -2,11 +2,11 @@
 
 import CarouselComp from '@/components/CarouselComp'
 import { CarouselItem } from '@/components/ui/carousel'
-import { EmployeeSingleT, GraduateSingleT } from '@/lib/types'
 import { cn, splitArray } from '@/lib/utils'
 import React, { useEffect, useState } from 'react'
 import EmployeesItem from '../entities-cards/EmployeesItem'
 import GraduatesItem from '../entities-cards/GraduatesItem'
+import { EmployeeSingleT, GraduateSingleT } from '@/lib/types/entities'
 
 export default function SplitSlider({
     data,

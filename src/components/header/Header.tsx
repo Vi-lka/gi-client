@@ -1,8 +1,8 @@
 import React from 'react'
 import HeaderClient from './HeaderClient'
 import { headers } from 'next/headers';
-import { getLinks, getNavBar } from '@/lib/queries';
 import ErrorHandler from '../errors/ErrorHandler';
+import { getLinks, getNavBar } from '@/lib/queries/additional';
 
 export default async function Header() {
 

@@ -5,8 +5,8 @@ import ErrorHandler from '@/components/errors/ErrorHandler';
 import { TypographyH1 } from '@/components/typography'
 import { dynamicContentQuery } from '@/lib/dynamicContentQuery';
 import { getDictionary } from '@/lib/getDictionary';
-import { fetchData } from '@/lib/queries';
-import { EducationalProgramPageT } from '@/lib/types';
+import fetchData from '@/lib/queries/fetchData';
+import { EducationalProgramPageT } from '@/lib/types/pages';
 import { notFound } from 'next/navigation';
 import React from 'react'
 

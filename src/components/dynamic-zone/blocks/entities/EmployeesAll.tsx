@@ -1,9 +1,9 @@
 import PaginationControls from '@/components/PaginationControls';
 import ErrorHandler from '@/components/errors/ErrorHandler';
-import { getEmployees } from '@/lib/queries';
 import { headers } from 'next/headers';
 import React from 'react'
 import EmployeesItem from '../entities-cards/EmployeesItem';
+import { getEmployees } from '@/lib/queries/employees';
 
 const DEFAULT_PAGE_SIZE = 12;
 

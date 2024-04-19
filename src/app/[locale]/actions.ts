@@ -3,7 +3,7 @@ import { Resend } from "resend"
 import EmailTemplate from "@/components/EmailTemplate"
 import { render } from "@react-email/render"
 import { v4 as uuid } from 'uuid';
-import type { ContactFormT } from "@/lib/types"
+import type { ContactFormT } from "@/lib/types/components";
 
 interface State {
   error: string | null

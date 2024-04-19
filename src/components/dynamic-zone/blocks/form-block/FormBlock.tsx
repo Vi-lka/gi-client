@@ -3,7 +3,6 @@
 import DynamicReactIcon from '@/components/DynamicReactIcon'
 import IconCustom from '@/components/IconCustom'
 import { TypographyH2 } from '@/components/typography'
-import type { FormBlockCompT, FormBlockItemT } from '@/lib/types'
 import { cn } from '@/lib/utils'
 import React from 'react'
 import ImageComp from '@/components/ImageComp'
@@ -13,6 +12,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 import Link from 'next/link';
 import { Button } from '@/components/ui/button'
 import dynamic from 'next/dynamic'
+import type { FormBlockCompT, FormBlockItemT } from '@/lib/types/components'
  
 const ButtonForm = dynamic(
   () => import('./ButtonForm'),

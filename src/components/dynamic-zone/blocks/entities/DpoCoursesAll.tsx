@@ -1,10 +1,10 @@
 import ErrorHandler from '@/components/errors/ErrorHandler';
-import { getDpoCourses } from '@/lib/queries';
 import React from 'react'
 import PaginationControls from '@/components/PaginationControls';
 import { headers } from 'next/headers';
 import { getDictionary } from '@/lib/getDictionary';
 import DpoCoursesItem from '../entities-cards/DpoCoursesItem';
+import { getDpoCourses } from '@/lib/queries/dpo-courses';
 
 const DEFAULT_PAGE_SIZE = 12;
 

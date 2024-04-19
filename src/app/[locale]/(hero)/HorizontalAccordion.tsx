@@ -6,8 +6,8 @@ import MainLogo from './MainLogo';
 import About from './About';
 import Menu from './Menu';
 import { cn } from '@/lib/utils';
-import type { HeroAboutT, LinksT, NavBarT } from '@/lib/types';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
+import type { HeroAboutT, LinksT, NavBarT } from '@/lib/types/additional';
 
 type Props = {
     aboutData: HeroAboutT | null,

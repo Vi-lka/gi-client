@@ -9,7 +9,7 @@ import MoreMenu from './MoreMenu'
 import { usePathname } from '@/lib/hooks/usePathname'
 import Link from '../Link'
 import { useLocale } from '@/lib/hooks/useLocale'
-import type { LinksT, NavBarT } from '@/lib/types'
+import type { LinksT, NavBarT } from '@/lib/types/additional'
 
 export default function HeaderClient({
     navBar,

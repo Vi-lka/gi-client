@@ -1,5 +1,4 @@
 import React from 'react';
-import type { IconsBlockCompT } from '@/lib/types';
 import { cn } from '@/lib/utils';
 import IconsBlockItems from './IconsBlockItems';
 import ImageComp from '@/components/ImageComp';
@@ -10,6 +9,7 @@ import Link from '@/components/Link';
 import { headers } from 'next/headers';
 import IconsBlockLoading from '@/components/loadings/IconsBlockLoading';
 import { Skeleton } from '@/components/ui/skeleton';
+import type { IconsBlockCompT } from '@/lib/types/components';
 
 export default function IconsBlock({
     data,

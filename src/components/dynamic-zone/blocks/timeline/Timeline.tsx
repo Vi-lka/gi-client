@@ -1,9 +1,9 @@
 import BlocksRendererStrapi from '@/components/BlocksRendererStrapi'
 import { TypographyH2, TypographyH3 } from '@/components/typography'
-import type { TimelineCompT } from '@/lib/types'
 import { cn } from '@/lib/utils'
 import React from 'react'
 import "./timeline.css";
+import type { TimelineCompT } from '@/lib/types/components';
 
 export default function Timeline({
     data,

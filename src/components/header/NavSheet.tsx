@@ -9,9 +9,9 @@ import { CgMenuRight } from "react-icons/cg";
 import { useSelectedLayoutSegment } from 'next/navigation'
 import { useLocale } from '@/lib/hooks/useLocale'
 import Link from '../Link'
-import type { LinksT } from '@/lib/types'
 import { useDictionary } from '../providers/DictionaryProvider'
 import { getLinkTitle } from '@/lib/getSubLinks'
+import type { LinksT } from '@/lib/types/additional'
 
 export default function NavSheet({
   links,

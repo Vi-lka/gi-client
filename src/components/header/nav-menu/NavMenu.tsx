@@ -3,10 +3,10 @@
 import React from 'react'
 import { NavigationMenu, NavigationMenuList } from '../../ui/navigation-menu'
 import { useLocale } from '@/lib/hooks/useLocale'
-import type { LinksT, NavBarT } from '@/lib/types'
 import getSubLinks, { getLinkTitle } from '@/lib/getSubLinks'
 import { useDictionary } from '../../providers/DictionaryProvider'
 import NavMenuItem from './NavMenuItem'
+import type { LinksT, NavBarT } from '@/lib/types/additional'
 
 export default function NavMenu({
   navBar,

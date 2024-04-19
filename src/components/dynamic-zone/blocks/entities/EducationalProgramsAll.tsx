@@ -1,11 +1,11 @@
 import TabsComp from '@/components/TabsComp';
 import ErrorHandler from '@/components/errors/ErrorHandler';
 import { getDictionary } from '@/lib/getDictionary';
-import { getEducationalPrograms } from '@/lib/queries';
-import type { EducationalProgramSingleT } from '@/lib/types';
 import { headers } from 'next/headers';
 import React from 'react'
 import EducationalProgramsItem from '../entities-cards/EducationalProgramsItem';
+import { getEducationalPrograms } from '@/lib/queries/educational-programs';
+import type { EducationalProgramSingleT } from '@/lib/types/entities';
 
 export default async function EducationalProgramsAll({
     searchParams,

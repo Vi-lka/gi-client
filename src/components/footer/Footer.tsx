@@ -1,6 +1,3 @@
-import { fetchData } from '@/lib/queries';
-import type { CustomIconEnum, ImageT } from '@/lib/types';
-import { FooterT } from '@/lib/types';
 import { notFound } from 'next/navigation';
 import React from 'react'
 import ErrorHandler from '../errors/ErrorHandler';
@@ -14,6 +11,9 @@ import { headers } from 'next/headers';
 import { cn } from '@/lib/utils';
 import { ClientHydration } from '../ClientHydration';
 import { Skeleton } from '../ui/skeleton';
+import { FooterT } from '@/lib/types/additional';
+import fetchData from '@/lib/queries/fetchData';
+import type { CustomIconEnum, ImageT } from '@/lib/types/components';
 
 export const dynamic = 'force-dynamic'
 

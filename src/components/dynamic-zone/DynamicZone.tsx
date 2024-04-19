@@ -1,4 +1,3 @@
-import type { DynamicZoneT } from '@/lib/types'
 import React from 'react'
 import { cn } from '@/lib/utils';
 import dynamic from 'next/dynamic';
@@ -14,6 +13,7 @@ import TimelineLoading from '../loadings/TimelineLoading';
 import NumbersLoading from '../loadings/NumbersLoading';
 import ListLoading from '../loadings/ListLoading';
 import "./blocks/timeline/timeline.css"
+import type { DynamicZoneT } from '@/lib/types/components';
  
 const RichText = dynamic(
   () => import('./blocks/RichText'), {loading: () => <TextLoading />}

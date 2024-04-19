@@ -1,10 +1,10 @@
 import ErrorHandler from '@/components/errors/ErrorHandler';
-import { getGraduates } from '@/lib/queries';
 import React from 'react';
 import { headers } from 'next/headers';
 import { ClientHydration } from '@/components/ClientHydration';
 import SplitSlider from '../sliders/SplitSlider';
 import SplitSliderLoading from '@/components/loadings/SplitSliderLoading';
+import { getGraduates } from '@/lib/queries/graduates';
 
 export default async function GraduatesAll({
     searchParams,

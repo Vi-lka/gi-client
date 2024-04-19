@@ -8,8 +8,8 @@ import { cn } from '@/lib/utils'
 import SubmitButton from './SubmitButton'
 import { InputField } from './InputField'
 import type { z } from 'zod'
-import { ContactFormT } from "@/lib/types"
 import { useDictionary } from '../providers/DictionaryProvider'
+import { ContactFormT } from '@/lib/types/components'
 
 export default function ContactForm({
     handleAction,

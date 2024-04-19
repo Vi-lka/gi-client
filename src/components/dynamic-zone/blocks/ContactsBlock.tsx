@@ -1,6 +1,5 @@
 import ImageComp from '@/components/ImageComp'
 import { TypographyH2 } from '@/components/typography'
-import type { ContactsCompT } from '@/lib/types'
 import { cn } from '@/lib/utils'
 import Link from 'next/link'
 import React from 'react'
@@ -8,6 +7,7 @@ import { AtSign, MapPin } from 'lucide-react'
 import { FiPhone } from 'react-icons/fi'
 import { ClientHydration } from '@/components/ClientHydration'
 import { Skeleton } from '@/components/ui/skeleton'
+import type { ContactsCompT } from '@/lib/types/components'
 
 export default function ContactsBlock({
   data,

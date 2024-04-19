@@ -4,7 +4,7 @@ import Link from '@/components/Link'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
-import type { EducationalProgramSingleT } from '@/lib/types'
+import type { EducationalProgramSingleT } from '@/lib/types/entities'
 import React from 'react'
 
 export default function EducationalProgramsItem({

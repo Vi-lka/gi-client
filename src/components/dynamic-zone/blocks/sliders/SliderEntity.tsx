@@ -1,6 +1,5 @@
 import CarouselComp from '@/components/CarouselComp'
 import { TypographyH2 } from '@/components/typography'
-import type { SliderEntityCompT } from '@/lib/types'
 import { cn } from '@/lib/utils'
 import React from 'react'
 import EducationalProgramsItem from '../entities-cards/EducationalProgramsItem'
@@ -11,6 +10,7 @@ import SplitSliderLoading from '@/components/loadings/SplitSliderLoading'
 import DpoCoursesItem from '../entities-cards/DpoCoursesItem'
 import { CarouselItem } from '@/components/ui/carousel'
 import { getDictionary } from '@/lib/getDictionary'
+import type { SliderEntityCompT } from '@/lib/types/components'
 
 export default async function SliderEntity({
     data,

@@ -1,10 +1,11 @@
 import React from 'react'
 import HorizontalAccordion from './HorizontalAccordion'
 import { headers } from 'next/headers';
-import { HeroAboutT } from '@/lib/types';
-import { fetchData, getLinks, getNavBar } from '@/lib/queries';
 import { notFound } from 'next/navigation';
 import ErrorHandler from '@/components/errors/ErrorHandler';
+import { HeroAboutT } from '@/lib/types/additional';
+import fetchData from '@/lib/queries/fetchData';
+import { getLinks, getNavBar } from '@/lib/queries/additional';
 
 export const dynamic = 'force-dynamic'
 

@@ -1,13 +1,13 @@
 import Breadcrumbs from '@/components/Breadcrumbs'
 import { TypographyH1 } from '@/components/typography'
 import React from 'react'
-import { fetchData } from '@/lib/queries'
 import ErrorHandler from '@/components/errors/ErrorHandler'
 import DynamicZone from '@/components/dynamic-zone/DynamicZone'
-import { EntrancePageT } from '@/lib/types'
 import { notFound } from 'next/navigation'
 import { dynamicContentQuery } from '@/lib/dynamicContentQuery'
 import Anchors from '@/components/Anchors'
+import { EntrancePageT } from '@/lib/types/pages'
+import fetchData from '@/lib/queries/fetchData'
 
 export const dynamic = 'force-dynamic'
 

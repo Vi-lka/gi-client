@@ -1,7 +1,7 @@
 import BlocksRendererStrapi from '@/components/BlocksRendererStrapi'
 import { TypographyH2, TypographyH4 } from '@/components/typography'
 import { Button } from '@/components/ui/button'
-import type { TextGridCompT } from '@/lib/types'
+import type { TextGridCompT } from '@/lib/types/components'
 import { cn } from '@/lib/utils'
 import Link from 'next/link'
 import React from 'react'

@@ -7,12 +7,12 @@ import Graph from '@/components/icons/Graph';
 import ManDesktop from '@/components/icons/ManDesktop';
 import Presentation from '@/components/icons/Presentation';
 import VideoCall from '@/components/icons/VideoCall';
-import type { CustomIconEnum } from '@/lib/types';
 import React from 'react'
 import Deal from './icons/Deal';
 import Science from './icons/Science';
 import Idea from './icons/Idea';
 import HealthyMind from './icons/HealthyMind';
+import type { CustomIconEnum } from '@/lib/types/components';
 
 export default function IconCustom({
     icon,

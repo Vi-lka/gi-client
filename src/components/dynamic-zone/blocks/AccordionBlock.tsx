@@ -1,7 +1,7 @@
 import BlocksRendererStrapi from '@/components/BlocksRendererStrapi'
 import { TypographyH2 } from '@/components/typography'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
-import type { AccordionCompT } from '@/lib/types'
+import type { AccordionCompT } from '@/lib/types/components'
 import { cn } from '@/lib/utils'
 import React from 'react'
 

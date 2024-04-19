@@ -1,5 +1,5 @@
 import { TypographyH2 } from '@/components/typography'
-import type { FilesCompT } from '@/lib/types'
+import type { FilesCompT } from '@/lib/types/components'
 import { cn } from '@/lib/utils'
 import { FileText } from 'lucide-react'
 import Link from 'next/link'

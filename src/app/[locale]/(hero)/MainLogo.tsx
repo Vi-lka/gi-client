@@ -1,5 +1,3 @@
-"use client"
-
 import Image from "next/image";
 import HiLogoSvg from "./HiLogoSvg";
 import { CardBody, CardContainer, CardItem } from "@/components/ui/aceternity/3d-card";
@@ -9,7 +7,6 @@ export default function MainLogo({
 }: {
     selectedItem: number
 }) {
-
     return (
         <CardContainer 
             variant="follow"

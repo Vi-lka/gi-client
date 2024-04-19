@@ -5,10 +5,11 @@ import Image from "next/image";
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import type { HeroAboutT, IconsBlockItemT } from '@/lib/types';
 import Link from 'next/link';
 import IconCustom from '@/components/IconCustom';
 import DynamicReactIcon from '@/components/DynamicReactIcon';
+import type { HeroAboutT } from '@/lib/types/additional';
+import type { IconsBlockItemT } from '@/lib/types/components';
 
 export default function About({
     data,

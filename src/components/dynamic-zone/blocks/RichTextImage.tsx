@@ -1,6 +1,5 @@
 import React from 'react'
 import { cn } from '@/lib/utils'
-import type { TextImagesCompT } from '@/lib/types'
 import { TypographyH2 } from '@/components/typography'
 import BlocksRendererStrapi from '@/components/BlocksRendererStrapi'
 import CarouselComp from '@/components/CarouselComp'
@@ -9,6 +8,7 @@ import ImageComp from '@/components/ImageComp'
 import { ClientHydration } from '@/components/ClientHydration'
 import { Skeleton } from '@/components/ui/skeleton'
 import CarouselLoading from '@/components/loadings/CarouselLoading'
+import type { TextImagesCompT } from '@/lib/types/components'
 
 export default function RichText({
     data,

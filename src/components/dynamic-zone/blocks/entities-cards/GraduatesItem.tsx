@@ -2,7 +2,7 @@ import { ClientHydration } from '@/components/ClientHydration'
 import ImageComp from '@/components/ImageComp'
 import { Card, CardContent } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
-import type { GraduateSingleT } from '@/lib/types'
+import type { GraduateSingleT } from '@/lib/types/entities'
 import React from 'react'
 
 export default function GraduatesItem({

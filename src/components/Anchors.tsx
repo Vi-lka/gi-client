@@ -1,4 +1,4 @@
-import type { DynamicZoneT } from '@/lib/types'
+import type { DynamicZoneT } from '@/lib/types/components'
 import Link from 'next/link'
 import React from 'react'
 

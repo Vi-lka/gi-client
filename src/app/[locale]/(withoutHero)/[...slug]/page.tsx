@@ -4,9 +4,9 @@ import DynamicZone from '@/components/dynamic-zone/DynamicZone';
 import ErrorHandler from '@/components/errors/ErrorHandler';
 import { TypographyH1 } from '@/components/typography';
 import { dynamicContentQuery } from '@/lib/dynamicContentQuery';
-import { fetchData } from '@/lib/queries';
-import type { AdditionalPageSingleT} from '@/lib/types';
-import { AdditionalPagesT } from '@/lib/types';
+import fetchData from '@/lib/queries/fetchData';
+import type { AdditionalPageSingleT } from '@/lib/types/pages';
+import { AdditionalPagesT } from '@/lib/types/pages';
 import {notFound} from 'next/navigation';
 
 export const dynamic = 'force-dynamic'

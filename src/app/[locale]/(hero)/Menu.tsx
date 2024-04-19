@@ -5,7 +5,7 @@ import LocaleSwitcher from '@/components/LocaleSwitcher'
 import { useDictionary } from '@/components/providers/DictionaryProvider'
 import getSubLinks from '@/lib/getSubLinks'
 import { useLocale } from '@/lib/hooks/useLocale'
-import type { LinksT, NavBarT } from '@/lib/types'
+import type { LinksT, NavBarT } from '@/lib/types/additional'
 import { motion } from 'framer-motion'
 import React from 'react'
 
