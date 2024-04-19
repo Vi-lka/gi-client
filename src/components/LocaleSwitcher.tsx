@@ -6,7 +6,7 @@ import { Button } from "./ui/button";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { localesCodes } from "@/static/locales";
-import Link from "./Link";
+import Link from "next/link";
 
 export default function LocaleSwitcher({
     className,
@@ -28,7 +28,7 @@ export default function LocaleSwitcher({
                 {localesCodes.map((locale, index) => (
                     <Link
                         key={index}
-                        href="/" 
+                        href={`/${locale}`} 
                         locale={locale}
                         className="flex justify-center last:mt-1 w-full aspect-square"
                         scroll={false}

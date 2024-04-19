@@ -15,6 +15,7 @@ export default function NavMenuItem({
   image,
   description,
   subLinks,
+  className,
   children,
 }: {
   locale: string,
@@ -26,6 +27,7 @@ export default function NavMenuItem({
     link: string | null,
     linkDescription?: string | null,
   }[],
+  className?: string,
   children: React.ReactNode,
 }) {
   const selectedLayoutSegment = useSelectedLayoutSegment();
@@ -33,7 +35,7 @@ export default function NavMenuItem({
   const isActive = pathname === href;
 
   if (subLinks && subLinks.length > 0) return (
-    <NavigationMenuItem className='!ml-0'>
+    <NavigationMenuItem className={cn('!ml-0', className)}>
       <NavigationMenuTrigger icon={false} className='w-fit h-fit p-0'>
         <Link 
           aria-current={isActive ? 'page' : undefined}
@@ -93,7 +95,7 @@ export default function NavMenuItem({
     </NavigationMenuItem>
   )
   else return (
-    <NavigationMenuItem className='!ml-0'>
+    <NavigationMenuItem className={cn('!ml-0', className)}>
       <Link 
         aria-current={isActive ? 'page' : undefined}
         locale={locale}

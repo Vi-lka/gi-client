@@ -6,9 +6,9 @@ import { Button } from '../ui/button'
 import { usePathname } from "next/navigation";
 import { Moon, MoreHorizontal, Search, Sun } from 'lucide-react'
 import { localesCodes } from '@/static/locales';
-import Link from '../Link';
 import { cn } from '@/lib/utils';
 import { useTheme } from 'next-themes';
+import Link from 'next/link';
 
 export default function MoreMenu() {
 
@@ -86,7 +86,7 @@ export default function MoreMenu() {
               {localesCodes.map((locale, index) => (
                   <Link
                       key={index}
-                      href="/" 
+                      href={`/${locale}`}
                       locale={locale}
                       className="flex justify-center last:mt-1 w-full aspect-square"
                       scroll={false}
