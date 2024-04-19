@@ -9,6 +9,8 @@ import React, {
   useRef,
   useEffect,
 } from "react";
+import { CardPattern } from "./card-pattern";
+import { useMotionValue } from "framer-motion";
 
 type VariantT = {
   default: number;
@@ -23,6 +25,7 @@ const MouseEnterContext = createContext<
 export const CardContainer = ({
   threshold = 25,
   variant = "default",
+  pattern,
   children,
   style,
   className,
@@ -30,6 +33,7 @@ export const CardContainer = ({
 }: {
   threshold?: number;
   variant?: keyof VariantT;
+  pattern?: boolean;
   children?: React.ReactNode;
   style?: React.CSSProperties;
   className?: string;
@@ -38,9 +42,15 @@ export const CardContainer = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const [isMouseEntered, setIsMouseEntered] = useState(false);
 
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!containerRef.current) return;
     const { left, top, width, height } = containerRef.current.getBoundingClientRect();
+
+    mouseX.set(e.clientX - left);
+    mouseY.set(e.clientY - top);
 
     const x: VariantT = {
       default: (e.clientX - left - width / 2) / threshold,
@@ -70,7 +80,7 @@ export const CardContainer = ({
     <MouseEnterContext.Provider value={[isMouseEntered, setIsMouseEntered]}>
       <div
         className={cn(
-          "py-20 flex items-center justify-center",
+          "py-20 flex items-center justify-center group/card",
           containerClassName
         )}
         style={Object.assign({
@@ -80,6 +90,9 @@ export const CardContainer = ({
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
       >
+        {pattern && (
+          <CardPattern mouseX={mouseX} mouseY={mouseY} />
+        )}
         <div
           ref={containerRef}
           className={cn(
