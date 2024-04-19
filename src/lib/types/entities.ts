@@ -35,7 +35,7 @@ export const EducationalProgramSingleT  = z.object({
     code: z.string().nullable(),
     mainName: z.string().nullable(),
     mainCode: z.string().nullable(),
-    image: ImageT,
+    image: z.lazy(() => ImageT),
   }),
 })
 export type EducationalProgramSingleT = z.infer<typeof EducationalProgramSingleT>;
@@ -64,7 +64,7 @@ export const DpoCoursesSingleT  = z.object({
     location: z.string().nullable(),
     hours: z.number().nullable(),
     price: z.string().nullable(),
-    image: ImageT,
+    image: z.lazy(() => ImageT),
   }),
 })
 export type DpoCoursesSingleT = z.infer<typeof DpoCoursesSingleT>;
@@ -87,7 +87,7 @@ export const EmployeeSingleT  = z.object({
   id: z.string(),
   attributes: z.object({
     title: z.string(),
-    image: ImageT,
+    image: z.lazy(() => ImageT),
     meta: z.object({
       post: z.string().nullable(),
       degree: z.string().nullable(),
@@ -128,7 +128,7 @@ export const GraduateSingleT  = z.object({
     title: z.string(),
     description: z.string().nullable(),
     additionalInfo: z.string().nullable(), 
-    image: ImageT,
+    image: z.lazy(() => ImageT),
     educational_programs: z.object({
       data: EducationalProgramSingleT.array()
     }),
