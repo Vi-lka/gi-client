@@ -1,9 +1,8 @@
 "use client"
 
-import { motion, useMotionTemplate, useMotionValue, useSpring } from "framer-motion";
-import { useRef } from "react";
 import Image from "next/image";
 import HiLogoSvg from "./HiLogoSvg";
+import { CardBody, CardContainer, CardItem } from "@/components/ui/aceternity/3d-card";
 
 export default function MainLogo({
     selectedItem
@@ -11,81 +10,39 @@ export default function MainLogo({
     selectedItem: number
 }) {
 
-    const ROTATION_RANGE = 20;
-    const HALF_ROTATION_RANGE = ROTATION_RANGE / 2;
-
-    const ref = useRef<HTMLDivElement>(null);
-
-    const x = useMotionValue(0);
-    const y = useMotionValue(0);
-
-    const xSpring = useSpring(x);
-    const ySpring = useSpring(y);
-
-    const transform = useMotionTemplate`rotateX(${xSpring}deg) rotateY(${ySpring}deg)`;
-
-    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-        if (!ref.current) return [0, 0];
-    
-        const rect = ref.current.getBoundingClientRect()
-    
-        const width = rect.width;
-        const height = rect.height;
-    
-        const mouseX = (e.clientX - rect.left) * ROTATION_RANGE;
-        const mouseY = (e.clientY - rect.top) * ROTATION_RANGE;
-    
-        const rX = (mouseY / height - HALF_ROTATION_RANGE) * -1;
-        const rY = mouseX / width - HALF_ROTATION_RANGE;
-    
-        x.set(rX);
-        y.set(rY);
-    };
-
-    const handleMouseLeave = () => {
-        x.set(0);
-        y.set(0);
-    };
-
-    const variantsLogo = {
-        open: { 
-            height: "100%",
-            transition: {
-                type: "tween", damping: 1000, stiffness: 100, duration: 0.3
-            }
-        },
-        closed: { 
-            height: "16%",
-            transition: {
-                type: "tween", damping: 20, stiffness: 50, duration: 0.35
-            }
-        },
-    }
-
     return (
-        <motion.div
-            animate={selectedItem === 0 ? "open" : "closed"}
-            variants={variantsLogo}
-            className='absolute w-full h-full top-0 flex justify-center'
-            style={{ height: "100%" }}
+        <CardContainer 
+            variant="follow"
+            threshold={30}
+            containerClassName="absolute w-full h-full top-0 flex justify-center py-0 transition-all duration-500 ease-in-out"
+            className="w-full h-full"
+            style={{height: selectedItem === 0 ? "100%" : "16%"}}
         >
-            <motion.div 
-                ref={ref}
-                className='relative max-w-[25rem] w-2/5 h-full'
+            <CardBody className="relative group/card max-w-[25rem] w-2/5 h-full transition-all duration-500 ease-in-out">
+              <CardItem 
+                translateZ="40" 
+                className="w-full h-full z-20"
                 style={{
-                  transformStyle: "preserve-3d",
-                  transform,
+                    transform: selectedItem === 0 ? "translateZ(15px)" : "translateZ(8px)",
+                    transformStyle: "preserve-3d",
                 }}
-                onMouseMove={handleMouseMove}
-                onMouseLeave={handleMouseLeave}
             >
                 <HiLogoSvg 
-                    className="w-full h-full object-contain drop-shadow-sm dark:[&>path]:fill-foreground brightness-[.95]"
+                    className="w-full h-full object-contain drop-shadow-sm dark:[&>path]:fill-foreground brightness-[.95] z-20"
                     style={{
-                        transform: selectedItem === 0 ? "translateZ(50px)" : "translateZ(10px)",
+                        transform: selectedItem === 0 ? "translateZ(15px)" : "translateZ(8px)",
                         transformStyle: "preserve-3d",
                     }}
                 />
+              </CardItem>
+              <CardItem 
+                translateZ="20" 
+                className="absolute top-0 w-full h-full z-10"
+                style={{
+                    transform: selectedItem === 0 ? "translateZ(4px)" : "translateZ(1px)",
+                    transformStyle: "preserve-3d",
+                }}
+              >
                 <Image
                     src="/hi-logo.svg"
                     alt="HI"
@@ -93,12 +50,14 @@ export default function MainLogo({
                     sizes='100vw'
                     priority
                     quality={100}
-                    className='object-contain brightness-50 opacity-60 dark:brightness-0'
+                    className='object-contain brightness-50 opacity-60 dark:brightness-0 z-10'
                     style={{
-                        transform: selectedItem === 0 ? "translateZ(10px)" : "translateZ(1px)",
-                      }}
+                        transform: selectedItem === 0 ? "translateZ(4px)" : "translateZ(1px)",
+                        transformStyle: "preserve-3d",
+                    }}
                 />
-            </motion.div>
-        </motion.div>
+              </CardItem>
+            </CardBody>
+        </CardContainer>
     )
 }
