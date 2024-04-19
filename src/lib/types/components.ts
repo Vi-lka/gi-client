@@ -129,6 +129,7 @@ export const CollectionAllEnum = z.enum([
   "dpo-courses", 
   "graduates",
   "employees",
+  "departments",
 ]);
 export type CollectionAllEnum = z.infer<typeof CollectionAllEnum>;
 

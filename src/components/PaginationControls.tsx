@@ -85,7 +85,7 @@ export default function PaginationControls({
       if (value.length > 0) {
         params.set(pageParam, value);
         startTransitionPage(() => {
-          router.push(`${locale}${pathname}?${params.toString()}`, { scroll: false });
+          router.push(`/${locale}${pathname}?${params.toString()}`, { scroll: false });
         });
       } else {
         params.delete(pageParam);
@@ -100,7 +100,7 @@ export default function PaginationControls({
       if (value.length > 0) {
         params.set(perParam, value);
         startTransitionMore(() => {
-          router.push(`${locale}${pathname}?${params.toString()}`, { scroll: false });
+          router.push(`/${locale}${pathname}?${params.toString()}`, { scroll: false });
         });
       } else {
         params.delete(perParam);

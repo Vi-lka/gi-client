@@ -6,6 +6,7 @@ import GraduatesAll from './GraduatesAll';
 import { cn } from '@/lib/utils';
 import { TypographyH2 } from '@/components/typography';
 import type { CollectionAllCompT } from '@/lib/types/components';
+import DepartmentsAll from './DepartmentsAll';
 
 export default function CollectionAll({ 
     data,
@@ -44,6 +45,9 @@ export default function CollectionAll({
                     
                     case "graduates":
                         return <GraduatesAll key={index} searchParams={searchParams} />
+
+                    case "departments":
+                        return <DepartmentsAll key={index} searchParams={searchParams} />
                 
                     default:
                         return null;

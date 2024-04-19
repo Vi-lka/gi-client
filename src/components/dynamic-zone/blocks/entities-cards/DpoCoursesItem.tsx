@@ -22,21 +22,26 @@ export default function DpoCoursesItem({
     return (
         <Card key={"dpo-course" + item.id} className='min-w-0 h-full border-none shadow-md rounded-3xl'>
             <CardContent className="w-full h-full flex lg:flex-row flex-col xl:gap-8 gap-6 justify-between p-3">
-                <ClientHydration fallback={<Skeleton className='lg:w-[45%] w-full rounded-2xl lg:aspect-[4/5] aspect-[2/1]'/>}>
-                    <ImageComp
-                        src={item.attributes.image.data?.attributes.url}
-                        alt={item.attributes.title}
-                        fill={false}
-                        width={400}
-                        height={150}
-                        className='lg:w-[45%] w-full object-cover rounded-2xl lg:aspect-[4/5] aspect-[2/1]'
-                    />
+                <ClientHydration fallback={<Skeleton className='lg:w-[45%] w-full lg:aspect-[4/5] aspect-[2/1] rounded-2xl'/>}>
+                    <Link 
+                        locale={locale} 
+                        href={`/dpo/${item.attributes.slug}`} 
+                        className='relative lg:w-[45%] w-full lg:aspect-[4/5] aspect-[2/1] rounded-2xl overflow-hidden hover:ring-2 dark:hover:ring-2 ring-ring ring-offset-2 ring-offset-card transition-all duration-300'
+                    >
+                        <ImageComp
+                            src={item.attributes.image.data?.attributes.url}
+                            alt={item.attributes.title}
+                            fill
+                            sizes='(max-width: 1024px) 80vw, 30vw'
+                            className='object-cover'
+                        />
+                    </Link>
                 </ClientHydration>
                 
                 <div className='flex-1 lg:w-[55%] w-full flex flex-col gap-6 justify-between text-primary'>
                     <div className='lg:mr-6'>
                         <h4 className='xl:text-xl lg:text-lg sm:text-xl text-lg font-bold line-clamp-3'>
-                            {getShortText(item.attributes.title, 6)}
+                            {getShortText(item.attributes.title, 7)}
                         </h4>
 
                         {item.attributes.description && (
