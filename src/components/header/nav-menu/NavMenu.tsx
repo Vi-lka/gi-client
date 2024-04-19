@@ -2,7 +2,6 @@
 
 import React from 'react'
 import { NavigationMenu, NavigationMenuList } from '../../ui/navigation-menu'
-import { useLocale } from '@/lib/hooks/useLocale'
 import getSubLinks, { getLinkTitle } from '@/lib/getSubLinks'
 import { useDictionary } from '../../providers/DictionaryProvider'
 import NavMenuItem from './NavMenuItem'
@@ -20,51 +19,46 @@ export default function NavMenu({
 
   const dict = useDictionary()
 
-  const locale = useLocale()
-
   const entranceTitle = getLinkTitle(links.entrancePage.data?.attributes, dict.Header.nav.admission)
   const dpoTitle = getLinkTitle(links.dpo.data?.attributes, dict.Header.nav.dpo)
+  const structureTitle = getLinkTitle(links.structure.data?.attributes, dict.Header.nav.structure)
 
   const entranceLinks = getSubLinks({
       title: entranceTitle,
-      link: "/admission",
+      href: "/admission",
+      image: links.entrancePage.data?.attributes.navBarConfig?.navBarImage,
+      description: links.entrancePage.data?.attributes.navBarConfig?.navBarDescription,
       navBarData: navBar?.admission?.subLinks,
       linksData: links.entrancePage.data?.attributes.content
   })
   const dpoLinks = getSubLinks({
       title: dpoTitle,
-      link: "/dpo",
+      href: "/dpo",
+      image: links.dpo.data?.attributes.navBarConfig?.navBarImage,
+      description: links.dpo.data?.attributes.navBarConfig?.navBarDescription,
       navBarData: navBar?.dpo?.subLinks,
       linksData: links.dpo.data?.attributes.content
+  })
+  const structureLinks = getSubLinks({
+    title: structureTitle,
+    href: "/structure",
+    image: links.structure.data?.attributes.navBarConfig?.navBarImage,
+    description: links.structure.data?.attributes.navBarConfig?.navBarDescription,
+    navBarData: navBar?.structure?.subLinks,
+    linksData: links.structure.data?.attributes.content
   })
 
   return (
     <NavigationMenu delayDuration={100} className={className}>
       <NavigationMenuList className='relative gap-2 flex-wrap justify-between items-center'>
-        <NavMenuItem locale={locale} href='/info'>{dict.Header.nav.info}</NavMenuItem>
-        <NavMenuItem locale={locale} href='/structure'>{dict.Header.nav.structure}</NavMenuItem>
-        <NavMenuItem locale={locale} href='/education'>{dict.Header.nav.education}</NavMenuItem>
-        <NavMenuItem 
-          locale={locale} 
-          href={entranceLinks.link}
-          image={links.entrancePage.data?.attributes.navBarConfig?.navBarImage}
-          description={links.entrancePage.data?.attributes.navBarConfig?.navBarDescription}
-          subLinks={entranceLinks.subLinks}
-        >
-            {entranceLinks.title}
-        </NavMenuItem>
-        <NavMenuItem 
-          locale={locale} 
-          href={dpoLinks.link}
-          image={links.dpo.data?.attributes.navBarConfig?.navBarImage}
-          description={links.dpo.data?.attributes.navBarConfig?.navBarDescription}
-          subLinks={dpoLinks.subLinks}
-        >
-            {dpoLinks.title}
-        </NavMenuItem>
-        <NavMenuItem locale={locale} href='/science'>{dict.Header.nav.science}</NavMenuItem>
-        <NavMenuItem locale={locale} href='/projects'>{dict.Header.nav.projects}</NavMenuItem>
-        <NavMenuItem locale={locale} href='/journals'>{dict.Header.nav.journals}</NavMenuItem>
+        <NavMenuItem title={dict.Header.nav.info} href='/info' />
+        <NavMenuItem {...structureLinks}/>
+        <NavMenuItem title={dict.Header.nav.education} href='/education' />
+        <NavMenuItem {...entranceLinks} />
+        <NavMenuItem {...dpoLinks} />
+        <NavMenuItem title={dict.Header.nav.science} href='/science' />
+        <NavMenuItem title={dict.Header.nav.projects} href='/projects' />
+        <NavMenuItem title={dict.Header.nav.journals} href='/journals' />
       </NavigationMenuList>
     </NavigationMenu>
   )

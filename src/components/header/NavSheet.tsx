@@ -22,10 +22,9 @@ export default function NavSheet({
 }) {
   const dict = useDictionary()
 
-  const locale = useLocale()
-
   const entranceTitle = getLinkTitle(links.entrancePage.data?.attributes, dict.Header.nav.admission)
   const dpoTitle = getLinkTitle(links.dpo.data?.attributes, dict.Header.nav.dpo)
+  const structureTitle = getLinkTitle(links.structure.data?.attributes, dict.Header.nav.structure)
 
   return (
     <Sheet>
@@ -37,14 +36,14 @@ export default function NavSheet({
         <NavigationMenu orientation="vertical" className="mx-auto">
           <NavigationMenuList className="flex flex-col items-center">
             <ScrollArea className="font-Raleway mt-[2vh] h-[90vh] w-full p-1">
-              <SheetMenuItem locale={locale} href='/info'>{dict.Header.nav.info}</SheetMenuItem>
-              <SheetMenuItem locale={locale} href='/structure'>{dict.Header.nav.structure}</SheetMenuItem>
-              <SheetMenuItem locale={locale} href='/education'>{dict.Header.nav.education}</SheetMenuItem>
-              <SheetMenuItem locale={locale} href='/entrance'>{entranceTitle}</SheetMenuItem>
-              <SheetMenuItem locale={locale} href='/dpo'>{dpoTitle}</SheetMenuItem>
-              <SheetMenuItem locale={locale} href='/science'>{dict.Header.nav.science}</SheetMenuItem>
-              <SheetMenuItem locale={locale} href='/projects'>{dict.Header.nav.projects}</SheetMenuItem>
-              <SheetMenuItem locale={locale} href='/journals'>{dict.Header.nav.journals}</SheetMenuItem>
+              <SheetMenuItem title={dict.Header.nav.info} href='/info' />
+              <SheetMenuItem title={structureTitle} href='/structure' />
+              <SheetMenuItem title={dict.Header.nav.education} href='/education' />
+              <SheetMenuItem title={entranceTitle} href='/entrance' />
+              <SheetMenuItem title={dpoTitle} href='/dpo' />
+              <SheetMenuItem title={dict.Header.nav.science} href='/science' />
+              <SheetMenuItem title={dict.Header.nav.projects} href='/projects' />
+              <SheetMenuItem title={dict.Header.nav.journals} href='/journals' />
             </ScrollArea>
           </NavigationMenuList>
         </NavigationMenu>
@@ -55,16 +54,17 @@ export default function NavSheet({
 
 
 function SheetMenuItem({
-  locale,
-  children,
+  title,
   href,
   blank = false,
 }: {
-  locale: string,
-  children: React.ReactNode,
+  title: string,
   href: string,
   blank?: boolean,
 }) {
+
+  const locale = useLocale()
+
   const selectedLayoutSegment = useSelectedLayoutSegment();
   const pathname = selectedLayoutSegment ? `/${selectedLayoutSegment}` : '/';
   const isActive = pathname === href;
@@ -84,7 +84,7 @@ function SheetMenuItem({
           )}
         >
           <SheetClose className="px-3 py-2 text-base text-left w-full h-full uppercase">
-              {children}
+            {title}
           </SheetClose>
         </Link>
       </li>

@@ -2,7 +2,9 @@ import { z } from "zod";
 import { DynamicZoneT, ImageT } from "./components";
 import { EducationalProgramTypeEnum } from "./entities";
 
-//.........................Pages.........................//
+//..................................................Pages..................................................//
+
+//.........................Main Page.........................//
 export const MainPageT  = z.object({
   attributes: z.object({
     content: DynamicZoneT.array(),
@@ -10,6 +12,10 @@ export const MainPageT  = z.object({
 })
 export type MainPageT = z.infer<typeof MainPageT>;
 
+
+
+
+//.........................JustWait Page.........................//
 export const JustWaitPageT  = z.object({
   attributes: z.object({
     title: z.string(),
@@ -18,6 +24,10 @@ export const JustWaitPageT  = z.object({
 })
 export type JustWaitPageT = z.infer<typeof JustWaitPageT>;
 
+
+
+
+//.........................Entrance Page.........................//
 export const EntrancePageT  = z.object({
   attributes: z.object({
     title: z.string(),
@@ -26,6 +36,10 @@ export const EntrancePageT  = z.object({
 })
 export type EntrancePageT = z.infer<typeof EntrancePageT>;
 
+
+
+
+//.........................Educational Program Page.........................//
 export const EducationalProgramPageT  = z.object({
   id: z.string(),
   attributes: z.object({
@@ -41,6 +55,10 @@ export const EducationalProgramPageT  = z.object({
 })
 export type EducationalProgramPageT = z.infer<typeof EducationalProgramPageT>;
 
+
+
+
+//.........................DPO Page.........................//
 export const DpoPageT  = z.object({
   attributes: z.object({
     title: z.string(),
@@ -49,6 +67,10 @@ export const DpoPageT  = z.object({
 })
 export type DpoPageT = z.infer<typeof DpoPageT>;
 
+
+
+
+//.........................DPO Course Page.........................//
 export const DpoCoursePageT  = z.object({
   id: z.string(),
   attributes: z.object({
@@ -65,6 +87,20 @@ export const DpoCoursePageT  = z.object({
 })
 export type DpoCoursePageT = z.infer<typeof DpoCoursePageT>;
 
+
+
+//.........................Structure Page.........................//
+export const StructurePageT  = z.object({
+  attributes: z.object({
+    title: z.string(),
+    content: DynamicZoneT.array(),
+  }),
+})
+export type StructurePageT = z.infer<typeof StructurePageT>;
+
+
+
+//..................................................Additional Pages..................................................//
 export const AdditionalPageSingleT  = z.object({
   id: z.string(),
   attributes: z.object({

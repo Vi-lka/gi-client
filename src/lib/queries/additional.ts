@@ -80,6 +80,7 @@ export const getLinks = async (locale: string): Promise<LinksT> => {
     query Links($locale: I18NLocaleCode) {
       entrancePage${sameFields}
       dpo${sameFields}
+      structure${sameFields}
     }
   `;
 

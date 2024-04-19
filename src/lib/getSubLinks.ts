@@ -1,18 +1,26 @@
 export type LinkT = {
     title: string,
-    link: string,
+    href: string,
     subLinks: {
         title: string | null,
         link: string | null,
         linkDescription?: string | null,
     }[],
     secondTitle?: string,
-    secondLink?: string,
+    secondHref?: string,
 }
 
 export default function getSubLinks(params: {
     title: string,
-    link: string,
+    href: string,
+    image?: {
+        data: {
+            attributes: {
+                url: string;
+            };
+        } | null;
+    };
+    description?: string | null;
     navBarData: {
         title: string | null,
         link: string | null
@@ -27,7 +35,7 @@ export default function getSubLinks(params: {
     if (params.navBarData) {
         return {
             title: params.title,
-            link: params.link,
+            href: params.href,
             subLinks: params.navBarData
         }
     } else {
@@ -37,7 +45,7 @@ export default function getSubLinks(params: {
                 
                 return ({
                     title: item.linkTitle, 
-                    link: item.link ? `${params.link}#${item.link}` : null,
+                    link: item.link ? `${params.href}#${item.link}` : null,
                     linkDescription: item.linkDescription
                 })
             })
@@ -47,7 +55,7 @@ export default function getSubLinks(params: {
 
         return {
             title: params.title,
-            link: params.link,
+            href: params.href,
             subLinks
         }
     }

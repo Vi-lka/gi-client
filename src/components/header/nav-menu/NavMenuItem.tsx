@@ -8,17 +8,17 @@ import ImageComp from "@/components/ImageComp";
 import { ClientHydration } from "@/components/ClientHydration";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { ImageT } from "@/lib/types/components";
+import { useLocale } from "@/lib/hooks/useLocale";
 
 export default function NavMenuItem({
-  locale,
+  title,
   href,
   image,
   description,
   subLinks,
   className,
-  children,
 }: {
-  locale: string,
+  title: string,
   href: string,
   description?: string | null,
   image?: ImageT,
@@ -28,8 +28,9 @@ export default function NavMenuItem({
     linkDescription?: string | null,
   }[],
   className?: string,
-  children: React.ReactNode,
 }) {
+  const locale = useLocale()
+
   const selectedLayoutSegment = useSelectedLayoutSegment();
   const pathname = selectedLayoutSegment ? `/${selectedLayoutSegment}` : '/';
   const isActive = pathname === href;
@@ -47,7 +48,7 @@ export default function NavMenuItem({
             "h-fit lg:text-base text-sm 2xl:py-2 md:py-1 2xl:px-6 md:px-3 uppercase dark:border dark:border-solid dark:border-border"
           )}
         >
-          {children}
+          {title}
         </Link>
       </NavigationMenuTrigger>
       <NavigationMenuContent className='flex w-[90%] md:w-full'>
@@ -106,7 +107,7 @@ export default function NavMenuItem({
           "h-fit lg:text-base text-sm 2xl:py-2 md:py-1 2xl:px-6 md:px-3 uppercase dark:border dark:border-solid dark:border-border"
         )}
       >
-        {children}
+        {title}
       </Link>
     </NavigationMenuItem>
   )

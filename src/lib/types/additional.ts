@@ -66,6 +66,11 @@ export const LinksT  = z.object({
     data: z.object({
       attributes: LinksItemT
     }).nullable()
+  }),
+  structure: z.object({
+    data: z.object({
+      attributes: LinksItemT
+    }).nullable()
   })
 })
 export type LinksT = z.infer<typeof LinksT>;

@@ -25,44 +25,41 @@ export default function Menu({
 
     const entranceTitle = data.links.entrancePage.data ? data.links.entrancePage.data.attributes.title : dict.Header.nav.admission
     const dpoTitle = data.links.dpo.data ? data.links.dpo.data.attributes.title : dict.Header.nav.dpo
+    const structureTitle = data.links.structure.data ? data.links.structure.data.attributes.title : dict.Header.nav.structure
 
     const entranceLinks = getSubLinks({
         title: entranceTitle,
-        link: "/admission",
+        href: "/admission",
         navBarData: data.navBar?.admission?.subLinks,
         linksData: data.links.entrancePage.data?.attributes.content
     })
     const dpoLinks = getSubLinks({
         title: dpoTitle,
-        link: "/dpo",
+        href: "/dpo",
         navBarData: data.navBar?.dpo?.subLinks,
         linksData: data.links.dpo.data?.attributes.content
     })
+    const structureLinks = getSubLinks({
+        title: structureTitle,
+        href: "/structure",
+        navBarData: data.navBar?.structure?.subLinks,
+        linksData: data.links.structure.data?.attributes.content
+      })
 
     const links = [
         {
             title: dict.Header.nav.info,
-            link: "/info",
+            href: "/info",
             subLinks: [
                 { title: "Новости", link: "/info/news" },
                 { title: "Документы", link: "/info/docs" },
                 { title: "Программа развития ГИ", link: "/info/development-program" },
             ]
         },
-        {
-            title: dict.Header.nav.structure,
-            link: "/structure",
-            subLinks: [
-                { title: "Кафедры", link: "/structure/departments" },
-                { title: "Научные подразделения", link: "/structure/scientific-departments" },
-                { title: "Учебно-организационный отдел", link: "/structure/edu-org-department" },
-                { title: "Дирекция", link: "/structure/directorate" },
-                { title: "Сотрудники", link: "/structure/staff" },
-            ]
-        },
+        structureLinks,
         {
             title: dict.Header.nav.education,
-            link: "/education",
+            href: "/education",
             subLinks: [
                 { title: "Календарный график", link: "/education/schedule" },
                 { title: "Стипендии и премии", link: "/education/scholarships-awards" },
@@ -77,7 +74,7 @@ export default function Menu({
         dpoLinks,
         {
             title: dict.Header.nav.science,
-            link: "/science",
+            href: "/science",
             subLinks: [
                 { title: "Научные показатели", link: "/science/indicators" },
                 { title: "Исследовательские коллективы", link: "/science/research-teams" },
@@ -87,10 +84,10 @@ export default function Menu({
         },
         {
             title: dict.Header.nav.projects,
-            link: "/projects",
+            href: "/projects",
             subLinks: [],
             secondTitle: dict.Header.nav.journals,
-            secondLink: "/journals",
+            secondHref: "/journals",
         },
     ]
 
@@ -151,12 +148,12 @@ export default function Menu({
                         className='w-fit'
                     >
                         <div className='flex flex-wrap sm:gap-8 gap-6 items-center'>
-                            <Link locale={locale} href={item.link} className='link-underline py-1 pr-3 font-Cera font-bold uppercase xl:text-2xl lg:text-xl sm:text-base text-sm hover:text-apricot transition-all duration-300'>
+                            <Link locale={locale} href={item.href} className='link-underline py-1 pr-3 font-Cera font-bold uppercase xl:text-2xl lg:text-xl sm:text-base text-sm hover:text-apricot transition-all duration-300'>
                                 {item.title}
                             </Link>
-                            {item.secondLink && item.secondTitle 
+                            {item.secondHref && item.secondTitle 
                                 ? (
-                                <Link locale={locale} href={item.secondLink} className='link-underline py-1 pr-3 font-Cera font-bold uppercase xl:text-2xl lg:text-xl sm:text-base text-sm hover:text-apricot transition-all duration-300'>
+                                <Link locale={locale} href={item.secondHref} className='link-underline py-1 pr-3 font-Cera font-bold uppercase xl:text-2xl lg:text-xl sm:text-base text-sm hover:text-apricot transition-all duration-300'>
                                     {item.secondTitle}
                                 </Link>
                                 )
