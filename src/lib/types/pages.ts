@@ -89,6 +89,7 @@ export type DpoCoursePageT = z.infer<typeof DpoCoursePageT>;
 
 
 
+
 //.........................Structure Page.........................//
 export const StructurePageT  = z.object({
   attributes: z.object({
@@ -97,6 +98,21 @@ export const StructurePageT  = z.object({
   }),
 })
 export type StructurePageT = z.infer<typeof StructurePageT>;
+
+
+
+
+//.........................Structure Page.........................//
+export const DepartmentPageT  = z.object({
+  attributes: z.object({
+    slug: z.string(),
+    title: z.string(),
+    image: ImageT,
+    content: DynamicZoneT.array(),
+  }),
+})
+export type DepartmentPageT = z.infer<typeof DepartmentPageT>;
+
 
 
 
