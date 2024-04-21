@@ -18,44 +18,16 @@ export default async function DpoCoursePage({
     params: { locale: string, slug: string },
     searchParams: { [key: string]: string | string[] | undefined },
 }) {
-
-    const getDpoTitle = async (locale: string): Promise<string> => {
-        const query = /* GraphGL */ `
-        query DpoTitle($locale: I18NLocaleCode) {
-            dpo(locale: $locale) {
-            data {
-              attributes {
-                title
-              }
-            }
-          }
-        }
-        `;
-
-        const json = await fetchData<{ 
-            data: { 
-                dpo: { 
-                    data: {
-                        attributes: { title: string }
-                    } | null
-                } 
-            }; 
-        }>({ 
-            query, 
-            error: "Failed to fetch DPO Title",
-            variables: {
-                locale
-            }
-        })
-
-        if (json.data.dpo.data === null) notFound();
-    
-        return json.data.dpo.data.attributes.title;
-    };
-
-    const getDpoCourseBySlug = async (locale: string, slug: string): Promise<DpoCoursePageT> => {
+    const getDpoCourseBySlug = async (locale: string, slug: string) => {
         const query = /* GraphGL */ `
           query DpoCourse($locale: I18NLocaleCode, $filters: DpoCourseFiltersInput,) {
+            dpo(locale: $locale) {
+              data {
+                attributes {
+                  title
+                }
+              }
+            }
             dpoCourses(locale: $locale, filters: $filters) {
               data {
                 id
@@ -85,6 +57,11 @@ export default async function DpoCoursePage({
         
         const json = await fetchData<{ 
             data: { 
+                dpo: { 
+                    data: {
+                        attributes: { title: string }
+                    } | null
+                },
                 dpoCourses: {
                     data: DpoCoursePageT[]
                 }
@@ -104,25 +81,16 @@ export default async function DpoCoursePage({
         
         // await new Promise((resolve) => setTimeout(resolve, 2000))
         
-        if (json.data.dpoCourses.data.length === 0) notFound();
+        if (json.data.dpo.data === null || json.data.dpoCourses.data.length === 0) notFound();
+
+        const dpoTitle = json.data.dpo.data.attributes.title;
       
         const dpoCourse = DpoCoursePageT.parse(json.data.dpoCourses.data[0]);
       
-        return dpoCourse;
+        return { dpoTitle, dpoCourse };
     };
 
-    const [ dataResult, dpoTitleResult ] = await Promise.allSettled([ 
-        getDpoCourseBySlug(params.locale, params.slug),
-        getDpoTitle(params.locale)
-    ]);
-    if (dpoTitleResult.status === "rejected") return (
-        <ErrorHandler 
-            error={dpoTitleResult.reason as unknown} 
-            place={`DPO Title (${params.slug})`}
-            notFound
-            goBack
-        />
-    )
+    const [ dataResult ] = await Promise.allSettled([ getDpoCourseBySlug(params.locale, params.slug) ]);
     if (dataResult.status === "rejected") return (
         <ErrorHandler 
             error={dataResult.reason as unknown} 
@@ -135,17 +103,17 @@ export default async function DpoCoursePage({
     return (
         <div className='w-full'>
             <Breadcrumbs data={[
-                { title: dpoTitleResult.value, slug: "dpo" }, 
-                { title: dataResult.value.attributes.title, slug: params.slug }
+                { title: dataResult.value.dpoTitle, slug: "dpo" }, 
+                { title: dataResult.value.dpoCourse.attributes.title, slug: params.slug }
             ]}/>
 
             <TypographyH1 className='font-semibold text-primary my-6'>
-                {dataResult.value.attributes.title}
+                {dataResult.value.dpoCourse.attributes.title}
             </TypographyH1>
 
-            <Anchors data={dataResult.value.attributes.content} />
+            <Anchors data={dataResult.value.dpoCourse.attributes.content} />
 
-            {dataResult.value.attributes.content.map((item, index) => (
+            {dataResult.value.dpoCourse.attributes.content.map((item, index) => (
                 <section id={item.link ? item.link : undefined} key={index}>
                     <DynamicZone item={item} searchParams={searchParams} />
                 </section>

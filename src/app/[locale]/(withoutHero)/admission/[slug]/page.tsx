@@ -22,43 +22,16 @@ export default async function EducationalProgramPage({
 
     const dict = await getDictionary(params.locale)
 
-    const getEntranceTitle = async (locale: string): Promise<string> => {
-        const query = /* GraphGL */ `
-        query EntranceTitle($locale: I18NLocaleCode) {
-          entrancePage(locale: $locale) {
-            data {
-              attributes {
-                title
-              }
-            }
-          }
-        }
-        `;
-
-        const json = await fetchData<{ 
-            data: { 
-                entrancePage: { 
-                    data: {
-                        attributes: { title: string }
-                    } | null
-                } 
-            }; 
-        }>({ 
-            query, 
-            error: "Failed to fetch Entrance Title",
-            variables: {
-                locale
-            }
-        })
-
-        if (json.data.entrancePage.data === null) notFound();
-    
-        return json.data.entrancePage.data.attributes.title;
-    };
-
-    const getEducationalProgramBySlug = async (locale: string, slug: string): Promise<EducationalProgramPageT> => {
+    const getEducationalProgramBySlug = async (locale: string, slug: string) => {
         const query = /* GraphGL */ `
           query EducationalPrograms($locale: I18NLocaleCode, $filters: EducationalProgramFiltersInput) {
+            entrancePage(locale: $locale) {
+              data {
+                attributes {
+                  title
+                }
+              }
+            }
             educationalPrograms(locale: $locale, filters: $filters) {
               data {
                 id
@@ -87,6 +60,11 @@ export default async function EducationalProgramPage({
         
         const json = await fetchData<{ 
             data: { 
+                entrancePage: { 
+                    data: {
+                        attributes: { title: string }
+                    } | null
+                },
                 educationalPrograms: {
                     data: EducationalProgramPageT[]
                 }
@@ -106,26 +84,17 @@ export default async function EducationalProgramPage({
         
         // await new Promise((resolve) => setTimeout(resolve, 2000))
         
-        if (json.data.educationalPrograms.data.length === 0) notFound();
+        if (json.data.entrancePage.data === null || json.data.educationalPrograms.data.length === 0) notFound();
+
+        const entranceTitle = json.data.entrancePage.data.attributes.title
       
-        const educationalProgram = EducationalProgramPageT.parse(json.data.educationalPrograms.data[0]);
+        const program = EducationalProgramPageT.parse(json.data.educationalPrograms.data[0]);
       
-        return educationalProgram;
+        return { entranceTitle, program };
     };
   
 
-    const [ dataResult, entranceTitleResult ] = await Promise.allSettled([ 
-        getEducationalProgramBySlug(params.locale, params.slug),
-        getEntranceTitle(params.locale)
-    ]);
-    if (entranceTitleResult.status === "rejected") return (
-        <ErrorHandler 
-            error={entranceTitleResult.reason as unknown} 
-            place={`Entrance Title (${params.slug})`}
-            notFound
-            goBack
-        />
-    )
+    const [ dataResult ] = await Promise.allSettled([ getEducationalProgramBySlug(params.locale, params.slug)]);
     if (dataResult.status === "rejected") return (
         <ErrorHandler 
             error={dataResult.reason as unknown} 
@@ -138,32 +107,32 @@ export default async function EducationalProgramPage({
     return (
         <div className='w-full'>
             <Breadcrumbs data={[
-                { title: entranceTitleResult.value, slug: "admission" }, 
-                { title: dataResult.value.attributes.title, slug: params.slug }
+                { title: dataResult.value.entranceTitle, slug: "admission" }, 
+                { title: dataResult.value.program.attributes.title, slug: params.slug }
             ]}/>
 
             <TypographyH1 className='font-semibold text-primary my-6'>
-                {dataResult.value.attributes.title}
+                {dataResult.value.program.attributes.title}
             </TypographyH1>
 
             <div className='flex gap-x-28 gap-y-3 flex-wrap text-sm text-primary'>
                 <div className=''>
                     <p>{dict.Entities.EducationalPrograms.mainCode}:</p>
                     <p>
-                        {dataResult.value.attributes.mainCode} <span className="font-semibold">{dataResult.value.attributes.mainName}</span>
+                        {dataResult.value.program.attributes.mainCode} <span className="font-semibold">{dataResult.value.program.attributes.mainName}</span>
                     </p>
                 </div>
                 <div className=''>
                     <p>{dict.Entities.EducationalPrograms.code}:</p>
                     <p>
-                        {dataResult.value.attributes.code} <span className="font-semibold">{dataResult.value.attributes.title}</span>
+                        {dataResult.value.program.attributes.code} <span className="font-semibold">{dataResult.value.program.attributes.title}</span>
                     </p>
                 </div>
             </div>
 
-            <Anchors data={dataResult.value.attributes.content} />
+            <Anchors data={dataResult.value.program.attributes.content} />
 
-            {dataResult.value.attributes.content.map((item, index) => (
+            {dataResult.value.program.attributes.content.map((item, index) => (
                 <section id={item.link ? item.link : undefined} key={index}>
                     <DynamicZone item={item} searchParams={searchParams} />
                 </section>
