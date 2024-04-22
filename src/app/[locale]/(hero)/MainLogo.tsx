@@ -10,34 +10,31 @@ export default function MainLogo({
     return (
         <CardContainer 
             variant="follow"
-            threshold={30}
+            threshold={34}
+            perspective="3000px"
             containerClassName="absolute w-full h-full top-0 flex justify-center py-0 transition-all duration-500 ease-in-out"
             className="w-full h-full"
             style={{height: selectedItem === 0 ? "100%" : "16%"}}
         >
             <CardBody className="relative max-w-[25rem] w-2/5 h-full transition-all duration-500 ease-in-out">
               <CardItem 
-                translateZ="40" 
+                translateZ="-10" 
                 className="w-full h-full z-20"
-                style={{
-                    transform: selectedItem === 0 ? "translateZ(15px)" : "translateZ(8px)",
-                    transformStyle: "preserve-3d",
-                }}
+                style={{ transform: "translateZ(0px)" }}
             >
                 <HiLogoSvg 
                     className="w-full h-full object-contain drop-shadow dark:[&>path]:fill-foreground z-20"
-                    style={{
-                        transform: selectedItem === 0 ? "translateZ(15px)" : "translateZ(8px)",
+                    style={{ 
+                        transform: "translateZ(0px)",
                         transformStyle: "preserve-3d",
                     }}
                 />
               </CardItem>
               <CardItem 
-                translateZ="20" 
+                translateZ="-40"
                 className="absolute top-0 w-full h-full z-10"
                 style={{
-                    transform: selectedItem === 0 ? "translateZ(4px)" : "translateZ(1px)",
-                    transformStyle: "preserve-3d",
+                    transform: "translateZ(-2px)"
                 }}
               >
                 <Image
@@ -49,7 +46,7 @@ export default function MainLogo({
                     quality={100}
                     className='object-contain brightness-50 opacity-60 dark:brightness-0 z-10'
                     style={{
-                        transform: selectedItem === 0 ? "translateZ(4px)" : "translateZ(1px)",
+                        transform: "translateZ(-2px)",
                         transformStyle: "preserve-3d",
                     }}
                 />

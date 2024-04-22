@@ -24,6 +24,7 @@ const MouseEnterContext = createContext<
 
 export const CardContainer = ({
   threshold = 25,
+  perspective = "1000px",
   variant = "default",
   pattern,
   children,
@@ -32,6 +33,7 @@ export const CardContainer = ({
   containerClassName,
 }: {
   threshold?: number;
+  perspective?: string;
   variant?: keyof VariantT;
   pattern?: boolean;
   children?: React.ReactNode;
@@ -84,7 +86,7 @@ export const CardContainer = ({
           containerClassName
         )}
         style={Object.assign({
-          perspective: "1000px",
+          perspective: perspective,
         }, style)}
         onMouseEnter={handleMouseEnter}
         onMouseMove={handleMouseMove}
