@@ -160,6 +160,12 @@ export const DepartmentSingleT  = z.object({
     slug: z.string(),
     title: z.string(),
     image: z.lazy(() => ImageT),
+    contacts: z.object({
+      url: z.string().nullable(),
+      email: z.string().nullable(),
+      phone: z.string().nullable(),
+      location: z.string().nullable(),
+    }).nullable()
   }),
 })
 export type DepartmentSingleT = z.infer<typeof DepartmentSingleT>;

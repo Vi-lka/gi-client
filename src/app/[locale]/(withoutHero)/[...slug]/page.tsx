@@ -46,11 +46,13 @@ export default async function CatchAllPage({
             attributes {
               slug
               title
+              navBarConfig { navBarTitle }
               additional_pages {
                 data {
                   attributes {
                     slug
                     title
+                    navBarConfig { navBarTitle }
                   }
                 }
               }
@@ -120,8 +122,15 @@ export default async function CatchAllPage({
 
   const connectedPages = dataResult.value.attributes.additional_pages.data.map(item => ({
     slug: item.attributes.slug,
-    title: item.attributes.title
+    title: item.attributes.navBarConfig?.navBarTitle 
+      ? item.attributes.navBarConfig.navBarTitle
+      : item.attributes.title
   }))
+
+
+  const breadcrumbsTitle = dataResult.value.attributes.navBarConfig?.navBarTitle 
+    ? dataResult.value.attributes.navBarConfig.navBarTitle 
+    : dataResult.value.attributes.title
 
   const compareArrays = (a: string[], b: string[]) => (
     a.length === b.length &&
@@ -134,7 +143,7 @@ export default async function CatchAllPage({
     <div className='w-full'>
       <Breadcrumbs data={[
         ...connectedPages,
-        { title: dataResult.value.attributes.title, slug: dataResult.value.attributes.slug }
+        { title: breadcrumbsTitle, slug: dataResult.value.attributes.slug }
       ]}/>
 
       <TypographyH1 className='font-semibold text-primary my-6'>

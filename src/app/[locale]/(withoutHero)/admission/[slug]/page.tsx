@@ -29,6 +29,7 @@ export default async function EducationalProgramPage({
               data {
                 attributes {
                   title
+                  navBarConfig { navBarTitle }
                 }
               }
             }
@@ -62,7 +63,12 @@ export default async function EducationalProgramPage({
             data: { 
                 entrancePage: { 
                     data: {
-                        attributes: { title: string }
+                        attributes: { 
+                          title: string,
+                          navBarConfig: {
+                            navBarTitle: string | null
+                          } | null
+                        }
                     } | null
                 },
                 educationalPrograms: {
@@ -85,8 +91,10 @@ export default async function EducationalProgramPage({
         // await new Promise((resolve) => setTimeout(resolve, 2000))
         
         if (json.data.entrancePage.data === null || json.data.educationalPrograms.data.length === 0) notFound();
-
-        const entranceTitle = json.data.entrancePage.data.attributes.title
+        
+        const entranceTitle = json.data.entrancePage.data.attributes.navBarConfig?.navBarTitle 
+          ? json.data.entrancePage.data.attributes.navBarConfig.navBarTitle
+          : json.data.entrancePage.data.attributes.title;
       
         const program = EducationalProgramPageT.parse(json.data.educationalPrograms.data[0]);
       

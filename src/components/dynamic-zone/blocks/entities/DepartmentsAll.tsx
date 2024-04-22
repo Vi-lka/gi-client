@@ -51,13 +51,13 @@ export default async function DepartmentsAll({
                 ))}
             </div>
             <div className="mt-6">
-              <PaginationControls
-                length={dataResult.value.meta.pagination.total}
-                defaultPageSize={DEFAULT_PAGE_SIZE}
-                scrollToId='departments'
-                pageParam='page_departments'
-                perParam='per_departments'
-              />
+                <PaginationControls
+                    length={dataResult.value.meta.pagination.total}
+                    defaultPageSize={DEFAULT_PAGE_SIZE}
+                    scrollToId='departments'
+                    pageParam='page_departments'
+                    perParam='per_departments'
+                />
             </div>
         </>
     )

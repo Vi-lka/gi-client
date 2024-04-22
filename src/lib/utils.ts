@@ -77,4 +77,14 @@ export function formatDate(date: Date, locale: string) {
   return str
 }
 
+export function shortUrl(url: string | null | undefined) {
+  if (!url) return
+  
+  const uend = url.slice(url.length - 15);
+  const ustart = url.replace('http://', '').replace('https://', '').substring(0, 32);
+  const shorter = ustart + '...' + uend;
+
+  return shorter;
+}
+
 export const grayscale = "lg:dark:grayscale-[60%] lg:dark:contrast-[1.2] dark:grayscale-[30%] dark:contrast-[1.05] dark:hover:grayscale-0 dark:hover:contrast-100 transition-[filter] duration-200 ease-in"

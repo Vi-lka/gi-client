@@ -36,6 +36,12 @@ export const getDepartments = async ({
                 }
               }
             }
+            contacts {
+              url
+              email
+              phone
+              location
+            }
           }
         }
       }

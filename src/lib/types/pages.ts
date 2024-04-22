@@ -31,6 +31,9 @@ export type JustWaitPageT = z.infer<typeof JustWaitPageT>;
 export const EntrancePageT  = z.object({
   attributes: z.object({
     title: z.string(),
+    navBarConfig: z.object({ 
+      navBarTitle: z.string().nullable()
+    }).nullable(),
     content: DynamicZoneT.array(),
   }),
 })
@@ -62,6 +65,9 @@ export type EducationalProgramPageT = z.infer<typeof EducationalProgramPageT>;
 export const DpoPageT  = z.object({
   attributes: z.object({
     title: z.string(),
+    navBarConfig: z.object({ 
+      navBarTitle: z.string().nullable()
+    }).nullable(),
     content: DynamicZoneT.array(),
   }),
 })
@@ -94,6 +100,9 @@ export type DpoCoursePageT = z.infer<typeof DpoCoursePageT>;
 export const StructurePageT  = z.object({
   attributes: z.object({
     title: z.string(),
+    navBarConfig: z.object({
+      navBarTitle: z.string().nullable()
+    }).nullable(),
     content: DynamicZoneT.array(),
   }),
 })
@@ -122,11 +131,17 @@ export const AdditionalPageSingleT  = z.object({
   attributes: z.object({
     slug: z.string(),
     title: z.string(),
+    navBarConfig: z.object({
+      navBarTitle: z.string().nullable()
+    }).nullable(),
     additional_pages: z.object({
       data: z.object({
         attributes: z.object({
           slug: z.string(),
           title: z.string(),
+          navBarConfig: z.object({
+            navBarTitle: z.string().nullable()
+          }).nullable(),
         })
       }).array()
     }),

@@ -39,7 +39,7 @@ export default function DpoCoursesItem({
                 </ClientHydration>
                 
                 <div className='flex-1 lg:w-[55%] w-full flex flex-col gap-6 justify-between text-primary'>
-                    <div className='lg:mr-6'>
+                    <div>
                         <h4 className='xl:text-xl lg:text-lg sm:text-xl text-lg font-bold line-clamp-3'>
                             {getShortText(item.attributes.title, 7)}
                         </h4>
@@ -51,44 +51,44 @@ export default function DpoCoursesItem({
                         )}
                     </div>
 
+                    <ul className='flex flex-col gap-3 lg:mr-6 text-primary'>
+                        {(item.attributes.dateStart || item.attributes.dateEnd) && (
+                            <li className='flex items-center gap-2 font-medium'>
+                                <CalendarDays className='w-auto h-5 ' />
+                                <p>
+                                    {item.attributes.dateStart && formatDate(item.attributes.dateStart, locale)}
+                                    {item.attributes.dateStart && item.attributes.dateEnd && " - "}
+                                    {item.attributes.dateEnd && formatDate(item.attributes.dateEnd, locale)}
+                                </p>
+                            </li>
+                        )}
+                        {item.attributes.location && (
+                            <li className='flex items-center gap-2 font-medium'>
+                                <MapPin className='w-auto h-5 ' />
+                                {item.attributes.location}
+                            </li>
+                        )}
+                        {item.attributes.hours && (
+                            <li className='flex items-center gap-2 font-medium'>
+                                <Clock3 className='w-auto h-5 ' />
+                                {
+                                    item.attributes.hours.toString() 
+                                    + 
+                                    " " 
+                                    + 
+                                    declOfNum(item.attributes.hours, [dict.Entities.DPO.hour, dict.Entities.DPO.hours, dict.Entities.DPO.hoursSecond])
+                                }
+                            </li>
+                        )}
+                        {item.attributes.price && (
+                            <li className='flex items-center gap-2 font-medium'>
+                                <MdOutlineCurrencyRuble className='w-auto h-5 ' />
+                                {item.attributes.price}
+                            </li>
+                        )}
+                    </ul>
+
                     <div className='w-full flex flex-col gap-6 justify-end'>
-                        <ul className='flex flex-col gap-3 lg:mr-6 text-primary'>
-                            {(item.attributes.dateStart || item.attributes.dateEnd) && (
-                                <li className='flex items-center gap-2 font-medium'>
-                                    <CalendarDays className='w-auto h-5 ' />
-                                    <p>
-                                        {item.attributes.dateStart && formatDate(item.attributes.dateStart, locale)}
-                                        {item.attributes.dateStart && item.attributes.dateEnd && " - "}
-                                        {item.attributes.dateEnd && formatDate(item.attributes.dateEnd, locale)}
-                                    </p>
-                                </li>
-                            )}
-                            {item.attributes.location && (
-                                <li className='flex items-center gap-2 font-medium'>
-                                    <MapPin className='w-auto h-5 ' />
-                                    {item.attributes.location}
-                                </li>
-                            )}
-                            {item.attributes.hours && (
-                                <li className='flex items-center gap-2 font-medium'>
-                                    <Clock3 className='w-auto h-5 ' />
-                                    {
-                                        item.attributes.hours.toString() 
-                                        + 
-                                        " " 
-                                        + 
-                                        declOfNum(item.attributes.hours, [dict.Entities.DPO.hour, dict.Entities.DPO.hours, dict.Entities.DPO.hoursSecond])
-                                    }
-                                </li>
-                            )}
-                            {item.attributes.price && (
-                                <li className='flex items-center gap-2 font-medium'>
-                                    <MdOutlineCurrencyRuble className='w-auto h-5 ' />
-                                    {item.attributes.price}
-                                </li>
-                            )}
-                        </ul>
-                            
                         <Link locale={locale} href={`/dpo/${item.attributes.slug}`} className='w-fit sm:ml-auto sm:mr-0 ml-auto mr-auto'>
                             <Button className='uppercase font-medium px-10 py-5 rounded-3xl'>
                                 {dict.Buttons.more}

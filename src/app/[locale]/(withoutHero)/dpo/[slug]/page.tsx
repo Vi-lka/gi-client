@@ -25,6 +25,7 @@ export default async function DpoCoursePage({
               data {
                 attributes {
                   title
+                  navBarConfig { navBarTitle }
                 }
               }
             }
@@ -59,7 +60,12 @@ export default async function DpoCoursePage({
             data: { 
                 dpo: { 
                     data: {
-                        attributes: { title: string }
+                        attributes: { 
+                          title: string,
+                          navBarConfig: {
+                            navBarTitle: string | null
+                          } | null
+                        }
                     } | null
                 },
                 dpoCourses: {
@@ -83,7 +89,9 @@ export default async function DpoCoursePage({
         
         if (json.data.dpo.data === null || json.data.dpoCourses.data.length === 0) notFound();
 
-        const dpoTitle = json.data.dpo.data.attributes.title;
+        const dpoTitle = json.data.dpo.data.attributes.navBarConfig?.navBarTitle
+          ? json.data.dpo.data.attributes.navBarConfig.navBarTitle
+          : json.data.dpo.data.attributes.title;
       
         const dpoCourse = DpoCoursePageT.parse(json.data.dpoCourses.data[0]);
       

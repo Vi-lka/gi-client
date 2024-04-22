@@ -25,6 +25,7 @@ export default async function DpoPage({
             data {
               attributes {
                 title
+                navBarConfig { navBarTitle }
                 content {
                   ${dynamicContentQuery}
                 }
@@ -67,9 +68,13 @@ export default async function DpoPage({
         />
     )
 
+    const breadcrumbsTitle = dataResult.value.attributes.navBarConfig?.navBarTitle 
+        ? dataResult.value.attributes.navBarConfig.navBarTitle 
+        : dataResult.value.attributes.title
+
     return (
         <div className='w-full'>
-            <Breadcrumbs data={[{ title: dataResult.value.attributes.title, slug: "dpo" }]} />
+            <Breadcrumbs data={[{ title: breadcrumbsTitle, slug: "dpo" }]} />
 
             <TypographyH1 className='font-semibold text-primary my-6'>
                 {dataResult.value.attributes.title}
