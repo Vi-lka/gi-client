@@ -39,7 +39,7 @@ export default function NavSheet({
               <SheetMenuItem title={dict.Header.nav.info} href='/info' />
               <SheetMenuItem title={structureTitle} href='/structure' />
               <SheetMenuItem title={dict.Header.nav.education} href='/education' />
-              <SheetMenuItem title={entranceTitle} href='/entrance' />
+              <SheetMenuItem title={entranceTitle} href='/admission' />
               <SheetMenuItem title={dpoTitle} href='/dpo' />
               <SheetMenuItem title={dict.Header.nav.science} href='/science' />
               <SheetMenuItem title={dict.Header.nav.projects} href='/projects' />

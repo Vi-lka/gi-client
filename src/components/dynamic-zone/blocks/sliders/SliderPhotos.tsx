@@ -36,13 +36,13 @@ export default function SliderPhotos({
                         <CarouselItem key={index} className='lg:pl-8 pl-4'>
                             <Card className='border-none shadow-md bg-transparent rounded-3xl'>
                                 <CardContent className="relative w-full sm:aspect-[2/1] aspect-square">
-                                        <ImageComp
-                                            src={item.attributes.url}
-                                            alt={item.attributes.url}
-                                            fill
-                                            sizes='100vw'
-                                            className='w-full object-contain rounded-3xl'
-                                        />
+                                    <ImageComp
+                                        src={item.attributes.url}
+                                        alt={item.attributes.url}
+                                        fill
+                                        sizes='100vw'
+                                        className='w-full object-contain rounded-3xl'
+                                    />
                                 </CardContent>
                             </Card>
                         </CarouselItem>

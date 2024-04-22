@@ -154,7 +154,7 @@ export const GraduatesT  = z.object({
 export type GraduatesT = z.infer<typeof GraduatesT>;
 
 //.........................Dpo Courses.........................//
-export const DepartmentSingleT  = z.object({
+export const StructureSingleT  = z.object({
   id: z.string(),
   attributes: z.object({
     slug: z.string(),
@@ -168,14 +168,14 @@ export const DepartmentSingleT  = z.object({
     }).nullable()
   }),
 })
-export type DepartmentSingleT = z.infer<typeof DepartmentSingleT>;
+export type StructureSingleT = z.infer<typeof StructureSingleT>;
 
-export const DepartmentsT  = z.object({
+export const StructuresT  = z.object({
     meta: z.object({
         pagination: z.object({
           total: z.number(),
         }),
     }),
-    data: DepartmentSingleT.array(),
+    data: StructureSingleT.array(),
 })
-export type DepartmentsT = z.infer<typeof DepartmentsT>;
+export type StructuresT = z.infer<typeof StructuresT>;

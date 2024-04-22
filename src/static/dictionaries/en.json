@@ -39,6 +39,9 @@
       "hour": "hour",
       "hours": "hours",
       "hoursSecond": "hours"
+    },
+    "Structure": {
+      "contacts": "Contacts"
     }
   },
   "ContactForm": {

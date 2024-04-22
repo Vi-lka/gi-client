@@ -5,7 +5,7 @@ import NextLink from "next/link";
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
-import type { DepartmentSingleT } from '@/lib/types/entities'
+import type { StructureSingleT } from '@/lib/types/entities'
 import { getShortText } from '@/lib/utils'
 import { AtSign, Globe, MapPin } from 'lucide-react'
 import React from 'react'
@@ -17,14 +17,9 @@ export default function DepartmentsItem({
     dict
 }: {
     locale: string
-    item: DepartmentSingleT,
+    item: StructureSingleT,
     dict: Dictionary,
 }) {
-
-
-
-    const url = item.attributes.contacts?.url ? new URL(item.attributes.contacts.url) : undefined
-
     return (
         <Card key={"department" + item.id} className='min-w-0 h-full border-none shadow-md rounded-3xl'>
             <CardContent className="w-full h-full flex lg:flex-row flex-col xl:gap-8 gap-6 justify-between p-3">
@@ -51,7 +46,7 @@ export default function DepartmentsItem({
 
                     {item.attributes.contacts && (
                         <ul className='flex flex-col gap-3 lg:mr-6 text-sm text-primary'>
-                            {item.attributes.contacts.url && url && (
+                            {item.attributes.contacts.url && (
                                 <li className='flex items-center gap-2 font-medium'>
                                     <Globe className='w-auto h-5 ' />
                                     <NextLink 
@@ -59,7 +54,7 @@ export default function DepartmentsItem({
                                         target='__blank'
                                         className='flex-1 hover:underline underline-offset-2'
                                     >
-                                        {url.hostname}
+                                        {new URL(item.attributes.contacts.url).hostname}
                                     </NextLink>
                                 </li>
                             )}

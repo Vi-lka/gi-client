@@ -39,6 +39,9 @@
       "hour": "час",
       "hours": "часа",
       "hoursSecond": "часов"
+    },
+    "Structure": {
+      "contacts": "Контакты"
     }
   },
   "ContactForm": {

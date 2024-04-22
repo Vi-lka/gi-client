@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { DynamicZoneT, ImageT } from "./components";
+import { DynamicZoneT, ImageT, ImagesArrayT } from "./components";
 import { EducationalProgramTypeEnum } from "./entities";
 
 //..................................................Pages..................................................//
@@ -111,16 +111,24 @@ export type StructurePageT = z.infer<typeof StructurePageT>;
 
 
 
-//.........................Structure Page.........................//
-export const DepartmentPageT  = z.object({
+//.........................Structure Single Page.........................//
+export const StructureSinglePageT  = z.object({
   attributes: z.object({
     slug: z.string(),
     title: z.string(),
-    image: ImageT,
+    media: ImagesArrayT,
+    description_title: z.string().nullable(),
+    description: z.any(),
+    contacts: z.object({
+      url: z.string().nullable(),
+      email: z.string().nullable(),
+      phone: z.string().nullable(),
+      location: z.string().nullable(),
+    }).nullable(),
     content: DynamicZoneT.array(),
   }),
 })
-export type DepartmentPageT = z.infer<typeof DepartmentPageT>;
+export type StructureSinglePageT = z.infer<typeof StructureSinglePageT>;
 
 
 

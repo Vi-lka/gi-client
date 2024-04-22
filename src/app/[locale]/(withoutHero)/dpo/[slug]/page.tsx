@@ -115,7 +115,7 @@ export default async function DpoCoursePage({
                 { title: dataResult.value.dpoCourse.attributes.title, slug: params.slug }
             ]}/>
 
-            <TypographyH1 className='font-semibold text-primary my-6'>
+            <TypographyH1 className='font-semibold text-primary my-6 text-3xl'>
                 {dataResult.value.dpoCourse.attributes.title}
             </TypographyH1>
 

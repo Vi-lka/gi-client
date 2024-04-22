@@ -79,9 +79,9 @@ interface ImageBlockNode {
 type RootNode = ParagraphBlockNode | QuoteBlockNode | CodeBlockNode | HeadingBlockNode | ListBlockNode | ImageBlockNode;
 
 export default function BlocksRendererStrapi({
-    content
+  content
 }: {
-    content: any
+  content: any
 }) {
 
   if (!content) return null

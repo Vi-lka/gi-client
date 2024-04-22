@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import fetchData from "./fetchData";
-import { DepartmentsT } from "../types/entities";
+import { StructuresT } from "../types/entities";
 
 //.........................Departments.........................//
 export const getDepartments = async ({
@@ -15,7 +15,7 @@ export const getDepartments = async ({
   pageSize?: number;
   sort?: string;
   search?: string;
-}): Promise<DepartmentsT> => {
+}): Promise<StructuresT> => {
   const query = /* GraphGL */ `
     query Departments($locale: I18NLocaleCode, $filters: DepartmentFiltersInput, $sort: [String], $pagination: PaginationArg) {
       departments(locale: $locale, filters: $filters, sort: $sort, pagination: $pagination) {
@@ -48,7 +48,7 @@ export const getDepartments = async ({
     }
   `;
   
-  const json = await fetchData<{ data: { departments: DepartmentsT }; }>({ 
+  const json = await fetchData<{ data: { departments: StructuresT }; }>({ 
     query, 
     error: "Failed to fetch Departments", 
     variables: {
@@ -74,7 +74,7 @@ export const getDepartments = async ({
     notFound();
   }
 
-  const departments = DepartmentsT.parse(json.data.departments);
+  const departments = StructuresT.parse(json.data.departments);
 
   return departments;
 };

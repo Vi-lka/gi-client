@@ -119,7 +119,7 @@ export default async function EducationalProgramPage({
                 { title: dataResult.value.program.attributes.title, slug: params.slug }
             ]}/>
 
-            <TypographyH1 className='font-semibold text-primary my-6'>
+            <TypographyH1 className='font-semibold text-primary my-6 text-3xl'>
                 {dataResult.value.program.attributes.title}
             </TypographyH1>
 
