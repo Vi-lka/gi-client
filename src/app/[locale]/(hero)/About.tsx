@@ -8,6 +8,8 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import DynamicReactIcon from '@/components/DynamicReactIcon';
 import type { HeroAboutT } from '@/lib/types/additional';
+import type { IconsBlockItemT } from '@/lib/types/components';
+import ImageComp from '@/components/ImageComp';
 
 export default function About({
     data,
@@ -103,9 +105,7 @@ export default function About({
                                 variants={itemVariants}
                                 className='flex gap-4 xl:items-start items-center'
                             >
-                                {item.iconReact && (
-                                    <DynamicReactIcon icon={item.iconReact} className="lg:w-14 sm:w-10 w-8 h-auto text-background" />
-                                )}
+                                <IconAbout item={item} />
                                 <div className='flex-1 dark:text-foreground'>
                                     <h3 className='uppercase font-bold 2xl:text-lg lg:text-sm text-xs'>
                                         {item.title}
@@ -157,4 +157,44 @@ export default function About({
             </div>
         </div>
     )
+}
+
+function IconAbout({ 
+    item,
+    className,
+}: { 
+    item: IconsBlockItemT,
+    className?: string
+}) {
+    if (item.iconReact) return <DynamicReactIcon icon={item.iconReact} className={cn("lg:w-14 sm:w-10 w-8 h-auto text-background", className)} />
+    else if (item.image.data) return (
+        <div>
+            <ImageComp
+                src={item.image.data.attributes.url}
+                alt='Icon'
+                fill={false}
+                width={56}
+                height={56}
+                className={cn(
+                    'lg:h-14 sm:h-10 h-8 aspect-square object-contain', 
+                    className,
+                    item.imageDark.data ? "dark:hidden" : "dark:!filter-background"
+                )}
+            />
+            {item.imageDark.data && (
+                <ImageComp 
+                    src={item.imageDark.data.attributes.url} 
+                    alt='Icon'
+                    fill={false}
+                    width={56}
+                    height={56}
+                    className={cn(
+                        'lg:h-14 sm:h-10 h-8 aspect-square object-contain hidden dark:block', 
+                        className,
+                    )}
+                />
+            )}
+        </div>
+    )
+    else return null
 }

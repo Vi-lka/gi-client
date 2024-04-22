@@ -35,6 +35,20 @@ export const dynamicContentQuery = `
     items {
       title
       iconReact
+      image {
+        data {
+          attributes {
+            url
+          }
+        }
+      }
+      imageDark {
+        data {
+          attributes {
+            url
+          }
+        }
+      }
       description
     }
     moreTitle

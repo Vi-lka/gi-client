@@ -144,6 +144,8 @@ export type ContactsCompT = z.infer<typeof ContactsCompT>;
 export const IconsBlockItemT = z.object({
   title: z.string(),
   iconReact: z.string().nullable(),
+  image: ImageT,
+  imageDark: ImageT,
   description: z.string().nullable(),
 })
 export type IconsBlockItemT = z.infer<typeof IconsBlockItemT>;

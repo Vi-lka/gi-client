@@ -30,6 +30,20 @@ export default async function Hero() {
               items {
                 title
                 iconReact
+                image {
+                  data {
+                    attributes {
+                      url
+                    }
+                  }
+                }
+                imageDark {
+                  data {
+                    attributes {
+                      url
+                    }
+                  }
+                }
                 description
               }
               link

@@ -4,6 +4,7 @@ import { cn, splitArray } from '@/lib/utils'
 import React, { useEffect, useState } from 'react'
 import DynamicReactIcon from '@/components/DynamicReactIcon'
 import type { IconsBlockItemT } from '@/lib/types/components'
+import ImageComp from '@/components/ImageComp'
 
 export default function IconsBlockItems({
     items,
@@ -76,18 +77,49 @@ function IconBlockLine({
 function IconBlockItem({
     item,
     type,
+    className,
 }: {
     item: IconsBlockItemT,
-    type: "icon" | "title" | "description"
+    type: "icon" | "title" | "description",
+    className?: string,
 }) {
     switch (type) {
         case "icon":
-            if (item.iconReact) return <DynamicReactIcon icon={item.iconReact} className="w-auto lg:h-20 sm:h-16 h-14 text-secondary-foreground" />
+            if (item.iconReact) return <DynamicReactIcon icon={item.iconReact} className={cn("w-auto lg:h-20 sm:h-16 h-14 text-secondary-foreground", className)} />
+            else if (item.image.data) return (
+                <div>
+                    <ImageComp
+                        src={item.image.data.attributes.url}
+                        alt='Icon'
+                        fill={false}
+                        width={80}
+                        height={80}
+                        className={cn(
+                            'lg:h-20 sm:h-16 h-14 aspect-square object-contain', 
+                            className,
+                            item.imageDark.data ? "dark:hidden" : "dark:!filter-background"
+                        )}
+                    />
+                    {item.imageDark.data && (
+                        <ImageComp 
+                            src={item.imageDark.data.attributes.url} 
+                            alt='Icon'
+                            fill={false}
+                            width={80}
+                            height={80}
+                            className={cn(
+                                'lg:h-20 sm:h-16 h-14 aspect-square object-contain hidden dark:block', 
+                                className,
+                            )}
+                        />
+                    )}
+                </div>
+            )
             else return null
 
         case "title":
-            return <h3 className='font-semibold text-sm'>{item.title}</h3>
+            return <h3 className={cn('font-semibold text-sm', className)}>{item.title}</h3>
         case "description":
-            return <p className='text-sm text-foreground dark:text-muted-foreground'>{item.description}</p>
+            return <p className={cn('text-sm text-foreground dark:text-muted-foreground', className)}>{item.description}</p>
     }
 }
