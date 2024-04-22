@@ -48,27 +48,6 @@ export type ImagesArrayT = z.infer<typeof ImagesArrayT>;
 
 
 
-//.........................Custom Icon Enums.........................//
-export const CustomIconEnum = z.enum([
-  "deal",
-  "science",
-  "idea",
-  "healthy_mind",
-  "video_call",
-  "presentation",
-  "man_desktop",
-  "businessman",
-  "certificate",
-  "budget",
-  "deadline",
-  "authentication",
-  "graph",
-]);
-export type CustomIconEnum = z.infer<typeof CustomIconEnum>;
-
-
-
-
 //..................................................COMPONENTS..................................................//
 
 //.........................Text.........................//
@@ -165,7 +144,6 @@ export type ContactsCompT = z.infer<typeof ContactsCompT>;
 export const IconsBlockItemT = z.object({
   title: z.string(),
   iconReact: z.string().nullable(),
-  iconCustom: CustomIconEnum.nullable(),
   description: z.string().nullable(),
 })
 export type IconsBlockItemT = z.infer<typeof IconsBlockItemT>;
@@ -315,7 +293,6 @@ export type AccordionCompT = z.infer<typeof AccordionCompT>;
 export const FormBlockItemT = z.object({
   title: z.string(),
   description: z.string().nullable(),
-  iconCustom: CustomIconEnum.nullable(),
   iconReact: z.string().nullable(),
   image: ImageT,
   imageDark: ImageT,

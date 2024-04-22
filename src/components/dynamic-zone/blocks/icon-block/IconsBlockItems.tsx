@@ -2,7 +2,6 @@
 
 import { cn, splitArray } from '@/lib/utils'
 import React, { useEffect, useState } from 'react'
-import IconCustom from '../../../IconCustom'
 import DynamicReactIcon from '@/components/DynamicReactIcon'
 import type { IconsBlockItemT } from '@/lib/types/components'
 
@@ -83,8 +82,7 @@ function IconBlockItem({
 }) {
     switch (type) {
         case "icon":
-            if (item.iconCustom) return <IconCustom icon={item.iconCustom} className='w-auto lg:h-20 sm:h-16 h-14 filter-secondary-foreground dark:filter-background' />
-            else if (item.iconReact) return <DynamicReactIcon icon={item.iconReact} className="w-auto lg:h-20 sm:h-16 h-14 text-secondary-foreground" />
+            if (item.iconReact) return <DynamicReactIcon icon={item.iconReact} className="w-auto lg:h-20 sm:h-16 h-14 text-secondary-foreground" />
             else return null
 
         case "title":

@@ -1,7 +1,6 @@
 "use client"
 
 import DynamicReactIcon from '@/components/DynamicReactIcon'
-import IconCustom from '@/components/IconCustom'
 import { TypographyH2 } from '@/components/typography'
 import { cn } from '@/lib/utils'
 import React from 'react'
@@ -149,8 +148,7 @@ function FormBlockIcon({
     item: FormBlockItemT,
     className?: string
 }) {
-    if (item.iconCustom) return <IconCustom icon={item.iconCustom} className={cn('h-auto lg:w-11 sm:w-10 w-9 filter-background', className)} />
-    else if (item.iconReact) return <DynamicReactIcon icon={item.iconReact} className={cn("h-auto lg:w-11 sm:w-10 w-9 text-background dark:text-foreground", className)} />
+    if (item.iconReact) return <DynamicReactIcon icon={item.iconReact} className={cn("h-auto lg:w-11 sm:w-10 w-9 text-background dark:text-foreground", className)} />
     else if (item.image.data) return (
         <div>
             <ImageComp

@@ -6,10 +6,8 @@ import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import IconCustom from '@/components/IconCustom';
 import DynamicReactIcon from '@/components/DynamicReactIcon';
 import type { HeroAboutT } from '@/lib/types/additional';
-import type { IconsBlockItemT } from '@/lib/types/components';
 
 export default function About({
     data,
@@ -105,7 +103,9 @@ export default function About({
                                 variants={itemVariants}
                                 className='flex gap-4 xl:items-start items-center'
                             >
-                                <IconAbout item={item} />
+                                {item.iconReact && (
+                                    <DynamicReactIcon icon={item.iconReact} className="lg:w-14 sm:w-10 w-8 h-auto text-background" />
+                                )}
                                 <div className='flex-1 dark:text-foreground'>
                                     <h3 className='uppercase font-bold 2xl:text-lg lg:text-sm text-xs'>
                                         {item.title}
@@ -157,9 +157,4 @@ export default function About({
             </div>
         </div>
     )
-}
-
-function IconAbout({ item }: { item: IconsBlockItemT }) {
-    if (item.iconCustom) return <IconCustom icon={item.iconCustom} className='lg:w-14 sm:w-10 w-8 h-auto filter-background' />
-    else if (item.iconReact) return <DynamicReactIcon icon={item.iconReact} className="lg:w-14 sm:w-10 w-8 h-auto text-background" />
 }

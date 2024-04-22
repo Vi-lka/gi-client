@@ -2,7 +2,6 @@ import { notFound } from 'next/navigation';
 import React from 'react'
 import ErrorHandler from '../errors/ErrorHandler';
 import { TypographyH2 } from '../typography';
-import IconCustom from '../IconCustom';
 import DynamicReactIcon from '../DynamicReactIcon';
 import ImageComp from '../ImageComp';
 import Link from 'next/link';
@@ -13,7 +12,7 @@ import { ClientHydration } from '../ClientHydration';
 import { Skeleton } from '../ui/skeleton';
 import { FooterT } from '@/lib/types/additional';
 import fetchData from '@/lib/queries/fetchData';
-import type { CustomIconEnum, ImageT } from '@/lib/types/components';
+import type { ImageT } from '@/lib/types/components';
 
 export const dynamic = 'force-dynamic'
 
@@ -36,7 +35,7 @@ export default async function Footer() {
                     image {data { attributes { url } }}
                     imageDark {data { attributes { url } }}
                   }
-                  contacts { title phone email location iconCustom iconReact }
+                  contacts { title phone email location iconReact }
                   logos {
                     link
                     image {data { attributes { url } }}
@@ -121,7 +120,9 @@ export default async function Footer() {
                             <ul className='grid sm:grid-cols-2 grid-cols-1 sm:gap-10 gap-6 justify-between flex-1'>
                                 {dataResult.value.contacts.map((item, index) => (
                                     <li key={index} className='flex gap-3'>
-                                        <ContactsIcon {...item}/>
+                                        {item.iconReact && (
+                                            <DynamicReactIcon icon={item.iconReact} className="w-auto h-6 text-primary" />
+                                        )}
                                         <div className='flex-1 text-sm flex flex-col gap-0.5'>
                                             {item.title && <p className='font-medium'>{item.title}</p>}
                                             {item.phone && (
@@ -269,16 +270,4 @@ function SocialIcon({
             )}
         </ClientHydration>
     )
-}
-
-function ContactsIcon({
-    iconReact,
-    iconCustom,
-}: {
-    iconReact: string | null,
-    iconCustom: CustomIconEnum | null,
-}) {
-    if (iconCustom) return <IconCustom icon={iconCustom} className='w-auto h-6 filter-primary' />
-    else if (iconReact) return <DynamicReactIcon icon={iconReact} className="w-auto h-6 text-primary" />
-    else return null
 }

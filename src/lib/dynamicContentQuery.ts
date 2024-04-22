@@ -35,7 +35,6 @@ export const dynamicContentQuery = `
     items {
       title
       iconReact
-      iconCustom
       description
     }
     moreTitle
@@ -167,7 +166,6 @@ export const dynamicContentQuery = `
     list {
       title
       description
-      iconCustom
       iconReact
       image {
         data {

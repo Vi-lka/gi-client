@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ImageT, ImagesArrayT, IconsBlockItemT, CustomIconEnum } from "./components";
+import { ImageT, ImagesArrayT, IconsBlockItemT } from "./components";
 
 //.........................NavBar.........................//
 export const SubLinkT = z.object({
@@ -105,7 +105,6 @@ export const FooterT  = z.object({
     email: z.string().nullable(),
     location: z.string().nullable(),
     iconReact: z.string().nullable(),
-    iconCustom: CustomIconEnum.nullable(),
   }).array(),
   logos: z.object({
     link: z.string().nullable(),

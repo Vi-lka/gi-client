@@ -30,7 +30,6 @@ export default async function Hero() {
               items {
                 title
                 iconReact
-                iconCustom
                 description
               }
               link
