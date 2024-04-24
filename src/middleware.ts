@@ -59,7 +59,9 @@ export function middleware(request: NextRequest) {
     // Store current request url in a custom header, which you can read later
     const requestHeaders = new Headers(request.headers);
 
+    // const pathnameArray = 
     const locale = pathname.split("/")[1]
+    // const slug = pathname.split("/")[1]
 
     requestHeaders.set('x-url', request.url);
     requestHeaders.set('x-locale', locale);

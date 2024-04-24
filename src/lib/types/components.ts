@@ -148,7 +148,7 @@ export const CollectionAllStructureCompT = z.object({
   title: z.string().nullable(),
   link: z.string().nullable(),
   linkTitle: z.string().nullable(),
-  category: StructureCategoryEnum.nullable(),
+  category: z.lazy(() => StructureCategoryEnum).nullable(),
   type: z.object({
     data: z.object({
       id: z.string(),
@@ -212,16 +212,16 @@ export const SliderEntityCompT = z.object({
   link: z.string().nullable(),
   linkTitle: z.string().nullable(),
   educational_programs: z.object({
-    data: EducationalProgramSingleT.array()
+    data: z.lazy(() => EducationalProgramSingleT).array()
   }),
   employees: z.object({
-    data: EmployeeSingleT.array()
+    data: z.lazy(() => EmployeeSingleT).array()
   }),
   graduates: z.object({
-    data: GraduateSingleT.array()
+    data: z.lazy(() => GraduateSingleT).array()
   }),
   dpo_courses: z.object({
-    data: DpoCoursesSingleT.array()
+    data: z.lazy(() => DpoCoursesSingleT).array()
   })
 })
 export type SliderEntityCompT = z.infer<typeof SliderEntityCompT>;

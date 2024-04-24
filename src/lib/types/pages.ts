@@ -7,7 +7,7 @@ import { EducationalProgramTypeEnum } from "./entities";
 //.........................Main Page.........................//
 export const MainPageT  = z.object({
   attributes: z.object({
-    content: DynamicZoneT.array(),
+    content: z.lazy(() => DynamicZoneT).array(),
   }),
 })
 export type MainPageT = z.infer<typeof MainPageT>;
@@ -19,7 +19,7 @@ export type MainPageT = z.infer<typeof MainPageT>;
 export const JustWaitPageT  = z.object({
   attributes: z.object({
     title: z.string(),
-    content: DynamicZoneT.array(),
+    content: z.lazy(() => DynamicZoneT).array(),
   }),
 })
 export type JustWaitPageT = z.infer<typeof JustWaitPageT>;
@@ -34,7 +34,7 @@ export const EntrancePageT  = z.object({
     navBarConfig: z.object({ 
       navBarTitle: z.string().nullable()
     }).nullable(),
-    content: DynamicZoneT.array(),
+    content: z.lazy(() => DynamicZoneT).array(),
   }),
 })
 export type EntrancePageT = z.infer<typeof EntrancePageT>;
@@ -52,8 +52,8 @@ export const EducationalProgramPageT  = z.object({
     code: z.string().nullable(),
     mainName: z.string().nullable(),
     mainCode: z.string().nullable(),
-    image: ImageT,
-    content: DynamicZoneT.array(),
+    image: z.lazy(() => ImageT),
+    content: z.lazy(() => DynamicZoneT).array(),
   }),
 })
 export type EducationalProgramPageT = z.infer<typeof EducationalProgramPageT>;
@@ -68,7 +68,7 @@ export const DpoPageT  = z.object({
     navBarConfig: z.object({ 
       navBarTitle: z.string().nullable()
     }).nullable(),
-    content: DynamicZoneT.array(),
+    content: z.lazy(() => DynamicZoneT).array(),
   }),
 })
 export type DpoPageT = z.infer<typeof DpoPageT>;
@@ -87,8 +87,8 @@ export const DpoCoursePageT  = z.object({
     location: z.string().nullable(),
     hours: z.number().nullable(),
     price: z.string().nullable(),
-    image: ImageT,
-    content: DynamicZoneT.array(),
+    image: z.lazy(() => ImageT),
+    content: z.lazy(() => DynamicZoneT).array(),
   }),
 })
 export type DpoCoursePageT = z.infer<typeof DpoCoursePageT>;
@@ -103,7 +103,7 @@ export const StructurePageT  = z.object({
     navBarConfig: z.object({
       navBarTitle: z.string().nullable()
     }).nullable(),
-    content: DynamicZoneT.array(),
+    content: z.lazy(() => DynamicZoneT).array(),
   }),
 })
 export type StructurePageT = z.infer<typeof StructurePageT>;
@@ -116,7 +116,7 @@ export const DepartmentSinglePageT  = z.object({
   attributes: z.object({
     slug: z.string(),
     title: z.string(),
-    media: ImagesArrayT,
+    media: z.lazy(() => ImagesArrayT),
     description_title: z.string().nullable(),
     description: z.any(),
     contacts: z.object({
@@ -125,7 +125,7 @@ export const DepartmentSinglePageT  = z.object({
       phone: z.string().nullable(),
       location: z.string().nullable(),
     }).nullable(),
-    content: DynamicZoneT.array(),
+    content: z.lazy(() => DynamicZoneT).array(),
   }),
 })
 export type DepartmentSinglePageT = z.infer<typeof DepartmentSinglePageT>;
@@ -153,7 +153,7 @@ export const AdditionalPageSingleT  = z.object({
         })
       }).array()
     }),
-    content: DynamicZoneT.array(),
+    content: z.lazy(() => DynamicZoneT).array(),
   }),
 })
 export type AdditionalPageSingleT = z.infer<typeof AdditionalPageSingleT>;

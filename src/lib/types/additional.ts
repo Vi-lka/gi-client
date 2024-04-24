@@ -45,7 +45,7 @@ export const LinksItemT = z.object({
   navBarConfig: z.object({
     navBarTitle: z.string().nullable(),
     navBarDescription: z.string().nullable(),
-    navBarImage: ImageT,
+    navBarImage: z.lazy(() => ImageT),
   }).nullable(),
   content: z.object({
     title: z.string().nullable(),
@@ -79,8 +79,8 @@ export type LinksT = z.infer<typeof LinksT>;
 
 //.........................Hero.........................//
 export const HeroAboutT  = z.object({
-  icons: ImagesArrayT,
-  items: IconsBlockItemT.array(),
+  icons: z.lazy(() => ImagesArrayT),
+  items: z.lazy(() => IconsBlockItemT).array(),
   link: z.string().nullable(),
   linkTitle: z.string().nullable(),
 })
@@ -96,8 +96,8 @@ export const FooterT  = z.object({
   socialNetworks: z.object({
     link: z.string(),
     iconReact: z.string().nullable(),
-    image: ImageT,
-    imageDark: ImageT,
+    image: z.lazy(() => ImageT),
+    imageDark: z.lazy(() => ImageT),
   }).array(),
   contacts: z.object({
     title: z.string().nullable(),
@@ -108,8 +108,8 @@ export const FooterT  = z.object({
   }).array(),
   logos: z.object({
     link: z.string().nullable(),
-    image: ImageT,
-    imageDark: ImageT,
+    image: z.lazy(() => ImageT),
+    imageDark: z.lazy(() => ImageT),
   }).array(),
   copyright: z.string().nullable(),
 })
