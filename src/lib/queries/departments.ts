@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import fetchData from "./fetchData";
-import { StructuresT } from "../types/entities";
+import type { StructureCategoryEnum } from "../types/entities";
+import { DepartmentsT } from "../types/entities";
 
 //.........................Departments.........................//
 export const getDepartments = async ({
@@ -9,13 +10,17 @@ export const getDepartments = async ({
   pageSize,
   sort = "order:asc",
   search,
+  category,
+  typeId,
 }: {
   locale: string,
   page?: number;
   pageSize?: number;
   sort?: string;
   search?: string;
-}): Promise<StructuresT> => {
+  category?: StructureCategoryEnum | null,
+  typeId?: string;
+}): Promise<DepartmentsT> => {
   const query = /* GraphGL */ `
     query Departments($locale: I18NLocaleCode, $filters: DepartmentFiltersInput, $sort: [String], $pagination: PaginationArg) {
       departments(locale: $locale, filters: $filters, sort: $sort, pagination: $pagination) {
@@ -47,8 +52,24 @@ export const getDepartments = async ({
       }
     }
   `;
+
+  const typeFilter = 
+  typeId 
+    ? {
+      id: {
+        eqi: typeId
+      }
+    } 
+    : 
+    category 
+      ? {
+        category: {
+          eqi: category
+        }
+      }
+      : null
   
-  const json = await fetchData<{ data: { departments: StructuresT }; }>({ 
+  const json = await fetchData<{ data: { departments: DepartmentsT }; }>({ 
     query, 
     error: "Failed to fetch Departments", 
     variables: {
@@ -56,6 +77,7 @@ export const getDepartments = async ({
       sort,
       pagination: { page, pageSize },
       filters: {
+        type: typeFilter,
         or: [{
           title: {
             containsi: search
@@ -74,7 +96,7 @@ export const getDepartments = async ({
     notFound();
   }
 
-  const departments = StructuresT.parse(json.data.departments);
+  const departments = DepartmentsT.parse(json.data.departments);
 
   return departments;
 };

@@ -44,7 +44,7 @@ export default function getSubLinks(params: {
             ? params.linksData.map(item => {
                 
                 return ({
-                    title: item.linkTitle, 
+                    title: item.linkTitle ? item.linkTitle : item.title, 
                     link: item.link ? `${params.href}#${item.link}` : null,
                     linkDescription: item.linkDescription
                 })

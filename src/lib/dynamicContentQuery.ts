@@ -81,6 +81,16 @@ export const dynamicContentQuery = `
     linkTitle
     entity
   }
+  ... on ComponentContentCollectionAllStructure {
+    title
+    link
+    linkTitle
+    category
+    type {
+      data { id }
+    }
+    view
+  }
   ... on ComponentContentTextBlock {
     title
     link
@@ -226,6 +236,9 @@ export const dynamicContentLinksQuery = `
     ${sameFields}
   }
   ... on ComponentContentCollectionAll {
+    ${sameFields}
+  }
+  ... on ComponentContentCollectionAllStructure {
     ${sameFields}
   }
   ... on ComponentContentTextBlock {

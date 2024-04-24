@@ -11,7 +11,7 @@ export default function GraduatesItem({
     graduate: GraduateSingleT,
 }) {
     return (
-        <Card key={"graduate" + graduate.id} className='h-full border-none shadow-md rounded-3xl'>
+        <Card key={"graduate" + graduate.id} className='h-full group/card border-transparent dark:border-border/20 shadow-md rounded-3xl transition duration-300'>
             <CardContent className="w-full h-full flex lg:flex-row flex-col lg:items-center xl:gap-8 gap-6 p-6">
                 <ClientHydration fallback={<Skeleton className='rounded-full aspect-square max-h-32 lg:mx-0 mx-auto'/>}>
                     <ImageComp 

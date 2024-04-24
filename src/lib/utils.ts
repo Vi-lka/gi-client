@@ -87,4 +87,17 @@ export function shortUrl(url: string | null | undefined) {
   return shorter;
 }
 
+export function calcEach(index: number, each: number, gap: number) {
+  const inEach = each + gap + 1
+
+  if (index < gap) return false
+
+  if (index - inEach <= 0) {
+      if (index % each === 0) return true
+      else return false
+  } else if ((index - inEach) % each === 0) {
+      return true
+  } else return false
+}
+
 export const grayscale = "lg:dark:grayscale-[60%] lg:dark:contrast-[1.2] dark:grayscale-[30%] dark:contrast-[1.05] dark:hover:grayscale-0 dark:hover:contrast-100 transition-[filter] duration-200 ease-in"

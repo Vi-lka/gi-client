@@ -5,12 +5,21 @@ import { getDepartments } from '@/lib/queries/departments';
 import { headers } from 'next/headers';
 import React from 'react'
 import DepartmentsItem from '../entities-cards/DepartmentsItem';
+import type { CollectionAllViewEnum } from '@/lib/types/components';
+import DepartmentsBento from '../entities-cards/bento/DepartmentsBento';
+import type { StructureCategoryEnum } from '@/lib/types/entities';
 
-const DEFAULT_PAGE_SIZE = 16;
+const DEFAULT_PAGE_SIZE = 10;
 
 export default async function DepartmentsAll({
+    category,
+    typeId,
+    view,
     searchParams,
 }: {
+    category: StructureCategoryEnum | null,
+    typeId: string | undefined,
+    view: CollectionAllViewEnum | null;
     searchParams: { [key: string]: string | string[] | undefined };
 }) {
 
@@ -32,6 +41,8 @@ export default async function DepartmentsAll({
             search, 
             page: Number(page), 
             pageSize: Number(pageSize),
+            category,
+            typeId
         }) 
     ]);
     if (dataResult.status === "rejected") return (
@@ -45,12 +56,19 @@ export default async function DepartmentsAll({
 
     return (
         <>
-            <div id="departments" className="grid lg:grid-cols-2 grid-cols-1 lg:auto-rows-fr lg:gap-8 gap-6">
-                {dataResult.value.data.map(item => (
-                    <DepartmentsItem key={"department" + item.id} locale={locale} item={item} dict={dict} /> 
-                ))}
-            </div>
-            <div className="mt-6">
+            {view === "bento" 
+                ? (
+                    <DepartmentsBento locale={locale} departments={dataResult.value} />
+                )
+                : (
+                    <div id="departments" className="grid lg:grid-cols-2 grid-cols-1 lg:auto-rows-fr lg:gap-8 gap-6">
+                        {dataResult.value.data.map(item => (
+                            <DepartmentsItem key={"department" + item.id} locale={locale} item={item} dict={dict} /> 
+                        ))}
+                    </div>
+                )
+            }
+            <div className={view === "bento" ? "mt-8" : "mt-6"}>
                 <PaginationControls
                     length={dataResult.value.meta.pagination.total}
                     defaultPageSize={DEFAULT_PAGE_SIZE}

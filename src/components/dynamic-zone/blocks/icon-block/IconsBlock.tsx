@@ -28,7 +28,7 @@ export default function IconsBlock({
         <div className={cn("", className)}>
             <div className={cn(
                 "w-full flex xl:flex-row flex-col xl:gap-8 gap-4",
-                data.backgroundOn ? "bg-card shadow-md p-3 rounded-3xl overflow-hidden text-primary" : "",
+                data.backgroundOn ? "bg-card border border-transparent dark:border-border/20 shadow-md p-3 rounded-3xl overflow-hidden text-primary" : "",
                 data.image.data ? "items-stretch" : "items-center",
                 data.backgroundOn && !data.image.data ? "lg:p-8 p-2" : "",
                 data.alignImage === "right" ? "xl:flex-row-reverse" : "",

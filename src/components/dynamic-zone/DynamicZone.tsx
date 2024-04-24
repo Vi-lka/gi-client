@@ -71,6 +71,18 @@ const CollectionAll = dynamic(
   )}
 )
 
+const CollectionAllStructure = dynamic(
+  () => import('./blocks/entities/structure/CollectionAllStructure'), {loading: () => (
+    <div className='w-full lg:pt-28 pt-20'>
+      <Skeleton className='lg:w-1/2 w-2/3 lg:h-10 h-9 mb-6'/>
+
+      <Skeleton className='w-full aspect-square flex items-center justify-center'>
+        <Loader2 className='animate-spin'/>
+      </Skeleton>
+    </div>
+  )}
+)
+
 const FormBlock = dynamic(
   () => import('./blocks/form-block/FormBlock'), {loading: () => (
     <div className='w-full lg:pt-14 pt-10'>
@@ -143,6 +155,15 @@ export default function DynamicZone({
 
     case "ComponentContentCollectionAll":
       return <CollectionAll 
+              key={`key-${item.__typename}-${item.link}`} 
+              data={item} 
+              headingBig={headingBig} 
+              searchParams={searchParams} 
+              className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} 
+            />;
+
+    case "ComponentContentCollectionAllStructure":
+      return <CollectionAllStructure 
               key={`key-${item.__typename}-${item.link}`} 
               data={item} 
               headingBig={headingBig} 

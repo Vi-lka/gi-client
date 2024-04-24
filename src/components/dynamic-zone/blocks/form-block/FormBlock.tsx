@@ -47,7 +47,7 @@ export default function FormBlock({
 
             <div 
                 className={cn(
-                    'w-full flex relative lg:flex-row flex-col items-center lg:gap-6 gap-10 xl:p-16 lg:p-12 p-8 rounded-3xl overflow-hidden',
+                    'w-full flex relative lg:flex-row flex-col items-center lg:gap-6 gap-10 xl:p-16 lg:p-12 p-8 border-transparent dark:border-border/20 shadow-md rounded-3xl overflow-hidden',
                     (data.image.data || data.imageDark.data) && "dark:border",
                     data.image.data 
                         ? "bg-background" 

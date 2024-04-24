@@ -112,7 +112,7 @@ export type StructurePageT = z.infer<typeof StructurePageT>;
 
 
 //.........................Structure Single Page.........................//
-export const StructureSinglePageT  = z.object({
+export const DepartmentSinglePageT  = z.object({
   attributes: z.object({
     slug: z.string(),
     title: z.string(),
@@ -128,7 +128,7 @@ export const StructureSinglePageT  = z.object({
     content: DynamicZoneT.array(),
   }),
 })
-export type StructureSinglePageT = z.infer<typeof StructureSinglePageT>;
+export type DepartmentSinglePageT = z.infer<typeof DepartmentSinglePageT>;
 
 
 

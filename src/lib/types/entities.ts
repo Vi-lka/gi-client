@@ -153,8 +153,27 @@ export const GraduatesT  = z.object({
 })
 export type GraduatesT = z.infer<typeof GraduatesT>;
 
-//.........................Dpo Courses.........................//
-export const StructureSingleT  = z.object({
+
+
+
+//.........................Departments (Structures).........................//
+export const StructureCategoryEnum = z.enum([
+  "Administration",
+  "Science",
+  "Education",
+]);
+export type StructureCategoryEnum = z.infer<typeof StructureCategoryEnum>;
+
+export const DepartmentsTypeT = z.object({
+  id: z.string(),
+  attributes: z.object({
+    title: z.string(),
+    category: StructureCategoryEnum,
+  }),
+})
+export type DepartmentsTypeT = z.infer<typeof DepartmentsTypeT>;
+
+export const DepartmentSingleT = z.object({
   id: z.string(),
   attributes: z.object({
     slug: z.string(),
@@ -168,14 +187,14 @@ export const StructureSingleT  = z.object({
     }).nullable()
   }),
 })
-export type StructureSingleT = z.infer<typeof StructureSingleT>;
+export type DepartmentSingleT = z.infer<typeof DepartmentSingleT>;
 
-export const StructuresT  = z.object({
+export const DepartmentsT  = z.object({
     meta: z.object({
         pagination: z.object({
           total: z.number(),
         }),
     }),
-    data: StructureSingleT.array(),
+    data: DepartmentSingleT.array(),
 })
-export type StructuresT = z.infer<typeof StructuresT>;
+export type DepartmentsT = z.infer<typeof DepartmentsT>;

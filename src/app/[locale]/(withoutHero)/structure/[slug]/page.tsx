@@ -5,12 +5,12 @@ import ErrorHandler from '@/components/errors/ErrorHandler';
 import { TypographyH1, TypographyH2 } from '@/components/typography';
 import { dynamicContentQuery } from '@/lib/dynamicContentQuery';
 import fetchData from '@/lib/queries/fetchData';
-import { StructureSinglePageT } from '@/lib/types/pages';
 import { notFound } from 'next/navigation';
 import React from 'react'
 import { getDictionary } from '@/lib/getDictionary';
 import Media from './Media';
 import Description from './Description';
+import { DepartmentSinglePageT } from '@/lib/types/pages';
 
 export const dynamic = 'force-dynamic'
 
@@ -76,7 +76,7 @@ export default async function StructureSinglePage({
           } | null
         },
         departments: {
-          data: StructureSinglePageT[]
+          data: DepartmentSinglePageT[]
         }
       }
     }>({ 
@@ -100,9 +100,9 @@ export default async function StructureSinglePage({
       ? json.data.structure.data.attributes.navBarConfig.navBarTitle
       : json.data.structure.data.attributes.title;
     
-    const structure = StructureSinglePageT.parse(json.data.departments.data[0]);
+    const department = DepartmentSinglePageT.parse(json.data.departments.data[0]);
     
-    return { structureTitle, structure };
+    return { structureTitle, department };
   };
 
   const [ dataResult ] = await Promise.allSettled([ getStructureBySlug(params.locale, params.slug) ]);
@@ -119,31 +119,31 @@ export default async function StructureSinglePage({
     <div className='w-full'>
       <Breadcrumbs data={[
         { title: dataResult.value.structureTitle, slug: "structure" }, 
-        { title: dataResult.value.structure.attributes.title, slug: params.slug }
+        { title: dataResult.value.department.attributes.title, slug: params.slug }
       ]}/>
 
       <TypographyH1 className='font-semibold text-primary my-6 text-3xl'>
-        {dataResult.value.structure.attributes.title}
+        {dataResult.value.department.attributes.title}
       </TypographyH1>
 
-      <Anchors data={dataResult.value.structure.attributes.content} />
+      <Anchors data={dataResult.value.department.attributes.content} />
 
-      <Media media={dataResult.value.structure.attributes.media} className='my-6' />
+      <Media media={dataResult.value.department.attributes.media} className='my-6' />
 
-      {dataResult.value.structure.attributes.description_title && (
+      {dataResult.value.department.attributes.description_title && (
         <TypographyH2 className='font-semibold text-primary my-6'>
-          {dataResult.value.structure.attributes.description_title}
+          {dataResult.value.department.attributes.description_title}
         </TypographyH2>
       )}
 
       <Description 
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        description={dataResult.value.structure.attributes.description} 
-        contacts={dataResult.value.structure.attributes.contacts} 
+        description={dataResult.value.department.attributes.description} 
+        contacts={dataResult.value.department.attributes.contacts} 
         contactsTitle={dict.Entities.Structure.contacts}
       />
 
-      {dataResult.value.structure.attributes.content.map((item, index) => (
+      {dataResult.value.department.attributes.content.map((item, index) => (
         <section id={item.link ? item.link : undefined} key={index}>
           <DynamicZone item={item} searchParams={searchParams} />
         </section>

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { EducationalProgramSingleT, EmployeeSingleT, GraduateSingleT, DpoCoursesSingleT } from "./entities";
+import { EducationalProgramSingleT, EmployeeSingleT, GraduateSingleT, DpoCoursesSingleT, StructureCategoryEnum } from "./entities";
 
 //.........................FORMS.........................//
 const phoneRegex = new RegExp(
@@ -103,12 +103,17 @@ export type TextGridCompT = z.infer<typeof TextGridCompT>;
 
 
 //.........................CollectionAll.........................//
+export const CollectionAllViewEnum = z.enum([
+  "classic",
+  "bento",
+]);
+export type CollectionAllViewEnum = z.infer<typeof CollectionAllViewEnum>;
+
 export const CollectionAllEnum = z.enum([
   "educational-programs", 
   "dpo-courses", 
   "graduates",
   "employees",
-  "departments",
 ]);
 export type CollectionAllEnum = z.infer<typeof CollectionAllEnum>;
 
@@ -117,9 +122,28 @@ export const CollectionAllCompT = z.object({
   title: z.string().nullable(),
   link: z.string().nullable(),
   linkTitle: z.string().nullable(),
-  entity: CollectionAllEnum.array()
+  entity: CollectionAllEnum.array(),
 })
 export type CollectionAllCompT = z.infer<typeof CollectionAllCompT>;
+
+
+
+
+//.........................CollectionAllStructure.........................//
+export const CollectionAllStructureCompT = z.object({
+  __typename: z.literal("ComponentContentCollectionAllStructure"),
+  title: z.string().nullable(),
+  link: z.string().nullable(),
+  linkTitle: z.string().nullable(),
+  category: StructureCategoryEnum.nullable(),
+  type: z.object({
+    data: z.object({
+      id: z.string(),
+    }).nullable()
+  }),
+  view: CollectionAllViewEnum,
+})
+export type CollectionAllStructureCompT = z.infer<typeof CollectionAllStructureCompT>;
 
 
 
@@ -329,6 +353,7 @@ export const DynamicZoneT = z.discriminatedUnion("__typename", [
   TextImagesCompT,
   TextGridCompT,
   CollectionAllCompT,
+  CollectionAllStructureCompT,
   ContactsCompT,
   IconsBlockCompT,
   SliderEntityCompT,
