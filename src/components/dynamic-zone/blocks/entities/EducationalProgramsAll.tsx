@@ -9,8 +9,10 @@ import type { EducationalProgramSingleT } from '@/lib/types/entities';
 
 export default async function EducationalProgramsAll({
     searchParams,
+    connected,
 }: {
     searchParams: { [key: string]: string | string[] | undefined };
+    connected?: boolean;
 }) {
 
     const headersList = headers();
@@ -21,14 +23,16 @@ export default async function EducationalProgramsAll({
     const sort = searchParams["sort"] as string | undefined;
     const search = searchParams["search"] as string | undefined;
 
+    const sameParams = { locale, sort, search, filterBy: connected ? "" : undefined }
+
     const [ 
         bachelorsResult,
         magistracyResult,
         postgraduateResult
     ] = await Promise.allSettled([
-        getEducationalPrograms({ locale, sort, search, type: "bachelor" }),
-        getEducationalPrograms({ locale, sort, search, type: "magistracy" }),
-        getEducationalPrograms({ locale, sort, search, type: "postgraduate" }),
+        getEducationalPrograms({ ...sameParams, type: "bachelor" }),
+        getEducationalPrograms({ ...sameParams, type: "magistracy" }),
+        getEducationalPrograms({ ...sameParams, type: "postgraduate" }),
     ]);
 
     const bachelors = bachelorsResult.status === "rejected" 

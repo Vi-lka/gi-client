@@ -14,6 +14,7 @@ import NumbersLoading from '../loadings/NumbersLoading';
 import ListLoading from '../loadings/ListLoading';
 import "./blocks/timeline/timeline.css"
 import type { DynamicZoneT } from '@/lib/types/components';
+import CollectionAllLoading from '../loadings/CollectionAllLoading';
  
 const RichText = dynamic(
   () => import('./blocks/RichText'), {loading: () => <TextLoading />}
@@ -60,27 +61,11 @@ const SliderEntity = dynamic(
 )
 
 const CollectionAll = dynamic(
-  () => import('./blocks/entities/CollectionAll'), {loading: () => (
-    <div className='w-full lg:pt-28 pt-20'>
-      <Skeleton className='lg:w-1/2 w-2/3 lg:h-10 h-9 mb-6'/>
-
-      <Skeleton className='w-full aspect-square flex items-center justify-center'>
-        <Loader2 className='animate-spin'/>
-      </Skeleton>
-    </div>
-  )}
+  () => import('./blocks/entities/CollectionAll'), {loading: () => <CollectionAllLoading />}
 )
 
 const CollectionAllStructure = dynamic(
-  () => import('./blocks/entities/structure/CollectionAllStructure'), {loading: () => (
-    <div className='w-full lg:pt-28 pt-20'>
-      <Skeleton className='lg:w-1/2 w-2/3 lg:h-10 h-9 mb-6'/>
-
-      <Skeleton className='w-full aspect-square flex items-center justify-center'>
-        <Loader2 className='animate-spin'/>
-      </Skeleton>
-    </div>
-  )}
+  () => import('./blocks/entities/structure/CollectionAllStructure'), {loading: () => <CollectionAllLoading />}
 )
 
 const FormBlock = dynamic(
@@ -157,6 +142,16 @@ export default function DynamicZone({
       return <CollectionAll 
               key={`key-${item.__typename}-${item.link}`} 
               data={item} 
+              headingBig={headingBig} 
+              searchParams={searchParams} 
+              className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} 
+            />;
+    
+    case "ComponentContentCollectionAllConnected":
+      return <CollectionAll 
+              key={`key-${item.__typename}-${item.link}`} 
+              data={item}
+              connected
               headingBig={headingBig} 
               searchParams={searchParams} 
               className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} 

@@ -5,16 +5,18 @@ import EmployeesAll from './EmployeesAll';
 import GraduatesAll from './GraduatesAll';
 import { cn } from '@/lib/utils';
 import { TypographyH2 } from '@/components/typography';
-import type { CollectionAllCompT } from '@/lib/types/components';
+import type { CollectionAllCompT, CollectionAllConnectedCompT } from '@/lib/types/components';
 
 export default function CollectionAll({ 
     data,
     searchParams,
+    connected,
     headingBig,
     className,
 }: { 
-    data: CollectionAllCompT,
+    data: CollectionAllCompT | CollectionAllConnectedCompT,
     searchParams: { [key: string]: string | string[] | undefined },
+    connected?: boolean,
     headingBig?: boolean,
     className?: string,
 }) {
@@ -34,7 +36,7 @@ export default function CollectionAll({
             {data.entity.map((item, index) => {
                 switch (item) {
                     case "educational-programs":
-                        return <EducationalProgramsAll key={index} searchParams={searchParams} />;
+                        return <EducationalProgramsAll key={index} searchParams={searchParams} connected={connected} />;
                     
                     case "dpo-courses":
                         return <DpoCoursesAll key={index} searchParams={searchParams} />;

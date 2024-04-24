@@ -11,6 +11,7 @@ export const getEducationalPrograms = async ({
   type = "",
   sort = "order:asc",
   search,
+  filterBy,
 }: {
   locale: string,
   page?: number;
@@ -18,6 +19,7 @@ export const getEducationalPrograms = async ({
   type?: EducationalProgramTypeEnum | ""
   sort?: string;
   search?: string;
+  filterBy?: string;
 }): Promise<EducationalProgramsT> => {
   const query = /* GraphGL */ `
     query EducationalPrograms($locale: I18NLocaleCode, $sort: [String], $pagination: PaginationArg, $filters: EducationalProgramFiltersInput) {
@@ -48,6 +50,15 @@ export const getEducationalPrograms = async ({
       }
     }
   `;
+
+  const connectedFilter = (filterBy && filterBy.length > 0) 
+    ? {
+      department: {
+        slug: {
+          eqi: filterBy
+        }
+      }
+    } : undefined
   
   const json = await fetchData<{ data: { educationalPrograms: EducationalProgramsT }; }>({ 
     query, 
@@ -72,7 +83,8 @@ export const getEducationalPrograms = async ({
           },
           mainCode: {
             containsi: search
-          }
+          },
+          ...connectedFilter
         }]
       }
     }

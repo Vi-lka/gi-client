@@ -81,6 +81,12 @@ export const dynamicContentQuery = `
     linkTitle
     entity
   }
+  ... on ComponentContentCollectionAllConnected {
+    title
+    link
+    linkTitle
+    entity
+  }
   ... on ComponentContentCollectionAllStructure {
     title
     link
