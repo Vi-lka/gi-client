@@ -51,14 +51,14 @@ export default function NavMenu({
   return (
     <NavigationMenu delayDuration={100} className={className}>
       <NavigationMenuList className='relative gap-2 flex-wrap justify-between items-center'>
-        <NavMenuItem title={dict.Header.nav.info} href='/info' />
-        <NavMenuItem {...structureLinks}/>
-        <NavMenuItem title={dict.Header.nav.education} href='/education' />
-        <NavMenuItem {...entranceLinks} />
-        <NavMenuItem {...dpoLinks} />
-        <NavMenuItem title={dict.Header.nav.science} href='/science' />
-        <NavMenuItem title={dict.Header.nav.projects} href='/projects' />
-        <NavMenuItem title={dict.Header.nav.journals} href='/journals' />
+        <NavMenuItem data={{title: dict.Header.nav.info, href: '/info'}} />
+        <NavMenuItem data={structureLinks}/>
+        <NavMenuItem data={{title: dict.Header.nav.education, href: '/education'}} />
+        <NavMenuItem data={entranceLinks} />
+        <NavMenuItem data={dpoLinks} />
+        <NavMenuItem data={{title: dict.Header.nav.science, href: '/science'}} />
+        <NavMenuItem data={{title: dict.Header.nav.projects, href: '/projects'}} />
+        <NavMenuItem data={{title: dict.Header.nav.journals, href: '/journals'}} />
       </NavigationMenuList>
     </NavigationMenu>
   )

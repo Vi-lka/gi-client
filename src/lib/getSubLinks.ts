@@ -1,7 +1,11 @@
+import type { ImageT } from "./types/components";
+
 export type LinkT = {
     title: string,
     href: string,
-    subLinks: {
+    image?: ImageT,
+    description?: string,
+    subLinks?: {
         title: string | null,
         link: string | null,
         linkDescription?: string | null,
@@ -36,6 +40,8 @@ export default function getSubLinks(params: {
         return {
             title: params.title,
             href: params.href,
+            image: params.image,
+            description: params.description ? params.description : undefined,
             subLinks: params.navBarData
         }
     } else {
@@ -56,6 +62,8 @@ export default function getSubLinks(params: {
         return {
             title: params.title,
             href: params.href,
+            image: params.image,
+            description: params.description ? params.description : undefined,
             subLinks
         }
     }
