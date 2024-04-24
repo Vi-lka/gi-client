@@ -5,7 +5,7 @@ import NextLink from "next/link";
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
-import type { StructureSingleT } from '@/lib/types/entities'
+import type { DepartmentSingleT } from '@/lib/types/entities'
 import { getShortText } from '@/lib/utils'
 import { AtSign, Globe, MapPin } from 'lucide-react'
 import React from 'react'
@@ -17,7 +17,7 @@ export default function DepartmentsItem({
     dict
 }: {
     locale: string
-    item: StructureSingleT,
+    item: DepartmentSingleT,
     dict: Dictionary,
 }) {
     return (
