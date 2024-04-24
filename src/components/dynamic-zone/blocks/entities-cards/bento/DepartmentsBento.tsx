@@ -21,6 +21,7 @@ export default function DepartmentsBento({
         <BentoGrid className="mx-auto">
             {departments.data.map((item, i) => {
                 const isEach = calcEach(i, 3, 3)
+                const hasImage = Boolean(item.attributes.image.data?.attributes.url)
                 
                 return (
                     <BentoGridItem
@@ -46,14 +47,17 @@ export default function DepartmentsBento({
                                 </MoreButton>
                             </div>
                         }
-                        className={isEach ? "lg:col-span-2" : ""}
+                        className={cn(
+                            isEach ? "lg:col-span-2" : "",
+                            hasImage ? "p-4" : "p-8"
+                        )}
                     >
                         <Link locale={locale} href={`/structure/${item.attributes.slug}`} className='w-fit'>
-                            <h4 className='font-bold md:text-lg text-base mb-2 mr-2 lg:line-clamp-3 line-clamp-5'>
+                            <h4 className='font-bold md:text-lg text-base mr-2 lg:line-clamp-3 line-clamp-5'>
                                 {getShortText(item.attributes.title, 12)}
                             </h4>
                         </Link>
-                        <Description item={item} />
+                        <Description item={item} hasImage={hasImage} />
                     </BentoGridItem>
                 )
             })}
@@ -61,38 +65,49 @@ export default function DepartmentsBento({
     )
 }
 
-function Description({ item }: { item: DepartmentSingleT }) {
+function Description({ 
+    item,
+    hasImage,
+}: { 
+    item: DepartmentSingleT,
+    hasImage: boolean
+}) {
     if (!item.attributes.contacts) return null
 
     return (
-        <ul className='flex flex-wrap gap-x-2 gap-y-1 mr-2 text-xs text-muted-foreground'>
+        <ul className={cn(
+            'flex mr-2',
+            hasImage 
+            ? "flex-wrap gap-x-2 gap-y-1 text-xs text-muted-foreground mt-2" 
+            : "flex-col gap-3 text-sm mt-6"
+        )}>
         {item.attributes.contacts.url && (
-            <li className='flex items-center gap-1 font-medium'>
-                <Globe className='w-auto h-3' />
+            <li className={cn('flex items-center font-medium', hasImage ? 'gap-1' : 'gap-2')}>
+                <Globe className={cn('w-auto', hasImage ? 'h-3' : 'h-4' )} />
                 <span className='flex-1'>
                     {new URL(item.attributes.contacts.url).hostname}
                 </span>
             </li>
         )}
         {item.attributes.contacts.email && (
-            <li className='flex items-center gap-1 font-medium'>
-                <AtSign className='w-auto h-3' />
+            <li className={cn('flex items-center font-medium', hasImage ? 'gap-1' : 'gap-2')}>
+                <AtSign className={cn('w-auto', hasImage ? 'h-3' : 'h-4' )} />
                 <span className='flex-1'>
                     {item.attributes.contacts.email}
                 </span>
             </li>
         )}
         {item.attributes.contacts.phone && (
-            <li className='flex items-center gap-1 font-medium'>
-                <FiPhone className='w-auto h-3' />
+            <li className={cn('flex items-center font-medium', hasImage ? 'gap-1' : 'gap-2')}>
+                <FiPhone className={cn('w-auto', hasImage ? 'h-3' : 'h-4' )} />
                 <span className='flex-1'>
                     {item.attributes.contacts.phone}
                 </span>
             </li>
         )}
         {item.attributes.contacts.location && (
-            <li className='flex items-center gap-1 font-medium'>
-                <MapPin className='w-auto h-3' />
+            <li className={cn('flex items-center font-medium', hasImage ? 'gap-1' : 'gap-2')}>
+                <MapPin className={cn('w-auto', hasImage ? 'h-3' : 'h-4' )} />
                 <span className='flex-1'>
                     {item.attributes.contacts.location}
                 </span>

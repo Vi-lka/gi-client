@@ -18,6 +18,9 @@ export default function BentoImage({
     className?:string,
 }) {
     const locale = useLocale()
+
+    if (!src) return null
+    
     return (
         <Link 
             locale={locale} 
