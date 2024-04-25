@@ -7,11 +7,13 @@ import DepartmentsAll from './DepartmentsAll';
 export default function CollectionAllStructure({ 
     data,
     searchParams,
+    connected,
     headingBig,
     className,
 }: { 
     data: CollectionAllStructureCompT,
     searchParams: { [key: string]: string | string[] | undefined },
+    connected?: boolean | null,
     headingBig?: boolean,
     className?: string,
 }) {
@@ -27,12 +29,13 @@ export default function CollectionAllStructure({
                     {data.title}
                 </TypographyH2>
             )}
-            
-            <DepartmentsAll 
+
+            <DepartmentsAll
                 category={data.category} 
                 typeId={data.type.data?.id} 
                 view={data.view} 
                 searchParams={searchParams}
+                connected={connected}
             />
         </div>
         

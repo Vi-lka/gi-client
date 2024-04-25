@@ -11,7 +11,7 @@ export default async function GraduatesAll({
     connected,
 }: {
     searchParams: { [key: string]: string | string[] | undefined };
-    connected?: boolean;
+    connected?: boolean | null;
 }) {
     const headersList = headers();
     const locale = headersList.get('x-locale') || "";

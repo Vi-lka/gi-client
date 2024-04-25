@@ -12,6 +12,7 @@ export const getDepartments = async ({
   search,
   category,
   typeId,
+  filterBy,
 }: {
   locale: string,
   page?: number;
@@ -20,6 +21,7 @@ export const getDepartments = async ({
   search?: string;
   category?: StructureCategoryEnum | null,
   typeId?: string;
+  filterBy?: string;
 }): Promise<DepartmentsT> => {
   const query = /* GraphGL */ `
     query Departments($locale: I18NLocaleCode, $filters: DepartmentFiltersInput, $sort: [String], $pagination: PaginationArg) {
@@ -69,6 +71,22 @@ export const getDepartments = async ({
       }
       : null
   
+
+  const connectedFilter = (filterBy && filterBy.length > 0) 
+    ? {
+      or: [
+        {educationalPrograms: {
+          slug: { eqi: filterBy }
+        }},
+        {dpoCourses: {
+          slug: { eqi: filterBy }
+        }},
+        {head: {
+          id: { eqi: filterBy }
+        }}
+      ]
+    } : undefined
+
   const json = await fetchData<{ data: { departments: DepartmentsT }; }>({ 
     query, 
     error: "Failed to fetch Departments", 
@@ -78,11 +96,14 @@ export const getDepartments = async ({
       pagination: { page, pageSize },
       filters: {
         type: typeFilter,
-        or: [{
-          title: {
-            containsi: search
-          }
-        }]
+        and: [
+          {...connectedFilter},
+          {or: [
+            {title: {
+              containsi: search
+            }}
+          ]}
+        ]
       }
     }
   })

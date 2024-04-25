@@ -16,15 +16,18 @@ export default async function DepartmentsAll({
     typeId,
     view,
     searchParams,
+    connected,
 }: {
     category: StructureCategoryEnum | null,
     typeId: string | undefined,
     view: CollectionAllViewEnum | null;
     searchParams: { [key: string]: string | string[] | undefined };
+    connected?: boolean | null;
 }) {
 
     const headersList = headers();
     const locale = headersList.get('x-locale') || "";
+    const slug = headersList.get('x-slug') || undefined;
 
     const dict = await getDictionary(locale)
 
@@ -32,7 +35,6 @@ export default async function DepartmentsAll({
     const search = searchParams["search"] as string | undefined;
     const page = searchParams["page_departments"] ?? "1";
     const pageSize = searchParams["per_departments"] ?? DEFAULT_PAGE_SIZE;
-
 
     const [ dataResult ] = await Promise.allSettled([ 
         getDepartments({ 
@@ -42,7 +44,8 @@ export default async function DepartmentsAll({
             page: Number(page), 
             pageSize: Number(pageSize),
             category,
-            typeId
+            typeId,
+            filterBy: connected ? slug : undefined
         }) 
     ]);
     if (dataResult.status === "rejected") return (

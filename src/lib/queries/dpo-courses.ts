@@ -55,7 +55,7 @@ export const getDpoCourses = async ({
     or: [
       {department: {
         slug: { eqi: filterBy }
-        }},
+      }},
       {employees: {
         id: { eqi: filterBy }
       }}

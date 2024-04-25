@@ -13,7 +13,7 @@ export default async function DpoCoursesAll({
     connected,
 }: {
     searchParams: { [key: string]: string | string[] | undefined };
-    connected?: boolean;
+    connected?: boolean | null;
 }) {
 
     const headersList = headers();

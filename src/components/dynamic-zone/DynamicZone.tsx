@@ -142,16 +142,7 @@ export default function DynamicZone({
       return <CollectionAll 
               key={`key-${item.__typename}-${item.link}`} 
               data={item} 
-              headingBig={headingBig} 
-              searchParams={searchParams} 
-              className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} 
-            />;
-    
-    case "ComponentContentCollectionAllConnected":
-      return <CollectionAll 
-              key={`key-${item.__typename}-${item.link}`} 
-              data={item}
-              connected
+              connected={item.connected}
               headingBig={headingBig} 
               searchParams={searchParams} 
               className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} 
@@ -161,6 +152,7 @@ export default function DynamicZone({
       return <CollectionAllStructure 
               key={`key-${item.__typename}-${item.link}`} 
               data={item} 
+              connected={item.connected}
               headingBig={headingBig} 
               searchParams={searchParams} 
               className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} 

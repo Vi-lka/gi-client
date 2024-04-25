@@ -123,21 +123,9 @@ export const CollectionAllCompT = z.object({
   link: z.string().nullable(),
   linkTitle: z.string().nullable(),
   entity: CollectionAllEnum.array(),
+  connected: z.boolean().nullable(),
 })
 export type CollectionAllCompT = z.infer<typeof CollectionAllCompT>;
-
-
-
-
-//.........................CollectionAllConnected.........................//
-export const CollectionAllConnectedCompT = z.object({
-  __typename: z.literal("ComponentContentCollectionAllConnected"),
-  title: z.string().nullable(),
-  link: z.string().nullable(),
-  linkTitle: z.string().nullable(),
-  entity: CollectionAllEnum.array(),
-})
-export type CollectionAllConnectedCompT = z.infer<typeof CollectionAllConnectedCompT>;
 
 
 
@@ -155,6 +143,7 @@ export const CollectionAllStructureCompT = z.object({
     }).nullable()
   }),
   view: CollectionAllViewEnum,
+  connected: z.boolean().nullable(),
 })
 export type CollectionAllStructureCompT = z.infer<typeof CollectionAllStructureCompT>;
 
@@ -367,7 +356,6 @@ export const DynamicZoneT = z.discriminatedUnion("__typename", [
   TextGridCompT,
   CollectionAllCompT,
   CollectionAllStructureCompT,
-  CollectionAllConnectedCompT,
   ContactsCompT,
   IconsBlockCompT,
   SliderEntityCompT,

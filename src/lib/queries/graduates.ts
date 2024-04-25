@@ -60,7 +60,12 @@ export const getGraduates= async ({
         }},
         {dpoCourses: {
           slug: { eqi: filterBy }
-        }}
+        }},
+        {educational_programs: {
+          department: {
+            slug: { eqi: filterBy }
+          }
+        }},
       ]
     } : undefined
   

@@ -5,7 +5,7 @@ import EmployeesAll from './EmployeesAll';
 import GraduatesAll from './GraduatesAll';
 import { cn } from '@/lib/utils';
 import { TypographyH2 } from '@/components/typography';
-import type { CollectionAllCompT, CollectionAllConnectedCompT } from '@/lib/types/components';
+import type { CollectionAllCompT } from '@/lib/types/components';
 
 export default function CollectionAll({ 
     data,
@@ -14,9 +14,9 @@ export default function CollectionAll({
     headingBig,
     className,
 }: { 
-    data: CollectionAllCompT | CollectionAllConnectedCompT,
+    data: CollectionAllCompT,
     searchParams: { [key: string]: string | string[] | undefined },
-    connected?: boolean,
+    connected?: boolean | null,
     headingBig?: boolean,
     className?: string,
 }) {
