@@ -9,12 +9,14 @@ export const getDpoCourses = async ({
   pageSize,
   sort = "order:asc",
   search,
+  filterBy,
 }: {
   locale: string,
   page?: number;
   pageSize?: number;
   sort?: string;
   search?: string;
+  filterBy?: string;
 }): Promise<DpoCoursesT> => {
   const query = /* GraphGL */ `
     query DpoCourses($locale: I18NLocaleCode, $filters: DpoCourseFiltersInput, $sort: [String], $pagination: PaginationArg) {
@@ -47,6 +49,18 @@ export const getDpoCourses = async ({
       }
     }
   `;
+
+  const connectedFilter = (filterBy && filterBy.length > 0) 
+  ? {
+    or: [
+      {department: {
+        slug: { eqi: filterBy }
+        }},
+      {employees: {
+        id: { eqi: filterBy }
+      }}
+    ]
+  } : undefined
   
   const json = await fetchData<{ data: { dpoCourses: DpoCoursesT }; }>({ 
     query, 
@@ -56,11 +70,14 @@ export const getDpoCourses = async ({
       sort,
       pagination: { page, pageSize },
       filters: {
-        or: [{
-          title: {
-            containsi: search
-          }
-        }]
+        and: [
+          {...connectedFilter},
+          {or: [
+            {title: {
+              containsi: search
+            }}
+          ]}
+        ]
       }
     }
   })

@@ -8,15 +8,22 @@ import { getGraduates } from '@/lib/queries/graduates';
 
 export default async function GraduatesAll({
     searchParams,
+    connected,
 }: {
     searchParams: { [key: string]: string | string[] | undefined };
+    connected?: boolean;
 }) {
     const headersList = headers();
     const locale = headersList.get('x-locale') || "";
+    const slug = headersList.get('x-slug') || undefined;
 
     const search = searchParams["search"] as string | undefined;
 
-    const [ dataResult ] = await Promise.allSettled([ getGraduates({ locale, search }) ]);
+    const [ dataResult ] = await Promise.allSettled([ getGraduates({ 
+        locale, 
+        search,
+        filterBy: connected ? slug : undefined
+    }) ]);
     if (dataResult.status === "rejected") return (
         <ErrorHandler 
             error={dataResult.reason as unknown} 

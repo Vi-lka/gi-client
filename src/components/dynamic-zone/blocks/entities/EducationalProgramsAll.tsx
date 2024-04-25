@@ -17,14 +17,14 @@ export default async function EducationalProgramsAll({
 
     const headersList = headers();
     const locale = headersList.get('x-locale') || "";
+    const slug = headersList.get('x-slug') || undefined;
 
     const dict = await getDictionary(locale)
 
     const sort = searchParams["sort"] as string | undefined;
     const search = searchParams["search"] as string | undefined;
 
-    const sameParams = { locale, sort, search, filterBy: connected ? "" : undefined }
-
+    const sameParams = { locale, sort, search, filterBy: connected ? slug : undefined }
     const [ 
         bachelorsResult,
         magistracyResult,

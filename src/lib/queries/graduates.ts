@@ -1,6 +1,5 @@
 import { notFound } from "next/navigation";
 import { educationalPrograms } from "../contentQueries";
-import type { EducationalProgramTypeEnum} from "../types/entities";
 import { GraduatesT } from "../types/entities";
 import fetchData from "./fetchData";
 
@@ -9,14 +8,14 @@ export const getGraduates= async ({
   locale,
   page,
   pageSize,
-  type,
   search,
+  filterBy,
 }: {
   locale: string,
   page?: number;
   pageSize?: number;
-  type?: EducationalProgramTypeEnum | ""
   search?: string;
+  filterBy?: string;
 }): Promise<GraduatesT> => {
   const query = /* GraphGL */ `
   query Graduates($locale: I18NLocaleCode, $pagination: PaginationArg, $filters: GraduateFiltersInput) {
@@ -52,6 +51,18 @@ export const getGraduates= async ({
     }
   }
   `;
+
+  const connectedFilter = (filterBy && filterBy.length > 0) 
+    ? {
+      or: [
+        {educational_programs: {
+          slug: { eqi: filterBy }
+        }},
+        {dpoCourses: {
+          slug: { eqi: filterBy }
+        }}
+      ]
+    } : undefined
   
   const json = await fetchData<{ data: { graduates: GraduatesT }; }>({
     query, 
@@ -60,55 +71,20 @@ export const getGraduates= async ({
       locale,
       pagination: { page, pageSize },
       filters: {
-        or: [{
-          title: {
-            containsi: search
-          },
-          description: {
-            containsi: search
-          },
-          additionalInfo: {
-            containsi: search
-          },
-          educational_programs: {
-            type: {
-              containsi: type
-            },
-            or: [{
-              title: {
-                containsi: search
-              },
-              code: {
-                containsi: search
-              },
-              mainName: {
-                containsi: search
-              },
-              mainCode: {
-                containsi: search
-              }
-            }]
-          },
-          oldPrograms: {
-            type: {
-              containsi: type
-            },
-            or: [{
-              title: {
-                containsi: search
-              },
-              code: {
-                containsi: search
-              },
-              mainName: {
-                containsi: search
-              },
-              mainCode: {
-                containsi: search
-              }
-            }]
-          }
-        }]
+        and: [
+          {...connectedFilter},
+          {or: [
+            {title: {
+              containsi: search
+            }},
+            {description: {
+              containsi: search
+            }},
+            {additionalInfo: {
+              containsi: search
+            }}
+          ]}
+        ]
       }
     }
   })

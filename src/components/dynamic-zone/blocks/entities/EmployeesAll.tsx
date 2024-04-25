@@ -9,12 +9,15 @@ const DEFAULT_PAGE_SIZE = 12;
 
 export default async function EmployeesAll({
     searchParams,
+    connected,
 }: {
     searchParams: { [key: string]: string | string[] | undefined };
+    connected?: boolean;
 }) {
 
     const headersList = headers();
     const locale = headersList.get('x-locale') || "";
+    const slug = headersList.get('x-slug') || undefined;
 
     const sort = searchParams["sort"] as string | undefined;
     const search = searchParams["search"] as string | undefined;
@@ -29,6 +32,7 @@ export default async function EmployeesAll({
             search, 
             page: Number(page), 
             pageSize: Number(pageSize),
+            filterBy: connected ? slug : undefined
         }) 
     ]);
     if (dataResult.status === "rejected") return (

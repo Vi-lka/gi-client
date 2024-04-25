@@ -244,6 +244,9 @@ export const dynamicContentLinksQuery = `
   ... on ComponentContentCollectionAll {
     ${sameFields}
   }
+  ... on ComponentContentCollectionAllConnected {
+    ${sameFields}
+  }
   ... on ComponentContentCollectionAllStructure {
     ${sameFields}
   }

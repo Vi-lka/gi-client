@@ -10,12 +10,15 @@ const DEFAULT_PAGE_SIZE = 12;
 
 export default async function DpoCoursesAll({
     searchParams,
+    connected,
 }: {
     searchParams: { [key: string]: string | string[] | undefined };
+    connected?: boolean;
 }) {
 
     const headersList = headers();
     const locale = headersList.get('x-locale') || "";
+    const slug = headersList.get('x-slug') || undefined;
 
     const dict = await getDictionary(locale)
 
@@ -32,6 +35,7 @@ export default async function DpoCoursesAll({
             search, 
             page: Number(page), 
             pageSize: Number(pageSize),
+            filterBy: connected ? slug : undefined
         }) 
     ]);
     if (dataResult.status === "rejected") return (

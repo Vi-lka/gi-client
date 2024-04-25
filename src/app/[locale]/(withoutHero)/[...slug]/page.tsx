@@ -71,12 +71,12 @@ export default async function CatchAllPage({
       }
     }>({ 
       query, 
-      error: `Failed to fetch Additional Page: ${slug}`, 
+      error: `Failed to fetch Additional Page: ${slug}`,
       variables: {
         locale,
         filters: {
           slug: {
-             eqi: slug
+            eqi: slug
           },
           additional_pages: {
             slug: connectedSlugs.length > 0 ? 

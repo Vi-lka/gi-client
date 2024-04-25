@@ -9,12 +9,14 @@ export const getEmployees = async ({
   pageSize,
   sort = "order:asc",
   search,
+  filterBy,
 }: {
   locale: string,
   page?: number;
   pageSize?: number;
   sort?: string;
   search?: string;
+  filterBy?: string;
 }): Promise<EmployeesT> => {
   const query = /* GraphGL */ `
     query Employees($locale: I18NLocaleCode, $filters: EmployeeFiltersInput, $sort: [String], $pagination: PaginationArg) {
@@ -61,6 +63,24 @@ export const getEmployees = async ({
       }
     }
   `;
+
+  const connectedFilter = (filterBy && filterBy.length > 0) 
+    ? {
+      or: [
+        {educationalPrograms: {
+          slug: { eqi: filterBy }
+        }},
+        {dpoCourses: {
+          slug: { eqi: filterBy }
+        }},
+        {head_in_department: {
+          slug: { eqi: filterBy }
+        }},
+        {departments: {
+          slug: { eqi: filterBy }
+        }}
+      ]
+    } : undefined
   
   const json = await fetchData<{ data: { employees: EmployeesT }; }>({ 
     query, 
@@ -70,11 +90,14 @@ export const getEmployees = async ({
       sort,
       pagination: { page, pageSize },
       filters: {
-        or: [{
-          title: {
-            containsi: search
-          }
-        }]
+        and: [
+          {...connectedFilter},
+          {or: [
+            {title: {
+              containsi: search
+            }},
+          ]}
+        ]
       }
     }
   })

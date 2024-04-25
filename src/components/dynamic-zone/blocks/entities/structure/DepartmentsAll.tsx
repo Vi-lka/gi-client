@@ -4,9 +4,9 @@ import { getDictionary } from '@/lib/getDictionary';
 import { getDepartments } from '@/lib/queries/departments';
 import { headers } from 'next/headers';
 import React from 'react'
-import DepartmentsItem from '../entities-cards/DepartmentsItem';
+import DepartmentsItem from '../../entities-cards/DepartmentsItem';
 import type { CollectionAllViewEnum } from '@/lib/types/components';
-import DepartmentsBento from '../entities-cards/bento/DepartmentsBento';
+import DepartmentsBento from '../../entities-cards/bento/DepartmentsBento';
 import type { StructureCategoryEnum } from '@/lib/types/entities';
 
 const DEFAULT_PAGE_SIZE = 10;

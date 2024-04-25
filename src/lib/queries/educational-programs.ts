@@ -53,11 +53,14 @@ export const getEducationalPrograms = async ({
 
   const connectedFilter = (filterBy && filterBy.length > 0) 
     ? {
-      department: {
-        slug: {
-          eqi: filterBy
-        }
-      }
+      or: [
+        {department: {
+          slug: { eqi: filterBy }
+          }},
+        {employees: {
+          id: { eqi: filterBy }
+        }}
+      ]
     } : undefined
   
   const json = await fetchData<{ data: { educationalPrograms: EducationalProgramsT }; }>({ 
@@ -71,21 +74,23 @@ export const getEducationalPrograms = async ({
         type: {
           containsi: type
         },
-        or: [{
-          title: {
-            containsi: search
-          },
-          code: {
-            containsi: search
-          },
-          mainName: {
-            containsi: search
-          },
-          mainCode: {
-            containsi: search
-          },
-          ...connectedFilter
-        }]
+        and: [
+          {...connectedFilter},
+          {or: [
+            {title: {
+              containsi: search
+            }},
+            {code: {
+              containsi: search
+            }},
+            {mainName: {
+              containsi: search
+            }},
+            {mainCode: {
+              containsi: search
+            }}
+          ]}
+        ]
       }
     }
   })

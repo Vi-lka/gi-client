@@ -2,7 +2,7 @@ import { TypographyH2 } from '@/components/typography';
 import type { CollectionAllStructureCompT } from '@/lib/types/components';
 import { cn } from '@/lib/utils';
 import React from 'react'
-import DepartmentsAll from '../DepartmentsAll';
+import DepartmentsAll from './DepartmentsAll';
 
 export default function CollectionAllStructure({ 
     data,

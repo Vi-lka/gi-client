@@ -39,13 +39,13 @@ export default function CollectionAll({
                         return <EducationalProgramsAll key={index} searchParams={searchParams} connected={connected} />;
                     
                     case "dpo-courses":
-                        return <DpoCoursesAll key={index} searchParams={searchParams} />;
+                        return <DpoCoursesAll key={index} searchParams={searchParams} connected={connected} />;
 
                     case "employees":
-                        return <EmployeesAll key={index} searchParams={searchParams} />;
+                        return <EmployeesAll key={index} searchParams={searchParams} connected={connected} />;
                     
                     case "graduates":
-                        return <GraduatesAll key={index} searchParams={searchParams} />
+                        return <GraduatesAll key={index} searchParams={searchParams} connected={connected} />
                 
                     default:
                         return null;
