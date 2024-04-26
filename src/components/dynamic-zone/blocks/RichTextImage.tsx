@@ -32,8 +32,8 @@ export default function RichText({
                 </TypographyH2>
             )}
             <div className={cn(
-                'flex', 
-                data.images.data.length > 1 ? "items-center lg:gap-16 gap-6" : "items-stretch gap-6",
+                'flex items-stretch', 
+                data.images.data.length > 1 ? "lg:gap-16 gap-6" : "gap-6",
                 data.alignImages === "right" ? "lg:flex-row flex-col-reverse" : "lg:flex-row-reverse flex-col-reverse"
             )}>
                 <div className='lg:w-1/2 w-full h-fit'>
