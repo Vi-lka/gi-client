@@ -49,6 +49,12 @@ export const getDepartments = async ({
               phone
               location
             }
+            head {
+              data {
+                id
+                attributes { title }
+              }
+            }
           }
         }
       }

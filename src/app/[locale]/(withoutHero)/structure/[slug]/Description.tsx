@@ -1,15 +1,19 @@
 import BlocksRendererStrapi from '@/components/BlocksRendererStrapi';
 import { TypographyH3 } from '@/components/typography';
-import { AtSign, Globe, MapPin } from 'lucide-react';
+import { AtSign, CircleUser, Globe, MapPin } from 'lucide-react';
 import React from 'react'
 import NextLink from "next/link";
 import { FiPhone } from 'react-icons/fi';
+import Link from '@/components/Link';
 
 export default function Description({
+  locale,
   description,
   contacts,
-  contactsTitle
+  contactsTitle,
+  head
 }: {
+  locale: string,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   description: any,
   contacts: {
@@ -17,8 +21,12 @@ export default function Description({
     email: string | null;
     phone: string | null;
     location: string | null;
-  } | null,
-  contactsTitle: string
+  } | null;
+  contactsTitle: string;
+  head: {
+    title: string,
+    slug: string
+  } | null;
 }) {
   return (
     <div className='flex lg:flex-row flex-col gap-6'>
@@ -28,13 +36,25 @@ export default function Description({
           <BlocksRendererStrapi content={description} />
         </div>
       )}
-      {contacts && (
+      {(contacts || head) && (
         <div className='lg:w-1/2 w-full h-fit flex flex-col justify-center bg-primary dark:bg-accent text-background dark:text-foreground sm:px-12 px-8 sm:py-10 py-8 rounded-3xl'>
           <TypographyH3 className='text-background dark:text-foreground mb-6'>
             {contactsTitle}
           </TypographyH3>
           <ul className='flex flex-col gap-3 justify-center'>
-            {contacts.url && (
+            {head && (
+              <li className='flex items-center gap-2 font-medium'>
+                <CircleUser className='w-auto h-5 ' />
+                <Link 
+                  locale={locale}
+                  href={`/employees/${head.slug}`}
+                  className='flex-1 hover:underline underline-offset-2'
+                >
+                  {head.title}
+                </Link>
+              </li>
+            )}
+            {contacts?.url && (
               <li className='flex items-center gap-2 font-medium'>
                 <Globe className='w-auto h-5 ' />
                 <NextLink 
@@ -46,7 +66,7 @@ export default function Description({
                 </NextLink>
               </li>
             )}
-            {contacts.email && (
+            {contacts?.email && (
               <li className='flex items-center gap-2 font-medium'>
                 <AtSign className='w-auto h-5 ' />
                 <NextLink 
@@ -57,7 +77,7 @@ export default function Description({
                 </NextLink>
               </li>
             )}
-            {contacts.phone && (
+            {contacts?.phone && (
               <li className='flex items-center gap-2 font-medium'>
                 <FiPhone className='w-auto h-5 ' />
                 <NextLink 
@@ -68,7 +88,7 @@ export default function Description({
                 </NextLink>
               </li>
             )}
-            {contacts.location && (
+            {contacts?.location && (
               <li className='flex items-center gap-2 font-medium'>
                 <MapPin className='w-auto h-5 ' />
                 <NextLink 

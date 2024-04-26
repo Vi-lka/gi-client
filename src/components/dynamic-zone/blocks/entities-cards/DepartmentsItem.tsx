@@ -7,7 +7,7 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
 import type { DepartmentSingleT } from '@/lib/types/entities'
 import { getShortText } from '@/lib/utils'
-import { AtSign, Globe, MapPin } from 'lucide-react'
+import { AtSign, CircleUser, Globe, MapPin } from 'lucide-react'
 import React from 'react'
 import { FiPhone } from 'react-icons/fi'
 
@@ -39,16 +39,28 @@ export default function DepartmentsItem({
                     </Link>
                 </ClientHydration>
                 
-                <div className='flex-1 lg:w-[55%] w-full flex flex-col gap-6 justify-between text-primary'>
+                <div className='flex-1 lg:w-[55%] w-full flex flex-col justify-between text-primary space-y-8'>
                     <Link locale={locale} href={`/structure/${item.attributes.slug}`} className='w-fit'>
                         <h4 className='xl:text-xl lg:text-lg sm:text-xl text-lg font-bold line-clamp-5 md:translate-y-1 group-hover/card:translate-y-0 transition duration-300 transform-gpu'>
                             {getShortText(item.attributes.title, 12)}
                         </h4>
                     </Link>
 
-                    {item.attributes.contacts && (
-                        <ul className='flex flex-col gap-3 lg:mr-6 text-sm text-primary'>
-                            {item.attributes.contacts.url && (
+                    {(item.attributes.contacts || item.attributes.head.data) && (
+                        <ul className='flex flex-col gap-3 lg:flex-1 lg:mr-6 text-sm text-primary'>
+                            {item.attributes.head.data && (
+                                <li className='flex items-center gap-2 font-medium'>
+                                    <CircleUser className='w-auto h-5 ' />
+                                    <Link 
+                                      locale={locale}
+                                      href={`/employees/${item.attributes.head.data.id}`}
+                                      className='flex-1 hover:underline underline-offset-2'
+                                    >
+                                        {item.attributes.head.data.attributes.title}
+                                    </Link>
+                                </li>
+                            )}
+                            {item.attributes.contacts?.url && (
                                 <li className='flex items-center gap-2 font-medium'>
                                     <Globe className='w-auto h-5 ' />
                                     <NextLink 
@@ -60,7 +72,7 @@ export default function DepartmentsItem({
                                     </NextLink>
                                 </li>
                             )}
-                            {item.attributes.contacts.email && (
+                            {item.attributes.contacts?.email && (
                                 <li className='flex items-center gap-2 font-medium'>
                                     <AtSign className='w-auto h-5 ' />
                                     <NextLink 
@@ -71,7 +83,7 @@ export default function DepartmentsItem({
                                     </NextLink>
                                 </li>
                             )}
-                            {item.attributes.contacts.phone && (
+                            {item.attributes.contacts?.phone && (
                                 <li className='flex items-center gap-2 font-medium'>
                                     <FiPhone className='w-auto h-5 ' />
                                     <NextLink 
@@ -82,7 +94,7 @@ export default function DepartmentsItem({
                                     </NextLink>
                                 </li>
                             )}
-                            {item.attributes.contacts.location && (
+                            {item.attributes.contacts?.location && (
                                 <li className='flex items-center gap-2 font-medium'>
                                     <MapPin className='w-auto h-5 ' />
                                     <NextLink 

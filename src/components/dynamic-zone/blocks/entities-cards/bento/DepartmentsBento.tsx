@@ -3,7 +3,7 @@ import { BentoGrid, BentoGridItem } from '@/components/ui/aceternity/bento-grid'
 import { Skeleton } from '@/components/ui/skeleton'
 import type { DepartmentSingleT, DepartmentsT } from '@/lib/types/entities'
 import { calcEach, cn, getShortText } from '@/lib/utils'
-import { AtSign, ChevronRight, Globe, MapPin } from 'lucide-react'
+import { AtSign, ChevronRight, CircleUser, Globe, MapPin } from 'lucide-react'
 import React from 'react'
 import { FiPhone } from 'react-icons/fi'
 import BentoImage from './BentoImage'
@@ -72,16 +72,24 @@ function Description({
     item: DepartmentSingleT,
     hasImage: boolean
 }) {
-    if (!item.attributes.contacts) return null
+    if (!(item.attributes.contacts || item.attributes.head.data)) return null
 
     return (
         <ul className={cn(
             'flex mr-2',
             hasImage 
             ? "flex-wrap gap-x-2 gap-y-1 text-xs text-muted-foreground mt-2" 
-            : "flex-col gap-3 text-sm mt-6"
+            : "flex-col gap-3 text-sm mt-8"
         )}>
-        {item.attributes.contacts.url && (
+        {item.attributes.head.data && (
+            <li className={cn('flex items-center font-medium', hasImage ? 'gap-1' : 'gap-2')}>
+                <CircleUser className={cn('w-auto', hasImage ? 'h-3' : 'h-4' )} />
+                <span className='flex-1'>
+                    {item.attributes.head.data.attributes.title}
+                </span>
+            </li>
+        )}
+        {item.attributes.contacts?.url && (
             <li className={cn('flex items-center font-medium', hasImage ? 'gap-1' : 'gap-2')}>
                 <Globe className={cn('w-auto', hasImage ? 'h-3' : 'h-4' )} />
                 <span className='flex-1'>
@@ -89,7 +97,7 @@ function Description({
                 </span>
             </li>
         )}
-        {item.attributes.contacts.email && (
+        {item.attributes.contacts?.email && (
             <li className={cn('flex items-center font-medium', hasImage ? 'gap-1' : 'gap-2')}>
                 <AtSign className={cn('w-auto', hasImage ? 'h-3' : 'h-4' )} />
                 <span className='flex-1'>
@@ -97,7 +105,7 @@ function Description({
                 </span>
             </li>
         )}
-        {item.attributes.contacts.phone && (
+        {item.attributes.contacts?.phone && (
             <li className={cn('flex items-center font-medium', hasImage ? 'gap-1' : 'gap-2')}>
                 <FiPhone className={cn('w-auto', hasImage ? 'h-3' : 'h-4' )} />
                 <span className='flex-1'>
@@ -105,7 +113,7 @@ function Description({
                 </span>
             </li>
         )}
-        {item.attributes.contacts.location && (
+        {item.attributes.contacts?.location && (
             <li className={cn('flex items-center font-medium', hasImage ? 'gap-1' : 'gap-2')}>
                 <MapPin className={cn('w-auto', hasImage ? 'h-3' : 'h-4' )} />
                 <span className='flex-1'>

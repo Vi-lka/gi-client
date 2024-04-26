@@ -14,6 +14,7 @@ export default function LocaleSwitcher({
     className?: string,
 }) {
     const pathname = usePathname();
+    const pathnameNoLocale = pathname.split("/").slice(2).join("/")
 
     const localeCurrent = pathname.split("/")[1];
     
@@ -28,7 +29,7 @@ export default function LocaleSwitcher({
                 {localesCodes.map((locale, index) => (
                     <Link
                         key={index}
-                        href={`/${locale}`} 
+                        href={`/${locale}/${pathnameNoLocale}`} 
                         locale={locale}
                         className="flex justify-center last:mt-1 w-full aspect-square"
                         scroll={false}

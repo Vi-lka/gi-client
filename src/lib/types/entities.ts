@@ -184,7 +184,15 @@ export const DepartmentSingleT = z.object({
       email: z.string().nullable(),
       phone: z.string().nullable(),
       location: z.string().nullable(),
-    }).nullable()
+    }).nullable(),
+    head: z.object({
+      data: z.object({
+        id: z.string(),
+        attributes: z.object({
+          title: z.string()
+        })
+      }).nullable()
+    }),
   }),
 })
 export type DepartmentSingleT = z.infer<typeof DepartmentSingleT>;

@@ -4,7 +4,7 @@ import { GraduatesT } from "../types/entities";
 import fetchData from "./fetchData";
 
 //.........................Graduates.........................//
-export const getGraduates= async ({
+export const getGraduates = async ({
   locale,
   page,
   pageSize,

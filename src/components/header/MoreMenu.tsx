@@ -13,6 +13,8 @@ import Link from 'next/link';
 export default function MoreMenu() {
 
   const pathname = usePathname();
+  const pathnameNoLocale = pathname.split("/").slice(2).join("/")
+
   const { resolvedTheme, setTheme } = useTheme()
 
   const themes = ["light", "dark"]
@@ -86,7 +88,7 @@ export default function MoreMenu() {
               {localesCodes.map((locale, index) => (
                   <Link
                       key={index}
-                      href={`/${locale}`}
+                      href={`/${locale}/${pathnameNoLocale}`}
                       locale={locale}
                       className="flex justify-center last:mt-1 w-full aspect-square"
                       scroll={false}

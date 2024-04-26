@@ -125,6 +125,14 @@ export const DepartmentSinglePageT  = z.object({
       phone: z.string().nullable(),
       location: z.string().nullable(),
     }).nullable(),
+    head: z.object({
+      data: z.object({
+        id: z.string(),
+        attributes: z.object({
+          title: z.string()
+        })
+      }).nullable()
+    }),
     content: z.lazy(() => DynamicZoneT).array(),
   }),
 })

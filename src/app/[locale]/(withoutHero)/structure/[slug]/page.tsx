@@ -54,6 +54,14 @@ export default async function StructureSinglePage({
                 phone
                 location
               }
+              head {
+                data {
+                  id
+                  attributes {
+                    title
+                  }
+                }
+              }
               content {
                 ${dynamicContentQuery}
               }
@@ -115,6 +123,12 @@ export default async function StructureSinglePage({
     />
   )
 
+  const head = dataResult.value.department.attributes.head.data 
+    ? {
+      title: dataResult.value.department.attributes.head.data.attributes.title,
+      slug: dataResult.value.department.attributes.head.data.id
+    } : null;
+
   return (
     <div className='w-full'>
       <Breadcrumbs data={[
@@ -137,10 +151,12 @@ export default async function StructureSinglePage({
       )}
 
       <Description 
+        locale={params.locale}
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         description={dataResult.value.department.attributes.description} 
         contacts={dataResult.value.department.attributes.contacts} 
         contactsTitle={dict.Entities.Structure.contacts}
+        head={head}
       />
 
       {dataResult.value.department.attributes.content.map((item, index) => (
