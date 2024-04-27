@@ -86,6 +86,7 @@ export type DpoCoursesT = z.infer<typeof DpoCoursesT>;
 export const EmployeeSingleT  = z.object({
   id: z.string(),
   attributes: z.object({
+    slug: z.string(),
     title: z.string(),
     image: z.lazy(() => ImageT),
     meta: z.object({

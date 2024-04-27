@@ -29,6 +29,7 @@ export const getEmployees = async ({
         data {
           id
           attributes {
+            slug
             title
             meta {
               post

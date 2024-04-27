@@ -1,17 +1,21 @@
 import { ClientHydration } from '@/components/ClientHydration'
 import ImageComp from '@/components/ImageComp'
+import Link from '@/components/Link'
+import MoreButton from '@/components/MoreButton'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
 import type { EmployeeSingleT } from '@/lib/types/entities'
-import { AtSign, MapPin } from 'lucide-react'
-import Link from 'next/link'
+import { AtSign, ChevronRight, MapPin } from 'lucide-react'
+import NextLink from 'next/link'
 import React from 'react'
 import { FiPhone } from 'react-icons/fi'
 
 export default function EmployeesItem({
+    locale,
     employee,
 }: {
+    locale: string,
     employee: EmployeeSingleT,
 }) {
 
@@ -31,22 +35,32 @@ export default function EmployeesItem({
     const location = employee.attributes.location
 
     return (
-        <Card key={"employee" + employee.id} className='h-full border-none shadow-md rounded-3xl'>
-            <CardContent className="w-full h-full flex lg:flex-row flex-col lg:items-center xl:gap-8 gap-6 p-6">
+        <Card key={"employee" + employee.id} className='h-full group/card border-transparent dark:border-border/20 dark:hover:border-border hover:shadow-lg shadow-md rounded-3xl transition duration-300'>
+            <CardContent className="relative w-full h-full flex lg:flex-row flex-col lg:items-center xl:gap-8 gap-6 p-6 lg:pb-6 pb-14 overflow-hidden">
                 <ClientHydration fallback={<Skeleton className='rounded-full aspect-square w-32 lg:mx-0 mx-auto'/>}>
-                    <ImageComp 
-                        src={employee.attributes.image.data?.attributes.url}
-                        alt="Image"
-                        fill={false}
-                        width={128}
-                        height={128}
-                        className='object-cover rounded-full aspect-square max-h-32 lg:mx-0 mx-auto'
-                    />
+                    <Link 
+                        locale={locale} 
+                        href={`/structure/employees/${employee.attributes.slug}`}
+                        className='group-hover/card:scale-105 transition transform-gpu duration-300'
+                    >
+                        <ImageComp 
+                            src={employee.attributes.image.data?.attributes.url}
+                            alt="Image"
+                            fill={false}
+                            width={128}
+                            height={128}
+                            className='object-cover rounded-full aspect-square max-h-32 lg:mx-0 mx-auto'
+                        />
+                    </Link>
                 </ClientHydration>
     
                 <div className='flex flex-col flex-1 lg:justify-between gap-4 text-primary'>
                     <div>
-                        <p className='font-bold text-lg'>{employee.attributes.title}</p>
+                        <Link locale={locale} href={`/structure/employees/${employee.attributes.slug}`} className='w-fit'>
+                            <h4 className='text-lg font-bold line-clamp-5 md:translate-y-1 group-hover/card:translate-y-0 transition duration-300 transform-gpu'>
+                                {employee.attributes.title}
+                            </h4>
+                        </Link>
                         {employee.attributes.meta && (
                             <p className='font-normal text-sm mt-2'>
                                 {post}<span className='font-normal'>{post_between} {degree_rank}</span>
@@ -57,31 +71,37 @@ export default function EmployeesItem({
                     {(employee.attributes.showContacts && (phone || email || location)) && (
                         <ul className='flex flex-col gap-2 xl:text-sm text-xs'>
                             {phone && (
-                                <li className='flex items-center gap-3'>
+                                <li className='flex items-center gap-2'>
                                     <FiPhone className='w-4 h-4' />
-                                    <Link href={`tel:${phone}`} className='flex-1 hover:underline underline-offset-2'>
+                                    <NextLink 
+                                        href={`tel:${phone}`} 
+                                        className='flex-1 hover:underline underline-offset-2 group-hover/card:translate-x-0.5 transition transform-gpu duration-300'
+                                    >
                                         {phone}
-                                    </Link>
+                                    </NextLink>
                                 </li>
                             )}
                             {email && (
-                                <li className='flex items-center gap-3'>
+                                <li className='flex items-center gap-2'>
                                     <AtSign className='w-4 h-4' />
-                                    <Link href={`mailto:${email}`} className='flex-1 hover:underline underline-offset-2'>
+                                    <NextLink 
+                                        href={`mailto:${email}`} 
+                                        className='flex-1 hover:underline underline-offset-2 group-hover/card:translate-x-0.5 transition transform-gpu duration-300'
+                                    >
                                         {email}
-                                    </Link>
+                                    </NextLink>
                                 </li>
                             )}
                             {location && (
-                                <li className='flex items-center gap-3'>
+                                <li className='flex items-center gap-2'>
                                     <MapPin className='w-4 h-4' />
-                                    <Link 
+                                    <NextLink 
                                         href={`https://maps.yandex.ru/?text=${location}`} 
                                         target='__blank'
-                                        className='flex-1 hover:underline underline-offset-2'
+                                        className='flex-1 hover:underline underline-offset-2 group-hover/card:translate-x-0.5 transition transform-gpu duration-300'
                                     >
                                       {location}
-                                    </Link>
+                                    </NextLink>
                                 </li>
                             )}
                         </ul>
@@ -97,6 +117,15 @@ export default function EmployeesItem({
                             ))}
                         </ul>
                     )}
+                    <div className='absolute lg:hidden block bottom-4 left-1/2 transform -translate-x-1/2'>
+                        <MoreButton 
+                            href={`/structure/employees/${employee.attributes.slug}`}
+                            variant="link"
+                            className='h-6 p-0 text-xs'
+                        >
+                            <ChevronRight size={20} />
+                        </MoreButton>
+                    </div>
                 </div>
             </CardContent>
         </Card>

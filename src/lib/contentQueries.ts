@@ -27,6 +27,7 @@ export const employees = `
     data {
       id
       attributes {
+        slug
         title
         meta {
           post

@@ -7,6 +7,7 @@ import React, { useEffect, useState } from 'react'
 import EmployeesItem from '../entities-cards/EmployeesItem'
 import GraduatesItem from '../entities-cards/GraduatesItem'
 import { EmployeeSingleT, GraduateSingleT } from '@/lib/types/entities'
+import { useLocale } from '@/lib/hooks/useLocale'
 
 export default function SplitSlider({
     data,
@@ -15,6 +16,7 @@ export default function SplitSlider({
     data: EmployeeSingleT[] | GraduateSingleT[];
     className?: string;
 }) {
+    const locale = useLocale();
 
     const [width, setWidth] = useState(window?.innerWidth);
 
@@ -52,7 +54,7 @@ export default function SplitSlider({
                     )}
                 >
                     {arr.map(employee => (
-                        <EmployeesItem key={"employee" + employee.id} employee={employee} />
+                        <EmployeesItem key={"employee" + employee.id} locale={locale} employee={employee} />
                     ))}
                 </CarouselItem>
             ))}
