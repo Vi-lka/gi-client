@@ -114,3 +114,32 @@ export const dpo_courses = `
     }
   }
 `
+
+export const departments = `
+  departments {
+    data {
+      id
+      attributes {
+        slug
+        title
+        image {
+          data {
+            attributes { url }
+          }
+        }
+        contacts {
+          url
+          email
+          phone
+          location
+        }
+        head {
+          data {
+            id
+            attributes { title }
+          }
+        }
+      }
+    }
+  }
+`

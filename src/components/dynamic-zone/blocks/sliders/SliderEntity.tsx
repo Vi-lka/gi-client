@@ -11,6 +11,7 @@ import DpoCoursesItem from '../entities-cards/DpoCoursesItem'
 import { CarouselItem } from '@/components/ui/carousel'
 import { getDictionary } from '@/lib/getDictionary'
 import type { SliderEntityCompT } from '@/lib/types/components'
+import DepartmentsItem from '../entities-cards/DepartmentsItem'
 
 export default async function SliderEntity({
     data,
@@ -53,6 +54,15 @@ export default async function SliderEntity({
                     {data.dpo_courses.data.map(item => (
                         <CarouselItem key={"dpo-course" + item.id} className='lg:basis-1/2 lg:pl-8 pl-4'>
                             <DpoCoursesItem locale={locale} item={item} dict={dict} />
+                        </CarouselItem>
+                    ))}
+                </CarouselComp>
+            )}
+            {data.departments.data.length > 0 && (
+                <CarouselComp className='lg:-ml-8 -ml-4'>
+                    {data.departments.data.map(item => (
+                        <CarouselItem key={"department" + item.id} className='lg:basis-1/2 lg:pl-8 pl-4'>
+                            <DepartmentsItem locale={locale} item={item} dict={dict} />
                         </CarouselItem>
                     ))}
                 </CarouselComp>

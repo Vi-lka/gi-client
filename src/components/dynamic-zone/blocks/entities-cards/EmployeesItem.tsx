@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge'
 import { Card, CardContent } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
 import type { EmployeeSingleT } from '@/lib/types/entities'
+import { getShortText } from '@/lib/utils'
 import { AtSign, ChevronRight, MapPin } from 'lucide-react'
 import NextLink from 'next/link'
 import React from 'react'
@@ -38,11 +39,7 @@ export default function EmployeesItem({
         <Card key={"employee" + employee.id} className='h-full group/card border-transparent dark:border-border/20 dark:hover:border-border hover:shadow-lg shadow-md rounded-3xl transition duration-300'>
             <CardContent className="relative w-full h-full flex lg:flex-row flex-col lg:items-center xl:gap-8 gap-6 p-6 lg:pb-6 pb-14 overflow-hidden">
                 <ClientHydration fallback={<Skeleton className='rounded-full aspect-square w-32 lg:mx-0 mx-auto'/>}>
-                    <Link 
-                        locale={locale} 
-                        href={`/structure/employees/${employee.attributes.slug}`}
-                        className='group-hover/card:scale-105 transition transform-gpu duration-300'
-                    >
+                    <Link locale={locale} href={`/structure/employees/${employee.attributes.slug}`}>
                         <ImageComp 
                             src={employee.attributes.image.data?.attributes.url}
                             alt="Image"
@@ -57,17 +54,23 @@ export default function EmployeesItem({
                 <div className='flex flex-col flex-1 lg:justify-between gap-4 text-primary'>
                     <div>
                         <Link locale={locale} href={`/structure/employees/${employee.attributes.slug}`} className='w-fit'>
-                            <h4 className='text-lg font-bold line-clamp-5 md:translate-y-1 group-hover/card:translate-y-0 transition duration-300 transform-gpu'>
+                            <h4 className='text-lg font-bold line-clamp-5 md:translate-y-1.5 group-hover/card:translate-y-0 transition duration-300 transform-gpu'>
                                 {employee.attributes.title}
                             </h4>
                         </Link>
                         {employee.attributes.meta && (
-                            <p className='font-normal text-sm mt-2'>
+                            <p className='font-normal text-sm mt-2 md:translate-y-1 group-hover/card:translate-y-0 transition duration-300 transform-gpu'>
                                 {post}<span className='font-normal'>{post_between} {degree_rank}</span>
                             </p>
                         )}
                     </div>
-                    <p className='text-sm text-foreground dark:text-muted-foreground'>{employee.attributes.description}</p>
+
+                    {employee.attributes.description && (
+                        <p className='text-sm text-foreground dark:text-muted-foreground lg:line-clamp-3 line-clamp-5'>
+                            {getShortText(employee.attributes.description)}
+                        </p>
+                    )}
+
                     {(employee.attributes.showContacts && (phone || email || location)) && (
                         <ul className='flex flex-col gap-2 xl:text-sm text-xs'>
                             {phone && (

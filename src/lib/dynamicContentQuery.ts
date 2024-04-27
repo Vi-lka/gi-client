@@ -1,4 +1,4 @@
-import { dpo_courses, educationalPrograms, employees, graduates } from "./contentQueries"
+import { departments, dpo_courses, educationalPrograms, employees, graduates } from "./contentQueries"
 
 //.........................dynamicContentQuery.........................//
 export const dynamicContentQuery = `
@@ -74,6 +74,7 @@ export const dynamicContentQuery = `
     ${employees}
     ${graduates}
     ${dpo_courses}
+    ${departments}
   }
   ... on ComponentContentCollectionAll {
     title
