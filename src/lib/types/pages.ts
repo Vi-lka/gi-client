@@ -111,6 +111,21 @@ export type StructurePageT = z.infer<typeof StructurePageT>;
 
 
 
+//.........................Employees Page.........................//
+export const EmployeesPageT  = z.object({
+  attributes: z.object({
+    title: z.string(),
+    navBarConfig: z.object({
+      navBarTitle: z.string().nullable()
+    }).nullable(),
+    content: z.lazy(() => DynamicZoneT).array(),
+  }),
+})
+export type EmployeesPageT = z.infer<typeof EmployeesPageT>;
+
+
+
+
 //.........................Structure Single Page.........................//
 export const DepartmentSinglePageT  = z.object({
   attributes: z.object({

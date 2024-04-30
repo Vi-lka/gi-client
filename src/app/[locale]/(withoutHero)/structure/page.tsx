@@ -19,7 +19,7 @@ export default async function StructurePage({
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
 
-  const getStructurePage = async (): Promise<StructurePageT> => {
+  const getStructurePage = async (locale: string,): Promise<StructurePageT> => {
     const query = /* GraphGL */ `
     query StructurePage($locale: I18NLocaleCode) {
       structure(locale: $locale) {
@@ -58,7 +58,7 @@ export default async function StructurePage({
   };
   
 
-  const [ dataResult ] = await Promise.allSettled([ getStructurePage() ]);
+  const [ dataResult ] = await Promise.allSettled([ getStructurePage(locale) ]);
   if (dataResult.status === "rejected") return (
     <ErrorHandler 
       error={dataResult.reason as unknown} 
