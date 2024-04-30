@@ -16,7 +16,7 @@ const DynamicReactIcon = ({
   className?: string,
 }) => {
 
-  const lib = icon.replace(/([a-z0-9])([A-Z])/g, '$1 $2').split(" ")[0].toLocaleLowerCase() as keyof typeof Icons;
+  const lib = icon.replace(/([a-z0-9])([A-Z0-9])/g, '$1 $2').split(" ")[0].toLocaleLowerCase() as keyof typeof Icons;
 
   const Icons = {
     tb: dynamic(

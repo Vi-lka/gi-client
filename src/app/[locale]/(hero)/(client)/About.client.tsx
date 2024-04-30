@@ -77,7 +77,7 @@ export default function AboutClient({
             <div className={cn(
                 'relative w-full h-full flex flex-col gap-6 xl:justify-between justify-around xl:pr-16 pr-6 2xl:py-12 py-6 z-50',
                 // fix snap on load
-                selectedItem === 1 ? "pl-10" : "pl-20",
+                selectedItem === 1 ? "pl-14" : "pl-20",
                 "xl:pl-20 transition-all duration-300"
             )}>
                 <motion.div 
@@ -104,7 +104,7 @@ export default function AboutClient({
                     <motion.ul 
                         animate={selectedItem === 1 ? "open" : "closed"}
                         variants={containerVariants}
-                        className='grid lg:grid-cols-2 grid-cols-1 sm:gap-x-[5vh] xl:gap-y-6 gap-y-4 gap-3'
+                        className='grid lg:grid-cols-2 grid-cols-1 sm:gap-x-6 xl:gap-y-6 gap-y-4 gap-3'
                     >
                         {data.items.map((item, index) => (
                             <motion.li 
@@ -173,7 +173,7 @@ function IconAbout({
     item: IconsBlockItemT,
     className?: string
 }) {
-    if (item.iconReact) return <DynamicReactIcon icon={item.iconReact} className={cn("lg:w-14 sm:w-10 w-8 h-auto text-background", className)} />
+    if (item.iconReact) return <DynamicReactIcon icon={item.iconReact} className={cn("lg:w-14 sm:w-10 w-8 h-auto text-background dark:text-foreground", className)} />
     else if (item.image.data) return (
         <div>
             <ImageComp
