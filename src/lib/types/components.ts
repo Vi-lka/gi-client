@@ -94,6 +94,7 @@ export const TextGridCompT = z.object({
   link: z.string().nullable(),
   linkTitle: z.string().nullable(),
   items: TextGridItemT.array(),
+  bigTitles: z.boolean().nullable(),
   buttonTitle: z.string().nullable(),
   buttonLink: z.string().nullable(),
 })
@@ -160,6 +161,9 @@ export const ContactsCompT = z.object({
   email: z.string().nullable(),
   location: z.string().nullable(),
   image: ImageT,
+  secondTitle: z.string().nullable(),
+  additionalText: z.any(),
+  alignContacts: AlignEnum.nullable(),
 })
 export type ContactsCompT = z.infer<typeof ContactsCompT>;
 

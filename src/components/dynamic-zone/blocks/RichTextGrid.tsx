@@ -31,11 +31,18 @@ export default function RichTextGrid({
                 {data.items.map((item, index) => (
                     <div key={index}>
                         {item.title && (
-                            <TypographyH4 className='font-medium text-foreground uppercase mb-3'>
+                            <TypographyH4 className={cn(
+                                'font-medium text-foreground uppercase mb-3',
+                                data.bigTitles ? "font-semibold text-primary mb-8 text-3xl normal-case" : "",
+                                (headingBig && data.bigTitles) ? "text-4xl lg:text-5xl" : ""
+                            )}>
                                 {item.title}
                             </TypographyH4>
                         )}
-                        <article className="prose prose-p:!my-0 prose-p:text-sm dark:text-muted-foreground prose-headings:text-foreground">
+                        <article className={cn(
+                            "prose prose-p:!my-0 prose-p:text-sm dark:text-muted-foreground prose-headings:text-foreground",
+                            data.bigTitles ? "prose-p:text-base dark:text-foreground" : "",
+                        )}>
                             {/* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */}
                             <BlocksRendererStrapi content={item.text} />
                         </article>

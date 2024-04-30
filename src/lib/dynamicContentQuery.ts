@@ -17,6 +17,9 @@ export const dynamicContentQuery = `
         }
       }
     }
+    secondTitle
+    additionalText
+    alignContacts
   }
   ... on ComponentContentIconsBlock {
     title
@@ -122,6 +125,7 @@ export const dynamicContentQuery = `
       title
       text
     }
+    bigTitles
     buttonTitle
     buttonLink
   }
