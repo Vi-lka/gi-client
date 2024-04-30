@@ -3,9 +3,14 @@ import { notFound } from "next/navigation";
 import ErrorHandler from "@/components/errors/ErrorHandler";
 import DynamicZone from "@/components/dynamic-zone/DynamicZone";
 import Header from "@/components/header/Header";
-import Hero from "./(hero)/Hero";
+import Hero from "./(hero)/(client)/Hero";
 import { MainPageT } from "@/lib/types/pages";
 import fetchData from "@/lib/queries/fetchData";
+import About from "./(hero)/About";
+import Menu from "./(hero)/Menu";
+import { Suspense } from "react";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Loader2 } from "lucide-react";
 
 export const dynamic = 'force-dynamic'
 
@@ -61,7 +66,26 @@ export default async function Home({
   
   return (
     <>
-      <Hero />
+      <Hero 
+        about={
+          <Suspense fallback={
+            <Skeleton className='w-full h-full flex items-center justify-center'>
+              <Loader2 className='animate-spin'/>
+            </Skeleton>
+          }>
+            <About/>
+          </Suspense>
+        }
+        menu={
+          <Suspense fallback={
+            <Skeleton className='w-full h-full flex items-center justify-center'>
+              <Loader2 className='animate-spin'/>
+            </Skeleton>
+          }>
+            <Menu/>
+          </Suspense>
+        }
+      />
       <Header />
       {dataResult.status !== "rejected"
         ? (
