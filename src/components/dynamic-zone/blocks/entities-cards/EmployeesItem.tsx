@@ -37,7 +37,7 @@ export default function EmployeesItem({
 
     return (
         <Card key={"employee" + employee.id} className='h-full group/card border-transparent dark:border-border/20 dark:hover:border-border hover:shadow-lg shadow-md rounded-3xl transition duration-300'>
-            <CardContent className="relative w-full h-full flex lg:flex-row flex-col lg:items-center xl:gap-8 gap-6 p-6 lg:pb-6 pb-14 overflow-hidden">
+            <CardContent className="relative w-full h-full flex lg:flex-row flex-col lg:items-center xl:gap-8 gap-6 xl:px-8 p-6 overflow-hidden">
                 <ClientHydration fallback={<Skeleton className='rounded-full aspect-square w-32 lg:mx-0 mx-auto'/>}>
                     <Link locale={locale} href={`/structure/employees/${employee.attributes.slug}`}>
                         <ImageComp 
@@ -51,8 +51,8 @@ export default function EmployeesItem({
                     </Link>
                 </ClientHydration>
     
-                <div className='flex flex-col flex-1 lg:justify-between gap-4 text-primary'>
-                    <div>
+                <div className='h-full flex flex-col flex-1 lg:justify-center gap-4 text-primary'>
+                    <div className='lg:mt-auto lg:pt-3'>
                         <Link locale={locale} href={`/structure/employees/${employee.attributes.slug}`} className='w-fit'>
                             <h4 className='text-lg font-bold line-clamp-5 md:translate-y-1.5 group-hover/card:translate-y-0 transition duration-300 transform-gpu'>
                                 {employee.attributes.title}
@@ -120,7 +120,7 @@ export default function EmployeesItem({
                             ))}
                         </ul>
                     )}
-                    <div className='absolute lg:hidden block bottom-4 left-1/2 transform -translate-x-1/2'>
+                    <div className='w-full flex mt-auto'>
                         <MoreButton 
                             href={`/structure/employees/${employee.attributes.slug}`}
                             variant="link"
