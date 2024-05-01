@@ -3,13 +3,13 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import NavMenu from './nav-menu/NavMenu'
 import NavSheet from './NavSheet'
-import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import MoreMenu from './MoreMenu'
 import { usePathname } from '@/lib/hooks/usePathname'
 import Link from '../Link'
 import { useLocale } from '@/lib/hooks/useLocale'
 import type { LinksT, NavBarT } from '@/lib/types/additional'
+import HiLogo from './HiLogo'
 
 export default function HeaderClient({
     navBar,
@@ -115,13 +115,7 @@ export default function HeaderClient({
                           className='absolute top-1/2 -translate-y-1/2 2xl:-left-20 -left-14' 
                           onClick={handleScrollToTop}
                         >
-                          <Image 
-                            src="/hi-icon.svg"
-                            alt="HI"
-                            width={80}
-                            height={80}
-                            className='object-contain w-10 dark:grayscale'
-                          />
+                            <HiLogo className='w-10 h-10' />
                         </Link>
 
                         <NavMenu navBar={navBar} links={links} className='w-full max-w-none mx-auto justify-between lg:flex hidden nav-menu' />
@@ -135,13 +129,7 @@ export default function HeaderClient({
                     {/* Mobile */}
                     <div className='lg:hidden flex items-center justify-between w-full'>
                         <Link locale={locale} href="/" onClick={handleScrollToTop}>
-                            <Image 
-                                src="/hi-icon.svg"
-                                alt="HI"
-                                width={40}
-                                height={40}
-                                className='object-contain dark:grayscale'
-                            />
+                            <HiLogo className='w-10 h-10' />
                         </Link>
 
                         <div className='flex items-center gap-3'>
