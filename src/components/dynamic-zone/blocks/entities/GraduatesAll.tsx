@@ -2,9 +2,9 @@ import ErrorHandler from '@/components/errors/ErrorHandler';
 import React from 'react';
 import { headers } from 'next/headers';
 import { ClientHydration } from '@/components/ClientHydration';
-import SplitSlider from '../sliders/SplitSlider';
-import SplitSliderLoading from '@/components/loadings/SplitSliderLoading';
+import SliderGraduatesLoading from '@/components/loadings/SliderGraduatesLoading';
 import { getGraduates } from '@/lib/queries/graduates';
+import SliderSplit from '../sliders/SliderSplit';
 
 export default async function GraduatesAll({
     searchParams,
@@ -36,8 +36,8 @@ export default async function GraduatesAll({
     if (!search && dataResult.value.meta.pagination.total === 0) return null
 
     return (
-        <ClientHydration fallback={<SplitSliderLoading />}>
-            <SplitSlider data={dataResult.value.data} />
+        <ClientHydration fallback={<SliderGraduatesLoading />}>
+            <SliderSplit data={dataResult.value.data} />
         </ClientHydration>
     )
 }

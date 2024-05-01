@@ -2,16 +2,31 @@ import CarouselComp from '@/components/CarouselComp'
 import { TypographyH2 } from '@/components/typography'
 import { cn } from '@/lib/utils'
 import React from 'react'
-import EducationalProgramsItem from '../entities-cards/EducationalProgramsItem'
-import SplitSlider from './SplitSlider'
 import { headers } from 'next/headers'
 import { ClientHydration } from '@/components/ClientHydration'
-import SplitSliderLoading from '@/components/loadings/SplitSliderLoading'
-import DpoCoursesItem from '../entities-cards/DpoCoursesItem'
 import { CarouselItem } from '@/components/ui/carousel'
 import { getDictionary } from '@/lib/getDictionary'
 import type { SliderEntityCompT } from '@/lib/types/components'
-import DepartmentsItem from '../entities-cards/DepartmentsItem'
+import SliderEmployeesLoading from '@/components/loadings/SliderEmployeesLoading'
+import SliderGraduatesLoading from '@/components/loadings/SliderGraduatesLoading'
+import dynamic from 'next/dynamic'
+import EducationalProgramLoading from '@/components/loadings/items/EducationalProgramLoading'
+import DpoCourseLoading from '@/components/loadings/items/DpoCourseLoading'
+import SliderSplitLoading from '@/components/loadings/SliderSplitLoading'
+import DepartmentLoading from '@/components/loadings/items/DepartmentLoading'
+
+const EducationalProgramsItem = dynamic(
+    () => import('../entities-cards/EducationalProgramsItem'), {loading: () => <EducationalProgramLoading />}
+)
+const DpoCoursesItem = dynamic(
+    () => import('../entities-cards/DpoCoursesItem'), {loading: () => <DpoCourseLoading />}
+)
+const DepartmentsItem = dynamic(
+    () => import('../entities-cards/DepartmentsItem'), {loading: () => <DepartmentLoading />}
+)
+const SliderSplit = dynamic(
+    () => import('./SliderSplit'), {loading: () => <SliderSplitLoading />}
+)
 
 export default async function SliderEntity({
     data,
@@ -68,13 +83,13 @@ export default async function SliderEntity({
                 </CarouselComp>
             )}
             {data.employees.data.length > 0 && (
-                <ClientHydration fallback={<SplitSliderLoading />}>
-                    <SplitSlider data={data.employees.data} />
+                <ClientHydration fallback={<SliderEmployeesLoading />}>
+                    <SliderSplit data={data.employees.data} />
                 </ClientHydration>
             )}
             {data.graduates.data.length > 0 && (
-                <ClientHydration fallback={<SplitSliderLoading />}>
-                    <SplitSlider data={data.graduates.data} />
+                <ClientHydration fallback={<SliderGraduatesLoading />}>
+                    <SliderSplit data={data.graduates.data} />
                 </ClientHydration>
             )}
         </div>

@@ -52,13 +52,13 @@ export default async function EmployeesAll({
                 ))}
             </div>
             <div className="mt-6">
-              <PaginationControls
-                length={dataResult.value.meta.pagination.total}
-                defaultPageSize={DEFAULT_PAGE_SIZE}
-                scrollToId='employees'
-                pageParam='page_employees'
-                perParam='per_employees'
-              />
+                <PaginationControls
+                    length={dataResult.value.meta.pagination.total}
+                    defaultPageSize={DEFAULT_PAGE_SIZE}
+                    scrollToId='employees'
+                    pageParam='page_employees'
+                    perParam='per_employees'
+                />
             </div>
         </>
     )

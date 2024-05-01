@@ -6,6 +6,8 @@ import React from 'react'
 import EducationalProgramsItem from '../entities-cards/EducationalProgramsItem';
 import { getEducationalPrograms } from '@/lib/queries/educational-programs';
 import type { EducationalProgramSingleT } from '@/lib/types/entities';
+import EducationalProgramsLoading from '@/components/loadings/EducationalProgramsLoading';
+import { ClientHydration } from '@/components/ClientHydration';
 
 export default async function EducationalProgramsAll({
     searchParams,
@@ -113,7 +115,9 @@ export default async function EducationalProgramsAll({
     }
 
     return (
-        <TabsComp tabs={tabs} />
+        <ClientHydration fallback={<EducationalProgramsLoading />}>
+            <TabsComp tabs={tabs} />
+        </ClientHydration>
     )
 }
 

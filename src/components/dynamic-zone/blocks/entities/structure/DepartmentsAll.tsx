@@ -4,10 +4,18 @@ import { getDictionary } from '@/lib/getDictionary';
 import { getDepartments } from '@/lib/queries/departments';
 import { headers } from 'next/headers';
 import React from 'react'
-import DepartmentsItem from '../../entities-cards/DepartmentsItem';
 import type { CollectionAllViewEnum } from '@/lib/types/components';
-import DepartmentsBento from '../../entities-cards/bento/DepartmentsBento';
 import type { StructureCategoryEnum } from '@/lib/types/entities';
+import dynamic from 'next/dynamic';
+import BentoLoading from '@/components/loadings/BentoLoading';
+import DepartmentLoading from '@/components/loadings/items/DepartmentLoading';
+
+const DepartmentsBento = dynamic(
+    () => import('../../entities-cards/bento/DepartmentsBento'), {loading: () => <BentoLoading />}
+)
+const DepartmentsItem = dynamic(
+    () => import('../../entities-cards/DepartmentsItem'), {loading: () => <DepartmentLoading />}
+)
 
 const DEFAULT_PAGE_SIZE = 10;
 

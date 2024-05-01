@@ -55,13 +55,13 @@ export default async function DpoCoursesAll({
                 ))}
             </div>
             <div className="mt-6">
-            <PaginationControls
-                length={dataResult.value.meta.pagination.total}
-                defaultPageSize={DEFAULT_PAGE_SIZE}
-                scrollToId='dpo-courses'
-                pageParam='page_dpo'
-                perParam='per_dpo'
-            />
+                <PaginationControls
+                    length={dataResult.value.meta.pagination.total}
+                    defaultPageSize={DEFAULT_PAGE_SIZE}
+                    scrollToId='dpo-courses'
+                    pageParam='page_dpo'
+                    perParam='per_dpo'
+                />
             </div>
         </>
     )

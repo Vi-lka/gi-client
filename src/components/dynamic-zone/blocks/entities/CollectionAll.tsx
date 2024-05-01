@@ -1,11 +1,25 @@
 import React from 'react'
-import EducationalProgramsAll from './EducationalProgramsAll';
-import DpoCoursesAll from './DpoCoursesAll';
-import EmployeesAll from './EmployeesAll';
-import GraduatesAll from './GraduatesAll';
 import { cn } from '@/lib/utils';
 import { TypographyH2 } from '@/components/typography';
 import type { CollectionAllCompT } from '@/lib/types/components';
+import dynamic from 'next/dynamic';
+import SliderGraduatesLoading from '@/components/loadings/SliderGraduatesLoading';
+import EducationalProgramsLoading from '@/components/loadings/EducationalProgramsLoading';
+import DpoCoursesLoading from '@/components/loadings/DpoCoursesLoading';
+import EmployeesLoading from '@/components/loadings/EmployeesLoading';
+
+const EducationalProgramsAll = dynamic(
+    () => import('./EducationalProgramsAll'), {loading: () => <EducationalProgramsLoading />}
+)
+const DpoCoursesAll = dynamic(
+    () => import('./DpoCoursesAll'), {loading: () => <DpoCoursesLoading />}
+)
+const EmployeesAll = dynamic(
+    () => import('./EmployeesAll'), {loading: () => <EmployeesLoading />}
+)
+const GraduatesAll = dynamic(
+    () => import('./GraduatesAll'), {loading: () => <SliderGraduatesLoading />}
+)
 
 export default function CollectionAll({ 
     data,

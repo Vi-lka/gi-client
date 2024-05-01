@@ -13,7 +13,7 @@ export default function GraduatesItem({
     return (
         <Card key={"graduate" + graduate.id} className='h-full group/card border-transparent dark:border-border/20 shadow-md rounded-3xl transition duration-300'>
             <CardContent className="w-full h-full flex lg:flex-row flex-col lg:items-center xl:gap-8 gap-6 p-6">
-                <ClientHydration fallback={<Skeleton className='rounded-full aspect-square max-h-32 lg:mx-0 mx-auto'/>}>
+                <ClientHydration fallback={<Skeleton className='rounded-full aspect-square w-32 lg:mx-0 mx-auto'/>}>
                     <ImageComp 
                         src={graduate.attributes.image.data?.attributes.url}
                         alt="Image"
@@ -26,7 +26,7 @@ export default function GraduatesItem({
     
                 <div className='flex flex-col flex-1 justify-between gap-6 text-primary xl:text-base text-sm'>
                     <div>
-                        <p className='font-bold mb-1'>{graduate.attributes.title}</p>
+                        <p className='font-bold mb-2'>{graduate.attributes.title}</p>
                         <p>{graduate.attributes.description}</p>
                     </div>
                     <p className='dark:text-muted-foreground'>{graduate.attributes.additionalInfo}</p>
