@@ -49,7 +49,7 @@ export default async function DpoCoursesAll({
 
     return (
         <>
-            <div id="dpo-courses" className="grid lg:grid-cols-2 grid-cols-1 lg:auto-rows-fr lg:gap-8 gap-6">
+            <div key={Math.random()} id="dpo-courses" className="grid lg:grid-cols-2 grid-cols-1 lg:auto-rows-fr lg:gap-8 gap-6">
                 {dataResult.value.data.map(item => (
                     <DpoCoursesItem key={"dpo-course" + item.id} locale={locale} item={item} dict={dict} /> 
                 ))}

@@ -61,10 +61,12 @@ export default async function DepartmentsAll({
         <>
             {view === "bento" 
                 ? (
-                    <DepartmentsBento locale={locale} departments={dataResult.value} />
+                    <div key={Math.random()} id="departments">
+                        <DepartmentsBento locale={locale} departments={dataResult.value} />
+                    </div>
                 )
                 : (
-                    <div id="departments" className="grid lg:grid-cols-2 grid-cols-1 lg:auto-rows-fr lg:gap-8 gap-6">
+                    <div key={Math.random()} id="departments" className="grid lg:grid-cols-2 grid-cols-1 lg:auto-rows-fr lg:gap-8 gap-6">
                         {dataResult.value.data.map(item => (
                             <DepartmentsItem key={"department" + item.id} locale={locale} item={item} dict={dict} /> 
                         ))}

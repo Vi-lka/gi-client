@@ -46,7 +46,7 @@ export default async function EmployeesAll({
 
     return (
         <>
-            <div id="employees" className="grid md:grid-cols-2 grid-cols-1 auto-rows-auto lg:gap-8 gap-6">
+            <div key={Math.random()} id="employees" className="grid md:grid-cols-2 grid-cols-1 auto-rows-auto lg:gap-8 gap-6">
                 {dataResult.value.data.map(employee => (
                     <EmployeesItem key={"employee" + employee.id} locale={locale} employee={employee} />
                 ))}
