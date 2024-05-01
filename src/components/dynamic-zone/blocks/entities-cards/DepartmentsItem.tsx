@@ -53,7 +53,7 @@ export default function DepartmentsItem({
                                     <CircleUser className='w-auto h-5 ' />
                                     <Link 
                                       locale={locale}
-                                      href={`/employees/${item.attributes.head.data.id}`}
+                                      href={`/structure/employees/${item.attributes.head.data.attributes.slug}`}
                                       className='flex-1 hover:underline underline-offset-2 group-hover/card:translate-x-0.5 transition transform-gpu duration-300'
                                     >
                                         {item.attributes.head.data.attributes.title}
@@ -76,7 +76,7 @@ export default function DepartmentsItem({
                                 <li className='flex items-center gap-2 font-medium'>
                                     <AtSign className='w-auto h-5 ' />
                                     <NextLink 
-                                        href={`mailto:${item.attributes.contacts.phone}`} 
+                                        href={`mailto:${item.attributes.contacts.email}`} 
                                         className='flex-1 hover:underline underline-offset-2 group-hover/card:translate-x-0.5 transition transform-gpu duration-300'
                                     >
                                         {item.attributes.contacts.email}

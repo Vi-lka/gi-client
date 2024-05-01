@@ -190,6 +190,7 @@ export const DepartmentSingleT = z.object({
       data: z.object({
         id: z.string(),
         attributes: z.object({
+          slug: z.string(),
           title: z.string()
         })
       }).nullable()

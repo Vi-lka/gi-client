@@ -52,7 +52,10 @@ export const getDepartments = async ({
             head {
               data {
                 id
-                attributes { title }
+                attributes { 
+                  slug
+                  title 
+                }
               }
             }
           }

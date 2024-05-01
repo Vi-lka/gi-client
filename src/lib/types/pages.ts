@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { DynamicZoneT, ImageT, ImagesArrayT } from "./components";
-import { EducationalProgramTypeEnum } from "./entities";
+import { EducationalProgramTypeEnum, HashtagSingleT } from "./entities";
 
 //..................................................Pages..................................................//
 
@@ -126,6 +126,42 @@ export type EmployeesPageT = z.infer<typeof EmployeesPageT>;
 
 
 
+//.........................Employee Single Page.........................//
+export const EmployeeSinglePageT  = z.object({
+  attributes: z.object({
+    slug: z.string(),
+    title: z.string(),
+    image: z.lazy(() => ImageT),
+    meta: z.object({
+      post: z.string().nullable(),
+      degree: z.string().nullable(),
+      degreeShort: z.string().nullable(),
+      rank: z.string().nullable(),
+      rankShort: z.string().nullable(),
+    }).nullable(),
+    description: z.string().nullable(),
+    email: z.string().nullable(),
+    phone: z.string().nullable(),
+    location: z.string().nullable(),
+    hashtags: z.object({
+      data: z.lazy(() => HashtagSingleT).array()
+    }),
+    head_in_department: z.object({
+      data: z.object({
+        attributes: z.object({
+          shortTitle: z.string(),
+          slug: z.string()
+        })
+      }).nullable()
+    }),
+    content: z.lazy(() => DynamicZoneT).array(),
+  }),
+})
+export type EmployeeSinglePageT = z.infer<typeof EmployeeSinglePageT>;
+
+
+
+
 //.........................Structure Single Page.........................//
 export const DepartmentSinglePageT  = z.object({
   attributes: z.object({
@@ -144,6 +180,7 @@ export const DepartmentSinglePageT  = z.object({
       data: z.object({
         id: z.string(),
         attributes: z.object({
+          slug: z.string(),
           title: z.string()
         })
       }).nullable()

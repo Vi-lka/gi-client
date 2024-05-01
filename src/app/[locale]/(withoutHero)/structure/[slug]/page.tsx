@@ -58,6 +58,7 @@ export default async function StructureSinglePage({
                 data {
                   id
                   attributes {
+                    slug
                     title
                   }
                 }
@@ -126,7 +127,7 @@ export default async function StructureSinglePage({
   const head = dataResult.value.department.attributes.head.data 
     ? {
       title: dataResult.value.department.attributes.head.data.attributes.title,
-      slug: dataResult.value.department.attributes.head.data.id
+      slug: dataResult.value.department.attributes.head.data.attributes.slug
     } : null;
 
   return (

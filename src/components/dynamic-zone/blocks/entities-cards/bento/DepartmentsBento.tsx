@@ -9,6 +9,7 @@ import { FiPhone } from 'react-icons/fi'
 import BentoImage from './BentoImage'
 import MoreButton from '@/components/MoreButton'
 import Link from '@/components/Link'
+import NextLink from "next/link"
 
 export default function DepartmentsBento({
     locale,
@@ -60,7 +61,7 @@ export default function DepartmentsBento({
                                 {getShortText(item.attributes.title, 12)}
                             </h4>
                         </Link>
-                        <Description item={item} hasImage={hasImage} />
+                        <Description locale={locale} item={item} hasImage={hasImage} />
                     </BentoGridItem>
                 )
             })}
@@ -69,9 +70,11 @@ export default function DepartmentsBento({
 }
 
 function Description({ 
+    locale,
     item,
     hasImage,
 }: { 
+    locale: string,
     item: DepartmentSingleT,
     hasImage: boolean
 }) {
@@ -87,43 +90,88 @@ function Description({
             {item.attributes.head.data && (
                 <li className={cn('flex items-center font-medium', hasImage ? 'gap-1' : 'gap-2')}>
                     <CircleUser className={cn('w-auto', hasImage ? 'h-3' : 'h-4' )} />
-                    <span className='flex-1'>
-                        {item.attributes.head.data.attributes.title}
-                    </span>
+                    <DescriptionItem 
+                        title={item.attributes.head.data.attributes.title}
+                        href={`/structure/employees/${item.attributes.head.data.attributes.slug}`}
+                        locale={locale}
+                    />
                 </li>
             )}
             {item.attributes.contacts?.url && (
                 <li className={cn('flex items-center font-medium', hasImage ? 'gap-1' : 'gap-2')}>
                     <Globe className={cn('w-auto', hasImage ? 'h-3' : 'h-4' )} />
-                    <span className='flex-1'>
-                        {new URL(item.attributes.contacts.url).hostname}
-                    </span>
+                    <DescriptionItem 
+                        title={new URL(item.attributes.contacts.url).hostname}
+                        targetBlank
+                        href={item.attributes.contacts.url}
+                    />
                 </li>
-            )}
+             )}
             {item.attributes.contacts?.email && (
                 <li className={cn('flex items-center font-medium', hasImage ? 'gap-1' : 'gap-2')}>
                     <AtSign className={cn('w-auto', hasImage ? 'h-3' : 'h-4' )} />
-                    <span className='flex-1'>
-                        {item.attributes.contacts.email}
-                    </span>
+                    <DescriptionItem 
+                        title={item.attributes.contacts.email}
+                        targetBlank
+                        href={`mailto:${item.attributes.contacts.email}`}
+                    />
                 </li>
             )}
             {item.attributes.contacts?.phone && (
                 <li className={cn('flex items-center font-medium', hasImage ? 'gap-1' : 'gap-2')}>
                     <FiPhone className={cn('w-auto', hasImage ? 'h-3' : 'h-4' )} />
-                    <span className='flex-1'>
-                        {item.attributes.contacts.phone}
-                    </span>
+                    <DescriptionItem 
+                        title={item.attributes.contacts.phone}
+                        targetBlank
+                        href={`tel:${item.attributes.contacts.phone}`}
+                    />
                 </li>
             )}
             {item.attributes.contacts?.location && (
                 <li className={cn('flex items-center font-medium', hasImage ? 'gap-1' : 'gap-2')}>
                     <MapPin className={cn('w-auto', hasImage ? 'h-3' : 'h-4' )} />
-                    <span className='flex-1'>
-                        {item.attributes.contacts.location}
-                    </span>
+                    <DescriptionItem 
+                        title={item.attributes.contacts.location}
+                        targetBlank
+                        href={`https://maps.yandex.ru/?text=${item.attributes.contacts.location}`}
+                    />
                 </li>
             )}
         </ul>
+    )
+}
+
+type DescriptionItemT = {
+    title: string,
+    href: string,
+  } & (TargetBlank | NotTargetBlank);
+  
+type TargetBlank = {
+    targetBlank: true;
+};
+type NotTargetBlank = {
+    targetBlank?: false;
+    locale: string;
+};
+function DescriptionItem(props: DescriptionItemT) {
+
+    if (props.targetBlank) return (
+        <NextLink 
+            href={props.href}
+            target='__blank'
+            className='flex-1 hover:underline underline-offset-2'
+        >
+            {props.title}
+        </NextLink>
+    )
+
+    return (
+        <Link 
+            locale={props.locale}
+            href={props.href}
+            className='flex-1 hover:underline underline-offset-2'
+        >
+            {props.title}
+        </Link>
     )
 }

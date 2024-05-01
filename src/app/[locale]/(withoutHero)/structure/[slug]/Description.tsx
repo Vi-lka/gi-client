@@ -47,7 +47,7 @@ export default function Description({
                 <CircleUser className='w-auto h-5 ' />
                 <Link 
                   locale={locale}
-                  href={`/employees/${head.slug}`}
+                  href={`/structure/employees/${head.slug}`}
                   className='flex-1 hover:underline underline-offset-2'
                 >
                   {head.title}
