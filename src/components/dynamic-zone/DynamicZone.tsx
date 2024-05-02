@@ -15,6 +15,7 @@ import ListLoading from '../loadings/ListLoading';
 import "./blocks/timeline/timeline.css"
 import type { DynamicZoneT } from '@/lib/types/components';
 import CollectionAllLoading from '../loadings/CollectionAllLoading';
+import BentoLoading from '../loadings/BentoLoading';
  
 const RichText = dynamic(
   () => import('./blocks/RichText'), {loading: () => <TextLoading />}
@@ -50,6 +51,10 @@ const AccordionBlock = dynamic(
 
 const IconsBlock = dynamic(
   () => import('./blocks/icon-block/IconsBlock'), {loading: () => <IconsBlockLoading isList={false} className='w-full'/>}
+)
+
+const BentoGridBlock = dynamic(
+  () => import('./blocks/BentoGridBlock'), {loading: () => <BentoLoading />}
 )
 
 const SliderPhotos = dynamic(
@@ -185,6 +190,14 @@ export default function DynamicZone({
     case "ComponentContentAccordion":
       return <AccordionBlock 
               key={`key-${item.__typename}-${item.link}`} 
+              data={item} 
+              headingBig={headingBig} 
+              className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} 
+            />
+
+    case "ComponentContentBentoGrid":
+      return <BentoGridBlock 
+              key={`key-${item.__typename}-${item.link}`}
               data={item} 
               headingBig={headingBig} 
               className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} 

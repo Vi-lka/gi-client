@@ -324,6 +324,27 @@ export type AccordionCompT = z.infer<typeof AccordionCompT>;
 
 
 
+//.........................Accordion.........................//
+export const BentoGridItemT = z.object({
+  title: z.string(),
+  iconReact: z.string().nullable(),
+  image: ImageT,
+  textDescription: z.any(),
+})
+export type BentoGridItemT = z.infer<typeof BentoGridItemT>;
+
+export const BentoGridCompT = z.object({
+  __typename: z.literal("ComponentContentBentoGrid"),
+  title: z.string().nullable(),
+  link: z.string().nullable(),
+  linkTitle: z.string().nullable(),
+  items: BentoGridItemT.array(),
+})
+export type BentoGridCompT = z.infer<typeof BentoGridCompT>;
+
+
+
+
 //.........................FormBlock.........................//
 export const FormBlockItemT = z.object({
   title: z.string(),
@@ -371,6 +392,7 @@ export const DynamicZoneT = z.discriminatedUnion("__typename", [
   NumbersCompT,
   FilesCompT,
   AccordionCompT,
+  BentoGridCompT,
   FormBlockCompT,
 ])
 export type DynamicZoneT = z.infer<typeof DynamicZoneT>;

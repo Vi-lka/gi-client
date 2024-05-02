@@ -26,7 +26,7 @@ export default function DepartmentsBento({
                 
                 return (
                     <BentoGridItem
-                        key={"department-bento" + item.id}
+                        key={"department-bento-" + item.id}
                         header={
                             hasImage ? (
                                 <ClientHydration fallback={<Skeleton className={cn('w-full min-h-24 rounded-2xl', isEach ? "aspect-[4/1]" : "aspect-[2/1]")}/>}>

@@ -158,14 +158,27 @@ export const dynamicContentQuery = `
       title
       file {
         data {
-          attributes {
-            url
-          }
+          attributes { url }
         }
       }
     }
   }
-  ... on ComponentContentAccordion {
+  ... on ComponentContentBentoGrid {
+    title
+    link
+    linkTitle
+    items {
+      title
+      iconReact
+      image {
+        data {
+          attributes { url }
+        }
+      }
+      textDescription
+    }
+  }
+  ...on ComponentContentAccordion {
     title
     link
     linkTitle
@@ -267,6 +280,9 @@ export const dynamicContentLinksQuery = `
     ${sameFields}
   }
   ... on ComponentContentAccordion {
+    ${sameFields}
+  }
+  ... on ComponentContentBentoGrid {
     ${sameFields}
   }
   ... on ComponentContentFormBlock {
