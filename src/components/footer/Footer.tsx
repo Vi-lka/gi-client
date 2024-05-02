@@ -128,7 +128,7 @@ export default async function Footer() {
                                             {item.phone && (
                                                 <Link 
                                                     href={`tel:${item.phone}`} 
-                                                    className='hover:underline underline-offset-2'
+                                                    className='hover:underline underline-offset-2 hover:underline-offset-4 transition-all'
                                                 >
                                                     {item.phone}
                                                 </Link>
@@ -136,7 +136,7 @@ export default async function Footer() {
                                             {item.email && (
                                                 <Link 
                                                     href={`mailto:${item.email}`} 
-                                                    className='hover:underline underline-offset-2'
+                                                    className='hover:underline underline-offset-2 hover:underline-offset-4 transition-all'
                                                 >
                                                     {item.email}
                                                 </Link>  
@@ -145,7 +145,7 @@ export default async function Footer() {
                                                 <Link 
                                                     href={`https://maps.yandex.ru/?text=${item.location}`}
                                                     target="_blank"
-                                                    className='hover:underline underline-offset-2'
+                                                    className='hover:underline underline-offset-2 hover:underline-offset-4 transition-all'
                                                 >
                                                     {item.location}
                                                 </Link>
@@ -164,7 +164,7 @@ export default async function Footer() {
                                             key={index}
                                             href={item.link}
                                             target="_blank"
-                                            className='hover:underline underline-offset-2'
+                                            className='hover:underline underline-offset-2 hover:underline-offset-4 transition-all'
                                         >
                                             <ClientHydration fallback={<Skeleton className='aspect-video xl:w-[140px] w-24 rounded-2xl' />}>
                                                 <ImageComp 

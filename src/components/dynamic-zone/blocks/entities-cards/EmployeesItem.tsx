@@ -12,15 +12,45 @@ import NextLink from 'next/link'
 import React from 'react'
 import { FiPhone } from 'react-icons/fi'
 
-export default function EmployeesItem({
-    locale,
-    employee,
-}: {
+type EmployeesItemT = {
     locale: string,
     employee: EmployeeSingleT,
-}) {
+} & (Connected | NotConnected);
+  
+type Connected = {
+    connected: boolean | null;
+    slug: string | undefined
+};
+type NotConnected = {
+    connected?: undefined;
+};
 
-    const post = employee.attributes.meta?.post
+export default function EmployeesItem(props: EmployeesItemT) {
+    const employee = props.employee
+
+    let postData: {
+        post: string;
+        department: {
+            data: {
+                attributes: {
+                    slug: string;
+                    shortTitle: string;
+                };
+            };
+        };
+    } | undefined
+
+    if (employee.attributes.meta && employee.attributes.meta.posts.length > 0) {
+        if (props.connected) {
+            postData = employee.attributes.meta.posts.find(item => item.department.data.attributes.slug === props.slug)
+        } else if (employee.attributes.head_in_department.data) {
+            postData = employee.attributes.meta.posts.find(item => item.department.data.attributes.slug === employee.attributes.head_in_department.data?.attributes.slug)
+        } else {
+            postData = employee.attributes.meta.posts[0]
+        }
+    
+    }
+
     const degreeShort = employee.attributes.meta?.degreeShort ? employee.attributes.meta.degreeShort : ""
     const rankShort = employee.attributes.meta?.rankShort ? employee.attributes.meta.rankShort : ""
 
@@ -29,7 +59,7 @@ export default function EmployeesItem({
         ? degreeShort + degree_rank_between +  rankShort
         : null
 
-    const post_between = post && (degreeShort.length > 0 || rankShort.length > 0) ? ", " : ""
+    const post_between = postData && (degreeShort.length > 0 || rankShort.length > 0) ? ", " : ""
 
     const phone = employee.attributes.phone
     const email = employee.attributes.email
@@ -39,7 +69,7 @@ export default function EmployeesItem({
         <Card key={"employee" + employee.id} className='h-full group/card border-transparent dark:border-border/20 dark:hover:border-border hover:shadow-lg shadow-md rounded-3xl transition duration-300'>
             <CardContent className="relative w-full h-full flex lg:flex-row flex-col lg:items-center xl:gap-8 gap-6 xl:px-8 p-6 overflow-hidden">
                 <ClientHydration fallback={<Skeleton className='rounded-full aspect-square w-32 lg:mx-0 mx-auto'/>}>
-                    <Link locale={locale} href={`/structure/employees/${employee.attributes.slug}`}>
+                    <Link locale={props.locale} href={`/structure/employees/${employee.attributes.slug}`}>
                         <ImageComp 
                             src={employee.attributes.image.data?.attributes.url}
                             alt="Image"
@@ -53,14 +83,24 @@ export default function EmployeesItem({
     
                 <div className='h-full flex flex-col flex-1 lg:justify-center gap-4 text-primary'>
                     <div className='lg:mt-auto lg:pt-3'>
-                        <Link locale={locale} href={`/structure/employees/${employee.attributes.slug}`} className='w-fit'>
+                        <Link locale={props.locale} href={`/structure/employees/${employee.attributes.slug}`} className='w-fit'>
                             <h4 className='text-lg font-bold line-clamp-5 md:translate-y-1.5 group-hover/card:translate-y-0 transition duration-300 transform-gpu'>
                                 {employee.attributes.title}
                             </h4>
                         </Link>
                         {employee.attributes.meta && (
                             <p className='font-normal text-sm mt-2 md:translate-y-1 group-hover/card:translate-y-0 transition duration-300 transform-gpu'>
-                                {post}<span className='font-normal'>{post_between} {degree_rank}</span>
+                                {postData && (<>
+                                    {postData.post + " "}
+                                    <Link 
+                                        locale={props.locale} href={`/structure/${postData.department.data.attributes.slug}`} 
+                                        className='w-fit hover:underline underline-offset-2 hover:underline-offset-4 transition-all'
+                                    >
+                                        {postData.department.data.attributes.shortTitle}
+                                    </Link>
+                                </>)}
+                                {post_between}
+                                {degree_rank}
                             </p>
                         )}
                     </div>
@@ -78,7 +118,7 @@ export default function EmployeesItem({
                                     <FiPhone className='w-4 h-4' />
                                     <NextLink 
                                         href={`tel:${phone}`} 
-                                        className='flex-1 hover:underline underline-offset-2 group-hover/card:translate-x-0.5 transition transform-gpu duration-300'
+                                        className='flex-1 hover:underline underline-offset-2 hover:underline-offset-4 group-hover/card:translate-x-0.5 transition-all transform-gpu duration-300'
                                     >
                                         {phone}
                                     </NextLink>
@@ -89,7 +129,7 @@ export default function EmployeesItem({
                                     <AtSign className='w-4 h-4' />
                                     <NextLink 
                                         href={`mailto:${email}`} 
-                                        className='flex-1 hover:underline underline-offset-2 group-hover/card:translate-x-0.5 transition transform-gpu duration-300'
+                                        className='flex-1 hover:underline underline-offset-2 hover:underline-offset-4 group-hover/card:translate-x-0.5 transition-all transform-gpu duration-300'
                                     >
                                         {email}
                                     </NextLink>
@@ -101,7 +141,7 @@ export default function EmployeesItem({
                                     <NextLink 
                                         href={`https://maps.yandex.ru/?text=${location}`} 
                                         target='__blank'
-                                        className='flex-1 hover:underline underline-offset-2 group-hover/card:translate-x-0.5 transition transform-gpu duration-300'
+                                        className='flex-1 hover:underline underline-offset-2 hover:underline-offset-4 group-hover/card:translate-x-0.5 transition-all transform-gpu duration-300'
                                     >
                                       {location}
                                     </NextLink>
@@ -112,8 +152,8 @@ export default function EmployeesItem({
                     {employee.attributes.showHashtags && (
                         <ul className='inline-flex flex-wrap gap-2'>
                             {employee.attributes.hashtags.data.map(hashtag => (
-                                <li key={hashtag.attributes.slug} className='text-sm'>
-                                    <Badge className='hover:bg-transparent hover:text-primary dark:bg-accent dark:text-primary dark:hover:bg-transparent border border-border cursor-pointer transition-all'>
+                                <li key={hashtag.attributes.slug}>
+                                    <Badge className='text-xs hover:bg-transparent hover:text-primary dark:bg-accent dark:text-primary dark:hover:bg-transparent border border-border cursor-pointer transition-all'>
                                         #{hashtag.attributes.title}
                                     </Badge>
                                 </li>

@@ -32,11 +32,18 @@ export const getEmployees = async ({
             slug
             title
             meta {
-              post
-              degree
-              degreeShort
-              rank
-              rankShort
+              posts {
+                post
+                department {
+                  data {
+                    attributes {
+                      shortTitle slug
+                    }
+                  }
+                }
+              }
+              degree degreeShort
+              rank rankShort
             }
             description
             image {
@@ -54,6 +61,24 @@ export const getEmployees = async ({
                 attributes {
                   slug
                   title
+                }
+              }
+            }
+            head_in_department {
+              data {
+                id
+                attributes {
+                  shortTitle
+                  slug
+                }
+              }
+            }
+            departments {
+              data {
+                id
+                attributes {
+                  shortTitle
+                  slug
                 }
               }
             }

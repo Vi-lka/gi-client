@@ -159,7 +159,7 @@ function DescriptionItem(props: DescriptionItemT) {
         <NextLink 
             href={props.href}
             target='__blank'
-            className='flex-1 hover:underline underline-offset-2'
+            className='flex-1 hover:underline underline-offset-2 hover:underline-offset-4 transition-all'
         >
             {props.title}
         </NextLink>
@@ -169,7 +169,7 @@ function DescriptionItem(props: DescriptionItemT) {
         <Link 
             locale={props.locale}
             href={props.href}
-            className='flex-1 hover:underline underline-offset-2'
+            className='flex-1 hover:underline underline-offset-2 hover:underline-offset-4 transition-all'
         >
             {props.title}
         </Link>

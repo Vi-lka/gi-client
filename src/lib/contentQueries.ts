@@ -30,7 +30,16 @@ export const employees = `
         slug
         title
         meta {
-          post
+          posts {
+            post
+            department {
+              data {
+                attributes {
+                  shortTitle slug
+                }
+              }
+            }
+          }
           degree
           degreeShort
           rank
@@ -52,6 +61,24 @@ export const employees = `
             attributes {
               slug
               title
+            }
+          }
+        }
+        head_in_department {
+          data {
+            id
+            attributes {
+              shortTitle
+              slug
+            }
+          }
+        }
+        departments {
+          data {
+            id
+            attributes {
+              shortTitle
+              slug
             }
           }
         }

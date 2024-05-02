@@ -54,7 +54,7 @@ export default function DepartmentsItem({
                                     <Link 
                                       locale={locale}
                                       href={`/structure/employees/${item.attributes.head.data.attributes.slug}`}
-                                      className='flex-1 hover:underline underline-offset-2 group-hover/card:translate-x-0.5 transition transform-gpu duration-300'
+                                      className='flex-1 hover:underline underline-offset-2 hover:underline-offset-4 transition-all group-hover/card:translate-x-0.5 transform-gpu duration-300'
                                     >
                                         {item.attributes.head.data.attributes.title}
                                     </Link>
@@ -66,7 +66,7 @@ export default function DepartmentsItem({
                                     <NextLink 
                                         href={item.attributes.contacts.url}
                                         target='__blank'
-                                        className='flex-1 hover:underline underline-offset-2 group-hover/card:translate-x-0.5 transition transform-gpu duration-300'
+                                        className='flex-1 hover:underline underline-offset-2 hover:underline-offset-4 transition-all group-hover/card:translate-x-0.5 transform-gpu duration-300'
                                     >
                                         {new URL(item.attributes.contacts.url).hostname}
                                     </NextLink>
@@ -77,7 +77,7 @@ export default function DepartmentsItem({
                                     <AtSign className='w-auto h-5 ' />
                                     <NextLink 
                                         href={`mailto:${item.attributes.contacts.email}`} 
-                                        className='flex-1 hover:underline underline-offset-2 group-hover/card:translate-x-0.5 transition transform-gpu duration-300'
+                                        className='flex-1 hover:underline underline-offset-2 hover:underline-offset-4 transition-all group-hover/card:translate-x-0.5 transform-gpu duration-300'
                                     >
                                         {item.attributes.contacts.email}
                                     </NextLink>
@@ -88,7 +88,7 @@ export default function DepartmentsItem({
                                     <FiPhone className='w-auto h-5 ' />
                                     <NextLink 
                                         href={`tel:${item.attributes.contacts.phone}`} 
-                                        className='flex-1 hover:underline underline-offset-2 group-hover/card:translate-x-0.5 transition transform-gpu duration-300'
+                                        className='flex-1 hover:underline underline-offset-2 hover:underline-offset-4 transition-all group-hover/card:translate-x-0.5 transform-gpu duration-300'
                                     >
                                         {item.attributes.contacts.phone}
                                     </NextLink>
@@ -100,7 +100,7 @@ export default function DepartmentsItem({
                                     <NextLink 
                                         href={`https://maps.yandex.ru/?text=${item.attributes.contacts.location}`} 
                                         target='__blank'
-                                        className='flex-1 hover:underline underline-offset-2 group-hover/card:translate-x-0.5 transition transform-gpu duration-300'
+                                        className='flex-1 hover:underline underline-offset-2 hover:underline-offset-4 transition-all group-hover/card:translate-x-0.5 transform-gpu duration-300'
                                     >
                                         {item.attributes.contacts.location}
                                     </NextLink>

@@ -133,7 +133,18 @@ export const EmployeeSinglePageT  = z.object({
     title: z.string(),
     image: z.lazy(() => ImageT),
     meta: z.object({
-      post: z.string().nullable(),
+      posts: z.object({
+        post: z.string(),
+        department: z.object({
+          data: z.object({
+            attributes: z.object({
+              slug: z.string(),
+              title: z.string(),
+              shortTitle: z.string(),
+            })
+          })
+        })
+      }).array(),
       degree: z.string().nullable(),
       degreeShort: z.string().nullable(),
       rank: z.string().nullable(),

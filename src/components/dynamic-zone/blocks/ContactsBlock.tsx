@@ -44,7 +44,7 @@ export default function ContactsBlock({
               <FiPhone className='w-6 h-6' />
               <Link 
                 href={`tel:${data.phone}`} 
-                className='flex-1 hover:underline underline-offset-2'
+                className='flex-1 hover:underline underline-offset-2 hover:underline-offset-4 transition-all'
               >
                 {data.phone}
               </Link>
@@ -55,7 +55,7 @@ export default function ContactsBlock({
               <AtSign className='w-6 h-6' />
               <Link 
                 href={`mailto:${data.email}`} 
-                className='flex-1 hover:underline underline-offset-2 truncate'
+                className='flex-1 hover:underline underline-offset-2 hover:underline-offset-4 transition-all truncate'
               >
                 {data.email}
               </Link>
@@ -67,7 +67,7 @@ export default function ContactsBlock({
               <Link 
                 href={`https://maps.yandex.ru/?text=${data.location}`} 
                 target='__blank'
-                className='flex-1 hover:underline underline-offset-2'
+                className='flex-1 hover:underline underline-offset-2 hover:underline-offset-4 transition-all'
               >
                 {data.location}
               </Link>

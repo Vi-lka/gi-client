@@ -48,7 +48,7 @@ export default function Description({
                 <Link 
                   locale={locale}
                   href={`/structure/employees/${head.slug}`}
-                  className='flex-1 hover:underline underline-offset-2'
+                  className='flex-1 hover:underline underline-offset-2 hover:underline-offset-4 transition-all'
                 >
                   {head.title}
                 </Link>
@@ -60,7 +60,7 @@ export default function Description({
                 <NextLink 
                   href={contacts.url}
                   target='__blank'
-                  className='flex-1 hover:underline underline-offset-2'
+                  className='flex-1 hover:underline underline-offset-2 hover:underline-offset-4 transition-all'
                 >
                   {new URL(contacts.url).hostname}
                 </NextLink>
@@ -71,7 +71,7 @@ export default function Description({
                 <AtSign className='w-auto h-5 ' />
                 <NextLink 
                   href={`mailto:${contacts.phone}`} 
-                  className='flex-1 hover:underline underline-offset-2'
+                  className='flex-1 hover:underline underline-offset-2 hover:underline-offset-4 transition-all'
                 >
                   {contacts.email}
                 </NextLink>
@@ -82,7 +82,7 @@ export default function Description({
                 <FiPhone className='w-auto h-5 ' />
                 <NextLink 
                   href={`tel:${contacts.phone}`} 
-                  className='flex-1 hover:underline underline-offset-2'
+                  className='flex-1 hover:underline underline-offset-2 hover:underline-offset-4 transition-all'
                 >
                   {contacts.phone}
                 </NextLink>
@@ -94,7 +94,7 @@ export default function Description({
                 <NextLink 
                   href={`https://maps.yandex.ru/?text=${contacts.location}`} 
                   target='__blank'
-                  className='flex-1 hover:underline underline-offset-2'
+                  className='flex-1 hover:underline underline-offset-2 hover:underline-offset-4 transition-all'
                 >
                   {contacts.location}
                 </NextLink>

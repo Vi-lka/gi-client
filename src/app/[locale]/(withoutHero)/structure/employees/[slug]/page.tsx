@@ -9,6 +9,12 @@ import fetchData from '@/lib/queries/fetchData'
 import { EmployeeSinglePageT } from '@/lib/types/pages'
 import { notFound } from 'next/navigation'
 import React from 'react'
+import Post from './Post'
+import { ClientHydration } from '@/components/ClientHydration'
+import { Skeleton } from '@/components/ui/skeleton'
+import Contacts from './Contacts'
+import { Badge } from '@/components/ui/badge'
+import { getDictionary } from '@/lib/getDictionary'
 
 export default async function EmployeeSinglePage({
   params,
@@ -17,6 +23,8 @@ export default async function EmployeeSinglePage({
   params: { locale: string, slug: string },
   searchParams: { [key: string]: string | string[] | undefined };
 })  {
+
+  const dict = await getDictionary(params.locale);
 
   const getEmployeeBySlug = async (locale: string, slug: string) => {
     const query = /* GraphGL */ `
@@ -50,7 +58,18 @@ export default async function EmployeeSinglePage({
                 }
               }
               meta {
-                post
+                posts {
+                  post
+                  department {
+                    data {
+                      attributes {
+                        slug
+                        title
+                        shortTitle
+                      }
+                    }
+                  }
+                }
                 degree degreeShort
                 rank rankShort
               }
@@ -160,23 +179,53 @@ export default async function EmployeeSinglePage({
         { title: employee.title, slug: params.slug }
       ]}/>
 
-      <div className='grid lg:grid-cols-2 grid-cols-1 gap-8 mt-6'>
+      <div className='grid lg:grid-cols-2 grid-cols-1 lg:gap-8 gap-3 mt-6'>
         <div className='w-full'>
-          <TypographyH1 className='font-semibold text-primary mb-6 lg:text-4xl text-3xl'>
+          <TypographyH1 className='font-semibold text-primary lg:text-4xl text-3xl mb-3'>
             {employee.title}
           </TypographyH1>
 
-          <Anchors data={employee.content} />
+          <Post locale={params.locale} employee={dataResult.value.employee} />
+
+          {employee.description && (
+            <p className='lg:text-base text-sm text-foreground dark:text-muted-foreground lg:mt-6 mt-3'>
+              {employee.description}
+            </p>
+          )}
+
+          {(employee.hashtags.data.length > 0) && (
+            <ul className='inline-flex flex-wrap gap-2 lg:mt-6 mt-3'>
+              {employee.hashtags.data.map(hashtag => (
+                <li key={hashtag.attributes.slug}>
+                  <Badge className='lg:text-sm text-xs hover:bg-transparent hover:text-primary dark:bg-accent dark:text-primary dark:hover:bg-transparent border border-border cursor-pointer transition-all'>
+                    #{hashtag.attributes.title}
+                  </Badge>
+                </li>
+              ))}
+            </ul>
+          )}
+
+          <div className='lg:block hidden mt-6'>
+            <Contacts phone={employee.phone} email={employee.email} location={employee.location} contactsTitle={dict.Entities.Structure.contacts}/>
+            <Anchors data={employee.content}/>
+          </div>
         </div>
 
         <div className='relative w-full aspect-square overflow-hidden rounded-3xl'>
-          <ImageComp 
-            src={employee.image.data?.attributes.url}
-            alt={employee.title}
-            fill
-            sizes='(max-width: 1024px) 100vw, 50vw'
-            className='object-cover'
-          />
+          <ClientHydration fallback={<Skeleton className='w-full h-full'/>}>
+            <ImageComp 
+              src={employee.image.data?.attributes.url}
+              alt={employee.title}
+              fill
+              sizes='(max-width: 1024px) 100vw, 50vw'
+              className='object-cover'
+            />
+          </ClientHydration>
+        </div>
+
+        <div className='lg:hidden block mt-3'>
+          <Contacts phone={employee.phone} email={employee.email} location={employee.location} contactsTitle={dict.Entities.Structure.contacts}/>
+          <Anchors data={employee.content}/>
         </div>
       </div>
 

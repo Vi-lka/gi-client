@@ -90,7 +90,17 @@ export const EmployeeSingleT  = z.object({
     title: z.string(),
     image: z.lazy(() => ImageT),
     meta: z.object({
-      post: z.string().nullable(),
+      posts: z.object({
+        post: z.string(),
+        department: z.object({
+          data: z.object({
+            attributes: z.object({
+              shortTitle: z.string(),
+              slug: z.string(),
+            })
+          })
+        })
+      }).array(),
       degree: z.string().nullable(),
       degreeShort: z.string().nullable(),
       rank: z.string().nullable(),
@@ -102,6 +112,22 @@ export const EmployeeSingleT  = z.object({
     location: z.string().nullable(),
     hashtags: z.object({
       data: HashtagSingleT.array()
+    }),
+    head_in_department: z.object({
+      data: z.object({
+        attributes: z.object({
+          shortTitle: z.string(),
+          slug: z.string()
+        })
+      }).nullable()
+    }),
+    departments: z.object({
+      data: z.object({
+        attributes: z.object({
+          shortTitle: z.string(),
+          slug: z.string()
+        })
+      }).array()
     }),
     showContacts: z.boolean(),
     showHashtags: z.boolean()

@@ -20,7 +20,7 @@ export default function NotFound() {
                         </p>
 
                         <p className="text-lg">
-                            Возможно, вы сможете найти нужный вам материал на <Link href="/just-wait" className='text-primary font-bold hover:underline'>временной странице</Link>.
+                            Возможно, вы сможете найти нужный вам материал на <Link href="/just-wait" className='text-primary font-bold hover:underline underline-offset-2 hover:underline-offset-4 transition-all'>временной странице</Link>.
                         </p>
                     </div>
 

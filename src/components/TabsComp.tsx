@@ -27,9 +27,6 @@ type NoDefaultValue = {
 };
 
 export default function TabsComp(props: Props) {
-
-    const [selectedTab, setSelectedTab] = useState(props.tabs[0]);
-
     const maxCount = props.tabs.reduce((acc, tab) => {
         if (tab.count && tab.count > acc) {
             return tab.count
@@ -44,6 +41,11 @@ export default function TabsComp(props: Props) {
     } else {
         defaultValue = props.tabs.filter(tab => tab.count === maxCount)[0].value
     }
+
+    const defaultTab = props.tabs.find(tab => tab.value === defaultValue)
+    const switchStartTab = (props.tabs[0].count === 0) || (props.tabs[0].count === undefined)
+
+    const [selectedTab, setSelectedTab] = useState((switchStartTab && defaultTab) ? defaultTab : props.tabs[0]);
 
     return (
         <Tabs 

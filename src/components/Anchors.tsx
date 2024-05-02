@@ -1,11 +1,14 @@
 import type { DynamicZoneT } from '@/lib/types/components'
+import { cn } from '@/lib/utils';
 import Link from 'next/link'
 import React from 'react'
 
 export default function Anchors({
-    data
+    data,
+    className
 }: {
-    data: DynamicZoneT[]
+    data: DynamicZoneT[],
+    className?: string;
 }) {
     const anchors = data.map(item => {
         const label = item.linkTitle ? item.linkTitle : item.title
@@ -13,8 +16,10 @@ export default function Anchors({
         return { label, link }
     })
 
+    if (anchors.length === 0) return null
+
     return (
-        <div className='flex flex-wrap gap-y-3 lg:gap-x-6 gap-x-3 mt-6'>
+        <div className={cn('flex flex-wrap gap-y-3 lg:gap-x-6 gap-x-3 mt-6', className)}>
             {anchors.map((anchor, index) => {
                 if (typeof anchor.label === "string" && typeof anchor.link === "string") return (
                     <Link 

@@ -30,7 +30,7 @@ export default async function NotFound() {
                     </p>
 
                     <p className="text-lg">
-                        {dict.JustWaitPage.description} <Link locale={header_locale} href="/just-wait" className='text-primary font-bold hover:underline'>{dict.JustWaitPage.descriptionLink}</Link>.
+                        {dict.JustWaitPage.description} <Link locale={header_locale} href="/just-wait" className='text-primary font-bold hover:underline underline-offset-2 hover:underline-offset-4 transition-all'>{dict.JustWaitPage.descriptionLink}</Link>.
                     </p>
                 </div>
 
