@@ -1,13 +1,13 @@
 import React from 'react'
 import { BentoGrid, BentoGridItem } from '../ui/aceternity/bento-grid'
-import { calcEach, cn } from '@/lib/utils'
+import { calcBento, cn } from '@/lib/utils'
 import { Skeleton } from '../ui/skeleton'
 
 export default function BentoLoading() {
     return (
         <BentoGrid>
             {Array.from({ length: 7 }).map((_, index) => {
-                const isEach = calcEach(index, 3, 3)
+                const isEach = calcBento(index, 7)
 
                 return (
                     <BentoGridItem 

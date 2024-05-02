@@ -2,7 +2,7 @@ import { ClientHydration } from '@/components/ClientHydration'
 import { BentoGrid, BentoGridItem } from '@/components/ui/aceternity/bento-grid'
 import { Skeleton } from '@/components/ui/skeleton'
 import type { DepartmentSingleT, DepartmentsT } from '@/lib/types/entities'
-import { calcEach, cn, getShortText } from '@/lib/utils'
+import { cn, getShortText, calcBento } from '@/lib/utils'
 import { AtSign, ChevronRight, CircleUser, Globe, MapPin } from 'lucide-react'
 import React from 'react'
 import { FiPhone } from 'react-icons/fi'
@@ -21,7 +21,7 @@ export default function DepartmentsBento({
     return (
         <BentoGrid>
             {departments.data.map((item, i) => {
-                const isEach = calcEach(i, 3, 3)
+                const isEach = calcBento(i, departments.data.length)
                 const hasImage = Boolean(item.attributes.image.data?.attributes.url)
                 
                 return (

@@ -72,7 +72,7 @@ export function getDateLocale(locale: keyof DictionariesType) {
 
 export function formatDate(date: Date, locale: string) {
   const str = format(date, "P", { 
-      locale: getDateLocale(locale as keyof DictionariesType)
+    locale: getDateLocale(locale as keyof DictionariesType)
   })
   return str
 }
@@ -87,17 +87,53 @@ export function shortUrl(url: string | null | undefined) {
   return shorter;
 }
 
-export function calcEach(index: number, each: number, gap: number) {
-  const inEach = each + gap + 1
+// export function isEach(index: number, each: number, gap: number) {
 
-  if (index < gap) return false
+//   const inEach = each + gap + 1
 
-  if (index - inEach <= 0) {
-      if (index % each === 0) return true
-      else return false
-  } else if ((index - inEach) % each === 0) {
-      return true
-  } else return false
+//   if (index < gap) return false
+
+//   if (index - inEach <= 0) {
+//       if (index % each === 0) return true
+//       else return false
+//   } else if ((index - inEach) % each === 0) {
+//       return true
+//   } else return false
+// }
+
+export function calcEach(index: number, skip: number, gap: number) {
+
+  const inEach = skip + gap + 2
+
+  let currentIndex = index+1
+
+  if (currentIndex > inEach) {
+    while (currentIndex > inEach) {
+      currentIndex = currentIndex - inEach
+    }
+  }
+
+  if (currentIndex <= gap) return false
+
+  if ((currentIndex === inEach) || (currentIndex === (inEach - gap))) return true
+}
+
+export function calcBento(index: number, length: number) {
+  const isEven = length % 2 === 0
+  const isMultipleSeven = length % 7 === 0
+  const isMultipleFive = length % 5 === 0
+  const isMultipleThree = length % 3 === 0
+
+  if (length === 3) return calcEach(index, 0, 3)
+  if (isMultipleFive || isMultipleSeven) {
+    return calcEach(index, 2, 3)
+  }
+  if (isMultipleThree) {
+    return calcEach(index, ((index === 1) || (index === 8)) ? 0 : 1, 0)
+  }
+  if (isEven) {
+    return calcEach(index, (index === 1) ? 0 : 1, (index === 6) ? 1 : 0)
+  }
 }
 
 export const grayscale = "lg:dark:grayscale-[60%] lg:dark:contrast-[1.2] dark:grayscale-[30%] dark:contrast-[1.05] dark:hover:grayscale-0 dark:hover:contrast-100 transition-[filter] duration-200 ease-in"
