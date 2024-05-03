@@ -1,5 +1,6 @@
+"use server"
+
 import { localesCodes } from '@/static/locales';
-import 'server-only'
 
 export interface DictionariesType {
   ru: () => Promise<Dictionary>;

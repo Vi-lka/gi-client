@@ -1,3 +1,5 @@
+"use server"
+
 import { notFound } from "next/navigation";
 import type { EducationalProgramTypeEnum} from "../types/entities";
 import { EducationalProgramsT } from "../types/entities";

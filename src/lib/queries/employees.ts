@@ -1,3 +1,5 @@
+"use server"
+
 import { notFound } from "next/navigation";
 import { EmployeesT } from "../types/entities";
 import fetchData from "./fetchData";

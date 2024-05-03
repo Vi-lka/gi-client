@@ -1,3 +1,5 @@
+"use server"
+
 import { notFound } from "next/navigation";
 import fetchData from "./fetchData";
 import type { StructureCategoryEnum } from "../types/entities";

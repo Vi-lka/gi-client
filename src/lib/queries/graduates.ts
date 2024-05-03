@@ -1,3 +1,5 @@
+"use server"
+
 import { notFound } from "next/navigation";
 import { educationalPrograms } from "../contentQueries";
 import { GraduatesT } from "../types/entities";

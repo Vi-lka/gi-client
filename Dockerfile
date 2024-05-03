@@ -52,7 +52,7 @@ ENV RESEND_API_KEY=${RESEND_API_KEY}
 
 RUN pnpm install
 
-RUN pnpm i --config.arch=x64 --config.platform=linux --config.libc=musl sharp@0.32.6
+RUN pnpm i --config.arch=x64 --config.platform=linux --config.libc=musl sharp@0.33.3
 
 # Build Next.js based on the preferred package manager
 RUN pnpm build

@@ -1,3 +1,5 @@
+"use server"
+
 import { notFound } from "next/navigation";
 import { DpoCoursesT } from "../types/entities";
 import fetchData from "./fetchData";

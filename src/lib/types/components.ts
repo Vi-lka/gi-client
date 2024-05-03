@@ -125,6 +125,8 @@ export const CollectionAllCompT = z.object({
   linkTitle: z.string().nullable(),
   entity: CollectionAllEnum.array(),
   connected: z.boolean().nullable(),
+  showSearch: z.boolean().nullable(),
+  showFilters: z.boolean().nullable(),
 })
 export type CollectionAllCompT = z.infer<typeof CollectionAllCompT>;
 

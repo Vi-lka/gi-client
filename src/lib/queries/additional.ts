@@ -1,3 +1,5 @@
+"use server"
+
 import { notFound } from "next/navigation";
 import { dynamicContentLinksQuery } from "../dynamicContentQuery";
 import { LinksT, NavBarT } from "../types/additional";

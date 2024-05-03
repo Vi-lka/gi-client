@@ -1,3 +1,5 @@
+"use server"
+
 export default async function fetchData<T>({
   query,
   error,
