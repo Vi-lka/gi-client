@@ -4,31 +4,66 @@ import { headers } from 'next/headers';
 import React from 'react'
 import EmployeesItem from '../entities-cards/EmployeesItem';
 import { getEmployees } from '@/lib/queries/employees';
+import type { CollectionAllCompT } from '@/lib/types/components';
+import SearchField from '@/components/search/SearchField';
+import { getDictionary } from '@/lib/getDictionary';
 
 const DEFAULT_PAGE_SIZE = 12;
 
 export default async function EmployeesAll({
     searchParams,
-    connected,
+    data
 }: {
     searchParams: { [key: string]: string | string[] | undefined };
-    connected?: boolean | null;
+    data: CollectionAllCompT,
 }) {
 
     const headersList = headers();
     const locale = headersList.get('x-locale') || "";
     const slug = headersList.get('x-slug') || undefined;
 
-    const sort = searchParams["sort"] as string | undefined;
-    const search = searchParams["search"] as string | undefined;
+    const dict = await getDictionary(locale)
+
+    return (
+        <>
+            {data.showSearch && (
+                <div className='w-full'>
+                    <SearchField placeholder={dict.Inputs.search} param='search_employees' className='mb-6' />
+                </div>
+            )}
+            {data.showFilters && (
+                <div className='grid lg:grid-cols-2 grid-cols-1'>
+                    <div className='lg:order-1 order-2'>
+                
+                    </div>
+                    <div className='lg:order-2 order-1'>
+                
+                    </div>
+                </div>
+            )}
+            <EmployeesAllContent locale={locale} slug={slug} searchParams={searchParams} connected={data.connected} />
+        </>
+    )
+}
+
+async function EmployeesAllContent({
+    locale,
+    slug,
+    searchParams,
+    connected,
+}: {
+    locale: string,
+    slug: string | undefined,
+    searchParams: { [key: string]: string | string[] | undefined };
+    connected?: boolean | null
+}) {
+    const search = searchParams[`search_employees`] as string | undefined;
     const page = searchParams["page_employees"] ?? "1";
     const pageSize = searchParams["per_employees"] ?? DEFAULT_PAGE_SIZE;
 
-
     const [ dataResult ] = await Promise.allSettled([ 
-        getEmployees({ 
+        getEmployees({
             locale,
-            sort, 
             search, 
             page: Number(page), 
             pageSize: Number(pageSize),

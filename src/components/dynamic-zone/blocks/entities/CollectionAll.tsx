@@ -24,13 +24,11 @@ const GraduatesAll = dynamic(
 export default function CollectionAll({ 
     data,
     searchParams,
-    connected,
     headingBig,
     className,
 }: { 
     data: CollectionAllCompT,
     searchParams: { [key: string]: string | string[] | undefined },
-    connected?: boolean | null,
     headingBig?: boolean,
     className?: string,
 }) {
@@ -50,16 +48,16 @@ export default function CollectionAll({
             {data.entity.map((item, index) => {
                 switch (item) {
                     case "educational-programs":
-                        return <EducationalProgramsAll key={index} searchParams={searchParams} connected={connected} />;
+                        return <EducationalProgramsAll key={index} searchParams={searchParams} connected={data.connected} />;
                     
                     case "dpo-courses":
-                        return <DpoCoursesAll key={index} searchParams={searchParams} connected={connected} />;
+                        return <DpoCoursesAll key={index} searchParams={searchParams} connected={data.connected} />;
 
                     case "employees":
-                        return <EmployeesAll key={index} searchParams={searchParams} connected={connected} />;
+                        return <EmployeesAll key={index} searchParams={searchParams} data={data} />;
                     
                     case "graduates":
-                        return <GraduatesAll key={index} searchParams={searchParams} connected={connected} />
+                        return <GraduatesAll key={index} searchParams={searchParams} connected={data.connected} />
                 
                     default:
                         return null;

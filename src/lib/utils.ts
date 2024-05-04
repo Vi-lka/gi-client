@@ -87,20 +87,6 @@ export function shortUrl(url: string | null | undefined) {
   return shorter;
 }
 
-// export function isEach(index: number, each: number, gap: number) {
-
-//   const inEach = each + gap + 1
-
-//   if (index < gap) return false
-
-//   if (index - inEach <= 0) {
-//       if (index % each === 0) return true
-//       else return false
-//   } else if ((index - inEach) % each === 0) {
-//       return true
-//   } else return false
-// }
-
 export function calcEach(index: number, skip: number, gap: number) {
 
   const inEach = skip + gap + 2
@@ -134,6 +120,18 @@ export function calcBento(index: number, length: number) {
   if (isEven) {
     return calcEach(index, (index === 1) ? 0 : 1, (index === 6) ? 1 : 0)
   }
+}
+
+export function resetPaginationts(params: URLSearchParams) {
+  const hasPage = params.has("page");
+  const hasPageEmployees = params.has("page_employees");
+  const hasPageDpo = params.has("page_dpo");
+  const hasPageDepartments = params.has("page_departments");
+
+  if (hasPage) params.set("page", "1");
+  if (hasPageEmployees) params.set("page_employees", "1");
+  if (hasPageDpo) params.set("page_dpo", "1");
+  if (hasPageDepartments) params.set("page_departments", "1");
 }
 
 export const grayscale = "lg:dark:grayscale-[60%] lg:dark:contrast-[1.2] dark:grayscale-[30%] dark:contrast-[1.05] dark:hover:grayscale-0 dark:hover:contrast-100 transition-[filter] duration-200 ease-in"

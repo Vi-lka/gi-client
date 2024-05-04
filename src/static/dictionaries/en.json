@@ -64,6 +64,9 @@
     "tryAgain": "Try Again",
     "goBack": "Go Back"
   },
+  "Inputs": {
+    "search": "Search"
+  },
   "NotFound": {
     "title": "Not found"
   },
