@@ -208,6 +208,10 @@
   }
 }
 
+.popper-fit [data-radix-popper-content-wrapper] {
+  min-width: auto !important;
+}
+
 main {
   scroll-behavior: smooth !important;
 }

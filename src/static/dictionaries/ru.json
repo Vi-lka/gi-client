@@ -65,7 +65,8 @@
     "goBack": "Вернуться"
   },
   "Inputs": {
-    "search": "Поиск"
+    "search": "Поиск",
+    "departments": "Поиск по структуре"
   },
   "NotFound": {
     "title": "Не найдено"

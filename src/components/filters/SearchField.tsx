@@ -95,7 +95,7 @@ export default function SearchField({
         placeholder={placeholder}
         className={cn(
           "transition-all",
-          focus ? "ring-ring w-full ring-2 ring-offset-2" : "w-full",
+          focus ? "ring-ring w-full ring-1 ring-offset-0" : "w-full",
           className
         )}
       >

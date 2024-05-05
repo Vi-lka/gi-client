@@ -65,7 +65,8 @@
     "goBack": "Go Back"
   },
   "Inputs": {
-    "search": "Search"
+    "search": "Search",
+    "departments": "Search by department"
   },
   "NotFound": {
     "title": "Not found"

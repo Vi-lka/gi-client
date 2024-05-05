@@ -5,8 +5,9 @@ import React from 'react'
 import EmployeesItem from '../entities-cards/EmployeesItem';
 import { getEmployees } from '@/lib/queries/employees';
 import type { CollectionAllCompT } from '@/lib/types/components';
-import SearchField from '@/components/search/SearchField';
+import SearchField from '@/components/filters/SearchField';
 import { getDictionary } from '@/lib/getDictionary';
+import DepartmentsFilter from '@/components/filters/entities/DepartmentsFilter';
 
 const DEFAULT_PAGE_SIZE = 12;
 
@@ -28,16 +29,16 @@ export default async function EmployeesAll({
         <>
             {data.showSearch && (
                 <div className='w-full'>
-                    <SearchField placeholder={dict.Inputs.search} param='search_employees' className='mb-6' />
+                    <SearchField placeholder={dict.Inputs.search} param='search_employees' className='mb-3' />
                 </div>
             )}
             {data.showFilters && (
-                <div className='grid lg:grid-cols-2 grid-cols-1'>
+                <div className='grid lg:grid-cols-2 grid-cols-1 lg:gap-8 gap-6 mb-6'>
                     <div className='lg:order-1 order-2'>
-                
+                        <DepartmentsFilter searchParams={searchParams} />
                     </div>
                     <div className='lg:order-2 order-1'>
-                
+
                     </div>
                 </div>
             )}
@@ -60,6 +61,11 @@ async function EmployeesAllContent({
     const search = searchParams[`search_employees`] as string | undefined;
     const page = searchParams["page_employees"] ?? "1";
     const pageSize = searchParams["per_employees"] ?? DEFAULT_PAGE_SIZE;
+    const departmentsParam = searchParams["departments"] as string | undefined;
+
+    const departments = departmentsParam?.split("_or_")
+
+    console.log(departments)
 
     const [ dataResult ] = await Promise.allSettled([ 
         getEmployees({
@@ -67,7 +73,8 @@ async function EmployeesAllContent({
             search, 
             page: Number(page), 
             pageSize: Number(pageSize),
-            filterBy: connected ? slug : undefined
+            filterBy: connected ? slug : undefined,
+            departments
         }) 
     ]);
     if (dataResult.status === "rejected") return (
