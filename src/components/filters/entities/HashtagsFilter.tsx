@@ -1,11 +1,11 @@
 import ErrorHandler from '@/components/errors/ErrorHandler';
 import { getDictionary } from '@/lib/getDictionary';
-import { getDepartments } from '@/lib/queries/departments';
+import { getHashtags } from '@/lib/queries/hashtags';
 import { headers } from 'next/headers';
 import React from 'react'
 import { Select } from '../Select';
 
-export default async function DepartmentsFilter({
+export default async function HashtagsFilter({
     // searchParams
 }: {
     searchParams: { [key: string]: string | string[] | undefined };
@@ -17,15 +17,14 @@ export default async function DepartmentsFilter({
     const dict = await getDictionary(locale)
 
     const [ dataResult ] = await Promise.allSettled([ 
-        getDepartments({
-            locale,
-            sort: "title:asc"
+        getHashtags({ 
+            locale
         }) 
     ]);
     if (dataResult.status === "rejected") return (
         <ErrorHandler
             error={dataResult.reason as unknown}
-            place="Departments Filter"
+            place="Hashtags Filter"
             notFound={false}
         />
     )
@@ -35,6 +34,6 @@ export default async function DepartmentsFilter({
     ))
 
     return (
-        <Select isMulti values={values} param='departments' placeholder={dict.Inputs.departments} align="center" className='max-w-none'/>
+        <Select isMulti values={values} param='hashtags' placeholder={dict.Inputs.hashtags} align="center" className='max-w-none'/>
     )
 }

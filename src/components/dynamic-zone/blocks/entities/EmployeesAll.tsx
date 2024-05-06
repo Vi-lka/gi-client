@@ -8,6 +8,7 @@ import type { CollectionAllCompT } from '@/lib/types/components';
 import SearchField from '@/components/filters/SearchField';
 import { getDictionary } from '@/lib/getDictionary';
 import DepartmentsFilter from '@/components/filters/entities/DepartmentsFilter';
+import HashtagsFilter from '@/components/filters/entities/HashtagsFilter';
 
 const DEFAULT_PAGE_SIZE = 12;
 
@@ -33,13 +34,9 @@ export default async function EmployeesAll({
                 </div>
             )}
             {data.showFilters && (
-                <div className='grid lg:grid-cols-2 grid-cols-1 lg:gap-8 gap-6 mb-6'>
-                    <div className='lg:order-1 order-2'>
-                        <DepartmentsFilter searchParams={searchParams} />
-                    </div>
-                    <div className='lg:order-2 order-1'>
-
-                    </div>
+                <div className='grid lg:grid-cols-2 grid-cols-1 lg:gap-8 gap-3 mb-6'>
+                    <DepartmentsFilter searchParams={searchParams} />
+                    <HashtagsFilter searchParams={searchParams} />
                 </div>
             )}
             <EmployeesAllContent locale={locale} slug={slug} searchParams={searchParams} connected={data.connected} />
@@ -62,10 +59,10 @@ async function EmployeesAllContent({
     const page = searchParams["page_employees"] ?? "1";
     const pageSize = searchParams["per_employees"] ?? DEFAULT_PAGE_SIZE;
     const departmentsParam = searchParams["departments"] as string | undefined;
+    const hashtagsParam = searchParams["hashtags"] as string | undefined;
 
     const departments = departmentsParam?.split("_or_")
-
-    console.log(departments)
+    const hashtags = hashtagsParam?.split("_or_")
 
     const [ dataResult ] = await Promise.allSettled([ 
         getEmployees({
@@ -74,7 +71,8 @@ async function EmployeesAllContent({
             page: Number(page), 
             pageSize: Number(pageSize),
             filterBy: connected ? slug : undefined,
-            departments
+            departments,
+            hashtags
         }) 
     ]);
     if (dataResult.status === "rejected") return (

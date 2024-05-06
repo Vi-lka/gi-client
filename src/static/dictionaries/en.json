@@ -66,7 +66,8 @@
   },
   "Inputs": {
     "search": "Search",
-    "departments": "Search by department"
+    "departments": "Search by department",
+    "hashtags": "Search by hashtag"
   },
   "NotFound": {
     "title": "Not found"

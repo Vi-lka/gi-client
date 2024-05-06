@@ -58,6 +58,7 @@ export const employees = `
         location
         hashtags {
           data {
+            id
             attributes {
               slug
               title

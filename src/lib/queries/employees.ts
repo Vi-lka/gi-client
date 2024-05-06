@@ -14,6 +14,7 @@ export const getEmployees = async ({
   search,
   filterBy,
   departments,
+  hashtags
 }: {
   locale: string,
   page?: number;
@@ -22,6 +23,7 @@ export const getEmployees = async ({
   search?: string;
   filterBy?: string;
   departments?: string[]
+  hashtags?: string[]
 }): Promise<EmployeesT> => {
   const query = /* GraphGL */ `
     query Employees($locale: I18NLocaleCode, $filters: EmployeeFiltersInput, $sort: [String], $pagination: PaginationArg) {
@@ -63,6 +65,7 @@ export const getEmployees = async ({
             location
             hashtags {
               data {
+                id
                 attributes {
                   slug
                   title
@@ -171,7 +174,10 @@ export const getEmployees = async ({
       pagination: { page, pageSize },
       filters: {
         departments: departments ? {
-          slug: { in: departments }
+          id: { in: departments }
+        } : undefined,
+        hashtags: hashtags ? {
+          id: { in: hashtags }
         } : undefined,
         and: [
           {...connectedFilter},

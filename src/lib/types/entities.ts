@@ -3,6 +3,7 @@ import { ImageT } from "./components";
 
 //.........................Hashtags.........................//
 export const HashtagSingleT  = z.object({
+  id: z.string(),
   attributes: z.object({
     slug: z.string(),
     title: z.string()

@@ -152,10 +152,11 @@ export function Select({
           {isPendingRouter ? (
             <Loader2 className="animate-spin" />
           ) : (
-            <span className="truncate font-normal">
+            <span className="truncate font-normal lg:text-base">
               {selectedValues.length === 0 && placeholder}
               {selectedValues.length === 1 && selectedValues[0].label}
-              {selectedValues.length >= 2 && `${selectedValues.length} Выбрано`}
+              {selectedValues.length === 2 && selectedValues[0].label + ", " + selectedValues[1].label}
+              {selectedValues.length >= 3 && `${selectedValues.length} Выбрано`}
             </span>
           )}
         </div>

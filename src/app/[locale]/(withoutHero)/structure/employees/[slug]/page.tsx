@@ -79,6 +79,7 @@ export default async function EmployeeSinglePage({
               location
               hashtags {
                 data {
+                  id
                   attributes {
                     slug
                     title
