@@ -134,4 +134,49 @@ export function resetPaginationts(params: URLSearchParams) {
   if (hasPageDepartments) params.set("page_departments", "1");
 }
 
+
+export function objectToArray<A>(input: { [s: string]: A }): A[] {
+  return Object.entries(input)
+    .map(a => {
+      return {...a[1]}
+    })
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function updateValueByKey<T extends object>(key: string, newValue: any, obj: T) {
+  const newObj = { ...obj };
+
+  for (const prop in newObj) {
+    if (prop === key) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      newObj[prop] = newValue;
+    } else if (typeof newObj[prop] === 'object') {
+      (newObj[prop] as object) = updateValueByKey(key, newValue, newObj[prop] as object);
+    }
+  }
+
+  return newObj
+}
+
+
+export function genSearchFilter<T extends object>(key: string, newValue: string | undefined, obj: {or: T[]},) {
+
+  if (!newValue) return undefined
+
+  const searchArr = newValue?.split(" ")
+
+  const objects = searchArr.map((item) => {
+    const newObj = updateValueByKey(key, item, obj)
+
+    if (newObj?.or) {
+      const resultArray = {or: 
+        objectToArray((newObj as {or: {}}).or)
+      }
+      return resultArray
+    }  
+  })
+
+  return objects
+}
+
 export const grayscale = "lg:dark:grayscale-[60%] lg:dark:contrast-[1.2] dark:grayscale-[30%] dark:contrast-[1.05] dark:hover:grayscale-0 dark:hover:contrast-100 transition-[filter] duration-200 ease-in"

@@ -3,6 +3,7 @@
 import { notFound } from "next/navigation";
 import { EmployeesT } from "../types/entities";
 import fetchData from "./fetchData";
+import { genSearchFilter } from "../utils";
 
 //.........................Employees.........................//
 export const getEmployees = async ({
@@ -112,6 +113,55 @@ export const getEmployees = async ({
       ]
     } : undefined
   
+  const searchFilter = genSearchFilter(
+    "containsi",
+    search,
+    {or: [
+      {title: { containsi: search }},
+      {description: { containsi: search }},
+      {meta: {
+        degree: { containsi: search }
+      }},
+      {meta: {
+        degreeShort: { containsi: search }
+      }},
+      {meta: {
+        rank: { containsi: search }
+      }},
+      {meta: {
+        rankShort: { containsi: search }
+      }},
+      {meta: {
+        posts: {
+          post: { containsi: search }
+        }
+      }},
+      {meta: {
+        posts: {
+          department: {
+            title: { containsi: search }
+          }
+        }
+      }},
+      {meta: {
+        posts: {
+          department: {
+            shortTitle: { containsi: search }
+          }
+        }
+      }},
+      {head_in_department: {
+        title: { containsi: search }
+      }},
+      {head_in_department: {
+        shortTitle: { containsi: search }
+      }},
+      {hashtags: {
+        title: { containsi: search }
+      }}
+    ]}
+  )
+
   const json = await fetchData<{ data: { employees: EmployeesT }; }>({ 
     query, 
     error: "Failed to fetch Employees", 
@@ -125,11 +175,51 @@ export const getEmployees = async ({
         } : undefined,
         and: [
           {...connectedFilter},
-          {or: [
-            {title: {
-              containsi: search
-            }},
-          ]}
+          {or: searchFilter}
+          // {or: [
+          //   {title: { containsi: search }},
+          //   {description: { containsi: search }},
+          //   {meta: {
+          //     degree: { containsi: search }
+          //   }},
+          //   {meta: {
+          //     degreeShort: { containsi: search }
+          //   }},
+          //   {meta: {
+          //     rank: { containsi: search }
+          //   }},
+          //   {meta: {
+          //     rankShort: { containsi: search }
+          //   }},
+          //   {meta: {
+          //     posts: {
+          //       post: { containsi: search }
+          //     }
+          //   }},
+          //   {meta: {
+          //     posts: {
+          //       department: {
+          //         title: { containsi: search }
+          //       }
+          //     }
+          //   }},
+          //   {meta: {
+          //     posts: {
+          //       department: {
+          //         shortTitle: { containsi: search }
+          //       }
+          //     }
+          //   }},
+          //   {head_in_department: {
+          //     title: { containsi: search }
+          //   }},
+          //   {head_in_department: {
+          //     shortTitle: { containsi: search }
+          //   }},
+          //   {hashtags: {
+          //     title: { containsi: search }
+          //   }}
+          // ]}
         ]
       }
     }
