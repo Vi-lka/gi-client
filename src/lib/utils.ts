@@ -144,6 +144,8 @@ export function objectToArray<A>(input: { [s: string]: A }): A[] {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function updateValueByKey<T extends object>(key: string, newValue: any, obj: T) {
+  if (!newValue || String(newValue).length === 0) return obj
+  
   const newObj = { ...obj };
 
   for (const prop in newObj) {
