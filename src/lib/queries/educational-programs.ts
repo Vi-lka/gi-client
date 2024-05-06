@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import type { EducationalProgramTypeEnum} from "../types/entities";
 import { EducationalProgramsT } from "../types/entities";
 import fetchData from "./fetchData";
+import { genSearchFilter } from "../utils";
 
 //.........................Educational Programs.........................//
 export const getEducationalPrograms = async ({
@@ -14,6 +15,7 @@ export const getEducationalPrograms = async ({
   sort = "order:asc",
   search,
   filterBy,
+  departments
 }: {
   locale: string,
   page?: number;
@@ -22,6 +24,7 @@ export const getEducationalPrograms = async ({
   sort?: string;
   search?: string;
   filterBy?: string;
+  departments?: string[]
 }): Promise<EducationalProgramsT> => {
   const query = /* GraphGL */ `
     query EducationalPrograms($locale: I18NLocaleCode, $sort: [String], $pagination: PaginationArg, $filters: EducationalProgramFiltersInput) {
@@ -63,7 +66,32 @@ export const getEducationalPrograms = async ({
           slug: { eqi: filterBy }
         }}
       ]
-    } : undefined
+    } : undefined;
+
+  const searchFilter = genSearchFilter(
+    "containsi",
+    search,
+    {or: [
+      {title: {
+        containsi: search
+      }},
+      {code: {
+        containsi: search
+      }},
+      {mainName: {
+        containsi: search
+      }},
+      {mainCode: {
+        containsi: search
+      }},
+      {department: {
+        title: { containsi: search }
+      }},
+      {department: {
+        shortTitle: { containsi: search }
+      }}
+    ]}
+  )
   
   const json = await fetchData<{ data: { educationalPrograms: EducationalProgramsT }; }>({ 
     query, 
@@ -76,22 +104,12 @@ export const getEducationalPrograms = async ({
         type: {
           containsi: type
         },
+        department: departments ? {
+          id: { in: departments }
+        } : undefined,
         and: [
           {...connectedFilter},
-          {or: [
-            {title: {
-              containsi: search
-            }},
-            {code: {
-              containsi: search
-            }},
-            {mainName: {
-              containsi: search
-            }},
-            {mainCode: {
-              containsi: search
-            }}
-          ]}
+          {or: searchFilter}
         ]
       }
     }

@@ -4,24 +4,27 @@ import { notFound } from "next/navigation";
 import { educationalPrograms } from "../contentQueries";
 import { GraduatesT } from "../types/entities";
 import fetchData from "./fetchData";
+import { genSearchFilter } from "../utils";
 
 //.........................Graduates.........................//
 export const getGraduates = async ({
   locale,
   page,
   pageSize,
+  sort = "title:asc",
   search,
   filterBy,
 }: {
   locale: string,
   page?: number;
   pageSize?: number;
+  sort?: string;
   search?: string;
   filterBy?: string;
 }): Promise<GraduatesT> => {
   const query = /* GraphGL */ `
-  query Graduates($locale: I18NLocaleCode, $pagination: PaginationArg, $filters: GraduateFiltersInput) {
-    graduates(locale: $locale, pagination: $pagination, filters: $filters) {
+  query Graduates($locale: I18NLocaleCode, $pagination: PaginationArg, $sort: [String], $filters: GraduateFiltersInput) {
+    graduates(locale: $locale, pagination: $pagination, sort: $sort, filters: $filters) {
       meta {
         pagination {
           total
@@ -69,28 +72,35 @@ export const getGraduates = async ({
           }
         }},
       ]
-    } : undefined
+    } : undefined;
+
+  const searchFilter = genSearchFilter(
+    "containsi",
+    search,
+    {or: [
+      {title: {
+        containsi: search
+      }},
+      {description: {
+        containsi: search
+      }},
+      {additionalInfo: {
+        containsi: search
+      }}
+    ]}
+  )
   
   const json = await fetchData<{ data: { graduates: GraduatesT }; }>({
     query, 
     error: "Failed to fetch Graduates", 
     variables: {
       locale,
+      sort,
       pagination: { page, pageSize },
       filters: {
         and: [
           {...connectedFilter},
-          {or: [
-            {title: {
-              containsi: search
-            }},
-            {description: {
-              containsi: search
-            }},
-            {additionalInfo: {
-              containsi: search
-            }}
-          ]}
+          {or: searchFilter}
         ]
       }
     }

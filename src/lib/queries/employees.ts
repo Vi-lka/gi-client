@@ -114,7 +114,7 @@ export const getEmployees = async ({
           slug: { eqi: filterBy }
         }}
       ]
-    } : undefined
+    } : undefined;
   
   const searchFilter = genSearchFilter(
     "containsi",
@@ -182,50 +182,6 @@ export const getEmployees = async ({
         and: [
           {...connectedFilter},
           {or: searchFilter}
-          // {or: [
-          //   {title: { containsi: search }},
-          //   {description: { containsi: search }},
-          //   {meta: {
-          //     degree: { containsi: search }
-          //   }},
-          //   {meta: {
-          //     degreeShort: { containsi: search }
-          //   }},
-          //   {meta: {
-          //     rank: { containsi: search }
-          //   }},
-          //   {meta: {
-          //     rankShort: { containsi: search }
-          //   }},
-          //   {meta: {
-          //     posts: {
-          //       post: { containsi: search }
-          //     }
-          //   }},
-          //   {meta: {
-          //     posts: {
-          //       department: {
-          //         title: { containsi: search }
-          //       }
-          //     }
-          //   }},
-          //   {meta: {
-          //     posts: {
-          //       department: {
-          //         shortTitle: { containsi: search }
-          //       }
-          //     }
-          //   }},
-          //   {head_in_department: {
-          //     title: { containsi: search }
-          //   }},
-          //   {head_in_department: {
-          //     shortTitle: { containsi: search }
-          //   }},
-          //   {hashtags: {
-          //     title: { containsi: search }
-          //   }}
-          // ]}
         ]
       }
     }

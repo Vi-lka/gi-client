@@ -70,7 +70,7 @@ export default function SearchField({
   React.useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedValue(inputValue);
-    }, 500);
+    }, 300);
 
     return () => {
       clearTimeout(timer);

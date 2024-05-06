@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { AnimatePresence, motion } from 'framer-motion';
 
@@ -46,6 +46,10 @@ export default function TabsComp(props: Props) {
     const switchStartTab = (props.tabs[0].count === 0) || (props.tabs[0].count === undefined)
 
     const [selectedTab, setSelectedTab] = useState((switchStartTab && defaultTab) ? defaultTab : props.tabs[0]);
+
+    useEffect(() => {
+      setSelectedTab((switchStartTab && defaultTab) ? defaultTab : props.tabs[0])
+    }, [defaultTab, props.tabs, switchStartTab])
 
     return (
         <Tabs 

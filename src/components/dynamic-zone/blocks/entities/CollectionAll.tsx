@@ -48,16 +48,16 @@ export default function CollectionAll({
             {data.entity.map((item, index) => {
                 switch (item) {
                     case "educational-programs":
-                        return <EducationalProgramsAll key={index} searchParams={searchParams} connected={data.connected} />;
+                        return <EducationalProgramsAll key={index} searchParams={searchParams} data={data} />;
                     
                     case "dpo-courses":
-                        return <DpoCoursesAll key={index} searchParams={searchParams} connected={data.connected} />;
+                        return <DpoCoursesAll key={index} searchParams={searchParams} data={data} />;
 
                     case "employees":
                         return <EmployeesAll key={index} searchParams={searchParams} data={data} />;
                     
                     case "graduates":
-                        return <GraduatesAll key={index} searchParams={searchParams} connected={data.connected} />
+                        return <GraduatesAll key={index} searchParams={searchParams} data={data} />
                 
                     default:
                         return null;

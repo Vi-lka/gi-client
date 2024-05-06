@@ -5,37 +5,70 @@ import { headers } from 'next/headers';
 import { getDictionary } from '@/lib/getDictionary';
 import DpoCoursesItem from '../entities-cards/DpoCoursesItem';
 import { getDpoCourses } from '@/lib/queries/dpo-courses';
+import type { CollectionAllCompT } from '@/lib/types/components';
+import SearchField from '@/components/filters/SearchField';
+import DepartmentsFilter from '@/components/filters/entities/DepartmentsFilter';
 
 const DEFAULT_PAGE_SIZE = 12;
 
 export default async function DpoCoursesAll({
     searchParams,
-    connected,
+    data,
 }: {
     searchParams: { [key: string]: string | string[] | undefined };
-    connected?: boolean | null;
+    data: CollectionAllCompT,
 }) {
-
     const headersList = headers();
     const locale = headersList.get('x-locale') || "";
     const slug = headersList.get('x-slug') || undefined;
 
     const dict = await getDictionary(locale)
 
-    const sort = searchParams["sort"] as string | undefined;
-    const search = searchParams["search"] as string | undefined;
+    return (
+        <>
+            {data.showSearch && (
+                <div className='w-full'>
+                    <SearchField placeholder={dict.Inputs.search} param='search_dpo' className='mb-3' />
+                </div>
+            )}
+            {data.showFilters && (
+                <div className='mb-6'>
+                    <DepartmentsFilter searchParams={searchParams} />
+                </div>
+            )}
+            <DpoCoursesAllContent locale={locale} slug={slug} dict={dict} searchParams={searchParams} connected={data.connected} />
+        </>
+    )
+}
+
+async function DpoCoursesAllContent({
+    locale,
+    slug,
+    dict,
+    searchParams,
+    connected,
+}: {
+    locale: string,
+    slug: string | undefined,
+    dict: Dictionary,
+    searchParams: { [key: string]: string | string[] | undefined };
+    connected?: boolean | null;
+}) {
+    const search = searchParams["search_dpo"] as string | undefined;
     const page = searchParams["page_dpo"] ?? "1";
     const pageSize = searchParams["per_dpo"] ?? DEFAULT_PAGE_SIZE;
+    const departmentsParam = searchParams["departments"] as string | undefined;
 
+    const departments = departmentsParam?.split("_or_")
 
     const [ dataResult ] = await Promise.allSettled([ 
         getDpoCourses({ 
             locale,
-            sort, 
             search, 
             page: Number(page), 
             pageSize: Number(pageSize),
-            filterBy: connected ? slug : undefined
+            filterBy: connected ? slug : undefined,
+            departments
         }) 
     ]);
     if (dataResult.status === "rejected") return (

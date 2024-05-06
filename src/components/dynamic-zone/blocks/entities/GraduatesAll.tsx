@@ -5,19 +5,48 @@ import { ClientHydration } from '@/components/ClientHydration';
 import SliderGraduatesLoading from '@/components/loadings/SliderGraduatesLoading';
 import { getGraduates } from '@/lib/queries/graduates';
 import SliderSplit from '../sliders/SliderSplit';
+import type { CollectionAllCompT } from '@/lib/types/components';
+import { getDictionary } from '@/lib/getDictionary';
+import SearchField from '@/components/filters/SearchField';
 
 export default async function GraduatesAll({
     searchParams,
-    connected,
+    data,
 }: {
     searchParams: { [key: string]: string | string[] | undefined };
-    connected?: boolean | null;
+    data: CollectionAllCompT,
 }) {
     const headersList = headers();
     const locale = headersList.get('x-locale') || "";
     const slug = headersList.get('x-slug') || undefined;
 
-    const search = searchParams["search"] as string | undefined;
+    const dict = await getDictionary(locale)
+
+    return (
+        <>
+            {data.showSearch && (
+                <div className='w-full'>
+                    <SearchField placeholder={dict.Inputs.search} param='search_graduates' className='mb-6' />
+                </div>
+            )}
+            <GraduatesAllContent locale={locale} slug={slug} searchParams={searchParams} connected={data.connected} />
+        </>
+    )
+}
+
+
+async function GraduatesAllContent({
+    locale,
+    slug,
+    searchParams,
+    connected,
+}: {
+    locale: string,
+    slug: string | undefined,
+    searchParams: { [key: string]: string | string[] | undefined };
+    connected?: boolean | null;
+}) {
+    const search = searchParams["search_graduates"] as string | undefined;
 
     const [ dataResult ] = await Promise.allSettled([ getGraduates({ 
         locale, 

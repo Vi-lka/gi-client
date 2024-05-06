@@ -3,6 +3,7 @@
 import { notFound } from "next/navigation";
 import { DpoCoursesT } from "../types/entities";
 import fetchData from "./fetchData";
+import { genSearchFilter } from "../utils";
 
 //.........................Dpo Courses.........................//
 export const getDpoCourses = async ({
@@ -12,6 +13,7 @@ export const getDpoCourses = async ({
   sort = "order:asc",
   search,
   filterBy,
+  departments,
 }: {
   locale: string,
   page?: number;
@@ -19,6 +21,7 @@ export const getDpoCourses = async ({
   sort?: string;
   search?: string;
   filterBy?: string;
+  departments?: string[]
 }): Promise<DpoCoursesT> => {
   const query = /* GraphGL */ `
     query DpoCourses($locale: I18NLocaleCode, $filters: DpoCourseFiltersInput, $sort: [String], $pagination: PaginationArg) {
@@ -62,7 +65,32 @@ export const getDpoCourses = async ({
         slug: { eqi: filterBy }
       }}
     ]
-  } : undefined
+  } : undefined;
+
+  const searchFilter = genSearchFilter(
+    "containsi",
+    search,
+    {or: [
+      {title: {
+        containsi: search
+      }},
+      {description: {
+        containsi: search
+      }},
+      {location: {
+        containsi: search
+      }},
+      {price: {
+        containsi: search
+      }},
+      {department: {
+        title: { containsi: search }
+      }},
+      {department: {
+        shortTitle: { containsi: search }
+      }}
+    ]}
+  )
   
   const json = await fetchData<{ data: { dpoCourses: DpoCoursesT }; }>({ 
     query, 
@@ -72,13 +100,12 @@ export const getDpoCourses = async ({
       sort,
       pagination: { page, pageSize },
       filters: {
+        department: departments ? {
+          id: { in: departments }
+        } : undefined,
         and: [
           {...connectedFilter},
-          {or: [
-            {title: {
-              containsi: search
-            }}
-          ]}
+          {or: searchFilter}
         ]
       }
     }

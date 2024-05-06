@@ -8,25 +8,59 @@ import { getEducationalPrograms } from '@/lib/queries/educational-programs';
 import type { EducationalProgramSingleT } from '@/lib/types/entities';
 import EducationalProgramsLoading from '@/components/loadings/EducationalProgramsLoading';
 import { ClientHydration } from '@/components/ClientHydration';
+import type { CollectionAllCompT } from '@/lib/types/components';
+import SearchField from '@/components/filters/SearchField';
+import DepartmentsFilter from '@/components/filters/entities/DepartmentsFilter';
 
 export default async function EducationalProgramsAll({
     searchParams,
-    connected,
+    data,
 }: {
     searchParams: { [key: string]: string | string[] | undefined };
-    connected?: boolean | null;
+    data: CollectionAllCompT,
 }) {
-
     const headersList = headers();
     const locale = headersList.get('x-locale') || "";
     const slug = headersList.get('x-slug') || undefined;
 
     const dict = await getDictionary(locale)
 
-    const sort = searchParams["sort"] as string | undefined;
-    const search = searchParams["search"] as string | undefined;
+    return (
+        <>
+            {data.showSearch && (
+                <div className='w-full'>
+                    <SearchField placeholder={dict.Inputs.search} param='search_eduProg' className='mb-3' />
+                </div>
+            )}
+            {data.showFilters && (
+                <div className='mb-6'>
+                    <DepartmentsFilter searchParams={searchParams} />
+                </div>
+            )}
+            <EducationalProgramsAllContent locale={locale} slug={slug} dict={dict} searchParams={searchParams} connected={data.connected} />
+        </>
+    )
+}
 
-    const sameParams = { locale, sort, search, filterBy: connected ? slug : undefined }
+async function EducationalProgramsAllContent({
+    locale,
+    slug,
+    dict,
+    searchParams,
+    connected,
+}: {
+    locale: string,
+    slug: string | undefined,
+    dict: Dictionary,
+    searchParams: { [key: string]: string | string[] | undefined };
+    connected?: boolean | null;
+}) {
+    const search = searchParams["search_eduProg"] as string | undefined;
+    const departmentsParam = searchParams["departments"] as string | undefined;
+
+    const departments = departmentsParam?.split("_or_")
+
+    const sameParams = { locale, search, departments, filterBy: connected ? slug : undefined }
     const [ 
         bachelorsResult,
         magistracyResult,
