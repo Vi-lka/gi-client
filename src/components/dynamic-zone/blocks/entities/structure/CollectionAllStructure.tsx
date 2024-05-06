@@ -28,13 +28,7 @@ export default function CollectionAllStructure({
                 </TypographyH2>
             )}
 
-            <DepartmentsAll
-                category={data.category} 
-                typeId={data.type.data?.id} 
-                view={data.view} 
-                searchParams={searchParams}
-                connected={data.connected}
-            />
+            <DepartmentsAll data={data} searchParams={searchParams}/>
         </div>
         
     )

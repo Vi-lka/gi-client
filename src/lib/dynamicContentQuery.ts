@@ -98,6 +98,7 @@ export const dynamicContentQuery = `
     }
     view
     connected
+    showSearch
   }
   ... on ComponentContentTextBlock {
     title

@@ -147,6 +147,7 @@ export const CollectionAllStructureCompT = z.object({
   }),
   view: CollectionAllViewEnum,
   connected: z.boolean().nullable(),
+  showSearch: z.boolean().nullable(),
 })
 export type CollectionAllStructureCompT = z.infer<typeof CollectionAllStructureCompT>;
 

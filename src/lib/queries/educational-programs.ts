@@ -92,8 +92,6 @@ export const getEducationalPrograms = async ({
       }}
     ]}
   )
-
-  console.log("searchFilter: ", JSON.stringify(searchFilter, null, 2))
   
   const json = await fetchData<{ data: { educationalPrograms: EducationalProgramsT }; }>({ 
     query, 

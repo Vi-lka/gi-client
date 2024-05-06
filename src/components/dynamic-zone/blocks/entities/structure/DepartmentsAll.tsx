@@ -4,11 +4,12 @@ import { getDictionary } from '@/lib/getDictionary';
 import { getDepartments } from '@/lib/queries/departments';
 import { headers } from 'next/headers';
 import React from 'react'
-import type { CollectionAllViewEnum } from '@/lib/types/components';
+import type { CollectionAllStructureCompT, CollectionAllViewEnum } from '@/lib/types/components';
 import type { StructureCategoryEnum } from '@/lib/types/entities';
 import dynamic from 'next/dynamic';
 import BentoLoading from '@/components/loadings/BentoLoading';
 import DepartmentLoading from '@/components/loadings/items/DepartmentLoading';
+import SearchField from '@/components/filters/SearchField';
 
 const DepartmentsBento = dynamic(
     () => import('../../entities-cards/bento/DepartmentsBento'), {loading: () => <BentoLoading />}
@@ -20,34 +21,66 @@ const DepartmentsItem = dynamic(
 const DEFAULT_PAGE_SIZE = 10;
 
 export default async function DepartmentsAll({
-    category,
-    typeId,
-    view,
     searchParams,
-    connected,
+    data
 }: {
-    category: StructureCategoryEnum | null,
-    typeId: string | undefined,
-    view: CollectionAllViewEnum | null;
-    searchParams: { [key: string]: string | string[] | undefined };
-    connected?: boolean | null;
-}) {
-
+    searchParams: { [key: string]: string | string[] | undefined },
+    data: CollectionAllStructureCompT,
+}){
     const headersList = headers();
     const locale = headersList.get('x-locale') || "";
     const slug = headersList.get('x-slug') || undefined;
 
     const dict = await getDictionary(locale)
 
-    const sort = searchParams["sort"] as string | undefined;
-    const search = searchParams["search"] as string | undefined;
+    return (
+        <>
+            {data.showSearch && (
+                <div className='w-full'>
+                    <SearchField placeholder={dict.Inputs.search} param='search_departments' className='mb-6' />
+                </div>
+            )}
+            <DepartmentsAllContent 
+                locale={locale} 
+                slug={slug} 
+                dict={dict} 
+                category={data.category}
+                typeId={data.type.data?.id} 
+                view={data.view} 
+                searchParams={searchParams} 
+                connected={data.connected} 
+            />
+        </>
+    )
+}
+
+
+async function DepartmentsAllContent({
+    locale,
+    slug,
+    dict,
+    category,
+    typeId,
+    view,
+    searchParams,
+    connected,
+}: {
+    locale: string,
+    slug: string | undefined,
+    dict: Dictionary,
+    category: StructureCategoryEnum | null,
+    typeId: string | undefined,
+    view: CollectionAllViewEnum | null;
+    searchParams: { [key: string]: string | string[] | undefined };
+    connected?: boolean | null;
+}) {
+    const search = searchParams["search_departments"] as string | undefined;
     const page = searchParams["page_departments"] ?? "1";
     const pageSize = searchParams["per_departments"] ?? DEFAULT_PAGE_SIZE;
 
     const [ dataResult ] = await Promise.allSettled([ 
         getDepartments({ 
             locale,
-            sort, 
             search, 
             page: Number(page), 
             pageSize: Number(pageSize),

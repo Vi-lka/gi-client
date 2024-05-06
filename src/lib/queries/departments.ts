@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import fetchData from "./fetchData";
 import type { StructureCategoryEnum } from "../types/entities";
 import { DepartmentsT } from "../types/entities";
+import { genSearchFilter } from "../utils";
 
 //.........................Departments.........................//
 export const getDepartments = async ({
@@ -96,7 +97,50 @@ export const getDepartments = async ({
           id: { eqi: filterBy }
         }}
       ]
-    } : undefined
+    } : undefined;
+
+  const searchFilter = genSearchFilter(
+    "containsi",
+    search,
+    {or: [
+      {title: {
+        containsi: search
+      }},
+      {shortTitle: {
+        containsi: search
+      }},
+      {description: {
+        containsi: search
+      }},
+      {type: {
+        title: { containsi: search }
+      }},
+      {contacts: {
+        url: { containsi: search }
+      }},
+      {contacts: {
+        phone: { containsi: search }
+      }},
+      {contacts: {
+        email: { containsi: search }
+      }},
+      {contacts: {
+        location: { containsi: search }
+      }},
+      {head: {
+        title: { containsi: search }
+      }},
+      {employees: {
+        title: { containsi: search }
+      }},
+      {educationalPrograms: {
+        title: { containsi: search }
+      }},
+      {dpoCourses: {
+        title: { containsi: search }
+      }},
+    ]}
+  )
 
   const json = await fetchData<{ data: { departments: DepartmentsT }; }>({ 
     query, 
@@ -109,11 +153,7 @@ export const getDepartments = async ({
         type: typeFilter,
         and: [
           {...connectedFilter},
-          {or: [
-            {title: {
-              containsi: search
-            }}
-          ]}
+          {or: searchFilter}
         ]
       }
     }
