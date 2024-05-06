@@ -115,6 +115,7 @@ export const CollectionAllEnum = z.enum([
   "dpo-courses", 
   "graduates",
   "employees",
+  "departments"
 ]);
 export type CollectionAllEnum = z.infer<typeof CollectionAllEnum>;
 
@@ -127,29 +128,21 @@ export const CollectionAllCompT = z.object({
   connected: z.boolean().nullable(),
   showSearch: z.boolean().nullable(),
   showFilters: z.boolean().nullable(),
+  departmentsConfig: z.object({
+    category: z.lazy(() => StructureCategoryEnum).nullable(),
+    type: z.object({
+      data: z.object({
+        id: z.string(),
+      }).nullable()
+    }),
+    view: CollectionAllViewEnum,
+  }).nullable(),
+  employeesConfig: z.object({
+    showContacts: z.boolean(),
+    showHashtags: z.boolean()
+  }).nullable()
 })
 export type CollectionAllCompT = z.infer<typeof CollectionAllCompT>;
-
-
-
-
-//.........................CollectionAllStructure.........................//
-export const CollectionAllStructureCompT = z.object({
-  __typename: z.literal("ComponentContentCollectionAllStructure"),
-  title: z.string().nullable(),
-  link: z.string().nullable(),
-  linkTitle: z.string().nullable(),
-  category: z.lazy(() => StructureCategoryEnum).nullable(),
-  type: z.object({
-    data: z.object({
-      id: z.string(),
-    }).nullable()
-  }),
-  view: CollectionAllViewEnum,
-  connected: z.boolean().nullable(),
-  showSearch: z.boolean().nullable(),
-})
-export type CollectionAllStructureCompT = z.infer<typeof CollectionAllStructureCompT>;
 
 
 
@@ -221,7 +214,14 @@ export const SliderEntityCompT = z.object({
   }),
   departments: z.object({
     data: z.lazy(() => DepartmentSingleT).array()
-  })
+  }),
+  departmentsConfig: z.object({
+    viewStyle: CollectionAllViewEnum,
+  }).nullable(),
+  employeesConfig: z.object({
+    showContacts: z.boolean(),
+    showHashtags: z.boolean()
+  }).nullable()
 })
 export type SliderEntityCompT = z.infer<typeof SliderEntityCompT>;
 
@@ -386,7 +386,6 @@ export const DynamicZoneT = z.discriminatedUnion("__typename", [
   TextImagesCompT,
   TextGridCompT,
   CollectionAllCompT,
-  CollectionAllStructureCompT,
   ContactsCompT,
   IconsBlockCompT,
   SliderEntityCompT,

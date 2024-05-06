@@ -78,6 +78,13 @@ export const dynamicContentQuery = `
     ${graduates}
     ${dpo_courses}
     ${departments}
+    departmentsConfig {
+      viewStyle
+    }
+    employeesConfig {
+      showContacts
+      showHashtags
+    }
   }
   ... on ComponentContentCollectionAll {
     title
@@ -87,18 +94,17 @@ export const dynamicContentQuery = `
     connected
     showSearch
     showFilters
-  }
-  ... on ComponentContentCollectionAllStructure {
-    title
-    link
-    linkTitle
-    category
-    type {
-      data { id }
+    departmentsConfig {
+      category
+      type {
+        data { id }
+      }
+      view
     }
-    view
-    connected
-    showSearch
+    employeesConfig {
+      showContacts
+      showHashtags
+    }
   }
   ... on ComponentContentTextBlock {
     title
@@ -259,9 +265,6 @@ export const dynamicContentLinksQuery = `
     ${sameFields}
   }
   ... on ComponentContentCollectionAll {
-    ${sameFields}
-  }
-  ... on ComponentContentCollectionAllStructure {
     ${sameFields}
   }
   ... on ComponentContentTextBlock {

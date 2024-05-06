@@ -6,8 +6,15 @@ import { getDictionary } from '@/lib/getDictionary';
 import DpoCoursesItem from '../entities-cards/DpoCoursesItem';
 import { getDpoCourses } from '@/lib/queries/dpo-courses';
 import type { CollectionAllCompT } from '@/lib/types/components';
-import SearchField from '@/components/filters/SearchField';
-import DepartmentsFilter from '@/components/filters/entities/DepartmentsFilter';
+import dynamic from 'next/dynamic';
+import { Skeleton } from '@/components/ui/skeleton';
+
+const SearchField = dynamic(
+    () => import('@/components/filters/SearchField'), {loading: () => <Skeleton className='w-full h-10' />}
+)
+const DepartmentsFilter = dynamic(
+    () => import('@/components/filters/entities/DepartmentsFilter'), {loading: () => <Skeleton className='w-full h-10' />}
+)
 
 const DEFAULT_PAGE_SIZE = 12;
 

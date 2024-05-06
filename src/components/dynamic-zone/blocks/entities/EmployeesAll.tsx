@@ -5,10 +5,19 @@ import React from 'react'
 import EmployeesItem from '../entities-cards/EmployeesItem';
 import { getEmployees } from '@/lib/queries/employees';
 import type { CollectionAllCompT } from '@/lib/types/components';
-import SearchField from '@/components/filters/SearchField';
 import { getDictionary } from '@/lib/getDictionary';
-import DepartmentsFilter from '@/components/filters/entities/DepartmentsFilter';
-import HashtagsFilter from '@/components/filters/entities/HashtagsFilter';
+import dynamic from 'next/dynamic';
+import { Skeleton } from '@/components/ui/skeleton';
+
+const SearchField = dynamic(
+    () => import('@/components/filters/SearchField'), {loading: () => <Skeleton className='w-full h-10' />}
+)
+const DepartmentsFilter = dynamic(
+    () => import('@/components/filters/entities/DepartmentsFilter'), {loading: () => <Skeleton className='w-full h-10' />}
+)
+const HashtagsFilter = dynamic(
+    () => import('@/components/filters/entities/HashtagsFilter'), {loading: () => <Skeleton className='w-full h-10' />}
+)
 
 const DEFAULT_PAGE_SIZE = 12;
 
@@ -39,7 +48,7 @@ export default async function EmployeesAll({
                     <HashtagsFilter searchParams={searchParams} />
                 </div>
             )}
-            <EmployeesAllContent locale={locale} slug={slug} searchParams={searchParams} connected={data.connected} />
+            <EmployeesAllContent locale={locale} slug={slug} searchParams={searchParams} connected={data.connected} config={data.employeesConfig} />
         </>
     )
 }
@@ -49,11 +58,16 @@ async function EmployeesAllContent({
     slug,
     searchParams,
     connected,
+    config
 }: {
-    locale: string,
-    slug: string | undefined,
+    locale: string;
+    slug: string | undefined;
     searchParams: { [key: string]: string | string[] | undefined };
-    connected?: boolean | null
+    connected?: boolean | null;
+    config: {
+        showContacts: boolean,
+        showHashtags: boolean
+    } | null
 }) {
     const search = searchParams[`search_employees`] as string | undefined;
     const page = searchParams["page_employees"] ?? "1";
@@ -84,13 +98,15 @@ async function EmployeesAllContent({
         />
     )
 
+
     return (
         <>
             <div key={Math.random()} id="employees" className="grid md:grid-cols-2 grid-cols-1 auto-rows-auto lg:gap-8 gap-6">
                 {dataResult.value.data.map(employee => (
                     <EmployeesItem 
                         key={"employee" + employee.id} 
-                        locale={locale} 
+                        locale={locale}
+                        config={config}
                         employee={employee}
                         connected={connected}
                         slug={slug}

@@ -61,7 +61,6 @@ export default async function Home({
       return mainPage;
   };
 
-
   const [ dataResult ] = await Promise.allSettled([ getMainPage(locale) ]);
   
   return (

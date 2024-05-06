@@ -2,15 +2,22 @@ import TabsComp from '@/components/TabsComp';
 import ErrorHandler from '@/components/errors/ErrorHandler';
 import { getDictionary } from '@/lib/getDictionary';
 import { headers } from 'next/headers';
-import React from 'react'
+import React, { Suspense } from 'react'
 import EducationalProgramsItem from '../entities-cards/EducationalProgramsItem';
 import { getEducationalPrograms } from '@/lib/queries/educational-programs';
 import type { EducationalProgramSingleT } from '@/lib/types/entities';
 import EducationalProgramsLoading from '@/components/loadings/EducationalProgramsLoading';
 import { ClientHydration } from '@/components/ClientHydration';
 import type { CollectionAllCompT } from '@/lib/types/components';
-import SearchField from '@/components/filters/SearchField';
-import DepartmentsFilter from '@/components/filters/entities/DepartmentsFilter';
+import dynamic from 'next/dynamic';
+import { Skeleton } from '@/components/ui/skeleton';
+
+const SearchField = dynamic(
+    () => import('@/components/filters/SearchField'), {loading: () => <Skeleton className='w-full h-10' />}
+)
+const DepartmentsFilter = dynamic(
+    () => import('@/components/filters/entities/DepartmentsFilter'), {loading: () => <Skeleton className='w-full h-10' />}
+)
 
 export default async function EducationalProgramsAll({
     searchParams,
@@ -37,7 +44,9 @@ export default async function EducationalProgramsAll({
                     <DepartmentsFilter searchParams={searchParams} />
                 </div>
             )}
-            <EducationalProgramsAllContent locale={locale} slug={slug} dict={dict} searchParams={searchParams} connected={data.connected} />
+            <Suspense fallback={<EducationalProgramsLoading />}>
+                <EducationalProgramsAllContent locale={locale} slug={slug} dict={dict} searchParams={searchParams} connected={data.connected} />
+            </Suspense>
         </>
     )
 }

@@ -4,18 +4,22 @@ import { getDictionary } from '@/lib/getDictionary';
 import { getDepartments } from '@/lib/queries/departments';
 import { headers } from 'next/headers';
 import React from 'react'
-import type { CollectionAllStructureCompT, CollectionAllViewEnum } from '@/lib/types/components';
+import type { CollectionAllCompT, CollectionAllViewEnum } from '@/lib/types/components';
 import type { StructureCategoryEnum } from '@/lib/types/entities';
 import dynamic from 'next/dynamic';
 import BentoLoading from '@/components/loadings/BentoLoading';
 import DepartmentLoading from '@/components/loadings/items/DepartmentLoading';
-import SearchField from '@/components/filters/SearchField';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const DepartmentsBento = dynamic(
-    () => import('../../entities-cards/bento/DepartmentsBento'), {loading: () => <BentoLoading />}
+    () => import('../entities-cards/bento/DepartmentsBento'), {loading: () => <BentoLoading />}
 )
 const DepartmentsItem = dynamic(
-    () => import('../../entities-cards/DepartmentsItem'), {loading: () => <DepartmentLoading />}
+    () => import('../entities-cards/DepartmentsItem'), {loading: () => <DepartmentLoading />}
+)
+
+const SearchField = dynamic(
+    () => import('@/components/filters/SearchField'), {loading: () => <Skeleton className='w-full h-10' />}
 )
 
 const DEFAULT_PAGE_SIZE = 10;
@@ -25,7 +29,7 @@ export default async function DepartmentsAll({
     data
 }: {
     searchParams: { [key: string]: string | string[] | undefined },
-    data: CollectionAllStructureCompT,
+    data: CollectionAllCompT,
 }){
     const headersList = headers();
     const locale = headersList.get('x-locale') || "";
@@ -44,9 +48,9 @@ export default async function DepartmentsAll({
                 locale={locale} 
                 slug={slug} 
                 dict={dict} 
-                category={data.category}
-                typeId={data.type.data?.id} 
-                view={data.view} 
+                category={data.departmentsConfig?.category}
+                typeId={data.departmentsConfig?.type.data?.id} 
+                view={data.departmentsConfig?.view} 
                 searchParams={searchParams} 
                 connected={data.connected} 
             />
@@ -68,9 +72,9 @@ async function DepartmentsAllContent({
     locale: string,
     slug: string | undefined,
     dict: Dictionary,
-    category: StructureCategoryEnum | null,
+    category: StructureCategoryEnum | null | undefined,
     typeId: string | undefined,
-    view: CollectionAllViewEnum | null;
+    view: CollectionAllViewEnum | undefined;
     searchParams: { [key: string]: string | string[] | undefined };
     connected?: boolean | null;
 }) {

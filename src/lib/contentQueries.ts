@@ -164,7 +164,10 @@ export const departments = `
         head {
           data {
             id
-            attributes { title }
+            attributes { 
+              slug
+              title 
+            }
           }
         }
       }

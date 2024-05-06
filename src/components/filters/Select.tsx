@@ -156,7 +156,8 @@ export function Select({
               {selectedValues.length === 0 && placeholder}
               {selectedValues.length === 1 && selectedValues[0].label}
               {selectedValues.length === 2 && selectedValues[0].label + ", " + selectedValues[1].label}
-              {selectedValues.length >= 3 && `${selectedValues.length} Выбрано`}
+              {selectedValues.length === 3 && selectedValues[0].label + ", " + selectedValues[1].label + ", " + selectedValues[2].label}
+              {selectedValues.length >= 4 && `${selectedValues.length} Выбрано`}
             </span>
           )}
         </div>
@@ -204,7 +205,7 @@ export function Select({
               role="combobox"
               aria-expanded={openCombobox}
               className={cn(
-                "flex-1 text-muted-foreground hover:text-background relative justify-between border-border py-5 rounded-3xl",
+                "flex-1 text-muted-foreground hover:text-background relative justify-between border-border h-10 rounded-3xl",
                 selectedValues.length > 0 ? "w-[90%]" : "w-full",
                 icon && "p-0",
               )}

@@ -15,6 +15,10 @@ import { FiPhone } from 'react-icons/fi'
 type EmployeesItemT = {
     locale: string,
     employee: EmployeeSingleT,
+    config: {
+        showContacts: boolean,
+        showHashtags: boolean
+    } | null | undefined,
 } & (Connected | NotConnected);
   
 type Connected = {
@@ -65,6 +69,9 @@ export default function EmployeesItem(props: EmployeesItemT) {
     const email = employee.attributes.email
     const location = employee.attributes.location
 
+    const showContacts = props.config ? props.config.showContacts : employee.attributes.showContacts
+    const showHashtags = props.config ? props.config.showHashtags : employee.attributes.showHashtags
+
     return (
         <Card key={"employee" + employee.id} className='h-full group/card border-transparent dark:border-border/20 dark:hover:border-border hover:shadow-lg shadow-md rounded-3xl transition duration-300'>
             <CardContent className="relative w-full h-full flex lg:flex-row flex-col lg:items-center xl:gap-8 gap-6 xl:px-8 p-6 overflow-hidden">
@@ -111,7 +118,7 @@ export default function EmployeesItem(props: EmployeesItemT) {
                         </p>
                     )}
 
-                    {(employee.attributes.showContacts && (phone || email || location)) && (
+                    {(showContacts && (phone || email || location)) && (
                         <ul className='flex flex-col gap-2 xl:text-sm text-xs'>
                             {phone && (
                                 <li className='flex items-center gap-2'>
@@ -149,7 +156,7 @@ export default function EmployeesItem(props: EmployeesItemT) {
                             )}
                         </ul>
                     )}
-                    {employee.attributes.showHashtags && (
+                    {(showHashtags && employee.attributes.hashtags.data.length > 0) && (
                         <ul className='inline-flex flex-wrap gap-2'>
                             {employee.attributes.hashtags.data.map(hashtag => (
                                 <li key={hashtag.attributes.slug}>

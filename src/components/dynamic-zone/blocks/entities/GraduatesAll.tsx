@@ -7,7 +7,12 @@ import { getGraduates } from '@/lib/queries/graduates';
 import SliderSplit from '../sliders/SliderSplit';
 import type { CollectionAllCompT } from '@/lib/types/components';
 import { getDictionary } from '@/lib/getDictionary';
-import SearchField from '@/components/filters/SearchField';
+import dynamic from 'next/dynamic';
+import { Skeleton } from '@/components/ui/skeleton';
+
+const SearchField = dynamic(
+    () => import('@/components/filters/SearchField'), {loading: () => <Skeleton className='w-full h-10' />}
+)
 
 export default async function GraduatesAll({
     searchParams,

@@ -1,7 +1,7 @@
 "use client"
 
 import React from 'react'
-import type { CarouselApi} from './ui/carousel';
+import type { CarouselApi } from './ui/carousel';
 import { Carousel, CarouselContent, CarouselNext, CarouselPrevious } from './ui/carousel'
 import { calcWidth, cn } from '@/lib/utils';
 

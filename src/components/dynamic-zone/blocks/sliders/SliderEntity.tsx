@@ -14,6 +14,7 @@ import EducationalProgramLoading from '@/components/loadings/items/EducationalPr
 import DpoCourseLoading from '@/components/loadings/items/DpoCourseLoading'
 import SliderSplitLoading from '@/components/loadings/SliderSplitLoading'
 import DepartmentLoading from '@/components/loadings/items/DepartmentLoading'
+import BentoLoading from '@/components/loadings/BentoLoading'
 
 const EducationalProgramsItem = dynamic(
     () => import('../entities-cards/EducationalProgramsItem'), {loading: () => <EducationalProgramLoading />}
@@ -26,6 +27,10 @@ const DepartmentsItem = dynamic(
 )
 const SliderSplit = dynamic(
     () => import('./SliderSplit'), {loading: () => <SliderSplitLoading />}
+)
+
+const DepartmentsBento = dynamic(
+    () => import('../entities-cards/bento/DepartmentsBento'), {loading: () => <BentoLoading />}
 )
 
 export default async function SliderEntity({
@@ -74,17 +79,29 @@ export default async function SliderEntity({
                 </CarouselComp>
             )}
             {data.departments.data.length > 0 && (
-                <CarouselComp className='lg:-ml-8 -ml-4'>
-                    {data.departments.data.map(item => (
-                        <CarouselItem key={"department" + item.id} className='lg:basis-1/2 lg:pl-8 pl-4'>
-                            <DepartmentsItem locale={locale} item={item} dict={dict} />
-                        </CarouselItem>
-                    ))}
-                </CarouselComp>
+                data.departmentsConfig?.viewStyle === "bento" ? (
+                    <DepartmentsBento 
+                        locale={locale} 
+                        departments={{
+                            data: data.departments.data, 
+                            meta: {pagination: {
+                                total: data.departments.data.length
+                            }}
+                        }} 
+                    />
+                ) : (
+                    <CarouselComp className='lg:-ml-8 -ml-4'>
+                        {data.departments.data.map(item => (
+                            <CarouselItem key={"department" + item.id} className='lg:basis-1/2 lg:pl-8 pl-4'>
+                                <DepartmentsItem locale={locale} item={item} dict={dict} />
+                            </CarouselItem>
+                        ))}
+                    </CarouselComp>
+                )
             )}
             {data.employees.data.length > 0 && (
                 <ClientHydration fallback={<SliderEmployeesLoading />}>
-                    <SliderSplit data={data.employees.data} />
+                    <SliderSplit data={data.employees.data} config={data.employeesConfig} />
                 </ClientHydration>
             )}
             {data.graduates.data.length > 0 && (

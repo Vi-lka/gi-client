@@ -7,12 +7,16 @@ import SliderGraduatesLoading from '@/components/loadings/SliderGraduatesLoading
 import EducationalProgramsLoading from '@/components/loadings/EducationalProgramsLoading';
 import DpoCoursesLoading from '@/components/loadings/DpoCoursesLoading';
 import EmployeesLoading from '@/components/loadings/EmployeesLoading';
+import BentoLoading from '@/components/loadings/BentoLoading';
 
 const EducationalProgramsAll = dynamic(
     () => import('./EducationalProgramsAll'), {loading: () => <EducationalProgramsLoading />}
 )
 const DpoCoursesAll = dynamic(
     () => import('./DpoCoursesAll'), {loading: () => <DpoCoursesLoading />}
+)
+const DepartmentsAll = dynamic(
+    () => import('./DepartmentsAll'), {loading: () => <BentoLoading />}
 )
 const EmployeesAll = dynamic(
     () => import('./EmployeesAll'), {loading: () => <EmployeesLoading />}
@@ -52,6 +56,9 @@ export default function CollectionAll({
                     
                     case "dpo-courses":
                         return <DpoCoursesAll key={index} searchParams={searchParams} data={data} />;
+
+                    case "departments":
+                        return <DepartmentsAll data={data} searchParams={searchParams}/>
 
                     case "employees":
                         return <EmployeesAll key={index} searchParams={searchParams} data={data} />;

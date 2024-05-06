@@ -19,9 +19,14 @@ const GraduatesItem = dynamic(
 
 export default function SliderSplit({
     data,
+    config,
     className
 }: {
     data: (EmployeeSingleT | GraduateSingleT)[],
+    config?: {
+        showContacts: boolean,
+        showHashtags: boolean
+    } | null,
     className?: string
 }) {
     const locale = useLocale();
@@ -60,7 +65,7 @@ export default function SliderSplit({
                         const graduateResult = GraduateSingleT.safeParse(item)
 
                         if (employeeResult.success) return (
-                            <EmployeesItem key={"employee" + item.id} locale={locale} employee={employeeResult.data} />
+                            <EmployeesItem key={"employee" + item.id} locale={locale} employee={employeeResult.data} config={config} />
                         )
                         if (graduateResult.success) return (
                             <GraduatesItem key={"graduate" + item.id} graduate={graduateResult.data} />

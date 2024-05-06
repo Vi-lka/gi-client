@@ -10,11 +10,13 @@ export default function BentoImage({
     href,
     src,
     alt,
+    sizes = '(max-width: 1024px) 100vw, 70vw',
     className,
 }: {
     href: string,
     src: string | undefined,
     alt: string,
+    sizes?: string,
     className?:string,
 }) {
     const locale = useLocale()
@@ -34,7 +36,7 @@ export default function BentoImage({
                 src={src}
                 alt={alt}
                 fill
-                sizes='(max-width: 1024px) 100vw, 70vw'
+                sizes={sizes}
                 className='object-cover'
             />
         </Link>

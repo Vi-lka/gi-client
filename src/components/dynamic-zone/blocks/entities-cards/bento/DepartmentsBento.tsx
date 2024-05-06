@@ -29,12 +29,28 @@ export default function DepartmentsBento({
                         key={"department-bento-" + item.id}
                         header={
                             hasImage ? (
-                                <ClientHydration fallback={<Skeleton className={cn('w-full min-h-24 rounded-2xl', isEach ? "aspect-[4/1]" : "aspect-[2/1]")}/>}>
+                                <ClientHydration fallback={
+                                    <Skeleton className={cn(
+                                        'w-full min-h-24 rounded-2xl', 
+                                        isEach ? "aspect-[4/1]" : "aspect-[2/1]",
+                                        departments.meta.pagination.total === 1 ? "aspect-[4/1]" : "",
+                                    )}/>
+                                }>
                                     <BentoImage 
                                         href={`/structure/${item.attributes.slug}`} 
                                         src={item.attributes.image.data?.attributes.url}
                                         alt={item.attributes.title}
-                                        className={isEach ? "aspect-[4/1]" : "aspect-[2/1]"}
+                                        sizes={
+                                            departments.meta.pagination.total === 1 
+                                            ? "100vw"
+                                            : isEach 
+                                                ? "(max-width: 1024px) 100vw, 70vw" 
+                                                : "(max-width: 1024px) 100vw, 40vw"
+                                        }
+                                        className={cn(
+                                            isEach ? "aspect-[4/1]" : "aspect-[2/1]",
+                                            departments.meta.pagination.total === 1 ? "aspect-[4/1]" : "",
+                                        )}
                                     />
                                 </ClientHydration>
                             )
@@ -53,6 +69,7 @@ export default function DepartmentsBento({
                         }
                         className={cn(
                             isEach ? "lg:col-span-2" : "",
+                            departments.meta.pagination.total === 1 ? "lg:col-span-3" : "",
                             hasImage ? "p-4" : "p-8"
                         )}
                     >
