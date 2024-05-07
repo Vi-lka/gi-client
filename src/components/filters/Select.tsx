@@ -30,6 +30,7 @@ export function Select({
   values,
   param,
   placeholder,
+  placeholderLength = 3,
   deleteParam,
   badges = false,
   icon = false,
@@ -41,6 +42,7 @@ export function Select({
   values: Array<Item> | null;
   param: string;
   placeholder: string;
+  placeholderLength?: number;
   deleteParam?: string;
   badges?: boolean;
   icon?: boolean;
@@ -152,13 +154,19 @@ export function Select({
           {isPendingRouter ? (
             <Loader2 className="animate-spin" />
           ) : (
-            <span className="truncate font-normal lg:text-base">
+            <p className="truncate font-normal lg:text-base">
               {selectedValues.length === 0 && placeholder}
-              {selectedValues.length === 1 && selectedValues[0].label}
-              {selectedValues.length === 2 && selectedValues[0].label + ", " + selectedValues[1].label}
-              {selectedValues.length === 3 && selectedValues[0].label + ", " + selectedValues[1].label + ", " + selectedValues[2].label}
-              {selectedValues.length >= 4 && `${selectedValues.length} Выбрано`}
-            </span>
+              {selectedValues.length >= placeholderLength
+                ? `${selectedValues.length} Выбрано`
+                : (
+                  selectedValues.map((item, indx) => (
+                    <span key={indx}>
+                      {item.label}{indx === selectedValues.length-1 ? "" : ", "}
+                    </span>
+                  ))
+                )
+              }
+            </p>
           )}
         </div>
         <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />

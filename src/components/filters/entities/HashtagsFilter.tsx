@@ -34,6 +34,6 @@ export default async function HashtagsFilter({
     ))
 
     return (
-        <Select isMulti values={values} param='hashtags' placeholder={dict.Inputs.hashtags} align="center" className='max-w-none'/>
+        <Select isMulti values={values} param='hashtags' placeholder={dict.Inputs.hashtags} placeholderLength={4} align="center" className='max-w-none'/>
     )
 }

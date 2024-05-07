@@ -35,6 +35,6 @@ export default async function DepartmentsFilter({
     ))
 
     return (
-        <Select isMulti values={values} param='departments' placeholder={dict.Inputs.departments} align="center" className='max-w-none'/>
+        <Select isMulti values={values} param='departments' placeholder={dict.Inputs.departments} placeholderLength={2} align="center" className='max-w-none'/>
     )
 }
