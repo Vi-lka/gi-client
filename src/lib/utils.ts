@@ -136,10 +136,10 @@ export function resetPaginationts(params: URLSearchParams) {
 
 
 export function objectToArray<A>(input: { [s: string]: A }): A[] {
-  return Object.entries(input)
-    .map(a => {
-      return {...a[1]}
-    })
+  const result = Object.entries(input).map(a => {
+    return {...a[1]}
+  })
+  return result
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

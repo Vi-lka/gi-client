@@ -86,9 +86,6 @@ export const getEducationalPrograms = async ({
       }},
       {department: {
         title: { containsi: search }
-      }},
-      {department: {
-        shortTitle: { containsi: search }
       }}
     ]}
   )

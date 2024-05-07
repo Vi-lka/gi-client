@@ -153,12 +153,13 @@ export const getEmployees = async ({
           }
         }
       }},
-      {head_in_department: {
-        title: { containsi: search }
-      }},
-      {head_in_department: {
-        shortTitle: { containsi: search }
-      }},
+      // BUG: Too slow response issue
+      // {head_in_department: {
+      //   title: { containsi: search }
+      // }},
+      // {head_in_department: {
+      //   shortTitle: { containsi: search }
+      // }},
       {hashtags: {
         title: { containsi: search }
       }}
@@ -186,8 +187,6 @@ export const getEmployees = async ({
       }
     }
   })
-  
-  // await new Promise((resolve) => setTimeout(resolve, 2000))
   
   if (
     json.data.employees.meta.pagination.total === 0 ||

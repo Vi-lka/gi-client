@@ -29,8 +29,7 @@ export default function SearchField({
 
   const [isPending, startTransition] = React.useTransition();
 
-  const handleSearchParams = React.useCallback(
-    (inputValue: string) => {
+  const handleSearchParams = React.useCallback((inputValue: string) => {
       const params = new URLSearchParams(window.location.search);
 
       // reset pagination(page) to prevent zero results

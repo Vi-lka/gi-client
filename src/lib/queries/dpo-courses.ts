@@ -85,9 +85,6 @@ export const getDpoCourses = async ({
       }},
       {department: {
         title: { containsi: search }
-      }},
-      {department: {
-        shortTitle: { containsi: search }
       }}
     ]}
   )

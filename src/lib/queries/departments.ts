@@ -126,19 +126,7 @@ export const getDepartments = async ({
       }},
       {contacts: {
         location: { containsi: search }
-      }},
-      {head: {
-        title: { containsi: search }
-      }},
-      {employees: {
-        title: { containsi: search }
-      }},
-      {educationalPrograms: {
-        title: { containsi: search }
-      }},
-      {dpoCourses: {
-        title: { containsi: search }
-      }},
+      }}
     ]}
   )
 
