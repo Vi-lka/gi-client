@@ -3,13 +3,13 @@ import ErrorHandler from '@/components/errors/ErrorHandler';
 import { getDictionary } from '@/lib/getDictionary';
 import { getDepartments } from '@/lib/queries/departments';
 import { headers } from 'next/headers';
-import React from 'react'
-import type { CollectionAllCompT, CollectionAllViewEnum } from '@/lib/types/components';
-import type { StructureCategoryEnum } from '@/lib/types/entities';
+import React, { Suspense } from 'react'
+import type { CollectionAllCompT } from '@/lib/types/components';
 import dynamic from 'next/dynamic';
 import BentoLoading from '@/components/loadings/BentoLoading';
 import DepartmentLoading from '@/components/loadings/items/DepartmentLoading';
 import { Skeleton } from '@/components/ui/skeleton';
+import DepartmentsLoading from '@/components/loadings/DepartmentsLoading';
 
 const DepartmentsBento = dynamic(
     () => import('../entities-cards/bento/DepartmentsBento'), {loading: () => <BentoLoading />}
@@ -35,6 +35,10 @@ export default async function DepartmentsAll({
     const locale = headersList.get('x-locale') || "";
     const slug = headersList.get('x-slug') || undefined;
 
+    const search = searchParams["search_departments"] as string | undefined;
+    const page = searchParams["page_departments"] ?? "1";
+    const pageSize = searchParams["per_departments"] ?? DEFAULT_PAGE_SIZE;
+
     const dict = await getDictionary(locale)
 
     return (
@@ -44,16 +48,18 @@ export default async function DepartmentsAll({
                     <SearchField placeholder={dict.Inputs.search} param='search_departments' className='mb-6' />
                 </div>
             )}
-            <DepartmentsAllContent 
-                locale={locale} 
-                slug={slug} 
-                dict={dict} 
-                category={data.departmentsConfig?.category}
-                typeId={data.departmentsConfig?.type.data?.id} 
-                view={data.departmentsConfig?.view} 
-                searchParams={searchParams} 
-                connected={data.connected} 
-            />
+            <Suspense 
+                key={`search=${search}&page=${page}&pageSize=${pageSize}`} 
+                fallback={data.departmentsConfig?.view === "bento" ? <BentoLoading /> : <DepartmentsLoading />}
+            >
+                <DepartmentsAllContent 
+                    locale={locale} 
+                    slug={slug} 
+                    dict={dict} 
+                    data={data}
+                    searchParams={searchParams} 
+                />
+            </Suspense>
         </>
     )
 }
@@ -63,20 +69,14 @@ async function DepartmentsAllContent({
     locale,
     slug,
     dict,
-    category,
-    typeId,
-    view,
+    data,
     searchParams,
-    connected,
 }: {
     locale: string,
     slug: string | undefined,
     dict: Dictionary,
-    category: StructureCategoryEnum | null | undefined,
-    typeId: string | undefined,
-    view: CollectionAllViewEnum | undefined;
+    data: CollectionAllCompT,
     searchParams: { [key: string]: string | string[] | undefined };
-    connected?: boolean | null;
 }) {
     const search = searchParams["search_departments"] as string | undefined;
     const page = searchParams["page_departments"] ?? "1";
@@ -88,9 +88,9 @@ async function DepartmentsAllContent({
             search, 
             page: Number(page), 
             pageSize: Number(pageSize),
-            category,
-            typeId,
-            filterBy: connected ? slug : undefined
+            category: data.departmentsConfig?.category,
+            typeId: data.departmentsConfig?.type.data?.id,
+            filterBy: data.connected ? slug : undefined
         }) 
     ]);
     if (dataResult.status === "rejected") return (
@@ -104,7 +104,7 @@ async function DepartmentsAllContent({
 
     return (
         <>
-            {view === "bento" 
+            {data.departmentsConfig?.view === "bento"
                 ? (
                     <div key={Math.random()} id="departments">
                         <DepartmentsBento locale={locale} departments={dataResult.value} />
@@ -118,13 +118,14 @@ async function DepartmentsAllContent({
                     </div>
                 )
             }
-            <div className={view === "bento" ? "mt-8" : "mt-6"}>
+            <div className={data.departmentsConfig?.view === "bento" ? "mt-8" : "mt-6"}>
                 <PaginationControls
                     length={dataResult.value.meta.pagination.total}
                     defaultPageSize={DEFAULT_PAGE_SIZE}
                     scrollToId='departments'
                     pageParam='page_departments'
                     perParam='per_departments'
+                    showMore={false}
                 />
             </div>
         </>

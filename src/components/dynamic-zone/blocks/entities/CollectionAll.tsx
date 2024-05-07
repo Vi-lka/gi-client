@@ -19,7 +19,7 @@ const DepartmentsAll = dynamic(
     () => import('./DepartmentsAll'), {loading: () => <BentoLoading />}
 )
 const EmployeesAll = dynamic(
-    () => import('./EmployeesAll'), {loading: () => <EmployeesLoading />}
+    () => import('./EmployeesAll'), {loading: () => <EmployeesLoading config={{ showContacts: false, showHashtags: true }} />}
 )
 const GraduatesAll = dynamic(
     () => import('./GraduatesAll'), {loading: () => <SliderGraduatesLoading />}

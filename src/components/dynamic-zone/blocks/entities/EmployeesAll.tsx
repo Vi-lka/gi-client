@@ -1,13 +1,14 @@
 import PaginationControls from '@/components/PaginationControls';
 import ErrorHandler from '@/components/errors/ErrorHandler';
 import { headers } from 'next/headers';
-import React from 'react'
+import React, { Suspense } from 'react'
 import EmployeesItem from '../entities-cards/EmployeesItem';
 import { getEmployees } from '@/lib/queries/employees';
 import type { CollectionAllCompT } from '@/lib/types/components';
 import { getDictionary } from '@/lib/getDictionary';
 import dynamic from 'next/dynamic';
 import { Skeleton } from '@/components/ui/skeleton';
+import EmployeesLoading from '@/components/loadings/EmployeesLoading';
 
 const SearchField = dynamic(
     () => import('@/components/filters/SearchField'), {loading: () => <Skeleton className='w-full h-10' />}
@@ -33,6 +34,12 @@ export default async function EmployeesAll({
     const locale = headersList.get('x-locale') || "";
     const slug = headersList.get('x-slug') || undefined;
 
+    const search = searchParams["search_employees"] as string | undefined;
+    const page = searchParams["page_employees"] ?? "1";
+    const pageSize = searchParams["per_employees"] ?? DEFAULT_PAGE_SIZE;
+    const departmentsParam = searchParams["departments"] as string | undefined;
+    const hashtagsParam = searchParams["hashtags"] as string | undefined;
+
     const dict = await getDictionary(locale)
 
     return (
@@ -48,7 +55,12 @@ export default async function EmployeesAll({
                     <HashtagsFilter searchParams={searchParams} />
                 </div>
             )}
-            <EmployeesAllContent locale={locale} slug={slug} searchParams={searchParams} connected={data.connected} config={data.employeesConfig} />
+            <Suspense 
+                key={`search=${search}&page=${page}&pageSize=${pageSize}&departments=${departmentsParam}&hashtags=${hashtagsParam}`} 
+                fallback={<EmployeesLoading config={data.employeesConfig} />}
+            >
+                <EmployeesAllContent locale={locale} slug={slug} searchParams={searchParams} connected={data.connected} config={data.employeesConfig} />                
+            </Suspense>
         </>
     )
 }

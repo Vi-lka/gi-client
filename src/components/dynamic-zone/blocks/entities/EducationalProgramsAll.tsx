@@ -30,6 +30,9 @@ export default async function EducationalProgramsAll({
     const locale = headersList.get('x-locale') || "";
     const slug = headersList.get('x-slug') || undefined;
 
+    const search = searchParams["search_eduProg"] as string | undefined;
+    const departmentsParam = searchParams["departments"] as string | undefined;
+
     const dict = await getDictionary(locale)
 
     return (
@@ -44,7 +47,10 @@ export default async function EducationalProgramsAll({
                     <DepartmentsFilter searchParams={searchParams} />
                 </div>
             )}
-            <Suspense fallback={<EducationalProgramsLoading />}>
+            <Suspense 
+                key={`search=${search}&departments=${departmentsParam}`} 
+                fallback={<EducationalProgramsLoading />}
+            >
                 <EducationalProgramsAllContent locale={locale} slug={slug} dict={dict} searchParams={searchParams} connected={data.connected} />
             </Suspense>
         </>

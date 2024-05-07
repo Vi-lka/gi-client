@@ -100,7 +100,7 @@ export default async function SliderEntity({
                 )
             )}
             {data.employees.data.length > 0 && (
-                <ClientHydration fallback={<SliderEmployeesLoading />}>
+                <ClientHydration fallback={<SliderEmployeesLoading config={data.employeesConfig} />}>
                     <SliderSplit data={data.employees.data} config={data.employeesConfig} />
                 </ClientHydration>
             )}

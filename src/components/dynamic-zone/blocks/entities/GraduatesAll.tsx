@@ -1,5 +1,5 @@
 import ErrorHandler from '@/components/errors/ErrorHandler';
-import React from 'react';
+import React, { Suspense } from 'react';
 import { headers } from 'next/headers';
 import { ClientHydration } from '@/components/ClientHydration';
 import SliderGraduatesLoading from '@/components/loadings/SliderGraduatesLoading';
@@ -25,6 +25,8 @@ export default async function GraduatesAll({
     const locale = headersList.get('x-locale') || "";
     const slug = headersList.get('x-slug') || undefined;
 
+    const search = searchParams["search_graduates"] as string | undefined;
+
     const dict = await getDictionary(locale)
 
     return (
@@ -34,7 +36,12 @@ export default async function GraduatesAll({
                     <SearchField placeholder={dict.Inputs.search} param='search_graduates' className='mb-6' />
                 </div>
             )}
-            <GraduatesAllContent locale={locale} slug={slug} searchParams={searchParams} connected={data.connected} />
+            <Suspense 
+                key={`search=${search}`} 
+                fallback={<SliderGraduatesLoading />}
+            >
+                <GraduatesAllContent locale={locale} slug={slug} searchParams={searchParams} connected={data.connected} />
+            </Suspense>
         </>
     )
 }
@@ -53,11 +60,13 @@ async function GraduatesAllContent({
 }) {
     const search = searchParams["search_graduates"] as string | undefined;
 
-    const [ dataResult ] = await Promise.allSettled([ getGraduates({ 
-        locale, 
-        search,
-        filterBy: connected ? slug : undefined
-    }) ]);
+    const [ dataResult ] = await Promise.allSettled([ 
+        getGraduates({
+            locale, 
+            search,
+            filterBy: connected ? slug : undefined
+        })
+    ]);
     if (dataResult.status === "rejected") return (
         <ErrorHandler 
             error={dataResult.reason as unknown} 

@@ -1,5 +1,5 @@
 import ErrorHandler from '@/components/errors/ErrorHandler';
-import React from 'react'
+import React, { Suspense } from 'react'
 import PaginationControls from '@/components/PaginationControls';
 import { headers } from 'next/headers';
 import { getDictionary } from '@/lib/getDictionary';
@@ -8,6 +8,7 @@ import { getDpoCourses } from '@/lib/queries/dpo-courses';
 import type { CollectionAllCompT } from '@/lib/types/components';
 import dynamic from 'next/dynamic';
 import { Skeleton } from '@/components/ui/skeleton';
+import DpoCoursesLoading from '@/components/loadings/DpoCoursesLoading';
 
 const SearchField = dynamic(
     () => import('@/components/filters/SearchField'), {loading: () => <Skeleton className='w-full h-10' />}
@@ -29,6 +30,11 @@ export default async function DpoCoursesAll({
     const locale = headersList.get('x-locale') || "";
     const slug = headersList.get('x-slug') || undefined;
 
+    const search = searchParams["search_dpo"] as string | undefined;
+    const page = searchParams["page_dpo"] ?? "1";
+    const pageSize = searchParams["per_dpo"] ?? DEFAULT_PAGE_SIZE;
+    const departmentsParam = searchParams["departments"] as string | undefined;
+
     const dict = await getDictionary(locale)
 
     return (
@@ -43,7 +49,12 @@ export default async function DpoCoursesAll({
                     <DepartmentsFilter searchParams={searchParams} />
                 </div>
             )}
-            <DpoCoursesAllContent locale={locale} slug={slug} dict={dict} searchParams={searchParams} connected={data.connected} />
+            <Suspense 
+                key={`search=${search}&page=${page}&pageSize=${pageSize}&departments=${departmentsParam}`} 
+                fallback={<DpoCoursesLoading />}
+            >
+                <DpoCoursesAllContent locale={locale} slug={slug} dict={dict} searchParams={searchParams} connected={data.connected} />
+            </Suspense>
         </>
     )
 }

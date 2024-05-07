@@ -18,17 +18,19 @@ import { usePathname } from '@/lib/hooks/usePathname';
 import { useLocale } from '@/lib/hooks/useLocale';
 
 export default function PaginationControls({ 
-    length,
-    defaultPageSize,
-    scrollToId,
-    pageParam = "page",
-    perParam = "per",
+  length,
+  defaultPageSize,
+  scrollToId,
+  pageParam = "page",
+  perParam = "per",
+  showMore = true,
 }: { 
-    length: number,
-    defaultPageSize: number,
-    scrollToId?: string,
-    pageParam?: string
-    perParam?: string
+  length: number,
+  defaultPageSize: number,
+  scrollToId?: string,
+  pageParam?: string,
+  perParam?: string,
+  showMore?: boolean,
 }) {
   const [isPendingMore, startTransitionMore] = React.useTransition()
   const [isPendingPage, startTransitionPage] = React.useTransition()
@@ -111,7 +113,7 @@ export default function PaginationControls({
 
   return (
     <div className='flex lg:gap-0 gap-6 lg:items-start items-center lg:flex-row flex-col lg:justify-end relative'>
-      {Number(page) === 1 ? (
+      {(showMore && (Number(page) === 1 )) ? (
         <Button
           variant="outline"
           className={cn(
