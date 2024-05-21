@@ -111,6 +111,37 @@ export type StructurePageT = z.infer<typeof StructurePageT>;
 
 
 
+//.........................Structure Single Page.........................//
+export const DepartmentSinglePageT  = z.object({
+  attributes: z.object({
+    slug: z.string(),
+    title: z.string(),
+    media: z.lazy(() => ImagesArrayT),
+    description_title: z.string().nullable(),
+    description: z.any(),
+    contacts: z.object({
+      url: z.string().nullable(),
+      email: z.string().nullable(),
+      phone: z.string().nullable(),
+      location: z.string().nullable(),
+    }).nullable(),
+    head: z.object({
+      data: z.object({
+        id: z.string(),
+        attributes: z.object({
+          slug: z.string(),
+          title: z.string()
+        })
+      }).nullable()
+    }),
+    content: z.lazy(() => DynamicZoneT).array(),
+  }),
+})
+export type DepartmentSinglePageT = z.infer<typeof DepartmentSinglePageT>;
+
+
+
+
 //.........................Employees Page.........................//
 export const EmployeesPageT  = z.object({
   attributes: z.object({
@@ -173,33 +204,17 @@ export type EmployeeSinglePageT = z.infer<typeof EmployeeSinglePageT>;
 
 
 
-//.........................Structure Single Page.........................//
-export const DepartmentSinglePageT  = z.object({
+//.........................Info Page.........................//
+export const InfoPageT  = z.object({
   attributes: z.object({
-    slug: z.string(),
     title: z.string(),
-    media: z.lazy(() => ImagesArrayT),
-    description_title: z.string().nullable(),
-    description: z.any(),
-    contacts: z.object({
-      url: z.string().nullable(),
-      email: z.string().nullable(),
-      phone: z.string().nullable(),
-      location: z.string().nullable(),
+    navBarConfig: z.object({
+      navBarTitle: z.string().nullable()
     }).nullable(),
-    head: z.object({
-      data: z.object({
-        id: z.string(),
-        attributes: z.object({
-          slug: z.string(),
-          title: z.string()
-        })
-      }).nullable()
-    }),
     content: z.lazy(() => DynamicZoneT).array(),
   }),
 })
-export type DepartmentSinglePageT = z.infer<typeof DepartmentSinglePageT>;
+export type InfoPageT = z.infer<typeof InfoPageT>;
 
 
 

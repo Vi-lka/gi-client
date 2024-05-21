@@ -170,6 +170,7 @@ export const dynamicContentQuery = `
           attributes { url }
         }
       }
+      description
     }
   }
   ... on ComponentContentBentoGrid {

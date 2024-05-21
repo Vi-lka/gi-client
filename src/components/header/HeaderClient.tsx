@@ -128,7 +128,7 @@ export default function HeaderClient({
 
                     {/* Mobile */}
                     <div className='lg:hidden flex items-center justify-between w-full'>
-                        <Link locale={locale} href="/" onClick={handleScrollToTop}>
+                        <Link locale={locale} href="/#top" onClick={handleScrollToTop}>
                             <HiLogo className='w-10 h-10' />
                         </Link>
 

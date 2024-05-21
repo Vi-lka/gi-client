@@ -292,7 +292,8 @@ export const FilesItemT = z.object({
           url: z.string(),
         }),
       })
-  })
+  }),
+  description: z.string().nullable(),
 })
 export type FilesItemT = z.infer<typeof FilesItemT>;
 
