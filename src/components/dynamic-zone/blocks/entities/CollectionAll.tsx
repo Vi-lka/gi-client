@@ -8,6 +8,7 @@ import EducationalProgramsLoading from '@/components/loadings/EducationalProgram
 import DpoCoursesLoading from '@/components/loadings/DpoCoursesLoading';
 import EmployeesLoading from '@/components/loadings/EmployeesLoading';
 import BentoLoading from '@/components/loadings/BentoLoading';
+import NewsLoading from '@/components/loadings/NewsLoading';
 
 const EducationalProgramsAll = dynamic(
     () => import('./EducationalProgramsAll'), {loading: () => <EducationalProgramsLoading />}
@@ -23,6 +24,9 @@ const EmployeesAll = dynamic(
 )
 const GraduatesAll = dynamic(
     () => import('./GraduatesAll'), {loading: () => <SliderGraduatesLoading />}
+)
+const NewsAll = dynamic(
+    () => import('./NewsAll'), {loading: () => <NewsLoading />}
 )
 
 export default function CollectionAll({ 
@@ -58,13 +62,16 @@ export default function CollectionAll({
                         return <DpoCoursesAll key={index} searchParams={searchParams} data={data} />;
 
                     case "departments":
-                        return <DepartmentsAll data={data} searchParams={searchParams}/>
+                        return <DepartmentsAll data={data} searchParams={searchParams}/>;
 
                     case "employees":
                         return <EmployeesAll key={index} searchParams={searchParams} data={data} />;
                     
                     case "graduates":
-                        return <GraduatesAll key={index} searchParams={searchParams} data={data} />
+                        return <GraduatesAll key={index} searchParams={searchParams} data={data} />;
+
+                    case "news":
+                        return <NewsAll key={index} searchParams={searchParams} data={data} />;
                 
                     default:
                         return null;

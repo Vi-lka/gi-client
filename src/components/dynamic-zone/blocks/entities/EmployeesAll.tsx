@@ -56,7 +56,7 @@ export default async function EmployeesAll({
                 </div>
             )}
             <Suspense 
-                key={`search=${search}&page=${page}&pageSize=${pageSize}&departments=${departmentsParam}&hashtags=${hashtagsParam}`} 
+                key={`search_employees=${search}&page_employees=${page}&per_employees=${pageSize}&departments=${departmentsParam}&hashtags=${hashtagsParam}`} 
                 fallback={<EmployeesLoading config={data.employeesConfig} />}
             >
                 <EmployeesAllContent locale={locale} slug={slug} searchParams={searchParams} connected={data.connected} config={data.employeesConfig} />                

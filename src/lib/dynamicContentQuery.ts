@@ -1,4 +1,4 @@
-import { departments, dpo_courses, educationalPrograms, employees, graduates } from "./contentQueries"
+import { departments, dpo_courses, educationalPrograms, employees, graduates, news } from "./contentQueries"
 
 //.........................dynamicContentQuery.........................//
 export const dynamicContentQuery = `
@@ -78,6 +78,7 @@ export const dynamicContentQuery = `
     ${graduates}
     ${dpo_courses}
     ${departments}
+    ${news}
     departmentsConfig {
       viewStyle
     }
@@ -85,6 +86,7 @@ export const dynamicContentQuery = `
       showContacts
       showHashtags
     }
+    titleAll
   }
   ... on ComponentContentCollectionAll {
     title
@@ -104,6 +106,10 @@ export const dynamicContentQuery = `
     employeesConfig {
       showContacts
       showHashtags
+    }
+    newsConfig {
+      count
+      showGoToAllButton
     }
   }
   ... on ComponentContentTextBlock {

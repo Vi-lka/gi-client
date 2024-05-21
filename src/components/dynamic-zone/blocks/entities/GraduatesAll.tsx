@@ -37,7 +37,7 @@ export default async function GraduatesAll({
                 </div>
             )}
             <Suspense 
-                key={`search=${search}`} 
+                key={`search_graduates=${search}`} 
                 fallback={<SliderGraduatesLoading />}
             >
                 <GraduatesAllContent locale={locale} slug={slug} searchParams={searchParams} connected={data.connected} />

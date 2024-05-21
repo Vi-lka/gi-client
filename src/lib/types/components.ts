@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { EducationalProgramSingleT, EmployeeSingleT, GraduateSingleT, DpoCoursesSingleT, StructureCategoryEnum, DepartmentSingleT } from "./entities";
+import { EducationalProgramSingleT, EmployeeSingleT, GraduateSingleT, DpoCoursesSingleT, StructureCategoryEnum, DepartmentSingleT, NewSingleT } from "./entities";
 
 //.........................FORMS.........................//
 const phoneRegex = new RegExp(
@@ -115,7 +115,8 @@ export const CollectionAllEnum = z.enum([
   "dpo-courses", 
   "graduates",
   "employees",
-  "departments"
+  "departments",
+  "news"
 ]);
 export type CollectionAllEnum = z.infer<typeof CollectionAllEnum>;
 
@@ -140,7 +141,11 @@ export const CollectionAllCompT = z.object({
   employeesConfig: z.object({
     showContacts: z.boolean(),
     showHashtags: z.boolean()
-  }).nullable()
+  }).nullable(),
+  newsConfig: z.object({
+    count: z.number(),
+    showGoToAllButton: z.boolean()
+  }).nullable(),
 })
 export type CollectionAllCompT = z.infer<typeof CollectionAllCompT>;
 
@@ -215,13 +220,17 @@ export const SliderEntityCompT = z.object({
   departments: z.object({
     data: z.lazy(() => DepartmentSingleT).array()
   }),
+  news: z.object({
+    data: z.lazy(() => NewSingleT).array()
+  }),
   departmentsConfig: z.object({
     viewStyle: CollectionAllViewEnum,
   }).nullable(),
   employeesConfig: z.object({
     showContacts: z.boolean(),
     showHashtags: z.boolean()
-  }).nullable()
+  }).nullable(),
+  titleAll: z.string().nullable(),
 })
 export type SliderEntityCompT = z.infer<typeof SliderEntityCompT>;
 

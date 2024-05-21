@@ -42,12 +42,12 @@ export const EducationalProgramSingleT  = z.object({
 export type EducationalProgramSingleT = z.infer<typeof EducationalProgramSingleT>;
 
 export const EducationalProgramsT  = z.object({
-    meta: z.object({
-        pagination: z.object({
-          total: z.number(),
-        }),
+  meta: z.object({
+    pagination: z.object({
+      total: z.number(),
     }),
-    data: EducationalProgramSingleT.array(),
+  }),
+  data: EducationalProgramSingleT.array(),
 })
 export type EducationalProgramsT = z.infer<typeof EducationalProgramsT>;
 
@@ -71,12 +71,12 @@ export const DpoCoursesSingleT  = z.object({
 export type DpoCoursesSingleT = z.infer<typeof DpoCoursesSingleT>;
 
 export const DpoCoursesT  = z.object({
-    meta: z.object({
-        pagination: z.object({
-          total: z.number(),
-        }),
+  meta: z.object({
+    pagination: z.object({
+      total: z.number(),
     }),
-    data: DpoCoursesSingleT.array(),
+  }),
+  data: DpoCoursesSingleT.array(),
 })
 export type DpoCoursesT = z.infer<typeof DpoCoursesT>;
 
@@ -138,9 +138,9 @@ export type EmployeeSingleT = z.infer<typeof EmployeeSingleT>;
 
 export const EmployeesT  = z.object({
   meta: z.object({
-      pagination: z.object({
-        total: z.number(),
-      }),
+    pagination: z.object({
+      total: z.number(),
+    }),
   }),
   data: EmployeeSingleT.array(),
 })
@@ -172,12 +172,12 @@ export const GraduateSingleT  = z.object({
 export type GraduateSingleT = z.infer<typeof GraduateSingleT>;
 
 export const GraduatesT  = z.object({
-    meta: z.object({
-        pagination: z.object({
-          total: z.number(),
-        }),
+  meta: z.object({
+    pagination: z.object({
+      total: z.number(),
     }),
-    data: GraduateSingleT.array(),
+  }),
+  data: GraduateSingleT.array(),
 })
 export type GraduatesT = z.infer<typeof GraduatesT>;
 
@@ -227,11 +227,37 @@ export const DepartmentSingleT = z.object({
 export type DepartmentSingleT = z.infer<typeof DepartmentSingleT>;
 
 export const DepartmentsT  = z.object({
-    meta: z.object({
-        pagination: z.object({
-          total: z.number(),
-        }),
+  meta: z.object({
+    pagination: z.object({
+      total: z.number(),
     }),
-    data: DepartmentSingleT.array(),
+  }),
+  data: DepartmentSingleT.array(),
 })
 export type DepartmentsT = z.infer<typeof DepartmentsT>;
+
+
+
+
+
+//.........................News.........................//
+export const NewSingleT = z.object({
+  id: z.string(),
+  attributes: z.object({
+    slug: z.string(),
+    title: z.string(),
+    image: z.lazy(() => ImageT),
+    publishedAt: z.string().pipe( z.coerce.date() )
+  }),
+})
+export type NewSingleT = z.infer<typeof NewSingleT>;
+
+export const NewsT  = z.object({
+  meta: z.object({
+    pagination: z.object({
+      total: z.number(),
+    }),
+  }),
+  data: NewSingleT.array(),
+})
+export type NewsT = z.infer<typeof NewsT>;

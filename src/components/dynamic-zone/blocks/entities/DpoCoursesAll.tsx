@@ -50,7 +50,7 @@ export default async function DpoCoursesAll({
                 </div>
             )}
             <Suspense 
-                key={`search=${search}&page=${page}&pageSize=${pageSize}&departments=${departmentsParam}`} 
+                key={`search_dpo=${search}&page_dpo=${page}&per_dpo=${pageSize}&departments=${departmentsParam}`} 
                 fallback={<DpoCoursesLoading />}
             >
                 <DpoCoursesAllContent locale={locale} slug={slug} dict={dict} searchParams={searchParams} connected={data.connected} />

@@ -48,7 +48,7 @@ export default async function EducationalProgramsAll({
                 </div>
             )}
             <Suspense 
-                key={`search=${search}&departments=${departmentsParam}`} 
+                key={`search_eduProg=${search}&departments=${departmentsParam}`} 
                 fallback={<EducationalProgramsLoading />}
             >
                 <EducationalProgramsAllContent locale={locale} slug={slug} dict={dict} searchParams={searchParams} connected={data.connected} />

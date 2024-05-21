@@ -15,6 +15,9 @@ import DpoCourseLoading from '@/components/loadings/items/DpoCourseLoading'
 import SliderSplitLoading from '@/components/loadings/SliderSplitLoading'
 import DepartmentLoading from '@/components/loadings/items/DepartmentLoading'
 import BentoLoading from '@/components/loadings/BentoLoading'
+import NewLoading from '@/components/loadings/items/NewLoading'
+import Link from 'next/link'
+import { Button } from '@/components/ui/button'
 
 const EducationalProgramsItem = dynamic(
     () => import('../entities-cards/EducationalProgramsItem'), {loading: () => <EducationalProgramLoading />}
@@ -25,6 +28,10 @@ const DpoCoursesItem = dynamic(
 const DepartmentsItem = dynamic(
     () => import('../entities-cards/DepartmentsItem'), {loading: () => <DepartmentLoading />}
 )
+const NewsItem = dynamic(
+    () => import('../entities-cards/NewsItem'), {loading: () => <NewLoading />}
+)
+
 const SliderSplit = dynamic(
     () => import('./SliderSplit'), {loading: () => <SliderSplitLoading />}
 )
@@ -32,6 +39,11 @@ const SliderSplit = dynamic(
 const DepartmentsBento = dynamic(
     () => import('../entities-cards/bento/DepartmentsBento'), {loading: () => <BentoLoading />}
 )
+
+type CountType = {
+    label: "educational_programs" | "dpo_courses" | "departments" | "employees" | "graduates" | "news";
+    count: number;
+}
 
 export default async function SliderEntity({
     data,
@@ -47,6 +59,46 @@ export default async function SliderEntity({
     const locale = headersList.get('x-locale') || "";
 
     const dict = await getDictionary(locale)
+
+    const counts: CountType[] = [
+        {label: "educational_programs", count: data.educational_programs.data.length},
+        {label: "dpo_courses", count: data.dpo_courses.data.length},
+        {label: "departments", count: data.departments.data.length},
+        {label: "employees", count: data.employees.data.length},
+        {label: "graduates", count: data.graduates.data.length},
+        {label: "news", count: data.news.data.length}
+    ]
+
+    const withMostCount = counts.reduce(
+        (prev, current) => {
+            return prev.count > current.count ? prev : current
+        }
+    );
+
+    const hrefToMostCount = function() {
+        switch (withMostCount.label) {
+            case "educational_programs":
+                return "/admission";
+
+            case "dpo_courses":
+                return "/dpo";
+
+            case "departments":
+                return "/departments";
+
+            case "employees":
+                return "/structure/employees";
+
+            case "graduates":
+                return "/graduates";
+
+            case "news":
+                return "/info/news";
+
+            default:
+                return "/";
+        }
+    }()
 
     return (
         <div className={cn("w-full", className)}>
@@ -74,6 +126,15 @@ export default async function SliderEntity({
                     {data.dpo_courses.data.map(item => (
                         <CarouselItem key={"dpo-course" + item.id} className='lg:basis-1/2 lg:pl-8 pl-4'>
                             <DpoCoursesItem locale={locale} item={item} dict={dict} />
+                        </CarouselItem>
+                    ))}
+                </CarouselComp>
+            )}
+            {data.news.data.length > 0 && (
+                <CarouselComp className='lg:-ml-8 -ml-4'>
+                    {data.news.data.map(item => (
+                        <CarouselItem key={"news" + item.id} className='lg:basis-1/3 sm:basis-1/2 lg:pl-8 pl-4'>
+                            <NewsItem locale={locale} item={item} buttonTitle={dict.Buttons.more} />
                         </CarouselItem>
                     ))}
                 </CarouselComp>
@@ -108,6 +169,13 @@ export default async function SliderEntity({
                 <ClientHydration fallback={<SliderGraduatesLoading />}>
                     <SliderSplit data={data.graduates.data} />
                 </ClientHydration>
+            )}
+            {data.titleAll && (
+                <Link locale={locale} href={hrefToMostCount} className='flex w-fit mx-auto mt-6'>
+                    <Button className='uppercase font-medium px-10 py-5 rounded-3xl'>
+                        {data.titleAll}
+                    </Button>
+                </Link>
             )}
         </div>
     )

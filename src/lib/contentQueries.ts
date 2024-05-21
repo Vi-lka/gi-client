@@ -174,3 +174,21 @@ export const departments = `
     }
   }
 `
+
+export const news = `
+  news(sort: "publishedAt:asc") {
+    data {
+      id
+      attributes {
+        slug
+        title
+        image {
+          data {
+            attributes { url }
+          }
+        }
+        publishedAt
+      }
+    }
+  }
+`
