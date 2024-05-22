@@ -99,7 +99,7 @@ async function NewsAllContent({
     <>
       {config && (config.count > 0) 
         ? (
-          <>
+          <div key={`search_news=${search}&page_news=${page}&per_news=${pageSize}`} id="news" className='w-full'>
             <CarouselComp className='lg:-ml-8 -ml-4'>
               {dataResult.value.data.map(item => (
                 <CarouselItem key={"news" + item.id} className='lg:basis-1/3 sm:basis-1/2 lg:pl-8 pl-4'>
@@ -114,11 +114,11 @@ async function NewsAllContent({
                 </Button>
               </Link>
             )}
-          </>
+          </div>
         )
         : (
           <>
-            <div key={Math.random()} id="news" className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 auto-rows-fr lg:gap-8 gap-6">
+            <div key={`search_news=${search}&page_news=${page}&per_news=${pageSize}`} id="news" className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 auto-rows-fr lg:gap-8 gap-6">
               {dataResult.value.data.map(item => (
                 <NewsItem key={"news" + item.id} locale={locale} item={item} buttonTitle={dict.Buttons.more} /> 
               ))}

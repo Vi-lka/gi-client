@@ -2,7 +2,7 @@ import {  clsx } from "clsx"
 import type {ClassValue} from "clsx";
 import { twMerge } from "tailwind-merge"
 import type { DictionariesType } from "./getDictionary";
-import { format } from "date-fns";
+import { formatInTimeZone } from "date-fns-tz";
 import { ru, enUS } from "date-fns/locale";
 
 export function cn(...inputs: ClassValue[]) {
@@ -71,7 +71,7 @@ export function getDateLocale(locale: keyof DictionariesType) {
 }
 
 export function formatDate(date: Date, locale: string) {
-  const str = format(date, "P", { 
+  const str = formatInTimeZone(date, 'Asia/Krasnoyarsk', "P", { 
     locale: getDateLocale(locale as keyof DictionariesType)
   })
   return str

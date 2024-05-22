@@ -113,7 +113,7 @@ async function EmployeesAllContent({
 
     return (
         <>
-            <div key={Math.random()} id="employees" className="grid md:grid-cols-2 grid-cols-1 auto-rows-auto lg:gap-8 gap-6">
+            <div key={`search_employees=${search}&page_employees=${page}&per_employees=${pageSize}&departments=${departmentsParam}&hashtags=${hashtagsParam}`} id="employees" className="grid md:grid-cols-2 grid-cols-1 auto-rows-auto lg:gap-8 gap-6">
                 {dataResult.value.data.map(employee => (
                     <EmployeesItem 
                         key={"employee" + employee.id} 

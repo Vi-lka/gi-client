@@ -100,7 +100,7 @@ async function DpoCoursesAllContent({
 
     return (
         <>
-            <div key={Math.random()} id="dpo-courses" className="grid lg:grid-cols-2 grid-cols-1 lg:auto-rows-fr lg:gap-8 gap-6">
+            <div key={`search_dpo=${search}&page_dpo=${page}&per_dpo=${pageSize}&departments=${departmentsParam}`} id="dpo-courses" className="grid lg:grid-cols-2 grid-cols-1 lg:auto-rows-fr lg:gap-8 gap-6">
                 {dataResult.value.data.map(item => (
                     <DpoCoursesItem key={"dpo-course" + item.id} locale={locale} item={item} dict={dict} /> 
                 ))}

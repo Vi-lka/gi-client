@@ -7,12 +7,14 @@ import ImageComp from '../ImageComp';
 import Link from 'next/link';
 import FormFooter from './FormFooter';
 import { headers } from 'next/headers';
-import { cn } from '@/lib/utils';
+import { cn, getDateLocale } from '@/lib/utils';
 import { ClientHydration } from '../ClientHydration';
 import { Skeleton } from '../ui/skeleton';
 import { FooterT } from '@/lib/types/additional';
 import fetchData from '@/lib/queries/fetchData';
 import type { ImageT } from '@/lib/types/components';
+import { formatInTimeZone } from 'date-fns-tz';
+import type { DictionariesType } from '@/lib/getDictionary';
 
 export const dynamic = 'force-dynamic'
 
@@ -81,7 +83,11 @@ export default async function Footer() {
             notFound={false}
         />
     )
-    const year = new Date().getFullYear();
+    const year = new Date()
+
+    const yearFormat = formatInTimeZone(year, 'Asia/Krasnoyarsk', "yyyy", { 
+        locale: getDateLocale(header_locale as keyof DictionariesType)
+    })
 
     return (
         <footer className="bg-background lg:pt-36 sm:pt-32 pt-24 pb-8">
@@ -227,7 +233,7 @@ export default async function Footer() {
             {dataResult.value.copyright && (
                 <div className="container md:w-5/6 mx-auto xl:mt-16 mt-12">
                     <p className="lg:text-sm text-xs font-medium text-muted">
-                        © {year} {dataResult.value.copyright}
+                        © {yearFormat} {dataResult.value.copyright}
                     </p>
                 </div>
             )}

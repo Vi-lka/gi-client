@@ -49,7 +49,7 @@ export default async function DepartmentsAll({
                 </div>
             )}
             <Suspense 
-                key={`search=${search}&page=${page}&pageSize=${pageSize}`} 
+                key={`search_departments=${search}&page_departments=${page}&per_departments=${pageSize}`} 
                 fallback={data.departmentsConfig?.view === "bento" ? <BentoLoading /> : <DepartmentsLoading />}
             >
                 <DepartmentsAllContent 
@@ -106,12 +106,12 @@ async function DepartmentsAllContent({
         <>
             {data.departmentsConfig?.view === "bento"
                 ? (
-                    <div key={Math.random()} id="departments">
+                    <div key={`search_departments=${search}&page_departments=${page}&per_departments=${pageSize}`} id="departments">
                         <DepartmentsBento locale={locale} departments={dataResult.value} />
                     </div>
                 )
                 : (
-                    <div key={Math.random()} id="departments" className="grid lg:grid-cols-2 grid-cols-1 lg:auto-rows-fr lg:gap-8 gap-6">
+                    <div key={`search_departments=${search}&page_departments=${page}&per_departments=${pageSize}`} id="departments" className="grid lg:grid-cols-2 grid-cols-1 lg:auto-rows-fr lg:gap-8 gap-6">
                         {dataResult.value.data.map(item => (
                             <DepartmentsItem key={"department" + item.id} locale={locale} item={item} dict={dict} /> 
                         ))}
