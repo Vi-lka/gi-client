@@ -167,9 +167,19 @@ export const getEmployees = async ({
       sort,
       pagination: { page, pageSize },
       filters: {
-        departments: departments ? {
-          id: { in: departments }
-        } : undefined,
+        or: departments ? [
+          {departments: {
+            id: { in: departments }
+          }},
+          {head_in_department: {
+            id: { in: departments }
+          }},
+          {meta: {
+            posts: {
+              department: {id: { in: departments }}
+            }
+          }}
+        ] : undefined,
         hashtags: hashtags ? {
           id: { in: hashtags }
         } : undefined,
