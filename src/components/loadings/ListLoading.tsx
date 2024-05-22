@@ -8,7 +8,7 @@ export default function ListLoading() {
 
             <ul className="flex flex-col gap-4">
                 {Array.from({ length: 8 }).map((_, index) => (
-                    <li key={index} className='flex items-center w-[80%] gap-2'>
+                    <li key={index} className='flex items-center md:w-[80%] gap-2'>
                         <Skeleton className='w-7 h-7 rounded-full' />
                         <Skeleton className='w-full py-1 lg:h-6 h-5'/>
                     </li>

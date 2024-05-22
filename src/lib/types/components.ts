@@ -315,6 +315,19 @@ export const FilesCompT = z.object({
 })
 export type FilesCompT = z.infer<typeof FilesCompT>;
 
+export const FilesGridCompT = z.object({
+  __typename: z.literal("ComponentContentFilesGrid"),
+  title: z.string().nullable(),
+  link: z.string().nullable(),
+  linkTitle: z.string().nullable(),
+  items: FilesItemT.array(),
+  titleSecond: z.string().nullable(),
+  linkSecond: z.string().nullable(),
+  linkSecondTitle: z.string().nullable(),
+  itemsSecond: FilesItemT.array(),
+})
+export type FilesGridCompT = z.infer<typeof FilesGridCompT>;
+
 
 
 
@@ -403,6 +416,7 @@ export const DynamicZoneT = z.discriminatedUnion("__typename", [
   TimelineCompT,
   NumbersCompT,
   FilesCompT,
+  FilesGridCompT,
   AccordionCompT,
   BentoGridCompT,
   FormBlockCompT,

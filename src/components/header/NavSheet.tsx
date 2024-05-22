@@ -25,6 +25,7 @@ export default function NavSheet({
   const entranceTitle = getLinkTitle(links.entrancePage.data?.attributes, dict.Header.nav.admission)
   const dpoTitle = getLinkTitle(links.dpo.data?.attributes, dict.Header.nav.dpo)
   const structureTitle = getLinkTitle(links.structure.data?.attributes, dict.Header.nav.structure)
+  const infoTitle = getLinkTitle(links.info.data?.attributes, dict.Header.nav.info)
 
   return (
     <Sheet>
@@ -36,7 +37,7 @@ export default function NavSheet({
         <NavigationMenu orientation="vertical" className="mx-auto">
           <NavigationMenuList className="flex flex-col items-center">
             <ScrollArea className="font-Raleway mt-[2vh] h-[90vh] w-full p-1">
-              <SheetMenuItem title={dict.Header.nav.info} href='/info' />
+              <SheetMenuItem title={infoTitle} href='/info' />
               <SheetMenuItem title={structureTitle} href='/structure' />
               <SheetMenuItem title={dict.Header.nav.education} href='/education' />
               <SheetMenuItem title={entranceTitle} href='/admission' />

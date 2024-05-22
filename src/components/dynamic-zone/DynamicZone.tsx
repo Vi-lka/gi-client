@@ -16,6 +16,7 @@ import "./blocks/timeline/timeline.css"
 import type { DynamicZoneT } from '@/lib/types/components';
 import CollectionAllLoading from '../loadings/CollectionAllLoading';
 import BentoLoading from '../loadings/BentoLoading';
+import ListGridLoading from '../loadings/ListGridLoading';
  
 const RichText = dynamic(
   () => import('./blocks/RichText'), {loading: () => <TextLoading />}
@@ -43,6 +44,10 @@ const Numbers = dynamic(
 
 const Files = dynamic(
   () => import('./blocks/Files'), {loading: () => <ListLoading />}
+)
+
+const FilesGrid = dynamic(
+  () => import('./blocks/FilesGrid'), {loading: () => <ListGridLoading />}
 )
 
 const AccordionBlock = dynamic(
@@ -166,6 +171,14 @@ export default function DynamicZone({
 
     case "ComponentContentFiles":
       return <Files 
+              key={`key-${item.__typename}-${item.link}`} 
+              data={item} 
+              headingBig={headingBig} 
+              className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} 
+            />;
+
+    case "ComponentContentFilesGrid":
+      return <FilesGrid 
               key={`key-${item.__typename}-${item.link}`} 
               data={item} 
               headingBig={headingBig} 

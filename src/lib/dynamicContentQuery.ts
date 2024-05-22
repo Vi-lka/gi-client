@@ -179,6 +179,32 @@ export const dynamicContentQuery = `
       description
     }
   }
+  ... on ComponentContentFilesGrid {
+    title
+    link
+    linkTitle
+    items {
+      title
+      file {
+        data {
+          attributes { url }
+        }
+      }
+      description
+    }
+    titleSecond
+    linkSecond
+    linkSecondTitle
+    itemsSecond {
+      title
+      file {
+        data {
+          attributes { url }
+        }
+      }
+      description
+    }
+  }
   ... on ComponentContentBentoGrid {
     title
     link
@@ -291,6 +317,13 @@ export const dynamicContentLinksQuery = `
   }
   ... on ComponentContentFiles {
     ${sameFields}
+  }
+  ... on ComponentContentFilesGrid {
+    ${sameFields}
+    titleSecond
+    linkSecond
+    linkSecondTitle
+    linkSecondDescription
   }
   ... on ComponentContentAccordion {
     ${sameFields}

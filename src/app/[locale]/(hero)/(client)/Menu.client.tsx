@@ -28,6 +28,7 @@ export default function MenuClient({
     const entranceTitle = data.links.entrancePage.data ? data.links.entrancePage.data.attributes.title : dict.Header.nav.admission
     const dpoTitle = data.links.dpo.data ? data.links.dpo.data.attributes.title : dict.Header.nav.dpo
     const structureTitle = data.links.structure.data ? data.links.structure.data.attributes.title : dict.Header.nav.structure
+    const infoTitle = data.links.info.data ? data.links.info.data.attributes.title : dict.Header.nav.info
 
     const entranceLinks = getSubLinks({
         title: entranceTitle,
@@ -46,18 +47,16 @@ export default function MenuClient({
         href: "/structure",
         navBarData: data.navBar?.structure?.subLinks,
         linksData: data.links.structure.data?.attributes.content
-      })
+    })
+    const infoLinks = getSubLinks({
+        title: infoTitle,
+        href: "/info",
+        navBarData: data.navBar?.info?.subLinks,
+        linksData: data.links.info.data?.attributes.content
+    })
 
     const links = [
-        {
-            title: dict.Header.nav.info,
-            href: "/info",
-            subLinks: [
-                { title: "Новости", link: "/info/news" },
-                { title: "Документы", link: "/info/docs" },
-                { title: "Программа развития ГИ", link: "/info/development-program" },
-            ]
-        },
+        infoLinks,
         structureLinks,
         {
             title: dict.Header.nav.education,

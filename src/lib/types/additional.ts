@@ -52,6 +52,10 @@ export const LinksItemT = z.object({
     link: z.string().nullable(),
     linkTitle: z.string().nullable(),
     linkDescription: z.string().nullable(),
+    titleSecond: z.string().nullable().optional(),
+    linkSecond: z.string().nullable().optional(),
+    linkSecondTitle: z.string().nullable().optional(),
+    linkSecondDescription: z.string().nullable().optional(),
   }).array()
 })
 export type LinksItemT = z.infer<typeof LinksItemT>;
@@ -68,6 +72,11 @@ export const LinksT  = z.object({
     }).nullable()
   }),
   structure: z.object({
+    data: z.object({
+      attributes: LinksItemT
+    }).nullable()
+  }),
+  info: z.object({
     data: z.object({
       attributes: LinksItemT
     }).nullable()

@@ -22,6 +22,8 @@ export default function NavMenu({
   const entranceTitle = getLinkTitle(links.entrancePage.data?.attributes, dict.Header.nav.admission)
   const dpoTitle = getLinkTitle(links.dpo.data?.attributes, dict.Header.nav.dpo)
   const structureTitle = getLinkTitle(links.structure.data?.attributes, dict.Header.nav.structure)
+  const infoTitle = getLinkTitle(links.info.data?.attributes, dict.Header.nav.info)
+  
 
   const entranceLinks = getSubLinks({
       title: entranceTitle,
@@ -47,11 +49,19 @@ export default function NavMenu({
     navBarData: navBar?.structure?.subLinks,
     linksData: links.structure.data?.attributes.content
   })
+  const infoLinks = getSubLinks({
+    title: infoTitle,
+    href: "/info",
+    image: links.info.data?.attributes.navBarConfig?.navBarImage,
+    description: links.info.data?.attributes.navBarConfig?.navBarDescription,
+    navBarData: navBar?.info?.subLinks,
+    linksData: links.info.data?.attributes.content
+  })
 
   return (
     <NavigationMenu delayDuration={100} className={className}>
       <NavigationMenuList className='relative gap-2 flex-wrap justify-between items-center'>
-        <NavMenuItem data={{title: dict.Header.nav.info, href: '/info'}} />
+        <NavMenuItem data={infoLinks} />
         <NavMenuItem data={structureLinks}/>
         <NavMenuItem data={{title: dict.Header.nav.education, href: '/education'}} />
         <NavMenuItem data={entranceLinks} />
