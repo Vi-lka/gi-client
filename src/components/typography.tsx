@@ -50,7 +50,7 @@ export function TypographyH6({ className, children }: { className?: string, chil
 
 export function TypographyP({ className, children }: { className?: string, children?: React.ReactNode }) {
     return (
-        <p className={cn("leading-7 [&:not(:first-child)]:mt-6", className)}>
+        <p className={cn("leading-7 [&:not(:first-child)]:mt-6 whitespace-pre-line", className)}>
             {children}
         </p>
     )

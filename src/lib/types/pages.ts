@@ -219,6 +219,33 @@ export type InfoPageT = z.infer<typeof InfoPageT>;
 
 
 
+//.........................News Page.........................//
+export const NewsPageT  = z.object({
+  attributes: z.object({
+    title: z.string(),
+    navBarConfig: z.object({
+      navBarTitle: z.string().nullable()
+    }).nullable(),
+    content: z.lazy(() => DynamicZoneT).array(),
+  }),
+})
+export type NewsPageT = z.infer<typeof NewsPageT>;
+
+export const NewsSinglePageT  = z.object({
+  attributes: z.object({
+    slug: z.string(),
+    title: z.string(),
+    image: z.lazy(() => ImageT),
+    text: z.any(),
+    publishedAt: z.string().pipe( z.coerce.date() ),
+    content: z.lazy(() => DynamicZoneT).array(),
+  }),
+})
+export type NewsSinglePageT = z.infer<typeof NewsSinglePageT>;
+
+
+
+
 //..................................................Additional Pages..................................................//
 export const AdditionalPageSingleT  = z.object({
   id: z.string(),
