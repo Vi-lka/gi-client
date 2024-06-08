@@ -27,7 +27,7 @@ export const sendEmail = async (prevState: State, formData: ContactFormT) => {
     await transporter.sendMail({
       from: process.env.SMTP_FROM_EMAIL,
       to,
-      subject: 'Запрос на Сайте Гуманитарного Института"',
+      subject: 'Запрос на Сайте Гуманитарного Института',
       html: render(EmailTemplate({ path, username, email, phone, text })),
       headers: {
         'X-Entity-Ref-ID': uuid(),
