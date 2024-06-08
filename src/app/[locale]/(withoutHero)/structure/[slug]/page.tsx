@@ -2,7 +2,7 @@ import Anchors from '@/components/Anchors';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import DynamicZone from '@/components/dynamic-zone/DynamicZone';
 import ErrorHandler from '@/components/errors/ErrorHandler';
-import { TypographyH1, TypographyH2 } from '@/components/typography';
+import { TypographyH1 } from '@/components/typography';
 import { dynamicContentQuery } from '@/lib/dynamicContentQuery';
 import fetchData from '@/lib/queries/fetchData';
 import { notFound } from 'next/navigation';
@@ -145,14 +145,9 @@ export default async function StructureSinglePage({
 
       <Media media={dataResult.value.department.attributes.media} className='my-6' />
 
-      {dataResult.value.department.attributes.description_title && (
-        <TypographyH2 className='font-semibold text-primary my-6'>
-          {dataResult.value.department.attributes.description_title}
-        </TypographyH2>
-      )}
-
       <Description 
         locale={params.locale}
+        descriptionTitle={dataResult.value.department.attributes.description_title}
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         description={dataResult.value.department.attributes.description} 
         contacts={dataResult.value.department.attributes.contacts} 
