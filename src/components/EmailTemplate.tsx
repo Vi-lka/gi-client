@@ -15,13 +15,11 @@ import { Tailwind } from "@react-email/tailwind";
 import * as React from "react";
 
 interface EmailTemplateProps {
-  place?: string;
   path?: string;
   username?: string;
   email?: string;
   phone?: string;
-  formTitle?: string | null;
-  formDescription?: string | null;
+  text?: string;
 }
 
 const baseUrl = process.env.NEXT_PUBLIC_URL
@@ -29,13 +27,11 @@ const baseUrl = process.env.NEXT_PUBLIC_URL
   : "https://hi.sfu-kras.ru";
 
 export const EmailTemplate = ({
-  place,
   path,
   username,
   email,
   phone,
-  formTitle,
-  formDescription,
+  text,
 }: EmailTemplateProps) => {
   const previewText = `Запрос на Сайте Гуманитарного Института`;
 
@@ -56,7 +52,7 @@ export const EmailTemplate = ({
               />
             </Section>
             <Heading className="text-black text-[24px] font-normal text-center p-0 my-[30px] mx-0">
-                Запрос на Сайте Гуманитарного Института
+              Запрос на Сайте Гуманитарного Института
             </Heading>
             <Text className="text-black text-[14px] leading-[24px]">
               ФИО: {username}
@@ -79,24 +75,18 @@ export const EmailTemplate = ({
                 {phone}
               </Link>
             </Text>
+            <Text className="text-black text-[14px] leading-[24px] whitespace-pre-wrap">
+              {text}
+            </Text>
             <Hr className="border border-solid border-[#eaeaea] my-[26px] mx-0 w-full" />
             <Text className="text-[#666666] text-[12px] leading-[24px]">
-              Это сообщение было отправлено со страницы:{" "}
+              Открыть страницу с которой было отправлено данное сообщение:{" "}
               <Link
                 href={`${baseUrl}${path}`}
-                className="text-blue-600 no-underline"
+                className="text-blue-600 underline"
               >
-                {`${baseUrl}${path}`}
+                Открыть
               </Link>.
-            </Text>
-            <Text className="text-[#666666] text-[12px] leading-[24px]">
-              Компонент: <span className="text-black">{place}</span>.
-            </Text>
-            <Text className="text-[#666666] text-[12px] leading-[24px]">
-              Заголовок формы: <span className="text-black">{formTitle}</span>.
-            </Text>
-            <Text className="text-[#666666] text-[12px] leading-[24px]">
-              Описание формы: <span className="text-black">{formDescription}</span>.
             </Text>
           </Container>
         </Body>

@@ -10,6 +10,7 @@ import { InputField } from './InputField'
 import type { z } from 'zod'
 import { useDictionary } from '../providers/DictionaryProvider'
 import { ContactFormT } from '@/lib/types/components'
+import { AutosizeTextareaField } from './AutosizeTextareaField'
 
 export default function ContactForm({
     handleAction,
@@ -25,7 +26,8 @@ export default function ContactForm({
         defaultValues: {
             username: "",
             email: "",
-            phone: ""
+            phone: "",
+            text: "",
         },
         mode: 'onBlur',
     })
@@ -84,6 +86,25 @@ export default function ContactForm({
                                 />
                             </FormControl>
                             <FormMessage />
+                        </FormItem>
+                    )}
+                />
+                <FormField
+                    control={form.control}
+                    name="text"
+                    render={({ field }) => (
+                        <FormItem className='w-full'>
+                          <FormControl>
+                            <AutosizeTextareaField
+                                placeholder={dict.ContactForm.form.text}
+                                disabled={form.formState.isSubmitting}
+                                minHeight={58}
+                                maxHeight={200}
+                                className='bg-input rounded-3xl border-border shadow-sm'
+                                {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
                         </FormItem>
                     )}
                 />

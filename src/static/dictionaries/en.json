@@ -49,6 +49,7 @@
       "name": "Name",
       "email": "E-mail",
       "phone": "Phone",
+      "text": "Your question:",
       "send": "Send"
     },
     "sendMessage": {

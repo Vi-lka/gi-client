@@ -15,7 +15,11 @@ services:
         SENTRY_AUTH_TOKEN: ${SENTRY_AUTH_TOKEN}
         SENTRY_PROJECT: ${SENTRY_PROJECT}
         SENTRY_ORG: ${SENTRY_ORG}
-        RESEND_API_KEY: ${RESEND_API_KEY}
+        SMTP_HOST: ${SMTP_HOST}
+        SMTP_PORT: ${SMTP_PORT}
+        SMTP_USER: ${SMTP_USER}
+        SMTP_PASSWORD: ${SMTP_PASSWORD}
+        SMTP_FROM_EMAIL: ${SMTP_FROM_EMAIL}
     restart: always
     volumes:
       - client_next_cache:/app/.next/cache

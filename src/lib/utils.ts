@@ -9,6 +9,9 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
+
+
+
 export function getShortText(
   description: string,
   length?: number,
@@ -21,6 +24,9 @@ export function getShortText(
     return array.slice(0, sliceLength).join(" ") + "...";
   } else return array.join(" ");
 }
+
+
+
 
 export function calcWidth({index, current, count}: {index: number, current: number, count: number}) {
   const per = (100 / count) / count
@@ -39,6 +45,9 @@ export function calcWidth({index, current, count}: {index: number, current: numb
   }
 }
 
+
+
+
 export function splitArray<T>(arr: T[], size: number) {
   const arr2 = arr.slice(0)
   const arrays = [];
@@ -48,14 +57,23 @@ export function splitArray<T>(arr: T[], size: number) {
   return arrays;
 }
 
+
+
+
 export function declOfNum(number: number, titles: string[]) {
   const cases = [2, 0, 1, 1, 1, 2];
   return titles[(number % 100 > 4 && number % 100 < 20) ? 2 : cases[(number % 10 < 5) ? number % 10 : 5]];
 }
 
+
+
+
 export function uniqArray<T>(arr: T[]) {
   return Array.from(new Set(arr));
 }
+
+
+
 
 export function getDateLocale(locale: keyof DictionariesType) {
   switch (locale) {
@@ -70,12 +88,18 @@ export function getDateLocale(locale: keyof DictionariesType) {
   }
 }
 
+
+
+
 export function formatDate(date: Date, locale: string) {
   const str = formatInTimeZone(date, 'Asia/Krasnoyarsk', "P", { 
     locale: getDateLocale(locale as keyof DictionariesType)
   })
   return str
 }
+
+
+
 
 export function shortUrl(url: string | null | undefined) {
   if (!url) return
@@ -86,6 +110,9 @@ export function shortUrl(url: string | null | undefined) {
 
   return shorter;
 }
+
+
+
 
 export function calcEach(index: number, skip: number, gap: number) {
 
@@ -103,6 +130,9 @@ export function calcEach(index: number, skip: number, gap: number) {
 
   if ((currentIndex === inEach) || (currentIndex === (inEach - gap))) return true
 }
+
+
+
 
 export function calcBento(index: number, length: number) {
   const isEven = length % 2 === 0
@@ -122,6 +152,9 @@ export function calcBento(index: number, length: number) {
   }
 }
 
+
+
+
 export function resetPaginationts(params: URLSearchParams) {
   const hasPage = params.has("page");
   const hasPageEmployees = params.has("page_employees");
@@ -135,12 +168,17 @@ export function resetPaginationts(params: URLSearchParams) {
 }
 
 
+
+
 export function objectToArray<A>(input: { [s: string]: A }): A[] {
   const result = Object.entries(input).map(a => {
     return {...a[1]}
   })
   return result
 }
+
+
+
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function updateValueByKey<T extends object>(key: string, newValue: any, obj: T) {
@@ -159,6 +197,8 @@ export function updateValueByKey<T extends object>(key: string, newValue: any, o
 
   return newObj
 }
+
+
 
 
 export function genSearchFilter<T extends object>(key: string, newValue: string | undefined, obj: {or: T[]},) {
@@ -180,5 +220,8 @@ export function genSearchFilter<T extends object>(key: string, newValue: string 
 
   return objects
 }
+
+
+
 
 export const grayscale = "lg:dark:grayscale-[60%] lg:dark:contrast-[1.2] dark:grayscale-[30%] dark:contrast-[1.05] dark:hover:grayscale-0 dark:hover:contrast-100 transition-[filter] duration-200 ease-in"

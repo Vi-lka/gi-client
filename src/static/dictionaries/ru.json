@@ -49,6 +49,7 @@
       "name": "ФИО",
       "email": "E-mail",
       "phone": "Телефон",
+      "text": "Ваш вопрос:",
       "send": "Отправить"
     },
     "sendMessage": {

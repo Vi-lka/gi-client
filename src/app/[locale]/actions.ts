@@ -1,9 +1,10 @@
 "use server"
-import { Resend } from "resend"
+import nodemailer from "nodemailer";
 import EmailTemplate from "@/components/EmailTemplate"
 import { render } from "@react-email/render"
 import { v4 as uuid } from 'uuid';
 import type { ContactFormT } from "@/lib/types/components";
+import { smtpOptions } from "@/lib/email";
 
 interface State {
   error: string | null
@@ -11,21 +12,23 @@ interface State {
 }
 
 export const sendEmail = async (prevState: State, formData: ContactFormT) => {
-  const place = formData.place
+  const to = formData.to as string
   const path = formData.path
   const username = formData.username
   const email = formData.email
   const phone = formData.phone
-  const formTitle = formData.formTitle
-  const formDescription = formData.formDescription
+  const text = formData.text
 
   try {
-    const resend = new Resend(process.env.RESEND_API_KEY)
-    await resend.emails.send({
-      from: "onboarding@resend.dev",
-      to: "vitalya.permyakov155@gmail.com",
-      subject: "Запрос на Сайте Гуманитарного Института",
-      html: render(EmailTemplate({ place, path, username, email, phone, formTitle, formDescription })),
+    const transporter = nodemailer.createTransport({
+      ...smtpOptions,
+    })
+    
+    await transporter.sendMail({
+      from: process.env.SMTP_FROM_EMAIL,
+      to,
+      subject: 'Запрос на Сайте Гуманитарного Института"',
+      html: render(EmailTemplate({ path, username, email, phone, text })),
       headers: {
         'X-Entity-Ref-ID': uuid(),
       },
@@ -35,10 +38,10 @@ export const sendEmail = async (prevState: State, formData: ContactFormT) => {
       success: true
     }
   } catch (error) {
-    console.log(error)
+    console.error(JSON.stringify(error, null, 2));
     return {
-      error: (error as Error).message,
-      success: false
+        error: (error as Error).message,
+        success: false
     }
   }
 }

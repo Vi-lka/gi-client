@@ -7,15 +7,14 @@ const phoneRegex = new RegExp(
 );
 
 export const ContactFormT = z.object({
-  place: z.string().optional(),
   path: z.string().optional(),
+  to: z.string().optional(),
   username: z.string().min(2, {
     message: "min2symbols",
   }),
   email: z.string().email({ message: "email" }),
   phone: z.string().regex(phoneRegex, 'phone'),
-  formTitle: z.string().nullable().optional(),
-  formDescription: z.string().nullable().optional(),
+  text: z.string(),
 })
 export type ContactFormT = z.infer<typeof ContactFormT>;
 

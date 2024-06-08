@@ -105,10 +105,7 @@ export default async function Footer() {
 
                 <div className="flex lg:flex-row flex-col items-start justify-between xl:gap-28 lg:gap-20 sm:gap-12 gap-8 flex-wrap">
                     <section className="lg:w-1/4 w-full">
-                        <FormFooter 
-                            formTitle={dataResult.value.title} 
-                            formDescription={dataResult.value.subtitle}
-                        />
+                        <FormFooter />
                     </section>
 
                     <section className='flex-1 lg:w-auto w-full'>

@@ -5,7 +5,9 @@ import ContactForm from '@/components/forms/ContactForm';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { useToast } from '@/components/ui/use-toast';
+import { getToEmail } from '@/lib/email';
 import { cn, getShortText } from '@/lib/utils';
 import { usePathname } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
@@ -59,13 +61,12 @@ export default function ButtonForm({
 
     const handleAction = (formData: FormData) => {
         sendEmailAction({
-            place: "FormBlock",
+            to: getToEmail(pathname),
             path: pathname,
             username: formData.get("username") as string,
             email: formData.get("email") as string,
             phone: formData.get("phone") as string,
-            formTitle: formTitle,
-            formDescription: formDescription,
+            text: formData.get("text") as string,
         })
     }
 
@@ -85,7 +86,11 @@ export default function ButtonForm({
                     <DialogTitle>{formTitle}</DialogTitle>
                     <DialogDescription className='whitespace-pre-wrap'>{formDescription}</DialogDescription>
                 </DialogHeader>
-                <ContactForm handleAction={handleAction} />
+                <ScrollArea type='scroll' className='max-h-[70vh]'>
+                    <div className='py-2 px-4'>
+                        <ContactForm handleAction={handleAction} />
+                    </div>
+                </ScrollArea>
             </DialogContent>
         </Dialog>
     )

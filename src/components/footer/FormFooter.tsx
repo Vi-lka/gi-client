@@ -8,16 +8,9 @@ import { sendEmail } from '@/app/[locale]/actions';
 import { getShortText } from '@/lib/utils';
 import { usePathname } from 'next/navigation';
 import { useDictionary } from '../providers/DictionaryProvider';
+import { getToEmail } from '@/lib/email';
 
-type Props = {
-    formTitle: string | null,
-    formDescription: string | null,
-}
-
-export default function FormFooter({
-    formTitle,
-    formDescription,
-}: Props) {
+export default function FormFooter() {
     const dict = useDictionary()
 
     const { toast } = useToast();
@@ -49,13 +42,12 @@ export default function FormFooter({
 
     const handleAction = (formData: FormData) => {
         sendEmailAction({
-            place: "Footer",
+            to: getToEmail(pathname),
             path: pathname,
             username: formData.get("username") as string,
             email: formData.get("email") as string,
             phone: formData.get("phone") as string,
-            formTitle: formTitle,
-            formDescription: formDescription,
+            text: formData.get("text") as string,
         })
     }
 
