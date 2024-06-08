@@ -10,7 +10,7 @@ export const getNews = async ({
   locale,
   page,
   pageSize,
-  sort = "publishedAt:asc",
+  sort = "publishedAt:desc",
   search
 }: {
   locale: string,
