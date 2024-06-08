@@ -83,7 +83,7 @@ export default function ButtonForm({
             <DialogContent className='!rounded-3xl md:p-8'>
                 <DialogHeader className='mb-1'>
                     <DialogTitle>{formTitle}</DialogTitle>
-                    <DialogDescription>{formDescription}</DialogDescription>
+                    <DialogDescription className='whitespace-pre-wrap'>{formDescription}</DialogDescription>
                 </DialogHeader>
                 <ContactForm handleAction={handleAction} />
             </DialogContent>

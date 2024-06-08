@@ -27,9 +27,9 @@ export default function GraduatesItem({
                 <div className='flex flex-col flex-1 justify-between gap-6 text-primary xl:text-base text-sm'>
                     <div>
                         <p className='font-bold mb-2'>{graduate.attributes.title}</p>
-                        <p>{graduate.attributes.description}</p>
+                        <p className='whitespace-pre-wrap'>{graduate.attributes.description}</p>
                     </div>
-                    <p className='dark:text-muted-foreground'>{graduate.attributes.additionalInfo}</p>
+                    <p className='dark:text-muted-foreground whitespace-pre-wrap'>{graduate.attributes.additionalInfo}</p>
                 </div>
             </CardContent>
         </Card>

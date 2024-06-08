@@ -98,7 +98,7 @@ export default async function Footer() {
                     </TypographyH2>
                 )}
                 {dataResult.value.subtitle && (
-                    <p className='mt-0 mb-6'>
+                    <p className='mt-0 mb-6 whitespace-pre-wrap'>
                         {dataResult.value.subtitle}
                     </p>
                 )}
@@ -232,7 +232,7 @@ export default async function Footer() {
 
             {dataResult.value.copyright && (
                 <div className="container md:w-5/6 mx-auto xl:mt-16 mt-12">
-                    <p className="lg:text-sm text-xs font-medium text-muted">
+                    <p className="lg:text-sm text-xs font-medium text-muted whitespace-pre-wrap">
                         © {yearFormat} {dataResult.value.copyright}
                     </p>
                 </div>

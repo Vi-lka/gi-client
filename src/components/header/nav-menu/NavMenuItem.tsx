@@ -55,7 +55,7 @@ export default function NavMenuItem({
                 )}
               />
             </ClientHydration>
-            <p className="absolute bottom-0 font-medium text-sm leading-tight text-background dark:text-foreground p-4">
+            <p className="absolute bottom-0 font-medium text-sm leading-tight text-background dark:text-foreground p-4 whitespace-pre-wrap">
               {data.description}
             </p>
           </div>
@@ -73,7 +73,7 @@ export default function NavMenuItem({
                 title={item.title}
                 className={cn(
                   navigationMenuTriggerStyle(),
-                  "h-fit w-full lg:text-base text-sm 2xl:py-2 md:py-1 2xl:px-6 md:px-3 rounded-lg flex flex-col items-start"
+                  "h-fit w-full lg:text-base text-sm 2xl:py-2 md:py-1 2xl:px-6 md:px-3 rounded-lg flex flex-col items-start whitespace-pre-wrap"
                 )}
               >
                 {item.linkDescription}

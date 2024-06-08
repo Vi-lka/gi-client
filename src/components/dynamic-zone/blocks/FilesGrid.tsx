@@ -42,7 +42,7 @@ export default function FilesGrid({
                                     {item.title}
                                 </p>
                             </Link>
-                            <p className='xl:max-w-[40%] lg:max-w-[50%] md:max-w-[70%] text-sm mt-3 ml-1 dark:text-muted-foreground'>{item.description}</p>
+                            <p className='xl:max-w-[40%] lg:max-w-[50%] md:max-w-[70%] text-sm mt-3 ml-1 dark:text-muted-foreground whitespace-pre-wrap'>{item.description}</p>
                         </li>
                     ))}
                 </ul>
@@ -73,7 +73,7 @@ export default function FilesGrid({
                                     {item.title}
                                 </p>
                             </Link>
-                            <p className='xl:max-w-[40%] lg:max-w-[50%] md:max-w-[70%] text-sm mt-3 ml-1 dark:text-muted-foreground'>{item.description}</p>
+                            <p className='xl:max-w-[40%] lg:max-w-[50%] md:max-w-[70%] text-sm mt-3 ml-1 dark:text-muted-foreground whitespace-pre-wrap'>{item.description}</p>
                         </li>
                     ))}
                 </ul>

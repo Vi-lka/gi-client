@@ -120,6 +120,6 @@ function IconBlockItem({
         case "title":
             return <h3 className={cn('font-semibold text-sm', className)}>{item.title}</h3>
         case "description":
-            return <p className={cn('text-sm text-foreground dark:text-muted-foreground', className)}>{item.description}</p>
+            return <p className={cn('text-sm text-foreground dark:text-muted-foreground whitespace-pre-wrap', className)}>{item.description}</p>
     }
 }

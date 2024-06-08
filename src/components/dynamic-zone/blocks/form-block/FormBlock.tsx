@@ -105,7 +105,7 @@ export default function FormBlock({
                                 data.largeTitles ? "2xl:text-4xl xl:text-3xl text-2xl" : "2xl:text-[1.4rem] xl:text-xl text-lg"
                             )}>
                                 {item.title}
-                                <span className='block font-light text-sm mt-0.5'>{item.description}</span>
+                                <span className='block font-light text-sm mt-0.5 whitespace-pre-wrap'>{item.description}</span>
                             </p>
                         </li>
                     ))}

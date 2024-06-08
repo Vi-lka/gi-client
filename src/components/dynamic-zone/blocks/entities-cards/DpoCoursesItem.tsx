@@ -47,7 +47,7 @@ export default function DpoCoursesItem({
                         </Link>
 
                         {item.attributes.description && (
-                            <p className='text-xs text-foreground dark:text-muted-foreground line-clamp-6 mt-3 md:-translate-y-1 group-hover/card:translate-y-0 transition duration-300 transform-gpu'>
+                            <p className='text-xs text-foreground dark:text-muted-foreground line-clamp-6 mt-3 md:-translate-y-1 group-hover/card:translate-y-0 transition duration-300 transform-gpu whitespace-pre-wrap'>
                                 {getShortText(item.attributes.description, 40)}
                             </p>
                         )}

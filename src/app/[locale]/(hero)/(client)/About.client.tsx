@@ -117,7 +117,7 @@ export default function AboutClient({
                                     <h3 className='uppercase font-bold 2xl:text-lg lg:text-sm text-xs'>
                                         {item.title}
                                     </h3>
-                                    <p className='2xl:text-base xl:text-sm text-xs lg:block hidden'>
+                                    <p className='2xl:text-base xl:text-sm text-xs lg:block hidden whitespace-pre-wrap'>
                                         {item.description}
                                     </p>
                                 </div>
