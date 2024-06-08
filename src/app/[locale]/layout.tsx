@@ -3,8 +3,6 @@ import localFont from 'next/font/local';
 import "../globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import Footer from "@/components/footer/Footer";
-import { SpeedInsights } from '@vercel/speed-insights/next';
-import { Analytics } from '@vercel/analytics/react';
 import { getDictionary } from "@/lib/getDictionary";
 import Script from "next/script";
 import Providers from "@/components/providers/Providers";
@@ -105,8 +103,6 @@ export default async function Layout({
           <Toaster />
           <Footer />
         </Providers>
-        <SpeedInsights />
-        <Analytics />
         <Script
           id="globalThis-polyfill"
           strategy="beforeInteractive"
