@@ -189,7 +189,7 @@ export default async function EmployeeSinglePage({
           <Post locale={params.locale} employee={dataResult.value.employee} />
 
           {employee.description && (
-            <p className='lg:text-base text-sm text-foreground dark:text-muted-foreground lg:mt-6 mt-3'>
+            <p className='lg:text-base text-sm text-foreground dark:text-muted-foreground lg:mt-6 mt-3 whitespace-pre-wrap'>
               {employee.description}
             </p>
           )}

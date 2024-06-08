@@ -113,7 +113,7 @@ export default function EmployeesItem(props: EmployeesItemT) {
                     </div>
 
                     {employee.attributes.description && (
-                        <p className='text-sm text-foreground dark:text-muted-foreground lg:line-clamp-3 line-clamp-5'>
+                        <p className='text-sm text-foreground dark:text-muted-foreground lg:line-clamp-3 line-clamp-5 whitespace-pre-wrap'>
                             {getShortText(employee.attributes.description)}
                         </p>
                     )}
