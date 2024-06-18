@@ -22,7 +22,7 @@ export default function Contacts({
     if (!(phone || email || location)) return null
 
     return (
-        <div className='w-fit h-fit flex flex-col justify-center bg-primary dark:bg-accent text-background dark:text-foreground sm:px-12 px-8 sm:py-8 py-6 rounded-3xl'>
+        <div className='w-full h-fit flex flex-col justify-center bg-primary dark:bg-accent text-background dark:text-foreground sm:px-12 px-8 sm:py-8 py-6 rounded-3xl'>
             <TypographyH3 className='text-background dark:text-foreground mb-4'>
               {contactsTitle}
             </TypographyH3>

@@ -218,7 +218,7 @@ export default async function EmployeeSinglePage({
               src={employee.image.data?.attributes.url}
               alt={employee.title}
               fill
-              sizes='(max-width: 1024px) 100vw, 50vw'
+              sizes='(max-width: 1024px) 100vw, 60vw'
               className='object-cover'
             />
           </ClientHydration>
