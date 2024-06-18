@@ -202,5 +202,15 @@ export const getEmployees = async ({
 
   const employees = EmployeesT.parse(json.data.employees);
 
-  return employees;
+  const heads = employees.data.filter(employee => 
+    employee.attributes.head_in_department.data && !(employee.attributes.head_in_department.data?.attributes.slug === filterBy)
+  )
+
+  const headFilterBy = employees.data.filter(employee => 
+    employee.attributes.head_in_department.data && (employee.attributes.head_in_department.data?.attributes.slug === filterBy)
+  )
+
+  const employeesNoHead = employees.data.filter(employee => !employee.attributes.head_in_department.data)
+
+  return {data: [...headFilterBy, ...heads, ...employeesNoHead], meta: employees.meta};
 };
