@@ -15,6 +15,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 import Contacts from './Contacts'
 import { Badge } from '@/components/ui/badge'
 import { getDictionary } from '@/lib/getDictionary'
+import Link from '@/components/Link'
 
 export default async function EmployeeSinglePage({
   params,
@@ -197,11 +198,15 @@ export default async function EmployeeSinglePage({
           {(employee.hashtags.data.length > 0) && (
             <ul className='inline-flex flex-wrap gap-2 lg:mt-6 mt-3'>
               {employee.hashtags.data.map(hashtag => (
-                <li key={hashtag.attributes.slug}>
+                <Link
+                  key={hashtag.id}
+                  locale={params.locale}
+                  href={`/structure/employees?hashtags=${hashtag.id}`}
+                >
                   <Badge className='lg:text-sm text-xs hover:bg-transparent hover:text-primary dark:bg-accent dark:text-primary dark:hover:bg-transparent border border-border cursor-pointer transition-all'>
                     #{hashtag.attributes.title}
                   </Badge>
-                </li>
+                </Link>
               ))}
             </ul>
           )}

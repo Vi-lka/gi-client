@@ -159,11 +159,15 @@ export default function EmployeesItem(props: EmployeesItemT) {
                     {(showHashtags && employee.attributes.hashtags.data.length > 0) && (
                         <ul className='inline-flex flex-wrap gap-2'>
                             {employee.attributes.hashtags.data.map(hashtag => (
-                                <li key={hashtag.attributes.slug}>
+                                <Link 
+                                    key={hashtag.id}
+                                    locale={props.locale}
+                                    href={`/structure/employees?hashtags=${hashtag.id}`}
+                                >
                                     <Badge className='text-xs hover:bg-transparent hover:text-primary dark:bg-accent dark:text-primary dark:hover:bg-transparent border border-border cursor-pointer transition-all'>
                                         #{hashtag.attributes.title}
                                     </Badge>
-                                </li>
+                                </Link>
                             ))}
                         </ul>
                     )}
