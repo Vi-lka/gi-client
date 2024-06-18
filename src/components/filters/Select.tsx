@@ -282,7 +282,7 @@ export function Select({
                     return (
                       <CommandItem
                         key={index}
-                        value={item.label}
+                        value={item.value}
                         className={cn(
                           "rounded-xl",
                           isPendingRouter || isPendingSearch
