@@ -34,7 +34,7 @@ export default function MoreMenu() {
   )
 
   return (
-    <DropdownMenu>
+    <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className='lg:px-3.5 px-2 text-primary hover:text-primary focus:text-primary lg:border border-transparent hover:border-border focus:border-border hover:bg-transparent focus:bg-transparent rounded-3xl duration-300'>
           <MoreHorizontal className="w-8 h-8 lg:rotate-0 rotate-90" />
