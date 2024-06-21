@@ -249,6 +249,26 @@ export type SliderPhotosCompT = z.infer<typeof SliderPhotosCompT>;
 
 
 
+//.........................SliderVideo.........................//
+export const SliderVideoItemT = z.object({
+  title: z.string(),
+  video: ImageT,
+  embed: z.string().nullable()
+})
+export type SliderVideoItemT = z.infer<typeof SliderVideoItemT>;
+
+export const SliderVideoCompT = z.object({
+  __typename: z.literal("ComponentContentSliderVideo"),
+  title: z.string().nullable(),
+  link: z.string().nullable(),
+  linkTitle: z.string().nullable(),
+  items: SliderVideoItemT.array(),
+})
+export type SliderVideoCompT = z.infer<typeof SliderVideoCompT>;
+
+
+
+
 //.........................Timeline.........................//
 export const TimelineItemT = z.object({
   title: z.string().nullable(),
@@ -412,6 +432,7 @@ export const DynamicZoneT = z.discriminatedUnion("__typename", [
   IconsBlockCompT,
   SliderEntityCompT,
   SliderPhotosCompT,
+  SliderVideoCompT,
   TimelineCompT,
   NumbersCompT,
   FilesCompT,

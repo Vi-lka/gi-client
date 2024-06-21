@@ -30,12 +30,12 @@ export default function SliderPhotos({
                     {data.title}
                 </TypographyH2>
             )}
-            <ClientHydration fallback={<CarouselLoading className='w-full h-full sm:aspect-[2/1] aspect-square'/>}>
+            <ClientHydration fallback={<CarouselLoading noTitle className='w-full h-full sm:aspect-[2/1] aspect-square'/>}>
                 <CarouselComp className='lg:-ml-8 -ml-4'>
                     {data.photos.data.map((item, index) => (
                         <CarouselItem key={index} className='lg:pl-8 pl-4'>
                             <Card className='border-none shadow-md bg-transparent rounded-3xl'>
-                                <CardContent className="relative w-full sm:aspect-[2/1] aspect-square">
+                                <CardContent className="relative w-full sm:aspect-[2/1] aspect-square p-0">
                                     <ImageComp
                                         src={item.attributes.url}
                                         alt={item.attributes.url}

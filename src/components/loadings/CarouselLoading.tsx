@@ -4,13 +4,15 @@ import { Skeleton } from '../ui/skeleton'
 import { Loader2 } from 'lucide-react'
 
 export default function CarouselLoading({
+    noTitle,
     className
 }: {
+    noTitle?: boolean
     className?: string
 }) {
     return (
-        <div className='w-full lg:pt-28 pt-20'>
-            <Skeleton className='lg:w-1/2 w-2/3 lg:h-10 h-9 mb-6'/>
+        <div className={cn('w-full', noTitle ? "" : "lg:pt-28 pt-20")}>
+            {!noTitle && <Skeleton className='lg:w-1/2 w-2/3 lg:h-10 h-9 mb-6'/>}
 
             <div className={cn('w-full relative aspect-video', className)}>
                 <Skeleton className='w-full h-full flex items-center justify-center'>

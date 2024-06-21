@@ -17,6 +17,7 @@ import type { DynamicZoneT } from '@/lib/types/components';
 import CollectionAllLoading from '../loadings/CollectionAllLoading';
 import BentoLoading from '../loadings/BentoLoading';
 import ListGridLoading from '../loadings/ListGridLoading';
+import SliderVideo from './blocks/sliders/SliderVideo';
  
 const RichText = dynamic(
   () => import('./blocks/RichText'), {loading: () => <TextLoading />}
@@ -138,6 +139,14 @@ export default function DynamicZone({
     
     case "ComponentContentSliderPhotos":
       return <SliderPhotos 
+              key={`key-${item.__typename}-${item.link}`} 
+              data={item} 
+              headingBig={headingBig} 
+              className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} 
+            />;
+
+    case "ComponentContentSliderVideo":
+      return <SliderVideo
               key={`key-${item.__typename}-${item.link}`} 
               data={item} 
               headingBig={headingBig} 

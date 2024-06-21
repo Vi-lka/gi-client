@@ -69,6 +69,22 @@ export const dynamicContentQuery = `
       }
     }
   }
+  ... on ComponentContentSliderVideo {
+    title
+    link
+    linkTitle
+    items {
+      title
+      video {
+        data {
+          attributes {
+            url
+          }
+        }
+      }
+      embed
+    }
+  }
   ... on ComponentContentSliderEntity {
     title
     link
@@ -284,6 +300,11 @@ const sameFields = `
   linkTitle
   linkDescription
 `
+
+// ... on ComponentContentSliderVideo {
+//   ${sameFields}
+// }
+
 export const dynamicContentLinksQuery = `
   ... on ComponentContentContacts {
     ${sameFields}
