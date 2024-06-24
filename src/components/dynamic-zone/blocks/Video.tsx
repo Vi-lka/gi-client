@@ -25,7 +25,7 @@ export default function Video({
             ) : null}
 
             <div className={cn(
-                "w-full aspect-video overflow-hidden", 
+                "w-full sm:aspect-video aspect-square border bg-muted/20 sm:border-transparent border-border rounded-3xl overflow-hidden", 
                 classNameVideo,
                 loading ? "hidden" : "block"
             )}>

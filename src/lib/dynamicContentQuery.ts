@@ -148,6 +148,24 @@ export const dynamicContentQuery = `
       }
     }
   }
+  ... on ComponentContentTextVideo {
+    title
+    link
+    linkTitle
+    text
+    alignVideo
+    items {
+      title
+      video {
+        data {
+          attributes {
+            url
+          }
+        }
+      }
+      embed
+    }
+  }
   ... on ComponentContentTextGrid {
     title
     link
@@ -301,10 +319,6 @@ const sameFields = `
   linkDescription
 `
 
-// ... on ComponentContentSliderVideo {
-//   ${sameFields}
-// }
-
 export const dynamicContentLinksQuery = `
   ... on ComponentContentContacts {
     ${sameFields}
@@ -313,6 +327,9 @@ export const dynamicContentLinksQuery = `
     ${sameFields}
   }
   ... on ComponentContentSliderPhotos {
+    ${sameFields}
+  }
+  ... on ComponentContentSliderVideo {
     ${sameFields}
   }
   ... on ComponentContentSliderEntity {
@@ -325,6 +342,9 @@ export const dynamicContentLinksQuery = `
     ${sameFields}
   }
   ... on ComponentContentTextImages {
+    ${sameFields}
+  }
+  ... on ComponentContentTextVideo {
     ${sameFields}
   }
   ... on ComponentContentTextGrid {

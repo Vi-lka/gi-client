@@ -27,6 +27,10 @@ const RichTextImage = dynamic(
   () => import('./blocks/RichTextImage'), {loading: () => <TextImageLoading />}
 )
 
+const RichTextVideo = dynamic(
+  () => import('./blocks/RichTextVideo'), {loading: () => <TextImageLoading />}
+)
+
 const RichTextGrid = dynamic(
   () => import('./blocks/RichTextGrid'), {loading: () => <TextGridLoading />}
 )
@@ -111,6 +115,14 @@ export default function DynamicZone({
               data={item} 
               headingBig={headingBig} 
               className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} 
+            />;
+
+    case "ComponentContentTextVideo":
+      return <RichTextVideo
+              key={`key-${item.__typename}-${item.link}`}
+              data={item}
+              headingBig={headingBig}
+              className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")}
             />;
 
     case "ComponentContentTextGrid":

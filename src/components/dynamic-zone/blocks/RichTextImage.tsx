@@ -10,7 +10,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 import CarouselLoading from '@/components/loadings/CarouselLoading'
 import type { TextImagesCompT } from '@/lib/types/components'
 
-export default function RichText({
+export default function RichTextImage({
     data,
     headingBig,
     className,

@@ -80,6 +80,7 @@ export type TextImagesCompT = z.infer<typeof TextImagesCompT>;
 
 
 
+
 //.........................TextGrid.........................//
 export const TextGridItemT = z.object({
   title: z.string(),
@@ -269,6 +270,20 @@ export type SliderVideoCompT = z.infer<typeof SliderVideoCompT>;
 
 
 
+//.........................TextVideo.........................//
+export const TextVideoCompT = z.object({
+  __typename: z.literal("ComponentContentTextVideo"),
+  title: z.string().nullable(),
+  link: z.string().nullable(),
+  linkTitle: z.string().nullable(),
+  text: z.any(),
+  alignVideo: AlignEnum,
+  items: SliderVideoItemT.array(),
+})
+export type TextVideoCompT = z.infer<typeof TextVideoCompT>;
+
+
+
 //.........................Timeline.........................//
 export const TimelineItemT = z.object({
   title: z.string().nullable(),
@@ -426,6 +441,7 @@ export type FormBlockCompT = z.infer<typeof FormBlockCompT>;
 export const DynamicZoneT = z.discriminatedUnion("__typename", [
   TextCompT,
   TextImagesCompT,
+  TextVideoCompT,
   TextGridCompT,
   CollectionAllCompT,
   ContactsCompT,

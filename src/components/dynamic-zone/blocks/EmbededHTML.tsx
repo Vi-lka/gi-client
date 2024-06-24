@@ -23,7 +23,7 @@ export default function EmbededHTML({
     return (
       <div className={cn("w-full", className)}>
         <div className={cn(
-          "embeded-html flex w-full md:aspect-video aspect-square overflow-hidden",
+          "embeded-html flex w-full sm:aspect-video aspect-square overflow-hidden",
           classNameEmbeded
         )} dangerouslySetInnerHTML={{__html: embededHTML}}></div>
       </div>
