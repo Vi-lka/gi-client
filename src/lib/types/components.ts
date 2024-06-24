@@ -116,7 +116,8 @@ export const CollectionAllEnum = z.enum([
   "graduates",
   "employees",
   "departments",
-  "news"
+  "news",
+  "events"
 ]);
 export type CollectionAllEnum = z.infer<typeof CollectionAllEnum>;
 

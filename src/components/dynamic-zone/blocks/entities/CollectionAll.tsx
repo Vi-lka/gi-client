@@ -9,6 +9,7 @@ import DpoCoursesLoading from '@/components/loadings/DpoCoursesLoading';
 import EmployeesLoading from '@/components/loadings/EmployeesLoading';
 import BentoLoading from '@/components/loadings/BentoLoading';
 import NewsLoading from '@/components/loadings/NewsLoading';
+import EventsAll from './EventsAll';
 
 const EducationalProgramsAll = dynamic(
     () => import('./EducationalProgramsAll'), {loading: () => <EducationalProgramsLoading />}
@@ -72,6 +73,9 @@ export default function CollectionAll({
 
                     case "news":
                         return <NewsAll key={index} searchParams={searchParams} data={data} />;
+
+                    case "events":
+                        return <EventsAll key={index} searchParams={searchParams} data={data} />
                 
                     default:
                         return null;

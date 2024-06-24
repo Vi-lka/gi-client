@@ -1,15 +1,15 @@
 "use server"
 
 import { notFound } from "next/navigation";
-import { NewsT } from "../types/entities";
+import { EventsT } from "../types/entities";
 import fetchData from "./fetchData";
 import { genSearchFilter } from "../utils";
 
 //.........................News.........................//
-export const getNews = async ({
+export const getEvents = async ({
   locale,
   page,
-  pageSize,
+  pageSize = 100000,
   sort = "publishedAt:desc",
   search
 }: {
@@ -18,10 +18,10 @@ export const getNews = async ({
   pageSize?: number;
   sort?: string;
   search?: string;
-}): Promise<NewsT> => {
+}): Promise<EventsT> => {
   const query = /* GraphGL */ `
-    query News($locale: I18NLocaleCode, $filters: NewFiltersInput, $sort: [String], $pagination: PaginationArg) {
-      news(locale: $locale, filters: $filters, sort: $sort, pagination: $pagination) {
+    query Events($locale: I18NLocaleCode, $filters: EventFiltersInput, $sort: [String], $pagination: PaginationArg) {
+      events(locale: $locale, filters: $filters, sort: $sort, pagination: $pagination) {
         meta {
           pagination {
             total
@@ -39,7 +39,14 @@ export const getNews = async ({
                 }
               }
             }
-            publishedAt
+            text
+            dateStart
+            dateEnd
+            points {
+                time
+                description
+                text
+            }
           }
         }
       }
@@ -59,9 +66,9 @@ export const getNews = async ({
     ]}
   )
   
-  const json = await fetchData<{ data: { news: NewsT }; }>({ 
+  const json = await fetchData<{ data: { events: EventsT }; }>({ 
     query, 
-    error: "Failed to fetch News", 
+    error: "Failed to fetch Events", 
     variables: {
       locale,
       sort,
@@ -77,13 +84,13 @@ export const getNews = async ({
   // await new Promise((resolve) => setTimeout(resolve, 2000))
   
   if (
-    json.data.news.meta.pagination.total === 0 ||
-    json.data.news.data.length === 0
+    json.data.events.meta.pagination.total === 0 ||
+    json.data.events.data.length === 0
   ) {
     notFound();
   }
 
-  const news = NewsT.parse(json.data.news);
+  const events = EventsT.parse(json.data.events);
 
-  return news;
+  return events;
 };

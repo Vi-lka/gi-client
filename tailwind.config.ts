@@ -80,12 +80,22 @@ const config = {
           from: { width: "var(--radix-accordion-content-height)" },
           to: { width: "0" },
         },
+        "fade-in": {
+          from: { opacity: "0" },
+          to: { opacity: "1" },
+        },
+        "fade-out": {
+          from: { opacity: "1" },
+          to: { opacity: "0" },
+        }
       },
       animation: {
         "accordion-down": "accordion-down 0.3s ease-out",
         "accordion-up": "accordion-up 0.3s ease-out",
         "accordion-open": "accordion-open 0.3s ease-out",
         "accordion-close": "accordion-close 0.3s ease-out",
+        "fade-in": "fade-in 0.4s ease-in-out",
+        "fade-out": "fade-out 0.4s ease-in-out"
       },
     },
   },

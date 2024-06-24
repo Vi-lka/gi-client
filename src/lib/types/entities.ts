@@ -261,3 +261,38 @@ export const NewsT  = z.object({
   data: NewSingleT.array(),
 })
 export type NewsT = z.infer<typeof NewsT>;
+
+
+
+
+
+//.........................Events.........................//
+export const EventPointT = z.object({
+  time: z.string().pipe( z.coerce.date() ),
+  description: z.string().nullable(),
+  text: z.any(),
+})
+
+export const EventSingleT = z.object({
+  id: z.string(),
+  attributes: z.object({
+    slug: z.string(),
+    title: z.string(),
+    image: z.lazy(() => ImageT),
+    text: z.any(),
+    dateStart: z.string().pipe( z.coerce.date() ),
+    dateEnd: z.string().pipe( z.coerce.date() ),
+    points: EventPointT.array()
+  }),
+})
+export type EventSingleT = z.infer<typeof EventSingleT>;
+
+export const EventsT  = z.object({
+  meta: z.object({
+    pagination: z.object({
+      total: z.number(),
+    }),
+  }),
+  data: EventSingleT.array(),
+})
+export type EventsT = z.infer<typeof EventsT>;
