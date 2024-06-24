@@ -9,10 +9,8 @@ import { useRouter } from 'next/navigation'
  
 export default function GlobalError({
   error,
-  reset,
 }: {
   error: Error & { digest?: string }
-  reset: () => void
 }) {
   const router = useRouter();
 
@@ -20,7 +18,7 @@ export default function GlobalError({
     Sentry.captureException(error);
 
     console.log("GlobalError: ", error.message);
-  }, [error, reset])
+  }, [error])
  
   return (
     <html>
@@ -38,10 +36,7 @@ export default function GlobalError({
 
           <Button
             className="w-full max-w-[240px] p-6 uppercase hover:bg-background hover:text-primary rounded-3xl"
-            onClick={() => {
-              reset()
-              router.refresh()
-            }}
+            onClick={() => { router.refresh() }}
           >
             <Repeat className="ml-1" size={18} />
           </Button>

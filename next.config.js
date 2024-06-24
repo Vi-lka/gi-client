@@ -4,6 +4,9 @@ const { withSentryConfig } = require("@sentry/nextjs");
 
 const nextConfig = {
   output: "standalone",
+  experimental: {
+    instrumentationHook: true
+  },
   reactStrictMode: true,
   eslint: { ignoreDuringBuilds: true },
   env: {

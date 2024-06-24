@@ -11,10 +11,8 @@ import { useRouter } from 'next/navigation'
  
 export default function Error({
   error,
-  reset,
 }: {
   error: Error & { digest?: string }
-  reset: () => void,
 }) {
 
   const { toast } = useToast();
@@ -38,7 +36,6 @@ export default function Error({
           className="px-2 py-6 text-sm"
           altText={"Попробовать снова"}
           onClick={() => {
-            reset()
             router.refresh()
           }}
         >
@@ -46,7 +43,7 @@ export default function Error({
         </ToastAction>
       ),
     });
-  }, [error, reset, router, toast])
+  }, [error, router, toast])
  
   return (
     <div className='font-Din relative flex flex-col justify-center min-h-screen bg-background'>
@@ -64,10 +61,7 @@ export default function Error({
                 
         <Button
           className="w-full max-w-[240px] p-6 uppercase hover:bg-background hover:text-primary rounded-3xl"
-          onClick={() => {
-            reset()
-            router.back()
-          }}
+          onClick={() => { router.back() }}
         >
           Вернуться
           <Undo2 className="ml-1" size={18} />
