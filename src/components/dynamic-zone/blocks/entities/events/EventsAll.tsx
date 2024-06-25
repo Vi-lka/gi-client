@@ -1,13 +1,13 @@
 import ErrorHandler from '@/components/errors/ErrorHandler';
-import { Calendar } from '@/components/ui/calendar';
-import { DictionariesType, getDictionary } from '@/lib/getDictionary';
 import { getEvents } from '@/lib/queries/events';
 import type { CollectionAllCompT } from '@/lib/types/components';
-import { getDateLocale } from '@/lib/utils';
 import { headers } from 'next/headers';
 import React, { Suspense } from 'react'
+import CalendarBlocks from './CalendarBlocks';
+import { ClientHydration } from '@/components/ClientHydration';
+import type { EventPointT } from '@/lib/types/entities';
 
-export default async function EventsAll({
+export default function EventsAll({
   // searchParams,
   // data,
 }: {
@@ -17,26 +17,22 @@ export default async function EventsAll({
   const headersList = headers();
   const locale = headersList.get('x-locale') || "";
 
-  const dict = await getDictionary(locale)
-
   return (
     <>
       <Suspense 
         // key={`search_news=${search}&page_news=${page}&per_news=${pageSize}`} 
         fallback={"Loading..."}
       >
-        <EventsAllContent locale={locale} dict={dict} />
+        <EventsAllContent locale={locale} />
       </Suspense>
     </>
   )
 }
 
 async function EventsAllContent({
-  locale,
-  dict
+  locale
 }: {
-  locale: string,
-  dict: Dictionary,
+  locale: string
 }) {
 
   const [ dataResult ] = await Promise.allSettled([ 
@@ -53,18 +49,30 @@ async function EventsAllContent({
     />
   )
 
+  const eventDays = dataResult.value.data.map((event) => {
+    if (event.attributes.dateEnd) return { from: event.attributes.dateStart, to: event.attributes.dateEnd }
+    else return event.attributes.dateStart
+  })
+
+  const pointsArrays = dataResult.value.data.map((event) => event.attributes.points)
+
+  const points: EventPointT[] = [];
+  for (let i = 0; i < pointsArrays.length; i++) {
+    for (let j = 0; j < pointsArrays[i].length; j++) {
+      points.push(pointsArrays[i][j]);
+    }
+  }
+
   return (
     <div className='flex flex-wrap justify-between gap-6'>
       <div className='lg:w-[calc(33%-1.5rem)]'>
-        <Calendar
-          mode="single"
-          selected={new Date()}
-          ISOWeek
-          lang={locale}
-          // selected={date}
-          // onSelect={setDate}
-          className="w-full p-0"
-        />
+        <ClientHydration fallback={"...ClientHydration"}>
+          <CalendarBlocks 
+            locale={locale}
+            eventDays={eventDays}
+            points={points}
+          />
+        </ClientHydration>
       </div>
     </div>
   )

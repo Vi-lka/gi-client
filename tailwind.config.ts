@@ -94,8 +94,8 @@ const config = {
         "accordion-up": "accordion-up 0.3s ease-out",
         "accordion-open": "accordion-open 0.3s ease-out",
         "accordion-close": "accordion-close 0.3s ease-out",
-        "fade-in": "fade-in 0.4s ease-in-out",
-        "fade-out": "fade-out 0.4s ease-in-out"
+        "fade-in": "fade-in 0.3s ease-in-out",
+        "fade-out": "fade-out 0.3s ease-in-out"
       },
     },
   },

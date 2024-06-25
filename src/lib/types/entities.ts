@@ -272,6 +272,7 @@ export const EventPointT = z.object({
   description: z.string().nullable(),
   text: z.any(),
 })
+export type EventPointT = z.infer<typeof EventPointT>;
 
 export const EventSingleT = z.object({
   id: z.string(),
@@ -281,7 +282,7 @@ export const EventSingleT = z.object({
     image: z.lazy(() => ImageT),
     text: z.any(),
     dateStart: z.string().pipe( z.coerce.date() ),
-    dateEnd: z.string().pipe( z.coerce.date() ),
+    dateEnd: z.string().pipe( z.coerce.date() ).nullable(),
     points: EventPointT.array()
   }),
 })
