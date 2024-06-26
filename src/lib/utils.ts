@@ -1,9 +1,10 @@
-import {  clsx } from "clsx"
+import { clsx } from "clsx"
 import type {ClassValue} from "clsx";
 import { twMerge } from "tailwind-merge"
 import type { DictionariesType } from "./getDictionary";
 import { formatInTimeZone } from "date-fns-tz";
 import { ru, enUS } from "date-fns/locale";
+import { eachDayOfInterval } from "date-fns";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -96,6 +97,28 @@ export function formatDate(date: Date, locale: string) {
     locale: getDateLocale(locale as keyof DictionariesType)
   })
   return str
+}
+
+
+
+
+
+export function dateRange(start:  Date | string, end: Date | string) {
+  return eachDayOfInterval({ start, end })
+};
+
+
+
+
+
+export function matrixToArray<T>(matrix: T[][]) {
+  const array: T[] = [];
+  for (let i = 0; i < matrix.length; i++) {
+    for (let j = 0; j < matrix[i].length; j++) {
+      array.push(matrix[i][j]);
+    }
+  }
+  return array
 }
 
 

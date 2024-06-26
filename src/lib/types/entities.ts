@@ -268,11 +268,18 @@ export type NewsT = z.infer<typeof NewsT>;
 
 //.........................Events.........................//
 export const EventPointT = z.object({
-  time: z.string().pipe( z.coerce.date() ),
+  time: z.string(),
   description: z.string().nullable(),
   text: z.any(),
 })
 export type EventPointT = z.infer<typeof EventPointT>;
+
+export const EventDayT = z.object({
+  title: z.string().nullable(),
+  day: z.string().pipe( z.coerce.date() ),
+  points: EventPointT.array()
+})
+export type EventDayT = z.infer<typeof EventDayT>;
 
 export const EventSingleT = z.object({
   id: z.string(),
@@ -283,7 +290,7 @@ export const EventSingleT = z.object({
     text: z.any(),
     dateStart: z.string().pipe( z.coerce.date() ),
     dateEnd: z.string().pipe( z.coerce.date() ).nullable(),
-    points: EventPointT.array()
+    days: EventDayT.array()
   }),
 })
 export type EventSingleT = z.infer<typeof EventSingleT>;

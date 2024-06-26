@@ -10,7 +10,7 @@ export const getEvents = async ({
   locale,
   page,
   pageSize = 100000,
-  sort = "publishedAt:desc",
+  sort = "dateStart:asc",
   search
 }: {
   locale: string,
@@ -42,10 +42,14 @@ export const getEvents = async ({
             text
             dateStart
             dateEnd
-            points {
+            days {
+              title
+              day
+              points {
                 time
                 description
                 text
+              }
             }
           }
         }

@@ -5,7 +5,7 @@ import { headers } from 'next/headers';
 import React, { Suspense } from 'react'
 import CalendarBlocks from './CalendarBlocks';
 import { ClientHydration } from '@/components/ClientHydration';
-import type { EventPointT } from '@/lib/types/entities';
+import { matrixToArray } from '@/lib/utils';
 
 export default function EventsAll({
   // searchParams,
@@ -54,26 +54,17 @@ async function EventsAllContent({
     else return event.attributes.dateStart
   })
 
-  const pointsArrays = dataResult.value.data.map((event) => event.attributes.points)
+  const daysArrays = dataResult.value.data.map((event) => event.attributes.days)
 
-  const points: EventPointT[] = [];
-  for (let i = 0; i < pointsArrays.length; i++) {
-    for (let j = 0; j < pointsArrays[i].length; j++) {
-      points.push(pointsArrays[i][j]);
-    }
-  }
+  const days = matrixToArray(daysArrays);
 
   return (
-    <div className='flex flex-wrap justify-between gap-6'>
-      <div className='lg:w-[calc(33%-1.5rem)]'>
-        <ClientHydration fallback={"...ClientHydration"}>
-          <CalendarBlocks 
-            locale={locale}
-            eventDays={eventDays}
-            points={points}
-          />
-        </ClientHydration>
-      </div>
-    </div>
+    <ClientHydration fallback={"...ClientHydration"}>
+      <CalendarBlocks 
+        locale={locale}
+        eventDays={eventDays}
+        days={days}
+      />
+    </ClientHydration>
   )
 }
