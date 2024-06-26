@@ -5,7 +5,6 @@ import { headers } from 'next/headers';
 import React, { Suspense } from 'react'
 import CalendarBlocks from './CalendarBlocks';
 import { ClientHydration } from '@/components/ClientHydration';
-import { matrixToArray } from '@/lib/utils';
 
 export default function EventsAll({
   // searchParams,
@@ -49,21 +48,22 @@ async function EventsAllContent({
     />
   )
 
-  const eventDays = dataResult.value.data.map((event) => {
+  const allDates = dataResult.value.data.map((event) => {
     if (event.attributes.dateEnd) return { from: event.attributes.dateStart, to: event.attributes.dateEnd }
     else return event.attributes.dateStart
   })
 
-  const daysArrays = dataResult.value.data.map((event) => event.attributes.days)
-
-  const days = matrixToArray(daysArrays);
+  const eventsDays = dataResult.value.data.map((event) => ({
+    eventId: event.id,
+    days: event.attributes.days
+  }))
 
   return (
     <ClientHydration fallback={"...ClientHydration"}>
       <CalendarBlocks 
         locale={locale}
-        eventDays={eventDays}
-        days={days}
+        allDates={allDates}
+        eventsDays={eventsDays}
       />
     </ClientHydration>
   )

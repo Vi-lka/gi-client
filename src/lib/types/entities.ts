@@ -276,7 +276,7 @@ export type EventPointT = z.infer<typeof EventPointT>;
 
 export const EventDayT = z.object({
   title: z.string().nullable(),
-  day: z.string().pipe( z.coerce.date() ),
+  date: z.string().pipe( z.coerce.date() ),
   points: EventPointT.array()
 })
 export type EventDayT = z.infer<typeof EventDayT>;

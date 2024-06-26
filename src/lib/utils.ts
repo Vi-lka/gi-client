@@ -110,6 +110,13 @@ export function dateRange(start:  Date | string, end: Date | string) {
 
 
 
+export function getDateIndx<T>(date: Date, array: T[]) {
+  return array.map(Number).indexOf(+date);
+  //          ^^^^^^^^^^^^         ^ serialisation steps
+}
+
+
+
 
 export function matrixToArray<T>(matrix: T[][]) {
   const array: T[] = [];

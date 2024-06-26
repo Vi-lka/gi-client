@@ -2,7 +2,7 @@
 
 import { Calendar } from '@/components/ui/calendar'
 import React from 'react'
-import type { DateRange, Matcher, SelectSingleEventHandler } from 'react-day-picker'
+import type { Matcher, SelectSingleEventHandler } from 'react-day-picker'
 
 export default function CalendarSegment({
   locale,
@@ -36,7 +36,7 @@ export default function CalendarSegment({
 
 
   const disabledMatcher: Matcher = (day: Date) => {
-    return !Boolean(activeDates.find(item => {return item.toDateString() === day.toDateString()}));
+    return !Boolean(activeDates.find(item => item.toDateString() === day.toDateString()));
   };
 
   return (

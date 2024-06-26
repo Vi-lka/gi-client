@@ -42,10 +42,10 @@ export const getEvents = async ({
             text
             dateStart
             dateEnd
-            days {
+            days(sort: "date:asc") {
               title
-              day
-              points {
+              date
+              points(sort: "time:asc") {
                 time
                 description
                 text
