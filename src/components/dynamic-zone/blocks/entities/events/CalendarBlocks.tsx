@@ -54,7 +54,7 @@ export default function CalendarBlocks({
         lastDays
       }}
       modifiersClassNames={{
-        eventDays: "!w-full aria-selected:bg-accent bg-secondary/70 aria-selected:hover:bg-accent aria-selected:hover:text-accent-foreground rounded-[0.1px]", // css trick for rounded (if zero, get default)
+        eventDays: "!w-full aria-selected:bg-accent bg-secondary/70 aria-selected:hover:bg-accent aria-selected:hover:text-accent-foreground rounded-none",
         singleDays: "!rounded-xl",
         firstDays: "!rounded-l-xl",
         lastDays: "!rounded-r-xl"
