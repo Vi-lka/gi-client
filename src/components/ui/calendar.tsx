@@ -15,6 +15,7 @@ function Calendar({
   classNames,
   showOutsideDays = true,
   lang,
+  components,
   ...props
 }: CalendarProps) {
 
@@ -52,7 +53,7 @@ function Calendar({
         ),
         day: cn(
           buttonVariants({ variant: "ghost" }),
-          "h-8 md:w-10 w-9 hover:w-full aria-selected:w-full p-0 font-medium md:text-base text-sm aria-selected:opacity-100 hover:bg-primary hover:text-primary-foreground aria-selected:hover:bg-accent aria-selected:hover:text-accent-foreground transition-all duration-200"
+          "group/day h-8 md:w-10 w-9 hover:w-full aria-selected:w-full p-0 font-medium md:text-base text-sm aria-selected:opacity-100 hover:bg-primary hover:text-primary-foreground aria-selected:hover:bg-accent aria-selected:hover:text-accent-foreground transition-all duration-200"
         ),
         day_range_start: "day-range-start",
         day_range_end: "day-range-end",
@@ -72,6 +73,7 @@ function Calendar({
         IconLeft: ({ ...props }) => <ChevronLeftIcon className="h-5 w-5" />,
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         IconRight: ({ ...props }) => <ChevronRightIcon className="h-5 w-5" />,
+        ...components,
       }}
       {...props}
     />

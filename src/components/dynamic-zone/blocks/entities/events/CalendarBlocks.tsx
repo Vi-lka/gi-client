@@ -10,11 +10,9 @@ import type { CarouselApi } from '@/components/ui/carousel'
 // import { useDictionary } from '@/components/providers/DictionaryProvider';
 
 export default function CalendarBlocks({
-  locale,
   allDates,
   eventsDays
 }: {
-  locale: string,
   allDates: (Date | DateRange)[],
   eventsDays: {
     eventId: string;
@@ -24,28 +22,7 @@ export default function CalendarBlocks({
 
   // const dict = useDictionary()
 
-  // Get first Date
-  let firstDay: Date = new Date()
-  if (typeof allDates[0].valueOf() === "object") {
-    const start = (allDates[0] as DateRange).from as Date
-    firstDay = start
-  } else {
-    firstDay = (allDates[0] as Date)
-  }
-
-  // States
-  const [date, setDate] = useState<Date | undefined>(firstDay)
-  const [month, setMonth] = useState<Date | undefined>(firstDay);
-  const [carouselApi, setCarouselApi] = React.useState<CarouselApi>()
-
-  // Get Dates categories
-  // const singleDays = eventDays.map((day) => {
-  //   if (typeof day.valueOf() === "number") {
-  //     return day as Date
-  //   }
-  // }).filter(item => item) as Date[]
-
-  const allEventDays = allDates.map(date => {
+  const allEventDates = allDates.map(date => {
     if (typeof date.valueOf() === "object") {
       const from = (date as DateRange).from as Date
       const to = (date as DateRange).to as Date
@@ -57,13 +34,33 @@ export default function CalendarBlocks({
     }
   }).filter(item => item)
 
-  const activeDates = matrixToArray(allEventDays).sort((a,b) => {
+  const sortedDates = matrixToArray(allEventDates).sort((a,b) => {
     return a.getTime() - b.getTime();
   })
-
-  const uniqDates = activeDates.filter((item, index) => 
-    getDateIndx(item, activeDates) === index
+  // Uniq Dates
+  const dates = sortedDates.filter((item, index) => 
+    getDateIndx(item, sortedDates) === index
   );
+
+  const duplicatesDates = sortedDates.filter((item, index) => 
+    sortedDates.some((elem, idx) => elem.toDateString() === item.toDateString() && idx !== index)
+  )
+  // Uniq Duplicates
+  const duplicates = duplicatesDates.filter((item, index) => 
+    getDateIndx(item, duplicatesDates) !== index
+  );
+
+  // States
+  const [date, setDate] = useState<Date | undefined>(dates[0])
+  const [month, setMonth] = useState<Date | undefined>(dates[0]);
+  const [carouselApi, setCarouselApi] = React.useState<CarouselApi>()
+
+  // Get Dates categories
+  // const singleDays = eventDays.map((day) => {
+  //   if (typeof day.valueOf() === "number") {
+  //     return day as Date
+  //   }
+  // }).filter(item => item) as Date[]
 
   const handleSelectDate: SelectSingleEventHandler = (_, selectedDay) => {
     setDate(selectedDay)
@@ -71,15 +68,14 @@ export default function CalendarBlocks({
       return
     }
 
-    const indx = getDateIndx(selectedDay, uniqDates)
+    const indx = getDateIndx(selectedDay, dates)
     carouselApi.scrollTo(indx)
   }
 
   return (
     <div className='flex flex-wrap gap-6'>
       <CalendarSegment 
-        locale={locale}
-        activeDates={activeDates}
+        data={{ dates, duplicates, eventsDays }}
         date={date}
         month={month}
         onSelect={handleSelectDate}
@@ -88,10 +84,9 @@ export default function CalendarBlocks({
       />
 
       <CarouselSegment
+        data={{ dates, duplicates, eventsDays }}
         api={carouselApi}
         setApi={setCarouselApi}
-        activeDates={activeDates}
-        eventsDays={eventsDays}
         setDate={setDate}
         setMonth={setMonth}
         className='lg:w-[calc(33%-1.5rem)] max-w-none'

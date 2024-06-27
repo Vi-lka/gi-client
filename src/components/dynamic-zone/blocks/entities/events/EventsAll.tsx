@@ -61,7 +61,6 @@ async function EventsAllContent({
   return (
     <ClientHydration fallback={"...ClientHydration"}>
       <CalendarBlocks 
-        locale={locale}
         allDates={allDates}
         eventsDays={eventsDays}
       />

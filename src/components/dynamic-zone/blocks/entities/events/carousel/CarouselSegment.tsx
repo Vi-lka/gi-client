@@ -10,48 +10,39 @@ import CarouselContent from './CarouselContent'
 
 
 export default function CarouselSegment({
+  data,
   api,
   setApi,
-  activeDates,
-  eventsDays,
   setDate,
   setMonth,
   className,
 }: {
+  data: {
+    dates: Date[],
+    duplicates: Date[],
+    eventsDays: {
+      eventId: string;
+      days: EventDayT[]
+    }[],
+  },
   api: CarouselApi,
   setApi: React.Dispatch<React.SetStateAction<CarouselApi>>
-  activeDates: Date[],
-  eventsDays: {
-    eventId: string;
-    days: EventDayT[]
-  }[],
   setDate: React.Dispatch<React.SetStateAction<Date | undefined>>,
   setMonth: React.Dispatch<React.SetStateAction<Date | undefined>>,
   className?: string,
 }) {
-
-  const uniqDates = activeDates.filter((item, index) => 
-    getDateIndx(item, activeDates) === index
-  );
-
-  const duplicates = activeDates.filter((item, index) => 
-    activeDates.some((elem, idx) => elem.toDateString() === item.toDateString() && idx !== index)
-  )
-  const uniqDuplicates = duplicates.filter((item, index) => 
-    getDateIndx(item, duplicates) !== index
-  );
  
   React.useEffect(() => {
     if (!api) {
       return
     }
  
-    setDate(uniqDates[api.selectedScrollSnap()])
-    setMonth(uniqDates[api.selectedScrollSnap()])
+    setDate(data.dates[api.selectedScrollSnap()])
+    setMonth(data.dates[api.selectedScrollSnap()])
  
     api.on("select", () => {
-      setDate(uniqDates[api.selectedScrollSnap()])
-      setMonth(uniqDates[api.selectedScrollSnap()])
+      setDate(data.dates[api.selectedScrollSnap()])
+      setMonth(data.dates[api.selectedScrollSnap()])
     })
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [api])
@@ -67,9 +58,9 @@ export default function CarouselSegment({
       className={cn("w-full max-w-lg", className)}
     >
       <CarouselContent 
-        data={eventsDays}
-        uniqDates={uniqDates}
-        duplicates={uniqDuplicates}
+        data={data.eventsDays}
+        uniqDates={data.dates}
+        duplicates={data.duplicates}
       />
     </Carousel>
   )

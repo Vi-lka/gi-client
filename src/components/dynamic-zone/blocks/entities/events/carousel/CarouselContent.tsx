@@ -27,11 +27,10 @@ export default function CarouselContent({
         // Find data for card
         const items = data.map(item => {
           const finded = item.days.find(day => day.date.toDateString() === dateItem.toDateString())
-          if (finded) return { eventId: item.eventId, itemData: finded }
-          else return undefined
+          return { eventId: item.eventId, itemData: finded }
         }).filter(item => item) as Array<{
           eventId: string;
-          itemData: EventDayT;
+          itemData: EventDayT | undefined;
         }>
 
         // If duplicates
