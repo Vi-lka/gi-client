@@ -2,10 +2,31 @@
 
 import { Calendar } from '@/components/ui/calendar'
 import { useLocale } from '@/lib/hooks/useLocale'
-import { EventDayT } from '@/lib/types/entities'
 import { getDateIndx } from '@/lib/utils'
 import React from 'react'
-import { useDayPicker, type Matcher, type SelectSingleEventHandler } from 'react-day-picker'
+import { useDayPicker   } from 'react-day-picker'
+import type {Matcher, SelectSingleEventHandler} from 'react-day-picker';
+import type { EventDayT } from '@/lib/types/entities'
+
+type Props = {
+  data: {
+    dates: Date[],
+    duplicates: Date[],
+    eventsDays: {
+      eventId: string;
+      days: EventDayT[]
+    }[],
+    datesByEventId: {
+      id: string;
+      dates: Date[];
+    }[]
+  }
+  date: Date | undefined,
+  month: Date | undefined,
+  onSelect: SelectSingleEventHandler | undefined
+  setMonth: React.Dispatch<React.SetStateAction<Date | undefined>>
+  className?: string,
+}
 
 export default function CalendarSegment({
   data,
@@ -14,35 +35,9 @@ export default function CalendarSegment({
   onSelect,
   setMonth,
   className
-}: {
-  data: {
-    dates: Date[],
-    duplicates: Date[],
-    eventsDays: {
-      eventId: string;
-      days: EventDayT[]
-    }[],
-  }
-  date: Date | undefined,
-  month: Date | undefined,
-  onSelect: SelectSingleEventHandler | undefined
-  setMonth: React.Dispatch<React.SetStateAction<Date | undefined>>
-  className?: string,
-}) {
+}: Props) {
 
   const locale = useLocale()
-  
-  // const firstDays = eventDays.map((day) => {
-  //   if (typeof day.valueOf() === "object") {
-  //     return (day as DateRange).from
-  //   }
-  // }).filter(item => item) as Date[]
-
-  // const lastDays = eventDays.map((day) => {
-  //   if (typeof day.valueOf() === "object") {
-  //     return (day as DateRange).to
-  //   }
-  // }).filter(item => item) as Date[]
 
   const disabledMatcher: Matcher = (day: Date) => {
     return !Boolean(data.dates.find(item => item.toDateString() === day.toDateString()));
@@ -54,10 +49,7 @@ export default function CalendarSegment({
       ISOWeek
       lang={locale}
       modifiers={{
-        activeDates: data.dates,
-        // singleDays,
-        // firstDays,
-        // lastDays
+        activeDates: data.dates
       }}
       modifiersClassNames={{
         activeDates: "!w-full aria-selected:bg-accent bg-secondary/70 aria-selected:hover:bg-accent aria-selected:hover:text-accent-foreground rounded-xl",
@@ -80,11 +72,17 @@ export default function CalendarSegment({
         
           const duplicateIndx = getDateIndx(props.date, data.duplicates);
 
+          const eventsInCurrentDate = data.datesByEventId.map(item => {
+            const finded = item.dates.find(date => date.toDateString() === props.date.toDateString())
+            if (finded) return item.id
+            else return undefined
+          }).filter(item => item) as string[]
+
           // Find data for card
           const items = data.eventsDays.map(item => {
             const finded = item.days.find(day => day.date.toDateString() === props.date.toDateString())
             return { eventId: item.eventId, itemData: finded }
-          }).filter(item => item) as Array<{
+          }).filter(item => item).filter(item => eventsInCurrentDate.includes(item.eventId)) as Array<{
             eventId: string;
             itemData: EventDayT | undefined;
           }>

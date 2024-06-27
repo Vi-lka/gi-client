@@ -5,6 +5,7 @@ import { headers } from 'next/headers';
 import React, { Suspense } from 'react'
 import CalendarBlocks from './CalendarBlocks';
 import { ClientHydration } from '@/components/ClientHydration';
+import { dateRange, getDateIndx, matrixToArray } from '@/lib/utils'
 
 export default function EventsAll({
   // searchParams,
@@ -48,21 +49,43 @@ async function EventsAllContent({
     />
   )
 
-  const allDates = dataResult.value.data.map((event) => {
-    if (event.attributes.dateEnd) return { from: event.attributes.dateStart, to: event.attributes.dateEnd }
-    else return event.attributes.dateStart
-  })
-
-  const eventsDays = dataResult.value.data.map((event) => ({
+  const eventsDays = dataResult.value.data.map(event => ({
     eventId: event.id,
     days: event.attributes.days
   }))
 
+  const datesByEventId = dataResult.value.data.map(event => {
+    if (event.attributes.dateEnd) { 
+      const dates = dateRange(event.attributes.dateStart, event.attributes.dateEnd);
+      return { id: event.id, dates }
+    } else {
+      return { id: event.id, dates: [event.attributes.dateStart] }
+    }
+  })
+
+  const allDatesMatrix = datesByEventId.map(item => item.dates)
+  const allDates = matrixToArray(allDatesMatrix)
+  .sort((a,b) => {
+    return a.getTime() - b.getTime();
+  })
+  const datesUniq = allDates.filter((item, index) => 
+    getDateIndx(item, allDates) === index
+  );
+
+  const duplicatesDates = allDates.filter((item, index) => 
+    allDates.some((elem, idx) => elem.toDateString() === item.toDateString() && idx !== index)
+  )
+  const duplicatesUniq = duplicatesDates.filter((item, index) => 
+    getDateIndx(item, duplicatesDates) !== index
+  );
+
   return (
     <ClientHydration fallback={"...ClientHydration"}>
       <CalendarBlocks 
-        allDates={allDates}
+        dates={datesUniq}
+        duplicates={duplicatesUniq}
         eventsDays={eventsDays}
+        datesByEventId={datesByEventId}
       />
     </ClientHydration>
   )

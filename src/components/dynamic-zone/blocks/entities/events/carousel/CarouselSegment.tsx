@@ -5,9 +5,28 @@ import type { EventDayT } from '@/lib/types/entities'
 import React from 'react'
 import { WheelGesturesPlugin } from 'embla-carousel-wheel-gestures'
 import type { CarouselApi } from '@/components/ui/carousel'
-import { cn, getDateIndx } from '@/lib/utils'
+import { cn } from '@/lib/utils'
 import CarouselContent from './CarouselContent'
 
+type Props = {
+  data: {
+    dates: Date[],
+    duplicates: Date[],
+    eventsDays: {
+      eventId: string;
+      days: EventDayT[]
+    }[],
+    datesByEventId: {
+      id: string;
+      dates: Date[];
+    }[]
+  },
+  api: CarouselApi,
+  setApi: React.Dispatch<React.SetStateAction<CarouselApi>>
+  setDate: React.Dispatch<React.SetStateAction<Date | undefined>>,
+  setMonth: React.Dispatch<React.SetStateAction<Date | undefined>>,
+  className?: string,
+}
 
 export default function CarouselSegment({
   data,
@@ -16,21 +35,7 @@ export default function CarouselSegment({
   setDate,
   setMonth,
   className,
-}: {
-  data: {
-    dates: Date[],
-    duplicates: Date[],
-    eventsDays: {
-      eventId: string;
-      days: EventDayT[]
-    }[],
-  },
-  api: CarouselApi,
-  setApi: React.Dispatch<React.SetStateAction<CarouselApi>>
-  setDate: React.Dispatch<React.SetStateAction<Date | undefined>>,
-  setMonth: React.Dispatch<React.SetStateAction<Date | undefined>>,
-  className?: string,
-}) {
+}: Props) {
  
   React.useEffect(() => {
     if (!api) {
@@ -58,9 +63,10 @@ export default function CarouselSegment({
       className={cn("w-full max-w-lg", className)}
     >
       <CarouselContent 
-        data={data.eventsDays}
-        uniqDates={data.dates}
+        dates={data.dates}
         duplicates={data.duplicates}
+        eventsDays={data.eventsDays}
+        datesByEventId={data.datesByEventId}
       />
     </Carousel>
   )
