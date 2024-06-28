@@ -43,6 +43,32 @@ export default function CalendarSegment({
     return !Boolean(data.dates.find(item => item.toDateString() === day.toDateString()));
   };
 
+  function getItemData(dateItem: Date) {
+    const duplicateIndx = getDateIndx(dateItem, data.duplicates);
+
+    const eventsInCurrentDate = data.datesByEventId.map(item => {
+      const finded = item.dates.find(date => date.toDateString() === dateItem.toDateString())
+      if (finded) return item.id
+      else return undefined
+    }).filter(item => item) as string[]
+
+    // Find data for card
+    const items = data.eventsDays.map(item => {
+      const finded = item.days.find(day => day.date.toDateString() === dateItem.toDateString())
+      return { eventId: item.eventId, itemData: finded }
+    })
+    .filter(item => item)
+    .filter(item => eventsInCurrentDate.includes(item.eventId)) 
+    .sort((a,b) => {
+      return Number(a.eventId) - Number(b.eventId);
+    }) as Array<{
+      eventId: string;
+      itemData: EventDayT | undefined;
+    }>
+
+    return { duplicateIndx, items }
+  }
+
   return (
     <Calendar
       mode="single"
@@ -69,24 +95,7 @@ export default function CalendarSegment({
             locale,
             formatters: { formatDay }
           } = useDayPicker();
-        
-          const duplicateIndx = getDateIndx(props.date, data.duplicates);
-
-          const eventsInCurrentDate = data.datesByEventId.map(item => {
-            const finded = item.dates.find(date => date.toDateString() === props.date.toDateString())
-            if (finded) return item.id
-            else return undefined
-          }).filter(item => item) as string[]
-
-          // Find data for card
-          const items = data.eventsDays.map(item => {
-            const finded = item.days.find(day => day.date.toDateString() === props.date.toDateString())
-            return { eventId: item.eventId, itemData: finded }
-          }).filter(item => item).filter(item => eventsInCurrentDate.includes(item.eventId)) as Array<{
-            eventId: string;
-            itemData: EventDayT | undefined;
-          }>
-  
+          const { duplicateIndx, items } = getItemData(props.date)
           // If duplicates
           if (duplicateIndx >= 0) return (
             <p className='relative'>

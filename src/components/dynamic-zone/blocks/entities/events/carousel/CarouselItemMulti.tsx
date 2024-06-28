@@ -8,14 +8,14 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 
 export default function CarouselItemMulti({
+  // date,
   items,
-//   date
 }: {
+  date: Date,
   items: {
     eventId: string;
     itemData: EventDayT | undefined;
   }[]
-  date: Date,
 }) {
 
   const [selectedTab, setSelectedTab] = useState(items[0].eventId);
@@ -25,7 +25,7 @@ export default function CarouselItemMulti({
       {items.length > 0
         ? (
         <Tabs value={selectedTab} defaultValue={items[0].eventId} className="h-full">
-          <TabsList className="absolute top-3 z-50 flex-wrap h-fit sm:justify-around justify-center gap-y-1 bg-secondary  rounded-lg">
+          <TabsList className="absolute top-3 -left-1 z-50 flex-wrap h-fit sm:justify-around justify-center gap-y-1 bg-secondary  rounded-lg">
             {items.map((item, indx) => (
               <TabsTrigger 
                 key={item.eventId} 

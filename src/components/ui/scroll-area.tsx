@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils"
 
 type ExtendT = {
   classNameViewport?: string;
+  classNameBar?: string;
 };
 
 type ScrollAreaT = React.ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.Root> & ExtendT;
@@ -14,7 +15,7 @@ type ScrollAreaT = React.ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.Roo
 const ScrollArea = React.forwardRef<
   React.ElementRef<typeof ScrollAreaPrimitive.Root>,
   ScrollAreaT
->(({ className, classNameViewport, children, ...props }, ref) => (
+>(({ className, classNameViewport, classNameBar, children, ...props }, ref) => (
   <ScrollAreaPrimitive.Root
     ref={ref}
     className={cn("relative overflow-hidden", className)}
@@ -23,7 +24,7 @@ const ScrollArea = React.forwardRef<
     <ScrollAreaPrimitive.Viewport className={cn("h-full w-full rounded-[inherit]", classNameViewport)}>
       {children}
     </ScrollAreaPrimitive.Viewport>
-    <ScrollBar />
+    <ScrollBar className={classNameBar} />
     <ScrollAreaPrimitive.Corner />
   </ScrollAreaPrimitive.Root>
 ))
