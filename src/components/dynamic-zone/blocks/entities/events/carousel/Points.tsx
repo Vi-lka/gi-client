@@ -2,22 +2,34 @@ import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useLocale } from '@/lib/hooks/useLocale';
 import type { EventDayT } from '@/lib/types/entities';
-import { formatDate } from '@/lib/utils';
+import { cn, formatDate } from '@/lib/utils';
 import { CalendarPlus } from 'lucide-react';
-import React from 'react'
+import React, { createRef } from 'react'
 import { IoCalendarOutline } from "react-icons/io5";
 
 export default function Points({
   date,
   eventId,
-  itemData
+  itemData,
+  setActive
 }: {
-  date: Date,
-  eventId: string;
+  date: Date;
+  eventId: string | undefined;
   itemData: EventDayT | undefined;
+  setActive: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
 
   const locale = useLocale()
+
+  const scrollRef = createRef<HTMLDivElement>();
+
+  const handleActive = (active: boolean) => {
+    if (scrollRef.current && (scrollRef.current.scrollHeight <= scrollRef.current.clientHeight)) {
+      setActive(true)
+    } else {
+      setActive(active)
+    }
+  }
 
   return (
     <div className='flex flex-col w-full h-full'>
@@ -33,25 +45,39 @@ export default function Points({
           <CalendarPlus className='w-5 h-5' />
         </Button>
       </div>
-      <div className='mt-3 ml-11 flex-1 flex flex-col'>
-        {itemData 
+      <div className='mt-2 flex-1 flex flex-col'>
+        {itemData
           ? (
             <>
-              {itemData.title}
+              {itemData.title && (<span className='mb-1 font-semibold text-base'>{itemData.title}</span>)}
               <ScrollArea 
+                refViewport={scrollRef}
                 type="auto" 
-                className='flex-1 mt-1 z-50'
-                classNameViewport='h-[138px] z-50' 
-                classNameBar='bg-muted/20 py-[3px] pr-[2px] rounded-full'
+                className='flex-1 z-50'
+                classNameViewport={cn( 'z-50 border-t px-1 pt-2', itemData.title ? 'h-[162px]' : 'h-[190px]')} 
+                classNameBar='bg-muted/20 py-[3px] pr-[2px] rounded-full h-[calc(100%-0.5rem)] !top-auto !bottom-0'
+                onPointerEnter={() => handleActive(false)}
+                onPointerLeave={() => handleActive(true)}
+                onTouchStart={() => handleActive(false)}
+                onTouchEnd={() => handleActive(true)}
               >
                 {itemData.points.map((point, indx) => (
-                  <p key={indx} className='mb-8'>{point.time.slice(0, 5)}</p>
+                  <div key={indx} className='text-base mb-1.5 last:mb-0'>
+                    <p className='font-semibold'>
+                      {point.time.slice(0, 5)}
+                    </p>
+                    <p className='text-sm'>{point.description}</p>
+                  </div>
                 ))}
               </ScrollArea>
             </>
           )
           : (
-            "No Data"
+            <div className='w-full h-[190px] flex items-center justify-center'>
+              <span className='mb-3 font-semibold text-base text-center'>
+                Расписание отсутствует
+              </span>
+            </div>
           )
         }
       </div>

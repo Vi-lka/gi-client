@@ -8,21 +8,24 @@ import Points from "./Points";
 export default function CarouselItemSingle({
   date,
   data,
+  setActive,
 }: {
-  date: Date
+  date: Date;
   data: {
     eventId: string;
     itemData: EventDayT | undefined;
-  }
+  };
+  setActive: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   return (
-    <CarouselItem className=''>
+    <CarouselItem className='pt-8'>
       <Card className='min-w-0 h-full bg-primary text-primary-foreground dark:bg-card dark:text-card-foreground group/card border-transparent dark:border-border/20 dark:hover:border-border hover:shadow-md shadow-sm rounded-3xl transition duration-300'>
         <CardContent className="h-full flex items-center justify-center p-6">
           <Points 
             date={date} 
             eventId={data.eventId} 
-            itemData={data.itemData} 
+            itemData={data.itemData}
+            setActive={setActive}
           />
         </CardContent>
       </Card>

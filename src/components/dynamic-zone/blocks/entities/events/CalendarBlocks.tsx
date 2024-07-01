@@ -45,7 +45,7 @@ export default function CalendarBlocks({
   }
 
   return (
-    <div className='flex flex-wrap gap-6'>
+    <div className='flex flex-wrap gap-6 md:mt-10'>
       <CalendarSegment 
         data={{ dates, duplicates, eventsDays, datesByEventId }}
         date={date}

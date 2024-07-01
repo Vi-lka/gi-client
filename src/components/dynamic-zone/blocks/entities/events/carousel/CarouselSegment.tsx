@@ -1,6 +1,6 @@
 "use client"
 
-import { Carousel, CarouselContent } from '@/components/ui/carousel'
+import { Carousel, CarouselContent, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
 import type { EventDayT } from '@/lib/types/entities'
 import React from 'react'
 import { WheelGesturesPlugin } from 'embla-carousel-wheel-gestures'
@@ -37,6 +37,8 @@ export default function CarouselSegment({
   setMonth,
   className,
 }: Props) {
+
+  const [active, setActive] = React.useState(true)
  
   React.useEffect(() => {
     if (!api) {
@@ -82,23 +84,41 @@ export default function CarouselSegment({
   return (
     <Carousel
       setApi={setApi}
-      opts={{ align: "center", axis: "y" }}
+      opts={{ 
+        align: "center", 
+        axis: "y",
+        watchDrag: active
+      }}
       plugins={[
-        WheelGesturesPlugin()
+        WheelGesturesPlugin({active})
       ]}
       orientation="vertical"
-      className={cn("w-full max-w-lg", className)}
+      className={cn("w-full max-w-lg md:mt-0 mt-6", className)}
     >
-      <CarouselContent className="-mt-4 h-[280px]">
+      <CarouselContent className="-mt-8 h-[300px]" classNameOverflow='py-6 px-2'>
         {data.dates.map((dateItem, indx) => {
           const { duplicateIndx, items } = getItemData(dateItem)
           // If duplicates
           if (duplicateIndx >= 0) return (
-            <CarouselItemMulti key={indx} date={dateItem} items={items} />
+            <CarouselItemMulti 
+              key={indx} 
+              date={dateItem} 
+              items={items} 
+              setActive={setActive} 
+            />
           )
-          else return <CarouselItemSingle key={indx} date={dateItem} data={items[0]} />
+          else return (
+            <CarouselItemSingle 
+              key={indx} 
+              date={dateItem} 
+              data={items[0]} 
+              setActive={setActive} 
+            />
+          )
         })}
       </CarouselContent>
+      <CarouselPrevious className='disabled:opacity-20 md:-top-8 -top-6 border-none shadow-none transition-all duration-200' />
+      <CarouselNext className='disabled:opacity-20 md:-bottom-8 -bottom-6 border-none shadow-none transition-all duration-200' />
     </Carousel>
   )
 }
