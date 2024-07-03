@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button';
+import { Credenza, CredenzaBody, CredenzaClose, CredenzaContent, CredenzaDescription, CredenzaFooter, CredenzaHeader, CredenzaTitle, CredenzaTrigger } from '@/components/ui/credenza';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useLocale } from '@/lib/hooks/useLocale';
 import type { EventDayT } from '@/lib/types/entities';
@@ -41,9 +42,30 @@ export default function Points({
             {formatDate(date, locale)}
           </p>
         </div>
-        <Button variant="secondary" className='px-2 bg-apricot text-primary transition-all duration-200 rounded-xl'>
-          <CalendarPlus className='w-5 h-5' />
-        </Button>
+        <Credenza noBodyStyles>
+          <CredenzaTrigger asChild>
+            <Button variant="secondary" className='px-2 bg-apricot text-primary transition-all duration-200 rounded-xl'>
+              <CalendarPlus className='w-5 h-5' />
+            </Button>
+          </CredenzaTrigger>
+          <CredenzaContent>
+            <CredenzaHeader>
+              <CredenzaTitle>Credenza</CredenzaTitle>
+              <CredenzaDescription>
+                A responsive modal component for shadcn/ui.
+              </CredenzaDescription>
+            </CredenzaHeader>
+            <CredenzaBody>
+              This component is built using shadcn/ui&apos;s dialog and drawer
+              component, which is built on top of Vaul.
+            </CredenzaBody>
+            <CredenzaFooter>
+              <CredenzaClose asChild>
+                <button>Close</button>
+              </CredenzaClose>
+            </CredenzaFooter>
+          </CredenzaContent>
+        </Credenza>
       </div>
       <div className='mt-2 flex-1 flex flex-col'>
         {itemData

@@ -97,11 +97,11 @@ export default async function Layout({
       suppressHydrationWarning
       className={`${din.variable} ${cera.variable} scroll-smooth`}
     >
-      <body className='font-Din relative flex flex-col justify-between min-h-screen bg-background'>
+      <body className='font-Din relative flex flex-col justify-between min-h-screen bg-background antialiased'>
         <Providers dictionary={dict}>
           {children}
-          <Toaster />
           <Footer />
+          <Toaster />
         </Providers>
         <Script
           id="globalThis-polyfill"

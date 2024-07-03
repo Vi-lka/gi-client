@@ -28,7 +28,7 @@ export default function CarouselItemMulti({
       {items.length > 0
         ? (
         <Tabs value={selectedTab} defaultValue={items[0].eventId} className="h-full">
-          <TabsList className="absolute top-4 -left-2 flex-wrap h-fit sm:justify-around justify-center gap-y-1 bg-secondary rounded-lg z-50">
+          <TabsList className="absolute top-4 -left-2 flex-wrap h-fit sm:justify-around justify-center gap-y-1 bg-apricot rounded-lg z-50">
             {items.map((item, indx) => (
               <TabsTrigger 
                 key={item.eventId} 

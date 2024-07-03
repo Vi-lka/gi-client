@@ -94,13 +94,16 @@ export default function HeaderClient({
     }
 
     return (
-        <header className='container md:w-5/6 mx-auto'>
+        <header className={cn(
+            'container md:w-5/6 mx-auto',
+            sticky || pathname !== "/" ? "[&[data-aria-hidden=true]>div]:pr-[var(--removed-body-scroll-bar-size)]" : ""
+        )}>
             <div 
                 ref={stickyHeader} 
                 className={cn(
-                    " bg-background z-50 py-6 duration-300",
+                    "bg-background z-50 py-6 duration-300",
                     sticky || pathname !== "/" ? "fixed w-full top-0 left-1/2 -translate-x-1/2" : "relative -mb-[112px]",
-                    shadow ? "py-2 shadow-sm transition-all" : " transition-[padding]"
+                    shadow ? "py-2 shadow-sm transition-[padding-top,padding-bottom,box-shadow]" : "transition-[padding-top,padding-bottom]"
                 )}
             >
                 <div className={cn(
