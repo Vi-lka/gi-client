@@ -81,7 +81,7 @@ async function EventsAllContent({
 
   return (
     <ClientHydration fallback={"...ClientHydration"}>
-      <CalendarBlocks 
+      <CalendarBlocks
         dates={datesUniq}
         duplicates={duplicatesUniq}
         eventsDays={eventsDays}

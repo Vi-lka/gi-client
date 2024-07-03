@@ -5,9 +5,10 @@ import type { EventDayT } from '@/lib/types/entities'
 import React from 'react'
 import { WheelGesturesPlugin } from 'embla-carousel-wheel-gestures'
 import type { CarouselApi } from '@/components/ui/carousel'
-import { cn, getDateIndx } from '@/lib/utils'
+import { cn } from '@/lib/utils'
 import CarouselItemMulti from './carousel-segment/CarouselItemMulti'
 import CarouselItemSingle from './carousel-segment/CarouselItemSingle'
+import getItemData from '../getItemData'
 
 type Props = {
   data: {
@@ -55,32 +56,6 @@ export default function CarouselSegment({
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [api])
 
-  function getItemData(dateItem: Date) {
-    const duplicateIndx = getDateIndx(dateItem, data.duplicates);
-
-    const eventsInCurrentDate = data.datesByEventId.map(item => {
-      const finded = item.dates.find(date => date.toDateString() === dateItem.toDateString())
-      if (finded) return item.id
-      else return undefined
-    }).filter(item => item) as string[]
-
-    // Find data for card
-    const items = data.eventsDays.map(item => {
-      const finded = item.days.find(day => day.date.toDateString() === dateItem.toDateString())
-      return { eventId: item.eventId, itemData: finded }
-    })
-    .filter(item => item)
-    .filter(item => eventsInCurrentDate.includes(item.eventId)) 
-    .sort((a,b) => {
-      return Number(a.eventId) - Number(b.eventId);
-    }) as Array<{
-      eventId: string;
-      itemData: EventDayT | undefined;
-    }>
-
-    return { duplicateIndx, items }
-  }
-
   return (
     <Carousel
       setApi={setApi}
@@ -97,7 +72,12 @@ export default function CarouselSegment({
     >
       <CarouselContent className="-mt-8 h-[300px]" classNameOverflow='py-6 px-2'>
         {data.dates.map((dateItem, indx) => {
-          const { duplicateIndx, items } = getItemData(dateItem)
+          const { duplicateIndx, items } = getItemData({
+            currentDate: dateItem,
+            duplicates: data.duplicates,
+            datesByEventId: data.datesByEventId,
+            eventsDays: data.eventsDays
+          })
           // If duplicates
           if (duplicateIndx >= 0) return (
             <CarouselItemMulti 

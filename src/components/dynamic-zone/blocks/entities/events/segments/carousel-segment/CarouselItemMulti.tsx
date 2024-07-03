@@ -4,9 +4,10 @@ import { Card, CardContent } from "@/components/ui/card";
 import { CarouselItem } from "@/components/ui/carousel";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { EventDayT } from "@/lib/types/entities";
-import { motion } from "framer-motion";
-import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import Points from "./Points";
+import { eventIdAtom } from "@/lib/hooks/atoms";
+import { useAtom } from "jotai";
 
 export default function CarouselItemMulti({
   date,
@@ -21,7 +22,7 @@ export default function CarouselItemMulti({
   setActive: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
 
-  const [selectedTab, setSelectedTab] = useState(items[0].eventId);
+  const [selectedTab, setSelectedTab] = useAtom(eventIdAtom);
 
   return (
     <CarouselItem className='relative pt-8 min-h-[316px]'>
@@ -47,20 +48,42 @@ export default function CarouselItemMulti({
               </TabsTrigger>
             ))}
           </TabsList>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={selectedTab ? selectedTab : "empty"}
+              initial={{ transform: "rotateY(0)", opacity: 0.5 }}
+              animate={{ transform: "rotateY(360deg)", opacity: 1 }}
+              exit={{ transform: "rotateY(360deg)", opacity: 1 }}
+              transition={{ duration: 0.5 }}
+            >
             {items.map((item, indx) => (
-              <TabsContent key={item.eventId} value={item.eventId} className="h-full mt-0 animate-rotate-y animate-ease-in-out animate-duration-700">
-                <Card className='min-w-0 h-full bg-primary text-primary-foreground dark:bg-card dark:text-card-foreground group/card border-transparent dark:border-border/20 dark:hover:border-border hover:shadow-md shadow-sm rounded-3xl transition duration-300'>
-                  <CardContent key={indx} className="h-full flex items-center justify-center p-6 animate-fade animate-duration-500 animate-delay-200 animate-ease-in">
-                    <Points 
-                      date={date} 
-                      eventId={item.eventId} 
-                      itemData={item.itemData}
-                      setActive={setActive}
-                    />
-                  </CardContent>
-                </Card>
-              </TabsContent>
+              selectedTab === item.eventId 
+                ? (
+                  <TabsContent 
+                    forceMount
+                    key={item.eventId} 
+                    value={item.eventId} 
+                    className="h-full mt-0"
+                  >
+                    <Card className='w-full h-full bg-primary text-primary-foreground dark:bg-card dark:text-card-foreground group/card border-transparent dark:border-border/20 dark:hover:border-border hover:shadow-md shadow-sm rounded-3xl transition duration-300'>
+                      <CardContent 
+                        key={indx} 
+                        className="h-full min-h-[282px] flex items-center justify-center p-6 animate-fade animate-duration-300 animate-delay-200 animate-ease-in"
+                      >
+                        <Points 
+                          date={date} 
+                          eventId={item.eventId} 
+                          itemData={item.itemData}
+                          setActive={setActive}
+                        />
+                      </CardContent>
+                    </Card>
+                  </TabsContent>
+                )
+                : null
             ))}
+            </motion.div>
+          </AnimatePresence>
         </Tabs>
         )
         : (

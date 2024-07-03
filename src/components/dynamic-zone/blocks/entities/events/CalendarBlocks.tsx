@@ -1,12 +1,15 @@
 "use client"
 
 import type { EventDayT } from '@/lib/types/entities'
-import React, { useState } from 'react'
+import React, { useEffect } from 'react'
 import type { SelectSingleEventHandler } from 'react-day-picker'
-import CalendarSegment from './CalendarSegment'
-import CarouselSegment from './CarouselSegment'
+import CalendarSegment from './segments/CalendarSegment'
+import CarouselSegment from './segments/CarouselSegment'
 import { getDateIndx } from '@/lib/utils'
 import type { CarouselApi } from '@/components/ui/carousel'
+import TextSegment from './segments/TextSegment'
+import { dateAtom, eventIdAtom, monthAtom } from '@/lib/hooks/atoms'
+import { useAtom } from 'jotai'
 
 export default function CalendarBlocks({
   dates,
@@ -25,11 +28,35 @@ export default function CalendarBlocks({
     dates: Date[];
   }[]
 }) {
-
-  // States
-  const [date, setDate] = useState<Date | undefined>(dates[0])
-  const [month, setMonth] = useState<Date | undefined>(dates[0]);
+  
+  const [eventId, setEventId] = useAtom(eventIdAtom)
+  const [date, setDate] = useAtom(dateAtom)
+  const [month, setMonth] = useAtom(monthAtom)
   const [carouselApi, setCarouselApi] = React.useState<CarouselApi>()
+
+  useEffect(() => {
+    setDate(dates[0])
+    setMonth(dates[0])
+  }, [dates, setDate, setMonth])
+
+  useEffect(() => {
+    const eventsInCurrentDate = datesByEventId.map(item => {
+      if (!date) return undefined
+  
+      const finded = item.dates.find(item => item.toDateString() === date.toDateString())
+      if (finded) return item.id
+  
+      else return undefined
+    })
+    .filter(item => item)
+    .sort((a,b) => {
+      return Number(a) - Number(b);
+    }) as string[]
+
+    const include = eventsInCurrentDate.includes(eventId)
+
+    if (!include) setEventId(eventsInCurrentDate[0])
+  }, [date, datesByEventId, eventId, setEventId])
 
   const handleSelectDate: SelectSingleEventHandler = (_, selectedDay) => {
     setDate(selectedDay)
@@ -59,6 +86,11 @@ export default function CalendarBlocks({
         setDate={setDate}
         setMonth={setMonth}
         className='lg:w-[calc(33%-1.5rem)] max-w-none'
+      />
+
+      <TextSegment
+        date={date}
+        datesByEventId={datesByEventId}
       />
     </div>
   )
