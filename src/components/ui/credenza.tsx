@@ -25,18 +25,18 @@ import {
 } from "@/components/ui/drawer"
 import { useMediaQuery } from "@/lib/hooks/useMediaQuery"
 
-interface BaseProps {
+export interface BaseProps {
   children: React.ReactNode
 }
 
-interface RootCredenzaProps extends BaseProps {
+export interface RootCredenzaProps extends BaseProps {
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
   modal?: boolean;
   noBodyStyles?: boolean;
 }
 
-interface CredenzaProps extends BaseProps {
+export interface CredenzaProps extends BaseProps {
   className?: string;
   asChild?: true;
 }

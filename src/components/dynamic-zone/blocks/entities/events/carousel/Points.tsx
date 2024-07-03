@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { Credenza, CredenzaBody, CredenzaClose, CredenzaContent, CredenzaDescription, CredenzaFooter, CredenzaHeader, CredenzaTitle, CredenzaTrigger } from '@/components/ui/credenza';
+import { Credenza, CredenzaBody, CredenzaContent, CredenzaDescription, CredenzaHeader, CredenzaTitle, CredenzaTrigger } from '@/components/ui/credenza';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useLocale } from '@/lib/hooks/useLocale';
 import type { EventDayT } from '@/lib/types/entities';
@@ -7,6 +7,8 @@ import { cn, formatDate } from '@/lib/utils';
 import { CalendarPlus } from 'lucide-react';
 import React, { createRef } from 'react'
 import { IoCalendarOutline } from "react-icons/io5";
+import AddToCalendar from './AddToCalendar';
+import type { CalendarEvent } from "calendar-link";
 
 export default function Points({
   date,
@@ -32,6 +34,22 @@ export default function Points({
     }
   }
 
+  const event: CalendarEvent = {
+    title: "Всероссийский Aрхеологический Cъезд",
+    description: `Вы можете ознакомиться со всей информацией и состоянием вашего доклада на сайте: ${process.env.NEXT_PUBLIC_URL}`,
+    start: "2025-10-6 0:00:00 +0700",
+    end: "2025-10-10 0:00:00 +0700",
+    location: "г. Красноярск, пр. Свободный, 82"
+  };
+
+  const day: CalendarEvent = {
+    title: "Всероссийский Aрхеологический Cъезд",
+    description: `Вы можете ознакомиться со всей информацией и состоянием вашего доклада на сайте: ${process.env.NEXT_PUBLIC_URL}`,
+    start: "2025-10-6 0:00:00 +0700",
+    end: "2025-10-10 0:00:00 +0700",
+    location: "г. Красноярск, пр. Свободный, 82"
+  };
+
   return (
     <div className='flex flex-col w-full h-full'>
       <div className='flex w-full justify-between gap-6'>
@@ -42,31 +60,36 @@ export default function Points({
             {formatDate(date, locale)}
           </p>
         </div>
+
         <Credenza noBodyStyles>
           <CredenzaTrigger asChild>
-            <Button variant="secondary" className='px-2 bg-apricot text-primary transition-all duration-200 rounded-xl'>
+            <Button
+              variant="secondary"
+              className='px-2 bg-apricot text-primary transition-all duration-200 rounded-xl'
+            >
               <CalendarPlus className='w-5 h-5' />
             </Button>
           </CredenzaTrigger>
-          <CredenzaContent>
-            <CredenzaHeader>
-              <CredenzaTitle>Credenza</CredenzaTitle>
-              <CredenzaDescription>
-                A responsive modal component for shadcn/ui.
+          <CredenzaContent className='sm:rounded-3xl rounded-3xl md:p-8'>
+            <CredenzaHeader className='mb-1'>
+              <CredenzaTitle>Выберите календарь</CredenzaTitle>
+              <CredenzaDescription className='whitespace-pre-wrap'>
+                Это действие создаст запись о мероприятии в вашем календаре.
               </CredenzaDescription>
             </CredenzaHeader>
             <CredenzaBody>
-              This component is built using shadcn/ui&apos;s dialog and drawer
-              component, which is built on top of Vaul.
+              <AddToCalendar 
+                type="credenza"
+                event={event}
+                day={day}
+                date={date}
+                className='md:mb-1 mb-6'
+              />
             </CredenzaBody>
-            <CredenzaFooter>
-              <CredenzaClose asChild>
-                <button>Close</button>
-              </CredenzaClose>
-            </CredenzaFooter>
           </CredenzaContent>
         </Credenza>
       </div>
+
       <div className='mt-2 flex-1 flex flex-col'>
         {itemData
           ? (

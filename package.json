@@ -34,6 +34,7 @@
     "@sentry/nextjs": "^8.11.0",
     "@strapi/blocks-react-renderer": "^1.0.1",
     "@types/negotiator": "^0.6.3",
+    "calendar-link": "^2.6.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "cmdk": "0.2.1",
