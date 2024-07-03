@@ -12,6 +12,7 @@ import useSWR from 'swr';
 import { Skeleton } from '@/components/ui/skeleton';
 import ErrorToast from '@/components/errors/ErrorToast';
 import CredenzaPopup from '@/components/CredenzaPopup';
+import { useDictionary } from '@/components/providers/DictionaryProvider';
 
 type EventInfo = {
   event: {
@@ -31,6 +32,8 @@ export default function Points({
   setActive: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const locale = useLocale()
+
+  const dict = useDictionary()
 
   const scrollRef = createRef<HTMLDivElement>();
 
@@ -73,15 +76,15 @@ export default function Points({
     }`
   );
   if (isLoading) return <Skeleton className='rounded-lg border-border shadow h-10 w-full'/>
-  if (error) return <ErrorToast error={error.message} place="Мероприятия" returnNull />;
+  if (error) return <ErrorToast error={error.message} place="Events" returnNull />;
   if (!data || !data.event.data) return null;
 
   const eventData = data.event.data.attributes
 
   // *** EVENT
-  const eventUrl =  `Ссылка на мероприятие: ${process.env.NEXT_PUBLIC_URL}/info/${eventData.slug}\n\n\n\n`
+  const eventUrl =  `${dict.Calendar.eventUrl}: ${process.env.NEXT_PUBLIC_URL}/info/${eventData.slug}\n\n\n\n`
 
-  const eventOnline = eventData.online ? `Ссылка на подключение: ${eventData.online}\n\n\n\n` : ""
+  const eventOnline = eventData.online ? `${dict.Calendar.eventOnline}: ${eventData.online}\n\n\n\n` : ""
 
   const eventShedule = eventData.days.map(day => {
     const titleText = day.title 
@@ -111,14 +114,14 @@ export default function Points({
     ? `${eventData.title} (${formatDate(date, locale)}): ${itemData.title}` 
     : `${eventData.title} (${formatDate(date, locale)})`
 
-  const dayDescription = (itemData && itemData.points.length > 0)
+  const dayShedule = (itemData && itemData.points.length > 0)
     ? itemData.points.map(point => 
       `${point.time.slice(0, 5)}: ${point.description}`
     ).join('\n\n')
     : ''
 
 
-  let dayStart = new Date(date)
+  const dayStart = new Date(date)
   if (itemData && itemData.points.length > 0) {
     dayStart.setHours(
       Number(itemData.points[0].time.slice(0, 2)), // hours
@@ -126,7 +129,7 @@ export default function Points({
     )
   }
 
-  let dayEnd = new Date(dayStart)
+  const dayEnd = new Date(dayStart)
   if (itemData && itemData.points.length > 1) {
     dayEnd.setHours(
       Number(itemData.points[itemData.points.length - 1].time.slice(0, 2)), // hours
@@ -136,7 +139,7 @@ export default function Points({
 
   const day: CalendarEvent = {
     title: dayTitle,
-    description: dayDescription,
+    description: eventUrl + eventOnline + dayShedule,
     start: dayStart,
     end: dayEnd,
     location: eventData.location,
@@ -163,8 +166,8 @@ export default function Points({
               <CalendarPlus className='w-5 h-5' />
             </Button>
           }
-          title='Выберите календарь'
-          description='Это действие создаст запись о мероприятии/дне в вашем календаре.'
+          title={dict.Calendar.select}
+          description={dict.Calendar.selectDescription}
         >
           <AddToCalendar 
             type="credenza"
@@ -206,7 +209,7 @@ export default function Points({
           : (
             <div className='w-full h-[190px] flex items-center justify-center'>
               <span className='mb-3 font-semibold text-base text-center'>
-                Расписание отсутствует
+                {dict.Calendar.noSchedule}
               </span>
             </div>
           )

@@ -6,8 +6,8 @@ import React from 'react'
 import { WheelGesturesPlugin } from 'embla-carousel-wheel-gestures'
 import type { CarouselApi } from '@/components/ui/carousel'
 import { cn, getDateIndx } from '@/lib/utils'
-import CarouselItemMulti from './CarouselItemMulti'
-import CarouselItemSingle from './CarouselItemSingle'
+import CarouselItemMulti from './carousel-segment/CarouselItemMulti'
+import CarouselItemSingle from './carousel-segment/CarouselItemSingle'
 
 type Props = {
   data: {

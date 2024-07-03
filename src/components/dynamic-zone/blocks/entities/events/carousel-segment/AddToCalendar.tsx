@@ -18,6 +18,7 @@ import { cn, formatDate } from '@/lib/utils';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useLocale } from '@/lib/hooks/useLocale';
 import { motion } from 'framer-motion';
+import { useDictionary } from '@/components/providers/DictionaryProvider';
 
 
 export default function AddToCalendar({
@@ -35,6 +36,8 @@ export default function AddToCalendar({
 }) {
     const locale = useLocale()
 
+    const dict = useDictionary()
+
     const [selectedTab, setSelectedTab] = useState("event");
 
     const eventGoogleUrl = google(event); // https://calendar.google.com/calendar/render...
@@ -50,8 +53,8 @@ export default function AddToCalendar({
     const dayYahooUrl = yahoo(day); // https://calendar.yahoo.com/?v=60&title=...
 
     const items = [
-        {id: "event", title: "Всё мероприятие"}, 
-        {id: "day", title: `День: ${formatDate(date, locale)}`}
+        {id: "event", title: dict.Calendar.wholeEvent}, 
+        {id: "day", title: `${dict.Calendar.day}: ${formatDate(date, locale)}`}
     ]
 
     return (
@@ -86,11 +89,11 @@ export default function AddToCalendar({
                     </AddToCalendarItem>
 
                     <AddToCalendarItem type={type} href={eventICSUrl}>
-                        <FaApple className='mr-2'/> Apple<span className='text-xs ml-1'>(ics файл)</span>
+                        <FaApple className='mr-2'/> Apple<span className='text-xs ml-1'>(ics {dict.Calendar.file})</span>
                     </AddToCalendarItem>
 
                     <AddToCalendarItem type={type} href={eventICSUrl}>
-                        <FaYandex className='mr-2'/> Яндекс<span className='text-xs ml-1'>(ics файл)</span>
+                        <FaYandex className='mr-2'/> {dict.Calendar.Yandex}<span className='text-xs ml-1'>(ics {dict.Calendar.file})</span>
                     </AddToCalendarItem>
 
                     <AddToCalendarItem type={type} href={eventOutlookUrl}>
@@ -113,11 +116,11 @@ export default function AddToCalendar({
                     </AddToCalendarItem>
 
                     <AddToCalendarItem type={type} href={dayICSUrl}>
-                        <FaApple className='mr-2'/> Apple<span className='text-xs ml-1'>(ics файл)</span>
+                        <FaApple className='mr-2'/> Apple<span className='text-xs ml-1'>(ics {dict.Calendar.file})</span>
                     </AddToCalendarItem>
 
                     <AddToCalendarItem type={type} href={dayICSUrl}>
-                        <FaYandex className='mr-2'/> Яндекс<span className='text-xs ml-1'>(ics файл)</span>
+                        <FaYandex className='mr-2'/> {dict.Calendar.Yandex}<span className='text-xs ml-1'>(ics {dict.Calendar.file})</span>
                     </AddToCalendarItem>
 
                     <AddToCalendarItem type={type} href={dayOutlookUrl}>

@@ -60,6 +60,17 @@
       "error": "Error!"
     }
   },
+  "Calendar": {
+    "eventUrl": "Link to the event",
+    "eventOnline": "Link to the online conference",
+    "select": "Select a calendar",
+    "selectDescription": "This action will create an entry about the event/day in your calendar.",
+    "noSchedule": "No schedule",
+    "wholeEvent": "The whole event",
+    "day": "Day",
+    "Yandex": "Yandex",
+    "file": "file"
+  },
   "Buttons": {
     "more": "More",
     "allNews": "All News",

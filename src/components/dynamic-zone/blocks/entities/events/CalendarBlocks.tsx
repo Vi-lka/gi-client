@@ -4,10 +4,9 @@ import type { EventDayT } from '@/lib/types/entities'
 import React, { useState } from 'react'
 import type { SelectSingleEventHandler } from 'react-day-picker'
 import CalendarSegment from './CalendarSegment'
-import CarouselSegment from './carousel/CarouselSegment'
+import CarouselSegment from './CarouselSegment'
 import { getDateIndx } from '@/lib/utils'
 import type { CarouselApi } from '@/components/ui/carousel'
-// import { useDictionary } from '@/components/providers/DictionaryProvider';
 
 export default function CalendarBlocks({
   dates,
@@ -26,8 +25,6 @@ export default function CalendarBlocks({
     dates: Date[];
   }[]
 }) {
-
-  // const dict = useDictionary()
 
   // States
   const [date, setDate] = useState<Date | undefined>(dates[0])
