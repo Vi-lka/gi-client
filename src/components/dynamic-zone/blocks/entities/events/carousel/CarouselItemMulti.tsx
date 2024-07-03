@@ -24,7 +24,7 @@ export default function CarouselItemMulti({
   const [selectedTab, setSelectedTab] = useState(items[0].eventId);
 
   return (
-    <CarouselItem className='relative pt-8'>
+    <CarouselItem className='relative pt-8 min-h-[316px]'>
       {items.length > 0
         ? (
         <Tabs value={selectedTab} defaultValue={items[0].eventId} className="h-full">

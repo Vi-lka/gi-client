@@ -30,7 +30,7 @@ export default async function fetchData<T>({
   if (!res.ok) {
     // Log the error to an error reporting service
     const err = await res.text();
-    console.log(err);
+    console.error(err);
     // Throw an error
     throw new Error(error);
   }

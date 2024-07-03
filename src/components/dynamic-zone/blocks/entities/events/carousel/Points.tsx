@@ -1,14 +1,23 @@
 import { Button } from '@/components/ui/button';
-import { Credenza, CredenzaBody, CredenzaContent, CredenzaDescription, CredenzaHeader, CredenzaTitle, CredenzaTrigger } from '@/components/ui/credenza';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useLocale } from '@/lib/hooks/useLocale';
-import type { EventDayT } from '@/lib/types/entities';
+import type { EventDayT, EventSingleT } from '@/lib/types/entities';
 import { cn, formatDate } from '@/lib/utils';
 import { CalendarPlus } from 'lucide-react';
 import React, { createRef } from 'react'
 import { IoCalendarOutline } from "react-icons/io5";
 import AddToCalendar from './AddToCalendar';
 import type { CalendarEvent } from "calendar-link";
+import useSWR from 'swr';
+import { Skeleton } from '@/components/ui/skeleton';
+import ErrorToast from '@/components/errors/ErrorToast';
+import CredenzaPopup from '@/components/CredenzaPopup';
+
+type EventInfo = {
+  event: {
+    data: EventSingleT
+  }
+}
 
 export default function Points({
   date,
@@ -21,7 +30,6 @@ export default function Points({
   itemData: EventDayT | undefined;
   setActive: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-
   const locale = useLocale()
 
   const scrollRef = createRef<HTMLDivElement>();
@@ -34,21 +42,107 @@ export default function Points({
     }
   }
 
+  const { data, error, isLoading } = useSWR<EventInfo, Error>(
+    `query EventById {
+      event(locale: "${locale}", id: "${eventId}") {
+        data {
+          id
+          attributes {
+            title
+            slug
+            image {
+              data {
+                attributes { url }
+              }
+            }
+            location online
+            text
+            dateStart dateEnd
+            days(sort: "date:asc") {
+              title
+              date
+              points(sort: "time:asc") {
+                time
+                description
+                text
+              }
+            }
+          }
+        }
+      }
+    }`
+  );
+  if (isLoading) return <Skeleton className='rounded-lg border-border shadow h-10 w-full'/>
+  if (error) return <ErrorToast error={error.message} place="Мероприятия" returnNull />;
+  if (!data || !data.event.data) return null;
+
+  const eventData = data.event.data.attributes
+
+  // *** EVENT
+  const eventUrl =  `Ссылка на мероприятие: ${process.env.NEXT_PUBLIC_URL}/info/${eventData.slug}\n\n\n\n`
+
+  const eventOnline = eventData.online ? `Ссылка на подключение: ${eventData.online}\n\n\n\n` : ""
+
+  const eventShedule = eventData.days.map(day => {
+    const titleText = day.title 
+      ? `${formatDate(day.date, locale)}: ${day.title}\n\n`
+      : `${formatDate(day.date, locale)}\n\n`
+    
+    const pointsText = day.points.map(point => 
+      `${point.time.slice(0, 5)}: ${point.description}`
+    ).join('\n')
+
+    return titleText + pointsText
+  }).join('\n\n\n')
+
   const event: CalendarEvent = {
-    title: "Всероссийский Aрхеологический Cъезд",
-    description: `Вы можете ознакомиться со всей информацией и состоянием вашего доклада на сайте: ${process.env.NEXT_PUBLIC_URL}`,
-    start: "2025-10-6 0:00:00 +0700",
-    end: "2025-10-10 0:00:00 +0700",
-    location: "г. Красноярск, пр. Свободный, 82"
+    title: eventData.title,
+    description: eventUrl + eventOnline + eventShedule,
+    start: eventData.dateStart,
+    end: eventData.dateEnd,
+    location: eventData.location,
+    url: eventUrl,
   };
+  // *** EVENT
+
+
+  // *** ONE DAY
+  const dayTitle = itemData?.title 
+    ? `${eventData.title} (${formatDate(date, locale)}): ${itemData.title}` 
+    : `${eventData.title} (${formatDate(date, locale)})`
+
+  const dayDescription = (itemData && itemData.points.length > 0)
+    ? itemData.points.map(point => 
+      `${point.time.slice(0, 5)}: ${point.description}`
+    ).join('\n\n')
+    : ''
+
+
+  let dayStart = new Date(date)
+  if (itemData && itemData.points.length > 0) {
+    dayStart.setHours(
+      Number(itemData.points[0].time.slice(0, 2)), // hours
+      Number(itemData.points[0].time.slice(3, 5)) // min
+    )
+  }
+
+  let dayEnd = new Date(dayStart)
+  if (itemData && itemData.points.length > 1) {
+    dayEnd.setHours(
+      Number(itemData.points[itemData.points.length - 1].time.slice(0, 2)), // hours
+      Number(itemData.points[itemData.points.length - 1].time.slice(3, 5)) // min
+    )
+  }
 
   const day: CalendarEvent = {
-    title: "Всероссийский Aрхеологический Cъезд",
-    description: `Вы можете ознакомиться со всей информацией и состоянием вашего доклада на сайте: ${process.env.NEXT_PUBLIC_URL}`,
-    start: "2025-10-6 0:00:00 +0700",
-    end: "2025-10-10 0:00:00 +0700",
-    location: "г. Красноярск, пр. Свободный, 82"
+    title: dayTitle,
+    description: dayDescription,
+    start: dayStart,
+    end: dayEnd,
+    location: eventData.location,
+    url: eventUrl,
   };
+  // *** ONE DAY
 
   return (
     <div className='flex flex-col w-full h-full'>
@@ -60,34 +154,26 @@ export default function Points({
             {formatDate(date, locale)}
           </p>
         </div>
-
-        <Credenza noBodyStyles>
-          <CredenzaTrigger asChild>
+        <CredenzaPopup
+          trigger={
             <Button
               variant="secondary"
               className='px-2 bg-apricot text-primary transition-all duration-200 rounded-xl'
             >
               <CalendarPlus className='w-5 h-5' />
             </Button>
-          </CredenzaTrigger>
-          <CredenzaContent className='sm:rounded-3xl rounded-3xl md:p-8'>
-            <CredenzaHeader className='mb-1'>
-              <CredenzaTitle>Выберите календарь</CredenzaTitle>
-              <CredenzaDescription className='whitespace-pre-wrap'>
-                Это действие создаст запись о мероприятии в вашем календаре.
-              </CredenzaDescription>
-            </CredenzaHeader>
-            <CredenzaBody>
-              <AddToCalendar 
-                type="credenza"
-                event={event}
-                day={day}
-                date={date}
-                className='md:mb-1 mb-6'
-              />
-            </CredenzaBody>
-          </CredenzaContent>
-        </Credenza>
+          }
+          title='Выберите календарь'
+          description='Это действие создаст запись о мероприятии/дне в вашем календаре.'
+        >
+          <AddToCalendar 
+            type="credenza"
+            event={event}
+            day={day}
+            date={date}
+            className='md:mb-1 mb-6'
+          />
+        </CredenzaPopup>
       </div>
 
       <div className='mt-2 flex-1 flex flex-col'>

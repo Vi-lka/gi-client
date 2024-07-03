@@ -3,6 +3,7 @@
 import React from 'react'
 import DictionaryProvider from './DictionaryProvider'
 import ThemeProvider from './ThemeProvider'
+import { SWRProvider } from './SWRProvider'
 
 export default function Providers({
     dictionary,
@@ -19,7 +20,9 @@ export default function Providers({
             disableTransitionOnChange
         >
             <DictionaryProvider dictionary={dictionary}>
-                {children}
+                <SWRProvider>
+                    {children}
+                </SWRProvider>
             </DictionaryProvider>
         </ThemeProvider>
     )

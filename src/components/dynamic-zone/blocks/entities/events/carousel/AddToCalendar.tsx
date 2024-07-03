@@ -50,7 +50,7 @@ export default function AddToCalendar({
     const dayYahooUrl = yahoo(day); // https://calendar.yahoo.com/?v=60&title=...
 
     const items = [
-        {id: "event", title: "Все мероприятие"}, 
+        {id: "event", title: "Всё мероприятие"}, 
         {id: "day", title: `День: ${formatDate(date, locale)}`}
     ]
 

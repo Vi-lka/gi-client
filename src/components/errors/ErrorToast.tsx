@@ -15,9 +15,11 @@ import { useDictionary } from "../providers/DictionaryProvider";
 export default function ErrorToast({
   error,
   place,
+  returnNull
 }: {
   error: string | ZodIssue[];
   place: string;
+  returnNull?: boolean,
 }) {
   const dict = useDictionary()
 
@@ -42,7 +44,7 @@ export default function ErrorToast({
   React.useEffect(() => {
     Sentry.captureException(error);
 
-    console.log("ErrorToast: ", messageError);
+    console.error("ErrorToast: ", messageError);
 
     toast({
       variant: "destructive",
@@ -64,6 +66,8 @@ export default function ErrorToast({
       ),
     });
   }, [error, messageError, place, router, toast, dict.Error.toast]);
+
+  if (returnNull) return null
 
   return (
     <div className="mx-auto my-10 flex flex-col items-center gap-10 text-center">

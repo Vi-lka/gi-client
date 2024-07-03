@@ -31,7 +31,7 @@ export default function ErrorHandler(props: Props) {
       );
     else return null;
   } else {
-    console.log("ErrorHandler: ", props.error);
+    console.error("ErrorHandler: ", props.error);
     return (
       <ErrorToast
         error={

@@ -39,6 +39,8 @@ export const getEvents = async ({
                 }
               }
             }
+            location
+            online
             text
             dateStart
             dateEnd
