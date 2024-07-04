@@ -1,24 +1,14 @@
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useLocale } from '@/lib/hooks/useLocale';
-import type { EventDayT, EventSingleT } from '@/lib/types/entities';
+import type { EventDayT } from '@/lib/types/entities';
 import { cn, formatDate } from '@/lib/utils';
 import { CalendarPlus } from 'lucide-react';
 import React, { createRef } from 'react'
 import { IoCalendarOutline } from "react-icons/io5";
 import AddToCalendar from './AddToCalendar';
-import type { CalendarEvent } from "calendar-link";
-import useSWR from 'swr';
-import { Skeleton } from '@/components/ui/skeleton';
-import ErrorToast from '@/components/errors/ErrorToast';
 import CredenzaPopup from '@/components/CredenzaPopup';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
-
-type EventInfo = {
-  event: {
-    data: EventSingleT
-  }
-}
 
 export default function Points({
   date,
@@ -45,108 +35,6 @@ export default function Points({
     }
   }
 
-  const { data, error, isLoading } = useSWR<EventInfo, Error>(
-    `query EventById {
-      event(locale: "${locale}", id: "${eventId}") {
-        data {
-          id
-          attributes {
-            title
-            slug
-            image {
-              data {
-                attributes { url }
-              }
-            }
-            location online
-            text
-            dateStart dateEnd
-            days(sort: "date:asc") {
-              title
-              date
-              points(sort: "time:asc") {
-                time
-                description
-                text
-              }
-            }
-          }
-        }
-      }
-    }`
-  );
-  if (isLoading) return <Skeleton className='rounded-lg border-border shadow h-10 w-full'/>
-  if (error) return <ErrorToast error={error.message} place="Events" returnNull />;
-  if (!data || !data.event.data) return null;
-
-  const eventData = data.event.data.attributes
-
-  // *** EVENT
-  const eventUrl =  `${dict.Calendar.eventUrl}: ${process.env.NEXT_PUBLIC_URL}/info/events/${eventData.slug}\n\n\n\n`
-
-  const eventOnline = eventData.online ? `${dict.Calendar.eventOnline}: ${eventData.online}\n\n\n\n` : ""
-
-  const eventShedule = eventData.days.map(day => {
-    const titleText = day.title 
-      ? `${formatDate(day.date, locale)}: ${day.title}\n\n`
-      : `${formatDate(day.date, locale)}\n\n`
-    
-    const pointsText = day.points.map(point => 
-      `${point.time.slice(0, 5)}: ${point.description}`
-    ).join('\n')
-
-    return titleText + pointsText
-  }).join('\n\n\n')
-
-  const event: CalendarEvent = {
-    title: eventData.title,
-    description: eventUrl + eventOnline + eventShedule,
-    start: eventData.dateStart,
-    end: eventData.dateEnd,
-    location: eventData.location,
-    url: eventUrl,
-  };
-  // *** EVENT
-
-
-  // *** ONE DAY
-  const dayTitle = itemData?.title 
-    ? `${eventData.title} (${formatDate(date, locale)}): ${itemData.title}` 
-    : `${eventData.title} (${formatDate(date, locale)})`
-
-  const dayShedule = (itemData && itemData.points.length > 0)
-    ? itemData.points.map(point => 
-      `${point.time.slice(0, 5)}: ${point.description}`
-    ).join('\n\n')
-    : ''
-
-
-  const dayStart = new Date(date)
-  if (itemData && itemData.points.length > 0) {
-    dayStart.setHours(
-      Number(itemData.points[0].time.slice(0, 2)), // hours
-      Number(itemData.points[0].time.slice(3, 5)) // min
-    )
-  }
-
-  const dayEnd = new Date(dayStart)
-  if (itemData && itemData.points.length > 1) {
-    dayEnd.setHours(
-      Number(itemData.points[itemData.points.length - 1].time.slice(0, 2)), // hours
-      Number(itemData.points[itemData.points.length - 1].time.slice(3, 5)) // min
-    )
-  }
-
-  const day: CalendarEvent = {
-    title: dayTitle,
-    description: eventUrl + eventOnline + dayShedule,
-    start: dayStart,
-    end: dayEnd,
-    location: eventData.location,
-    url: eventUrl,
-  };
-  // *** ONE DAY
-
   return (
     <div className='flex flex-col w-full h-full'>
       <div className='flex w-full justify-between gap-6'>
@@ -171,9 +59,9 @@ export default function Points({
         >
           <AddToCalendar 
             type="credenza"
-            event={event}
-            day={day}
             date={date}
+            eventId={eventId}
+            itemData={itemData}
             className='md:mb-1 mb-6'
           />
         </CredenzaPopup>

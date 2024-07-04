@@ -1,16 +1,14 @@
 "use client"
 
 import BlocksRendererStrapi from '@/components/BlocksRendererStrapi';
-import Link from '@/components/Link';
 import MoreButton from '@/components/MoreButton';
-import { useDictionary } from '@/components/providers/DictionaryProvider';
 import { TypographyH4 } from '@/components/typography';
-import { Button } from '@/components/ui/button';
+import { Skeleton } from '@/components/ui/skeleton';
 import { eventIdAtom } from '@/lib/hooks/atoms';
 import { useLocale } from '@/lib/hooks/useLocale';
 import { cn, formatDate } from '@/lib/utils';
 import { useAtomValue } from 'jotai';
-import { ChevronRight, MapPin } from 'lucide-react';
+import { ChevronRight, Loader2, MapPin } from 'lucide-react';
 import React from 'react'
 import { IoCalendarOutline } from "react-icons/io5";
 
@@ -35,13 +33,17 @@ export default function TextSegment({
 
   const locale = useLocale()
 
-  const dict = useDictionary()
-
   const eventId = useAtomValue(eventIdAtom)
 
   const data = datesByEventId.find(item => item.id === eventId)
 
-  if (!data) return null
+  if (!data) return (
+    <div key={eventId} className={cn('w-full h-full relative', className)}>
+      <Skeleton className='h-full w-full min-h-[316px] flex items-center justify-center rounded-3xl'>
+        <Loader2 className='animate-spin'/>
+      </Skeleton>
+    </div>
+  )
   
   return (
     <div key={eventId} className={cn('w-full relative', className)}>
@@ -64,7 +66,7 @@ export default function TextSegment({
       </p>
 
       <article className={cn(
-        "mt-2 prose prose-sm prose-p:!my-0 prose-p:text-sm text-foreground dark:text-muted-foreground prose-headings:text-foreground",
+        "mt-2 prose prose-sm max-w-none prose-p:!my-0 prose-p:text-sm text-foreground dark:text-muted-foreground prose-headings:text-foreground",
         "line-clamp-[11] max-h-56 overflow-hidden",
         "animate-fade-left animate-duration-500 animate-ease-out animate-delay-150"
       )}>

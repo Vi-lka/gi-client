@@ -1,7 +1,7 @@
 "use client"
 
 import type { EventDayT } from '@/lib/types/entities'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import type { SelectSingleEventHandler } from 'react-day-picker'
 import CalendarSegment from './segments/CalendarSegment'
 import CarouselSegment from './segments/CarouselSegment'
@@ -10,6 +10,7 @@ import type { CarouselApi } from '@/components/ui/carousel'
 import TextSegment from './segments/TextSegment'
 import { dateAtom, eventIdAtom, monthAtom } from '@/lib/hooks/atoms'
 import { useAtom } from 'jotai'
+import CalendarBlocksLoading from '@/components/loadings/CalendarBlocksLoading'
 
 export default function CalendarBlocks({
   dates,
@@ -36,6 +37,7 @@ export default function CalendarBlocks({
     dates: Date[];
   }[]
 }) {
+  const [loading, setLoading] = useState(true)
   
   const [eventId, setEventId] = useAtom(eventIdAtom)
   const [date, setDate] = useAtom(dateAtom)
@@ -64,6 +66,8 @@ export default function CalendarBlocks({
     const include = eventsInCurrentDate.includes(eventId)
 
     if (!include) setEventId(eventsInCurrentDate[0])
+
+    setLoading(false)
   }, [date, datesByEventId, eventId, setEventId])
 
   const handleSelectDate: SelectSingleEventHandler = (_, selectedDay) => {
@@ -75,6 +79,8 @@ export default function CalendarBlocks({
     const indx = getDateIndx(selectedDay, dates)
     carouselApi.scrollTo(indx)
   }
+
+  if (!date && loading) return <CalendarBlocksLoading />
 
   return (
     <div className='flex flex-wrap justify-between gap-6 md:mt-10'>

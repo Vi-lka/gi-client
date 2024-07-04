@@ -9,6 +9,7 @@ import DpoCoursesLoading from '@/components/loadings/DpoCoursesLoading';
 import EmployeesLoading from '@/components/loadings/EmployeesLoading';
 import BentoLoading from '@/components/loadings/BentoLoading';
 import NewsLoading from '@/components/loadings/NewsLoading';
+import CalendarBlocksLoading from '@/components/loadings/CalendarBlocksLoading';
 
 const EducationalProgramsAll = dynamic(
     () => import('./EducationalProgramsAll'), {loading: () => <EducationalProgramsLoading />}
@@ -29,7 +30,7 @@ const NewsAll = dynamic(
     () => import('./NewsAll'), {loading: () => <NewsLoading />}
 )
 const EventsAll = dynamic(
-    () => import('./events/EventsAll'), {loading: () => <p>Loading...</p>}
+    () => import('./events/EventsAll'), {loading: () => <CalendarBlocksLoading />}
 )
 
 export default function CollectionAll({ 

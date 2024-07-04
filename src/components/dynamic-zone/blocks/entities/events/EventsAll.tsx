@@ -6,6 +6,9 @@ import React, { Suspense } from 'react'
 import CalendarBlocks from './CalendarBlocks';
 import { ClientHydration } from '@/components/ClientHydration';
 import { dateRange, getDateIndx, matrixToArray } from '@/lib/utils'
+import CalendarBlocksLoading from '@/components/loadings/CalendarBlocksLoading';
+
+// const DEFAULT_PAGE_SIZE = 16;
 
 export default function EventsAll({
   // searchParams,
@@ -16,12 +19,18 @@ export default function EventsAll({
 }) {
   const headersList = headers();
   const locale = headersList.get('x-locale') || "";
+  // const slug = headersList.get('x-slug') || undefined;
+
+  // const search = searchParams["search_events"] as string | undefined;
+  // const page = searchParams["page_events"] ?? "1";
+  // const pageSize = searchParams["per_events"] ?? DEFAULT_PAGE_SIZE;
 
   return (
     <>
       <Suspense 
-        // key={`search_news=${search}&page_news=${page}&per_news=${pageSize}`} 
-        fallback={"Loading..."}
+        // key={`search_events=${search}&page_events=${page}&per_events=${pageSize}`} 
+        // fallback={data.eventsConfig?.view === "calendar" ? <EventsCalendarLoading /> : <EventsLoading />}
+        fallback={<CalendarBlocksLoading />}
       >
         <EventsAllContent locale={locale} />
       </Suspense>
@@ -104,7 +113,7 @@ async function EventsAllContent({
   );
 
   return (
-    <ClientHydration fallback={"...ClientHydration"}>
+    <ClientHydration fallback={<CalendarBlocksLoading />}>
       <CalendarBlocks
         dates={datesUniq}
         duplicates={duplicatesUniq}
