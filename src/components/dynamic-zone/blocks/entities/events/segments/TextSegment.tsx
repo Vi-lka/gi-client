@@ -5,8 +5,8 @@ import { useAtomValue } from 'jotai';
 import React from 'react'
 
 export default function TextSegment({
-  date,
-  datesByEventId
+  // date,
+  // datesByEventId
 }: {
   date: Date | undefined,
   datesByEventId: {

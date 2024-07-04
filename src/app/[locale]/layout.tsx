@@ -98,11 +98,46 @@ export default async function Layout({
       className={`${din.variable} ${cera.variable} scroll-smooth`}
     >
       <body className='font-Din relative flex flex-col justify-between min-h-screen bg-background antialiased'>
+        {/* Yandex.Metrika counter */}
+        <Script
+          id="ymetrika"
+          type="text/javascript"
+          dangerouslySetInnerHTML={{
+            __html: `
+            (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+            m[i].l=1*new Date();
+            for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+            (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+            ym(97741801, "init", {
+                 clickmap:true,
+                 trackLinks:true,
+                 accurateTrackBounce:true,
+                 webvisor:true
+            });`,
+          }}
+        ></Script>
+        <noscript>
+          <div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img 
+              src="https://mc.yandex.ru/watch/97741801"
+              style={{ position: "absolute", left: "-9999px" }}
+              alt="" 
+              width={1}
+              height={1} 
+            />
+          </div>
+        </noscript>
+        {/* /Yandex.Metrika counter */}
+
         <Providers dictionary={dict}>
           {children}
           <Footer />
           <Toaster />
         </Providers>
+
         <Script
           id="globalThis-polyfill"
           strategy="beforeInteractive"
