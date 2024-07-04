@@ -66,7 +66,7 @@ export default function BentoGridBlock({
                                 {getShortText(item.title, 12)}
                             </h4>
                             <div className='flex items-end'>
-                                <article className="prose prose-p:!my-0 prose-p:text-sm text-background dark:text-muted-foreground prose-headings:text-text-background">
+                                <article className="prose prose-p:!my-0 prose-p:text-sm text-background dark:text-muted-foreground prose-headings:text-background">
                                     {/* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */}
                                     <BlocksRendererStrapi content={item.textDescription} />
                                 </article>

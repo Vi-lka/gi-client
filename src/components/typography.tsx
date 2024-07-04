@@ -42,7 +42,7 @@ export function TypographyH5({ className, children }: { className?: string, chil
 
 export function TypographyH6({ className, children }: { className?: string, children?: React.ReactNode }) {
     return (
-        <article className="prose lg:prose-xl">
+        <article className="prose lg:prose-lg">
             <h6 className={cn('font-Cera text-primary', className)} >{children}</h6>
         </article>
     )

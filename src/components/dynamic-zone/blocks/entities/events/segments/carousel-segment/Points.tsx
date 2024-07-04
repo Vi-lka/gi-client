@@ -82,7 +82,7 @@ export default function Points({
   const eventData = data.event.data.attributes
 
   // *** EVENT
-  const eventUrl =  `${dict.Calendar.eventUrl}: ${process.env.NEXT_PUBLIC_URL}/info/${eventData.slug}\n\n\n\n`
+  const eventUrl =  `${dict.Calendar.eventUrl}: ${process.env.NEXT_PUBLIC_URL}/info/events/${eventData.slug}\n\n\n\n`
 
   const eventOnline = eventData.online ? `${dict.Calendar.eventOnline}: ${eventData.online}\n\n\n\n` : ""
 
@@ -179,7 +179,7 @@ export default function Points({
         </CredenzaPopup>
       </div>
 
-      <div className='mt-2 flex-1 flex flex-col'>
+      <div className='mt-2 flex-1 flex flex-col animate-fade animate-duration-500 animate-ease-in-out'>
         {itemData
           ? (
             <>

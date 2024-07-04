@@ -25,6 +25,14 @@ export default function CalendarBlocks({
   }[],
   datesByEventId: {
     id: string;
+    eventData: {
+      slug: string;
+      title: string;
+      location: string;
+      dateStart: Date;
+      dateEnd: Date | null;
+      text: unknown;
+    };
     dates: Date[];
   }[]
 }) {
@@ -69,14 +77,14 @@ export default function CalendarBlocks({
   }
 
   return (
-    <div className='flex flex-wrap gap-6 md:mt-10'>
+    <div className='flex flex-wrap justify-between gap-6 md:mt-10'>
       <CalendarSegment 
         data={{ dates, duplicates, eventsDays, datesByEventId }}
         date={date}
         month={month}
         onSelect={handleSelectDate}
         setMonth={setMonth}
-        className="lg:min-w-[calc(33%-1.5rem)] lg:w-fit w-full p-0"
+        className="xl:w-[calc(33%-1.5rem)] md:w-[calc(50%-1.5rem)] sm:w-full w-full p-0"
       />
 
       <CarouselSegment
@@ -85,13 +93,10 @@ export default function CalendarBlocks({
         setApi={setCarouselApi}
         setDate={setDate}
         setMonth={setMonth}
-        className='lg:w-[calc(33%-1.5rem)] max-w-none'
+        className='xl:w-[calc(33%-1.5rem)] md:w-[calc(50%-1.5rem)] max-w-none'
       />
 
-      <TextSegment
-        date={date}
-        datesByEventId={datesByEventId}
-      />
+      <TextSegment datesByEventId={datesByEventId} className='xl:w-[calc(33%-2.5rem)]' />
     </div>
   )
 }

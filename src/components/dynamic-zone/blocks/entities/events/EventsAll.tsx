@@ -57,9 +57,33 @@ async function EventsAllContent({
   const datesByEventId = dataResult.value.data.map(event => {
     if (event.attributes.dateEnd) { 
       const dates = dateRange(event.attributes.dateStart, event.attributes.dateEnd);
-      return { id: event.id, dates }
+      return { 
+        id: event.id, 
+        eventData: {
+          slug: event.attributes.slug,
+          title: event.attributes.title,
+          location: event.attributes.location,
+          dateStart: event.attributes.dateStart,
+          dateEnd: event.attributes.dateEnd,
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+          text: event.attributes.text,
+        },
+        dates
+      }
     } else {
-      return { id: event.id, dates: [event.attributes.dateStart] }
+      return { 
+        id: event.id, 
+        eventData: {
+          slug: event.attributes.slug,
+          title: event.attributes.title,
+          location: event.attributes.location,
+          dateStart: event.attributes.dateStart,
+          dateEnd: event.attributes.dateEnd,
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+          text: event.attributes.text,
+        },
+        dates: [event.attributes.dateStart]
+      }
     }
   })
 
