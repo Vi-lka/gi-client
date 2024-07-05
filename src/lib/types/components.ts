@@ -104,6 +104,12 @@ export type TextGridCompT = z.infer<typeof TextGridCompT>;
 
 
 //.........................CollectionAll.........................//
+export const CollectionAllEventsViewEnum = z.enum([
+  "classic",
+  "calendar",
+  "bento"
+])
+
 export const CollectionAllViewEnum = z.enum([
   "classic",
   "bento",
@@ -147,6 +153,9 @@ export const CollectionAllCompT = z.object({
     count: z.number(),
     showGoToAllButton: z.boolean()
   }).nullable(),
+  eventsConfig: z.object({
+    view: CollectionAllEventsViewEnum,
+  }).nullable()
 })
 export type CollectionAllCompT = z.infer<typeof CollectionAllCompT>;
 

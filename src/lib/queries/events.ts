@@ -11,13 +11,15 @@ export const getEvents = async ({
   page,
   pageSize = 100000,
   sort = "dateStart:asc",
-  search
+  search,
+  filterBy
 }: {
   locale: string,
   page?: number;
   pageSize?: number;
   sort?: string;
   search?: string;
+  filterBy?: string;
 }): Promise<EventsT> => {
   const query = /* GraphGL */ `
     query Events($locale: I18NLocaleCode, $filters: EventFiltersInput, $sort: [String], $pagination: PaginationArg) {
@@ -59,6 +61,21 @@ export const getEvents = async ({
     }
   `;
 
+  const connectedFilter = (filterBy && filterBy.length > 0) 
+  ? {
+    or: [
+      {educationalPrograms: {
+        slug: { eqi: filterBy }
+      }},
+      {dpoCourses: {
+        slug: { eqi: filterBy }
+      }},
+      {departments: {
+        slug: { eqi: filterBy }
+      }}
+    ]
+  } : undefined;
+
   const searchFilter = genSearchFilter(
     "containsi",
     search,
@@ -68,6 +85,28 @@ export const getEvents = async ({
       }},
       {text: {
         containsi: search
+      }},
+      {location: {
+        containsi: search
+      }},
+      {days: {
+        points: {
+          description: { containsi: search }
+        }
+      }},
+      {days: {
+        points: {
+          text: { containsi: search }
+        }
+      }},
+      {departments: {
+        title: { containsi: search }
+      }},
+      {educationalPrograms: {
+        title: { containsi: search }
+      }},
+      {dpoCourses: {
+        title: { containsi: search }
       }}
     ]}
   )
@@ -81,6 +120,7 @@ export const getEvents = async ({
       pagination: { page, pageSize },
       filters: {
         and: [
+          {...connectedFilter},
           {or: searchFilter}
         ]
       }

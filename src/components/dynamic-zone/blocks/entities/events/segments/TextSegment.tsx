@@ -6,7 +6,7 @@ import { TypographyH4 } from '@/components/typography';
 import { Skeleton } from '@/components/ui/skeleton';
 import { eventIdAtom } from '@/lib/hooks/atoms';
 import { useLocale } from '@/lib/hooks/useLocale';
-import { cn, formatDate } from '@/lib/utils';
+import { cn, formatDate, getShortText } from '@/lib/utils';
 import { useAtomValue } from 'jotai';
 import { ChevronRight, Loader2, MapPin } from 'lucide-react';
 import React from 'react'
@@ -47,8 +47,8 @@ export default function TextSegment({
   
   return (
     <div key={eventId} className={cn('w-full relative', className)}>
-      <TypographyH4 className='xl:text-lg text-base mb-2 animate-fade-left animate-duration-500 animate-ease-out'>
-        {data.eventData.title}
+      <TypographyH4 className='xl:text-lg text-base mb-2 line-clamp-2 animate-fade-left animate-duration-500 animate-ease-out'>
+        {getShortText(data.eventData.title)}
       </TypographyH4>
 
       <p className='xl:text-sm text-xs flex gap-1 items-center mb-1 animate-fade-left animate-duration-500 animate-ease-out animate-delay-75'>
@@ -67,7 +67,7 @@ export default function TextSegment({
 
       <article className={cn(
         "mt-2 prose prose-sm max-w-none prose-p:!my-0 prose-p:text-sm text-foreground dark:text-muted-foreground prose-headings:text-foreground",
-        "line-clamp-[11] max-h-56 overflow-hidden",
+        "line-clamp-[10] max-h-[200px] overflow-hidden",
         "animate-fade-left animate-duration-500 animate-ease-out animate-delay-150"
       )}>
         <BlocksRendererStrapi content={data.eventData.text} />

@@ -3,50 +3,100 @@ import { getEvents } from '@/lib/queries/events';
 import type { CollectionAllCompT } from '@/lib/types/components';
 import { headers } from 'next/headers';
 import React, { Suspense } from 'react'
-import CalendarBlocks from './CalendarBlocks';
-import { ClientHydration } from '@/components/ClientHydration';
-import { dateRange, getDateIndx, matrixToArray } from '@/lib/utils'
 import CalendarBlocksLoading from '@/components/loadings/CalendarBlocksLoading';
+import { getDictionary } from '@/lib/getDictionary';
+import EventsLoading from '@/components/loadings/EventsLoading';
+import BentoLoading from '@/components/loadings/BentoLoading';
+import PaginationControls from '@/components/PaginationControls';
+import dynamic from 'next/dynamic';
+import EventLoading from '@/components/loadings/items/EventLoading';
+import { Skeleton } from '@/components/ui/skeleton';
 
-// const DEFAULT_PAGE_SIZE = 16;
+const EventsCalendar = dynamic(
+  () => import('./EventsCalendar'), {loading: () => <CalendarBlocksLoading />}
+)
+const EventsBento = dynamic(
+  () => import('../../entities-cards/bento/EventsBento'), {loading: () => <BentoLoading />}
+)
+const EventsItem = dynamic(
+  () => import('../../entities-cards/EventsItem'), {loading: () => <EventLoading />}
+)
 
-export default function EventsAll({
-  // searchParams,
-  // data,
+const SearchField = dynamic(
+  () => import('@/components/filters/SearchField'), {loading: () => <Skeleton className='w-full h-10' />}
+)
+
+const DEFAULT_PAGE_SIZE = 10;
+
+export default async function EventsAll({
+  searchParams,
+  data,
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
   data: CollectionAllCompT,
 }) {
   const headersList = headers();
   const locale = headersList.get('x-locale') || "";
-  // const slug = headersList.get('x-slug') || undefined;
+  const slug = headersList.get('x-slug') || undefined;
 
-  // const search = searchParams["search_events"] as string | undefined;
-  // const page = searchParams["page_events"] ?? "1";
-  // const pageSize = searchParams["per_events"] ?? DEFAULT_PAGE_SIZE;
+  const search = searchParams["search_events"] as string | undefined;
+  const page = searchParams["page_events"] ?? "1";
+  const pageSize = searchParams["per_events"] ?? DEFAULT_PAGE_SIZE;
+
+  const dict = await getDictionary(locale)
 
   return (
     <>
+      {(data.showSearch && (data.eventsConfig?.view === "classic" || data.eventsConfig?.view === "bento")) 
+      && (
+        <div className='w-full'>
+            <SearchField placeholder={dict.Inputs.search} param='search_events' className='mb-6' />
+        </div>
+      )}
       <Suspense 
-        // key={`search_events=${search}&page_events=${page}&per_events=${pageSize}`} 
-        // fallback={data.eventsConfig?.view === "calendar" ? <EventsCalendarLoading /> : <EventsLoading />}
-        fallback={<CalendarBlocksLoading />}
+        key={`search_events=${search}&page_events=${page}&per_events=${pageSize}`} 
+        fallback={
+          data.eventsConfig?.view === "classic"
+            ? <EventsLoading /> 
+            : data.eventsConfig?.view === "bento" ? <BentoLoading /> : <CalendarBlocksLoading />
+        }
       >
-        <EventsAllContent locale={locale} />
+        <EventsAllContent 
+          locale={locale} 
+          slug={slug}
+          dict={dict}
+          data={data}
+          searchParams={searchParams} 
+        />
       </Suspense>
     </>
   )
 }
 
 async function EventsAllContent({
-  locale
+  locale,
+  slug,
+  dict,
+  data,
+  searchParams,
 }: {
-  locale: string
+  locale: string,
+  slug: string | undefined,
+  dict: Dictionary,
+  data: CollectionAllCompT,
+  searchParams: { [key: string]: string | string[] | undefined };
 }) {
+  const search = searchParams["search_events"] as string | undefined;
+  const page = searchParams["page_events"] ?? "1";
+  const pageSize = searchParams["per_events"] ?? DEFAULT_PAGE_SIZE;
 
   const [ dataResult ] = await Promise.allSettled([ 
     getEvents({ 
-      locale
+      locale,
+      search, 
+      page: Number(page), 
+      pageSize: Number(pageSize),
+      filterBy: data.connected ? slug : undefined
     }) 
   ]);
   if (dataResult.status === "rejected") return (
@@ -58,68 +108,41 @@ async function EventsAllContent({
     />
   )
 
-  const eventsDays = dataResult.value.data.map(event => ({
-    eventId: event.id,
-    days: event.attributes.days
-  }))
-
-  const datesByEventId = dataResult.value.data.map(event => {
-    if (event.attributes.dateEnd) { 
-      const dates = dateRange(event.attributes.dateStart, event.attributes.dateEnd);
-      return { 
-        id: event.id, 
-        eventData: {
-          slug: event.attributes.slug,
-          title: event.attributes.title,
-          location: event.attributes.location,
-          dateStart: event.attributes.dateStart,
-          dateEnd: event.attributes.dateEnd,
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-          text: event.attributes.text,
-        },
-        dates
-      }
-    } else {
-      return { 
-        id: event.id, 
-        eventData: {
-          slug: event.attributes.slug,
-          title: event.attributes.title,
-          location: event.attributes.location,
-          dateStart: event.attributes.dateStart,
-          dateEnd: event.attributes.dateEnd,
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-          text: event.attributes.text,
-        },
-        dates: [event.attributes.dateStart]
-      }
-    }
-  })
-
-  const allDatesMatrix = datesByEventId.map(item => item.dates)
-  const allDates = matrixToArray(allDatesMatrix)
-  .sort((a,b) => {
-    return a.getTime() - b.getTime();
-  })
-  const datesUniq = allDates.filter((item, index) => 
-    getDateIndx(item, allDates) === index
-  );
-
-  const duplicatesDates = allDates.filter((item, index) => 
-    allDates.some((elem, idx) => elem.toDateString() === item.toDateString() && idx !== index)
-  )
-  const duplicatesUniq = duplicatesDates.filter((item, index) => 
-    getDateIndx(item, duplicatesDates) !== index
-  );
-
   return (
-    <ClientHydration fallback={<CalendarBlocksLoading />}>
-      <CalendarBlocks
-        dates={datesUniq}
-        duplicates={duplicatesUniq}
-        eventsDays={eventsDays}
-        datesByEventId={datesByEventId}
-      />
-    </ClientHydration>
+    <>
+      {(data.eventsConfig?.view === "classic" || data.eventsConfig?.view === "bento")
+        ? (
+          <>
+            {data.eventsConfig?.view === "bento"
+              ? (
+                <div key={`search_events=${search}&page_events=${page}&per_events=${pageSize}`}  id="events">
+                  <EventsBento locale={locale} events={dataResult.value} dict={dict} />
+                </div>
+              )
+              : (
+                <div key={`search_events=${search}&page_events=${page}&per_events=${pageSize}`}  id="events" className="grid grid-cols-1 lg:auto-rows-fr lg:gap-8 gap-6">
+                  {dataResult.value.data.map(item => (
+                    <EventsItem key={"event" + item.id} locale={locale} item={item} dict={dict} /> 
+                  ))}
+                </div>
+              )
+            }
+            <div className={data.eventsConfig?.view === "bento" ? "mt-8" : "mt-6"}>
+              <PaginationControls
+                length={dataResult.value.meta.pagination.total}
+                defaultPageSize={DEFAULT_PAGE_SIZE}
+                scrollToId='events'
+                pageParam='page_events'
+                perParam='per_events'
+                showMore={false}
+              />
+            </div>
+          </>
+        )
+        : (
+          <EventsCalendar events={dataResult.value} />
+        )
+      }
+    </>
   )
 }

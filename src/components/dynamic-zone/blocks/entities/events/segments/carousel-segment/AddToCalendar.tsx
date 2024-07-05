@@ -178,7 +178,10 @@ export default function AddToCalendar({
       defaultValue="event" 
       className={cn("w-full", className)}
     >
-      <TabsList className="w-full flex-wrap sm:justify-around justify-center gap-y-1 bg-primary/10 h-fit py-1 mb-3" >
+      <TabsList className={cn(
+        "w-full flex-wrap sm:justify-around justify-center gap-y-1 bg-primary/10 h-fit py-1 mb-3", 
+        itemData === undefined && "hidden"
+      )}>
         {items.map(item => (
           <TabsTrigger 
             key={item.id} 
@@ -224,7 +227,7 @@ export default function AddToCalendar({
           </AddToCalendarItem>
         </ul>
       </TabsContent>
-      <TabsContent value="day">
+      <TabsContent value="day" className={itemData === undefined ? "hidden" : ""}>
         <ul className='flex flex-col gap-4 items-center justify-center my-1'>
           <AddToCalendarItem type={type} href={dayGoogleUrl}>
             <FaGoogle className='mr-2'/> Google Calendar

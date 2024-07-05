@@ -127,6 +127,9 @@ export const dynamicContentQuery = `
       count
       showGoToAllButton
     }
+    eventsConfig {
+      view
+    }
   }
   ... on ComponentContentTextBlock {
     title
