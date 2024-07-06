@@ -45,7 +45,7 @@ export default function EventsItem({
           <div className='w-full flex justify-between gap-3'>
             <Link locale={locale} href={`/info/events/${item.attributes.slug}`} className='w-fit'>
               <h4 className='xl:text-xl lg:text-lg md:text-base sm:text-xl text-lg font-bold line-clamp-2 md:translate-y-1 group-hover/card:translate-y-0 transition duration-300 transform-gpu'>
-                {getShortText(item.attributes.title)}
+                {getShortText(item.attributes.title, 20)}
               </h4>
             </Link>
             <ClientHydration fallback={<Skeleton className='w-9 h-9 rounded-xl'/>}>

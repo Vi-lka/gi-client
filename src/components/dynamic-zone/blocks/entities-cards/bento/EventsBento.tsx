@@ -81,7 +81,7 @@ export default function EventsBento({
             <div className='w-full flex justify-between gap-3'>
               <Link locale={locale} href={`/info/events/${item.attributes.slug}`} className='w-fit'>
                 <h4 className='font-bold md:text-lg text-base mr-4 lg:line-clamp-3 line-clamp-5'>
-                  {getShortText(item.attributes.title)}
+                  {getShortText(item.attributes.title, 20)}
                 </h4>
               </Link>
               <CredenzaPopup

@@ -8,9 +8,11 @@ import { eventIdAtom } from '@/lib/hooks/atoms';
 import { useLocale } from '@/lib/hooks/useLocale';
 import { cn, formatDate, getShortText } from '@/lib/utils';
 import { useAtomValue } from 'jotai';
-import { ChevronRight, Loader2, MapPin } from 'lucide-react';
+import { ChevronRight, Globe, Loader2, MapPin } from 'lucide-react';
 import React from 'react'
 import { IoCalendarOutline } from "react-icons/io5";
+import NextLink from "next/link"
+import Link from '@/components/Link';
 
 export default function TextSegment({
   datesByEventId,
@@ -22,6 +24,7 @@ export default function TextSegment({
       slug: string;
       title: string;
       location: string;
+      online: string | null;
       dateStart: Date;
       dateEnd: Date | null;
       text: unknown;
@@ -47,27 +50,47 @@ export default function TextSegment({
   
   return (
     <div key={eventId} className={cn('w-full relative', className)}>
-      <TypographyH4 className='xl:text-lg text-base mb-2 line-clamp-2 animate-fade-left animate-duration-500 animate-ease-out'>
-        {getShortText(data.eventData.title)}
-      </TypographyH4>
+      <Link locale={locale} href={`/info/events/${data.eventData.slug}`} className='w-fit'>
+        <TypographyH4 className='xl:text-lg text-base mb-3 line-clamp-2 animate-fade-left animate-duration-500 animate-ease-out'>
+          {getShortText(data.eventData.title, 20)}
+        </TypographyH4>
+      </Link>
 
-      <p className='xl:text-sm text-xs flex gap-1 items-center mb-1 animate-fade-left animate-duration-500 animate-ease-out animate-delay-75'>
-        <IoCalendarOutline size={16} />
-        <span className='flex-1'>
-          {formatDate(data.eventData.dateStart, locale)}
-          {data.eventData.dateEnd ? " - " + formatDate(data.eventData.dateEnd, locale) : ""}
-        </span>
-      </p>
-      <p className='xl:text-sm text-xs flex gap-1 items-center animate-fade-left animate-duration-500 animate-ease-out animate-delay-75'>
-        <MapPin size={16} />
-        <span className='flex-1'>
-          {data.eventData.location}
-        </span>
-      </p>
+      <div className='flex flex-wrap items-center gap-2'>
+        <p className='xl:text-sm text-xs flex gap-1 items-center animate-fade-left animate-duration-500 animate-ease-out animate-delay-75'>
+          <IoCalendarOutline size={16} />
+          <span className='flex-1'>
+            {formatDate(data.eventData.dateStart, locale)}
+            {data.eventData.dateEnd ? " - " + formatDate(data.eventData.dateEnd, locale) : ""}
+          </span>
+        </p>
+        <p className='xl:text-sm text-xs flex gap-1 items-center animate-fade-left animate-duration-500 animate-ease-out animate-delay-75'>
+          <MapPin size={16} />
+          <NextLink 
+            href={`https://maps.yandex.ru/?text=${data.eventData.location}`}
+            target='__blank'
+            className='flex-1 hover:underline underline-offset-2 hover:underline-offset-4 transition-all transform-gpu duration-300'
+          >
+            {data.eventData.location}
+          </NextLink>
+        </p>
+        {data.eventData.online && (
+          <p className='xl:text-sm text-xs flex gap-1 items-center animate-fade-left animate-duration-500 animate-ease-out animate-delay-75'>
+            <Globe size={16} />
+            <NextLink 
+              href={data.eventData.online}
+              target='__blank'
+              className='flex-1 hover:underline underline-offset-2 hover:underline-offset-4 transition-all transform-gpu duration-300'
+            >
+              {new URL(data.eventData.online).hostname}
+            </NextLink>
+          </p>
+        )}
+      </div>
 
       <article className={cn(
-        "mt-2 prose prose-sm max-w-none prose-p:!my-0 prose-p:text-sm text-foreground dark:text-muted-foreground prose-headings:text-foreground",
-        "line-clamp-[10] max-h-[200px] overflow-hidden",
+        "mt-3 prose prose-sm max-w-none prose-p:!my-0 prose-p:text-sm text-foreground dark:text-muted-foreground prose-headings:text-foreground",
+        "line-clamp-[8] max-h-[165px] overflow-hidden",
         "animate-fade-left animate-duration-500 animate-ease-out animate-delay-150"
       )}>
         <BlocksRendererStrapi content={data.eventData.text} />

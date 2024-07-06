@@ -46,7 +46,7 @@ function Calendar({
           "text-muted-foreground rounded-xl w-full font-medium md:text-sm text-xs uppercase",
         row: "flex w-full mt-2 justify-between",
         cell: cn(
-          "animate-fade animate-duration-500 animate-ease-in-out w-full relative p-0 xl:mx-1 mx-0.5 text-center md:text-base text-sm focus-within:relative focus-within:z-20 [&:has([aria-selected])]:bg-accent [&:has([aria-selected].day-outside)]:bg-accent [&:has([aria-selected].day-range-end)]:rounded-r-xl",
+          "relative animate-fade animate-duration-500 animate-ease-in-out w-full relative p-0 xl:mx-1 mx-0.5 text-center md:text-base text-sm focus-within:relative focus-within:z-20 [&:has([aria-selected])]:bg-accent [&:has([aria-selected].day-outside)]:bg-accent [&:has([aria-selected].day-range-end)]:rounded-r-xl",
           props.mode === "range"
             ? "[&:has(>.day-range-end)]:rounded-r-xl [&:has(>.day-range-start)]:rounded-l-xl first:[&:has([aria-selected])]:rounded-l-xl last:[&:has([aria-selected])]:rounded-r-xl"
             : "[&:has([aria-selected])]:rounded-xl"

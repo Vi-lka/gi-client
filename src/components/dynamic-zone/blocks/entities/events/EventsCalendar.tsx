@@ -17,14 +17,20 @@ export default function EventsCalendar({
   }))
 
   const datesByEventId = events.data.map(event => {
-    if (event.attributes.dateEnd) { 
-      const dates = dateRange(event.attributes.dateStart, event.attributes.dateEnd);
-      return { 
+
+    let dates: Date[]
+
+    if (event.attributes.dateEnd) dates = dateRange(event.attributes.dateStart, event.attributes.dateEnd);
+    else dates = [event.attributes.dateStart]
+
+    return (
+      { 
         id: event.id, 
         eventData: {
           slug: event.attributes.slug,
           title: event.attributes.title,
           location: event.attributes.location,
+          online: event.attributes.online,
           dateStart: event.attributes.dateStart,
           dateEnd: event.attributes.dateEnd,
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -32,21 +38,7 @@ export default function EventsCalendar({
         },
         dates
       }
-    } else {
-      return { 
-        id: event.id, 
-        eventData: {
-          slug: event.attributes.slug,
-          title: event.attributes.title,
-          location: event.attributes.location,
-          dateStart: event.attributes.dateStart,
-          dateEnd: event.attributes.dateEnd,
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-          text: event.attributes.text,
-        },
-        dates: [event.attributes.dateStart]
-      }
-    }
+    )
   })
 
   const allDatesMatrix = datesByEventId.map(item => item.dates)

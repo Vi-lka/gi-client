@@ -3,7 +3,7 @@
 import { Calendar } from '@/components/ui/calendar'
 import { useLocale } from '@/lib/hooks/useLocale'
 import React from 'react'
-import { useDayPicker   } from 'react-day-picker'
+import { useDayPicker } from 'react-day-picker'
 import type {Matcher, SelectSingleEventHandler} from 'react-day-picker';
 import type { EventDayT } from '@/lib/types/entities'
 import getItemData from '../getItemData'

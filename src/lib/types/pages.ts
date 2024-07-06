@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { DynamicZoneT, ImageT, ImagesArrayT } from "./components";
-import { EducationalProgramTypeEnum, HashtagSingleT } from "./entities";
+import { EducationalProgramTypeEnum, EventDayT, HashtagSingleT } from "./entities";
 
 //..................................................Pages..................................................//
 
@@ -242,6 +242,37 @@ export const NewsSinglePageT  = z.object({
   }),
 })
 export type NewsSinglePageT = z.infer<typeof NewsSinglePageT>;
+
+
+
+
+//.........................News Page.........................//
+export const EventsPageT  = z.object({
+  attributes: z.object({
+    title: z.string(),
+    navBarConfig: z.object({
+      navBarTitle: z.string().nullable()
+    }).nullable(),
+    content: z.lazy(() => DynamicZoneT).array(),
+  }),
+})
+export type EventsPageT = z.infer<typeof EventsPageT>;
+
+export const EventsSinglePageT  = z.object({
+  attributes: z.object({
+    slug: z.string(),
+    title: z.string(),
+    image: z.lazy(() => ImageT),
+    location: z.string(),
+    online: z.string().nullable(),
+    text: z.any(),
+    dateStart: z.string().pipe( z.coerce.date() ),
+    dateEnd: z.string().pipe( z.coerce.date() ).nullable(),
+    days: z.lazy(() => EventDayT).array(),
+    content: z.lazy(() => DynamicZoneT).array(),
+  }),
+})
+export type EventsSinglePageT = z.infer<typeof EventsSinglePageT>;
 
 
 

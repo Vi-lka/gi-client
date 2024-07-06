@@ -30,6 +30,7 @@ export default function CalendarBlocks({
       slug: string;
       title: string;
       location: string;
+      online: string | null;
       dateStart: Date;
       dateEnd: Date | null;
       text: unknown;
