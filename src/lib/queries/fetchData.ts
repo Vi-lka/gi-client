@@ -4,10 +4,12 @@ export default async function fetchData<T>({
   query,
   error,
   variables,
+  revalidate
 }: {
   query: string,
   error: string,
-  variables?: unknown
+  variables?: unknown,
+  revalidate?: number | false
 }): Promise<T> {
   const headers = {
     "Content-Type": "application/json"
@@ -23,7 +25,7 @@ export default async function fetchData<T>({
     next: {
       tags: ["strapi"],
       // Next.js issue: if fetch in the component, not on the page, the cache is always MISS with tags, but with Time-based Revalidation both works correctly
-      revalidate: 3600,
+      revalidate: revalidate !== undefined ? revalidate : 3600,
     },
   });
     

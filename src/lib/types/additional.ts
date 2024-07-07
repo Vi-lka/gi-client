@@ -123,3 +123,39 @@ export const FooterT  = z.object({
   copyright: z.string().nullable(),
 })
 export type FooterT = z.infer<typeof FooterT>;
+
+
+
+
+
+
+//.........................Site Description.........................//
+export const i18NLocale = z.object({
+  id: z.string(),
+  attributes: z.object({
+    code: z.string(),
+    name: z.string()
+  })
+})
+export type i18NLocale = z.infer<typeof i18NLocale>;
+
+export const i18NLocales = i18NLocale.array()
+export type i18NLocales = z.infer<typeof i18NLocales>;
+
+
+
+
+
+//.........................Site Description.........................//
+export const SiteDescriptionT = z.object({
+  title: z.string(),
+  abbreviation: z.string(),
+  description: z.string(),
+  keywords: z.object({
+    word: z.string()
+  }).array(),
+  category: z.string().nullable(),
+  publisher:  z.string().nullable(),
+  image: ImageT
+})
+export type SiteDescriptionT = z.infer<typeof SiteDescriptionT>;
