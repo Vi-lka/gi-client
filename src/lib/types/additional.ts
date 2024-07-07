@@ -159,3 +159,24 @@ export const SiteDescriptionT = z.object({
   image: ImageT
 })
 export type SiteDescriptionT = z.infer<typeof SiteDescriptionT>;
+
+
+
+
+//.........................Pages Metadata.........................//
+export const ParentPagesMetaT = z.object({
+  title: z.string(),
+  navBarConfig: z.object({ 
+    navBarDescription: z.string().nullable(),
+    navBarImage: z.lazy(() => ImageT),
+  }).nullable(),
+})
+export type ParentPagesMetaT = z.infer<typeof ParentPagesMetaT>;
+
+export const ChildPagesMetaT = z.object({
+  title: z.string(),
+  slug: z.string(),
+  image: z.lazy(() => ImageT),
+  description: z.string().nullable().optional()
+})
+export type ChildPagesMetaT = z.infer<typeof ChildPagesMetaT>;

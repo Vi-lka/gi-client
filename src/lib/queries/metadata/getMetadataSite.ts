@@ -12,10 +12,7 @@ export default async function getMetadataSite(locale: string): Promise<{
       i18NLocales {
         data {
           id
-          attributes {
-            code
-            name
-          }
+          attributes { code name }
         }
       }
       siteDescription(locale: $locale) {

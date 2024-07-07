@@ -93,7 +93,7 @@ export async function generateMetadata({
 
   i18.map(item => {
     const key = item.attributes.code
-    languages[key] = (process.env.NEXT_PUBLIC_URL ?? "https://hi.sfu-kras.ru") + "/" + key;
+    languages[key] = (process.env.NEXT_PUBLIC_URL ?? "https://hi.sfu-kras.ru") + `/${key}`;
   })
 
   return {
