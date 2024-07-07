@@ -15,6 +15,7 @@ import { notFound } from 'next/navigation';
 import React from 'react'
 import { IoCalendarOutline } from "react-icons/io5";
 import NextLink from "next/link"
+import DynamicZone from '@/components/dynamic-zone/DynamicZone';
 
 export default async function EventsSinglePage({
   params,
@@ -213,7 +214,13 @@ export default async function EventsSinglePage({
         </div>
       </div>
 
-      
+      <div className='w-full lg:float-left'>
+        {event.content.map((item, index) => (
+          <section id={item.link ? item.link : undefined} key={index}>
+            <DynamicZone item={item} searchParams={searchParams} />
+          </section>
+        ))}
+      </div>
     </div>
   )
 }

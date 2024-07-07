@@ -33,6 +33,7 @@ export default async function NewsAll({
 }) {
   const headersList = headers();
   const locale = headersList.get('x-locale') || "";
+  const slug = headersList.get('x-slug') || undefined;
 
   const search = searchParams["search_news"] as string | undefined;
   const page = searchParams["page_news"] ?? "1";
@@ -51,7 +52,13 @@ export default async function NewsAll({
         key={`search_news=${search}&page_news=${page}&per_news=${pageSize}`} 
         fallback={<NewsLoading />}
       >
-        <NewsAllContent locale={locale} dict={dict} searchParams={searchParams} config={data.newsConfig} />
+        <NewsAllContent
+          locale={locale}
+          slug={slug}
+          dict={dict}
+          searchParams={searchParams}
+          data={data}
+        />
       </Suspense>
     </>
   )
@@ -59,23 +66,22 @@ export default async function NewsAll({
 
 async function NewsAllContent({
   locale,
+  slug,
   dict,
   searchParams,
-  config
+  data
 }: {
   locale: string,
+  slug: string | undefined,
   dict: Dictionary,
   searchParams: { [key: string]: string | string[] | undefined };
-  config: {
-    count: number,
-    showGoToAllButton: boolean
-  } | null
+  data: CollectionAllCompT,
 }) {
 
   const search = searchParams["search_news"] as string | undefined;
   const page = searchParams["page_news"] ?? "1";
-  const pageSize = (config && config.count > 0) 
-    ? config.count
+  const pageSize = (data.newsConfig && data.newsConfig.count > 0) 
+    ? data.newsConfig.count
     : searchParams["per_news"] ?? DEFAULT_PAGE_SIZE;
 
   const [ dataResult ] = await Promise.allSettled([ 
@@ -84,6 +90,7 @@ async function NewsAllContent({
       search, 
       page: Number(page), 
       pageSize: Number(pageSize),
+      filterBy: data.connected ? slug : undefined
     }) 
   ]);
   if (dataResult.status === "rejected") return (
@@ -97,7 +104,7 @@ async function NewsAllContent({
 
   return (
     <>
-      {config && (config.count > 0) 
+      {data.newsConfig && (data.newsConfig.count > 0) 
         ? (
           <div key={`search_news=${search}&page_news=${page}&per_news=${pageSize}`} id="news" className='w-full'>
             <CarouselComp className='lg:-ml-8 -ml-4'>
@@ -107,7 +114,7 @@ async function NewsAllContent({
                 </CarouselItem>
               ))}
             </CarouselComp>
-            {config.showGoToAllButton && (
+            {data.newsConfig.showGoToAllButton && (
               <Link locale={locale} href={"/info/news"} className='flex w-fit mx-auto mt-6'>
                 <Button className='uppercase font-medium px-10 py-5 rounded-3xl'>
                   {dict.Buttons.allNews}

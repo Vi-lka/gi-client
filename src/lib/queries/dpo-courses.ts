@@ -63,6 +63,9 @@ export const getDpoCourses = async ({
       }},
       {employees: {
         slug: { eqi: filterBy }
+      }},
+      {events: {
+        slug: { eqi: filterBy }
       }}
     ]
   } : undefined;

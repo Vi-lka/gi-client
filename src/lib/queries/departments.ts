@@ -94,7 +94,13 @@ export const getDepartments = async ({
           slug: { eqi: filterBy }
         }},
         {head: {
-          id: { eqi: filterBy }
+          slug: { eqi: filterBy }
+        }},
+        {employees: {
+          slug: { eqi: filterBy }
+        }},
+        {events: {
+          slug: { eqi: filterBy }
         }}
       ]
     } : undefined;

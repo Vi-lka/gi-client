@@ -181,11 +181,13 @@ export default async function NewsSinglePage({
         </div>
       </div>
 
-      {news.content.map((item, index) => (
-        <section id={item.link ? item.link : undefined} key={index}>
-          <DynamicZone item={item} searchParams={searchParams} />
-        </section>
-      ))}
+      <div className='w-full lg:float-left'>
+        {news.content.map((item, index) => (
+          <section id={item.link ? item.link : undefined} key={index}>
+            <DynamicZone item={item} searchParams={searchParams} />
+          </section>
+        ))}
+      </div>
     </div>
   )
 }

@@ -11,13 +11,15 @@ export const getNews = async ({
   page,
   pageSize,
   sort = "publishedAt:desc",
-  search
+  search,
+  filterBy
 }: {
   locale: string,
   page?: number;
   pageSize?: number;
   sort?: string;
   search?: string;
+  filterBy?: string;
 }): Promise<NewsT> => {
   const query = /* GraphGL */ `
     query News($locale: I18NLocaleCode, $filters: NewFiltersInput, $sort: [String], $pagination: PaginationArg) {
@@ -46,6 +48,15 @@ export const getNews = async ({
     }
   `;
 
+  const connectedFilter = (filterBy && filterBy.length > 0) 
+  ? {
+    or: [
+      {events: {
+        slug: { eqi: filterBy }
+      }}
+    ]
+  } : undefined;
+
   const searchFilter = genSearchFilter(
     "containsi",
     search,
@@ -68,6 +79,7 @@ export const getNews = async ({
       pagination: { page, pageSize },
       filters: {
         and: [
+          {...connectedFilter},
           {or: searchFilter}
         ]
       }

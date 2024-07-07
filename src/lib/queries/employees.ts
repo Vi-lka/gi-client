@@ -112,6 +112,9 @@ export const getEmployees = async ({
         }},
         {departments: {
           slug: { eqi: filterBy }
+        }},
+        {events: {
+          slug: { eqi: filterBy }
         }}
       ]
     } : undefined;
