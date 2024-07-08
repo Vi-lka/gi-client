@@ -9,8 +9,6 @@ import { StructurePageT } from '@/lib/types/pages';
 import { notFound } from 'next/navigation';
 import React from 'react'
 
-export const dynamic = 'force-dynamic'
-
 export default async function StructurePage({
   params: { locale },
   searchParams,

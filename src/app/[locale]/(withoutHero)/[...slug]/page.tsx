@@ -11,8 +11,6 @@ import { AdditionalPagesT } from '@/lib/types/pages';
 import type { Metadata } from 'next';
 import {notFound} from 'next/navigation';
 
-export const dynamic = 'force-dynamic'
-
 export async function generateMetadata({ 
   params
 }:  { 

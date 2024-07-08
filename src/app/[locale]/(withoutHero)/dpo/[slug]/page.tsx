@@ -11,8 +11,6 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import React from 'react'
 
-export const dynamic = 'force-dynamic'
-
 export async function generateMetadata({ 
   params: { locale, slug }
 }:  { 

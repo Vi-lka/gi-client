@@ -14,8 +14,6 @@ import { DepartmentSinglePageT } from '@/lib/types/pages';
 import type { Metadata } from 'next';
 import getMetadataStructureSingle from '@/lib/queries/metadata/structure/getMetadataStructureSingle';
 
-export const dynamic = 'force-dynamic'
-
 export async function generateMetadata({ 
   params: { locale, slug }
 }:  { 

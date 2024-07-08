@@ -9,8 +9,6 @@ import Anchors from '@/components/Anchors'
 import { EntrancePageT } from '@/lib/types/pages'
 import fetchData from '@/lib/queries/fetchData'
 
-export const dynamic = 'force-dynamic'
-
 export default async function AdmissionPage({
   params: { locale },
   searchParams,
