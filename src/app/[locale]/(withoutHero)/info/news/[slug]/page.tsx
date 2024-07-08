@@ -13,7 +13,7 @@ import getMetadataNewsSingle from '@/lib/queries/metadata/info/getMetadataNewsSi
 import { NewsSinglePageT } from '@/lib/types/pages';
 import { formatDate } from '@/lib/utils';
 import { CalendarDays, Clock3 } from 'lucide-react';
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import React from 'react'
 

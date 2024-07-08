@@ -16,7 +16,7 @@ import React from 'react'
 import { IoCalendarOutline } from "react-icons/io5";
 import NextLink from "next/link"
 import DynamicZone from '@/components/dynamic-zone/DynamicZone';
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
 import getMetadataEventsSingle from '@/lib/queries/metadata/info/getMetadataEventsSingle';
 
 

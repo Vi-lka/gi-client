@@ -8,7 +8,7 @@ import fetchData from '@/lib/queries/fetchData';
 import getMetadataAdditionalPage from '@/lib/queries/metadata/additional-pages/getMetadataAdditionalPage';
 import type { AdditionalPageSingleT } from '@/lib/types/pages';
 import { AdditionalPagesT } from '@/lib/types/pages';
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
 import {notFound} from 'next/navigation';
 
 export const dynamic = 'force-dynamic'

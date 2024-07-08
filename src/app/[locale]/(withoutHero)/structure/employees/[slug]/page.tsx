@@ -16,7 +16,7 @@ import Contacts from './Contacts'
 import { Badge } from '@/components/ui/badge'
 import { getDictionary } from '@/lib/getDictionary'
 import Link from '@/components/Link'
-import { Metadata } from 'next'
+import type { Metadata } from 'next'
 import getMetadataEmployee from '@/lib/queries/metadata/structure/getMetadataEmployee'
 
 export async function generateMetadata({ 

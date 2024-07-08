@@ -11,7 +11,7 @@ import { getDictionary } from '@/lib/getDictionary';
 import Media from './Media';
 import Description from './Description';
 import { DepartmentSinglePageT } from '@/lib/types/pages';
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
 import getMetadataStructureSingle from '@/lib/queries/metadata/structure/getMetadataStructureSingle';
 
 export const dynamic = 'force-dynamic'
