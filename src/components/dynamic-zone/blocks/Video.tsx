@@ -1,5 +1,6 @@
 "use client"
 
+import { Skeleton } from '@/components/ui/skeleton'
 import { cn } from '@/lib/utils'
 import { Loader2 } from 'lucide-react'
 import React, { Suspense } from 'react'
@@ -19,9 +20,9 @@ export default function Video({
     return (
         <div className={cn("w-full", className)}>
             {loading ? (
-                <div className="mx-auto w-full">
-                    <Loader2 className="mx-auto h-12 w-12 animate-spin" />
-                </div>
+                <Skeleton className="mx-auto w-full aspect-video flex items-center justify-center">
+                    <Loader2 className="mx-auto animate-spin" />
+                </Skeleton>
             ) : null}
 
             <div className={cn(
@@ -30,9 +31,9 @@ export default function Video({
                 loading ? "hidden" : "block"
             )}>
                 <Suspense fallback={
-                    <div className="mx-auto w-full">
-                        <Loader2 className="mx-auto h-12 w-12 animate-spin" />
-                    </div>
+                    <Skeleton className="mx-auto w-full aspect-video flex items-center justify-center">
+                        <Loader2 className="mx-auto animate-spin" />
+                    </Skeleton>
                 }>
                     <ReactPlayer
                         width={'100%'}

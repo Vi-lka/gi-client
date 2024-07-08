@@ -42,7 +42,11 @@ export default function RichTextImage({
                 </div>
                 {data.images.data.length > 1 
                     ? (
-                        <ClientHydration fallback={<CarouselLoading noTitle className='lg:w-1/2 w-full lg:aspect-[8/6] max-h-96 lg:mb-0 mb-6'/>}>
+                        <ClientHydration fallback={
+                            <div className="lg:w-1/2 w-full">
+                                <CarouselLoading noTitle className='w-full lg:aspect-[8/6] max-h-96 lg:mb-0 mb-6'/>
+                            </div>
+                        }>
                             <CarouselComp classNameContainer='lg:w-1/2 w-full' className='lg:-ml-8 -ml-4 items-center'>
                                 {data.images.data.map((image, index) => (
                                     <CarouselItem key={index} className='h-fit lg:pl-8 pl-4 flex items-center'>
