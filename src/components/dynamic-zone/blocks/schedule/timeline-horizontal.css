@@ -1,0 +1,113 @@
+.timeline-horizontal {
+    border-left-width: 0;
+    border-color: hsl(var(--foreground) / 0.15);
+  }
+  
+  .timeline-horizontal:before {
+    content: "";
+    display: block;
+    margin-bottom: 14px;
+    height: 0.25rem/* 4px */;
+    width: 100%;
+    background-color: hsl(var(--foreground) / 0.15);
+    border-radius: var(--radius);
+  }
+  
+  .timeline-horizontal > ol {
+    display: grid;
+    gap: 0.5rem/* 8px */;
+  }
+  
+  .timeline-horizontal > ol > li {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .timeline-horizontal > ol > li:first-child {
+    align-items: flex-start;
+    text-align: start;
+  }
+  .timeline-horizontal > ol > li:last-child {
+    align-items: flex-end;
+    text-align: end;
+  }
+  
+  .timeline-horizontal > ol > li > span:last-child  {
+    position: absolute;
+    top: -3.5rem/* -56px */;
+  }
+  
+  .timeline-horizontal > ol > li > span:first-child {
+    position: absolute;
+    top: -1.75rem/* -28px */;
+  }
+  .timeline-horizontal > ol > li > span:nth-child(2) {
+    display: block;
+  }
+  .timeline-horizontal > ol > li:first-child > span:first-child {
+    inset-inline-start: 0px;
+  }
+  .timeline-horizontal > ol > li:last-child > span:first-child {
+    inset-inline-end: 0px;
+  }
+  .timeline-horizontal > ol > li:not(:first-child):not(:last-child) > span:first-child {
+    left: 50%;
+    transform: translate(-50%)
+  }
+  
+  
+  @media (max-width: 767px) {
+    .timeline-horizontal {
+      padding-left: 16px;
+      border-left-width: 4px;
+    }
+  
+    .timeline-horizontal:before {
+      display: none;
+    }
+  
+    .timeline-horizontal > ol {
+      gap: 2rem;
+      grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+    }
+  
+    .timeline-horizontal > ol > li, 
+    .timeline-horizontal > ol > li:first-child, 
+    .timeline-horizontal > ol > li:last-child {
+      gap: 2px;
+      margin-bottom: 4px;
+      align-items: flex-start;
+      text-align: start;
+    }
+  
+    .timeline-horizontal > ol > li > span:first-child {
+      width: fit-content;
+      height: fit-content;
+      transform: none;
+    }
+    .timeline-horizontal > ol > li > span:nth-child(2) {
+      order: 1;
+    }
+    .timeline-horizontal > ol > li > span:last-child {
+      position: relative;
+      top: 0;
+      order: 0;
+    }
+  
+    .timeline-horizontal > ol > li:first-child > span:first-child {
+      left: -30px;
+      top: -2px;
+    }
+    .timeline-horizontal > ol > li:not(:first-child):not(:last-child) > span:first-child {
+      left: -30px;
+      top: 50%;
+      transform: translate(0, -50%);
+    }
+    .timeline-horizontal > ol > li:last-child > span:first-child {
+      left: -30px;
+      top: auto;
+      bottom: -4px;
+    }
+  }

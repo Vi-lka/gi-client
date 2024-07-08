@@ -18,6 +18,7 @@ import NextLink from "next/link"
 import DynamicZone from '@/components/dynamic-zone/DynamicZone';
 import type { Metadata } from 'next';
 import getMetadataEventsSingle from '@/lib/queries/metadata/info/getMetadataEventsSingle';
+import ScheduleSection from './ScheduleSection';
 
 
 export async function generateMetadata({ 
@@ -79,6 +80,7 @@ export default async function EventsSinglePage({
                   attributes { url }
                 }
               }
+              showSchedule
               location online
               text
               dateStart dateEnd
@@ -238,6 +240,12 @@ export default async function EventsSinglePage({
           <BlocksRendererStrapi content={event.text} />
         </div>
       </div>
+
+      {(event.showSchedule && event.days.length > 0) && (
+        <div className='w-full lg:float-left'>
+          <ScheduleSection locale={params.locale} days={event.days} />
+        </div>
+      )}
 
       <div className='w-full lg:float-left'>
         {event.content.map((item, index) => (

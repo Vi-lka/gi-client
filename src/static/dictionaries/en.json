@@ -69,7 +69,8 @@
     "wholeEvent": "The whole event",
     "day": "Day",
     "Yandex": "Yandex",
-    "file": "file"
+    "file": "file",
+    "schedule": "Schedule"
   },
   "Buttons": {
     "more": "More",

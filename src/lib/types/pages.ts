@@ -263,6 +263,7 @@ export const EventsSinglePageT  = z.object({
     slug: z.string(),
     title: z.string(),
     image: z.lazy(() => ImageT),
+    showSchedule: z.boolean(),
     location: z.string(),
     online: z.string().nullable(),
     text: z.any(),

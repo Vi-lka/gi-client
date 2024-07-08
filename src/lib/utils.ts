@@ -5,10 +5,27 @@ import type { DictionariesType } from "./getDictionary";
 import { formatInTimeZone } from "date-fns-tz";
 import { ru, enUS } from "date-fns/locale";
 import { eachDayOfInterval } from "date-fns";
+import React from "react";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
+
+
+
+
+/**
+ * Gets only the valid children of a component,
+ * and ignores any nullish or falsy child.
+ *
+ * @param children the children
+ */
+export function getValidChildren(children: React.ReactNode) {
+  return React.Children.toArray(children).filter((child) =>
+    React.isValidElement(child),
+  ) as React.ReactElement[]
+}
+
 
 
 
