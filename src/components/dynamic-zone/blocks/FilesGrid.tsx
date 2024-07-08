@@ -17,7 +17,7 @@ export default function FilesGrid({
 
     return (
         <div className={cn("w-full grid md:grid-cols-2 gap-8", className)}>
-            <div className='w-full'>
+            <div id={data.link ? data.link : ""} className='w-full'>
                 {data.title && (
                     <TypographyH2 
                         className={cn(

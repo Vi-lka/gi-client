@@ -16,6 +16,31 @@ import React from 'react'
 import { IoCalendarOutline } from "react-icons/io5";
 import NextLink from "next/link"
 import DynamicZone from '@/components/dynamic-zone/DynamicZone';
+import { Metadata } from 'next';
+import getMetadataEventsSingle from '@/lib/queries/metadata/info/getMetadataEventsSingle';
+
+
+export async function generateMetadata({ 
+  params: { locale, slug }
+}:  { 
+  params: { locale: string, slug: string }
+}): Promise<Metadata> {
+
+  const [ dataResult ] = await Promise.allSettled([ getMetadataEventsSingle(locale, slug) ]);
+
+  if (dataResult.status === "rejected") return {}
+
+  const metadata = dataResult.value
+
+  return {
+    title: metadata.title,
+    openGraph: {
+      title: metadata.title,
+      images: metadata.image.data?.attributes.url,
+      locale: locale,
+    }
+  }
+}
 
 export default async function EventsSinglePage({
   params,

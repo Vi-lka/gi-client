@@ -9,11 +9,35 @@ import { TypographyH1 } from '@/components/typography';
 import { Skeleton } from '@/components/ui/skeleton';
 import { dynamicContentQuery } from '@/lib/dynamicContentQuery';
 import fetchData from '@/lib/queries/fetchData';
+import getMetadataNewsSingle from '@/lib/queries/metadata/info/getMetadataNewsSingle';
 import { NewsSinglePageT } from '@/lib/types/pages';
 import { formatDate } from '@/lib/utils';
 import { CalendarDays, Clock3 } from 'lucide-react';
+import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import React from 'react'
+
+export async function generateMetadata({ 
+  params: { locale, slug }
+}:  { 
+  params: { locale: string, slug: string }
+}): Promise<Metadata> {
+
+  const [ dataResult ] = await Promise.allSettled([ getMetadataNewsSingle(locale, slug) ]);
+
+  if (dataResult.status === "rejected") return {}
+
+  const metadata = dataResult.value
+
+  return {
+    title: metadata.title,
+    openGraph: {
+      title: metadata.title,
+      images: metadata.image.data?.attributes.url,
+      locale: locale,
+    }
+  }
+}
 
 export default async function NewsSinglePage({
   params,

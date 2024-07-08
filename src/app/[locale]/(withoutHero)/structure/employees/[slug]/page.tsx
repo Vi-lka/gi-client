@@ -16,6 +16,32 @@ import Contacts from './Contacts'
 import { Badge } from '@/components/ui/badge'
 import { getDictionary } from '@/lib/getDictionary'
 import Link from '@/components/Link'
+import { Metadata } from 'next'
+import getMetadataEmployee from '@/lib/queries/metadata/structure/getMetadataEmployee'
+
+export async function generateMetadata({ 
+  params: { locale, slug }
+}:  { 
+  params: { locale: string, slug: string }
+}): Promise<Metadata> {
+
+  const [ dataResult ] = await Promise.allSettled([ getMetadataEmployee(locale, slug) ]);
+
+  if (dataResult.status === "rejected") return {}
+
+  const metadata = dataResult.value
+
+  return {
+    title: metadata.title,
+    description: metadata.description,
+    openGraph: {
+      title: metadata.title,
+      description: metadata.description ? metadata.description : undefined,
+      images: metadata.image.data?.attributes.url,
+      locale: locale,
+    }
+  }
+}
 
 export default async function EmployeeSinglePage({
   params,

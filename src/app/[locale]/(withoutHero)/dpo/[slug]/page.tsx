@@ -5,11 +5,37 @@ import ErrorHandler from '@/components/errors/ErrorHandler';
 import { TypographyH1 } from '@/components/typography';
 import { dynamicContentQuery } from '@/lib/dynamicContentQuery';
 import fetchData from '@/lib/queries/fetchData';
+import getMetadataDpoCourse from '@/lib/queries/metadata/dpo/getMetadataDpoCourse';
 import { DpoCoursePageT } from '@/lib/types/pages';
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import React from 'react'
 
 export const dynamic = 'force-dynamic'
+
+export async function generateMetadata({ 
+  params: { locale, slug }
+}:  { 
+  params: { locale: string, slug: string }
+}): Promise<Metadata> {
+
+  const [ dataResult ] = await Promise.allSettled([ getMetadataDpoCourse(locale, slug) ]);
+
+  if (dataResult.status === "rejected") return {}
+
+  const metadata = dataResult.value
+
+  return {
+    title: metadata.title,
+    description: metadata.description,
+    openGraph: {
+      title: metadata.title,
+      description: metadata.description ? metadata.description : undefined,
+      images: metadata.image.data?.attributes.url,
+      locale: locale,
+    }
+  }
+}
 
 export default async function DpoCoursePage({ 
     params,

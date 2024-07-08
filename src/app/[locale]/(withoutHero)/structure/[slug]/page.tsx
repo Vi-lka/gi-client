@@ -11,8 +11,32 @@ import { getDictionary } from '@/lib/getDictionary';
 import Media from './Media';
 import Description from './Description';
 import { DepartmentSinglePageT } from '@/lib/types/pages';
+import { Metadata } from 'next';
+import getMetadataStructureSingle from '@/lib/queries/metadata/structure/getMetadataStructureSingle';
 
 export const dynamic = 'force-dynamic'
+
+export async function generateMetadata({ 
+  params: { locale, slug }
+}:  { 
+  params: { locale: string, slug: string }
+}): Promise<Metadata> {
+
+  const [ dataResult ] = await Promise.allSettled([ getMetadataStructureSingle(locale, slug) ]);
+
+  if (dataResult.status === "rejected") return {}
+
+  const metadata = dataResult.value
+
+  return {
+    title: metadata.title,
+    openGraph: {
+      title: metadata.title,
+      images: metadata.image.data?.attributes.url,
+      locale: locale,
+    }
+  }
+}
 
 export default async function StructureSinglePage({
   params,
