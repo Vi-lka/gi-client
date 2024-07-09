@@ -9,6 +9,8 @@ import Providers from "@/components/providers/Providers";
 import { ViewTransitions } from 'next-view-transitions'
 import getMetadataSite from "@/lib/queries/metadata/getMetadataSite";
 
+export const dynamic = 'force-dynamic';
+
 const din = localFont({
   variable: "--Din",
   src: [
@@ -76,11 +78,11 @@ const cera = localFont({
   ],
 })
 
-export const generateMetadata = async ({ 
+export async function generateMetadata({ 
   params: { locale }
 }:  { 
   params: { locale: string }
-}): Promise<Metadata> => {
+}): Promise<Metadata> {
 
   const [ dataResult ] = await Promise.allSettled([ getMetadataSite(locale) ]);
 
