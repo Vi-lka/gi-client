@@ -9,8 +9,6 @@ import Providers from "@/components/providers/Providers";
 import { ViewTransitions } from 'next-view-transitions'
 import getMetadataSite from "@/lib/queries/metadata/getMetadataSite";
 
-export const dynamic = 'force-dynamic';
-
 const din = localFont({
   variable: "--Din",
   src: [
