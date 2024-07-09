@@ -38,8 +38,7 @@ export default async function getMetadataNewsSingle(locale: string, slug: string
               eqi: slug
             }
           }
-        },
-        revalidate: false
+        }
     })
     const data = ChildPagesMetaT.parse(json.data.news.data[0].attributes);
 

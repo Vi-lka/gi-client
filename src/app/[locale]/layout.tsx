@@ -76,11 +76,11 @@ const cera = localFont({
   ],
 })
 
-export async function generateMetadata({ 
+export const generateMetadata = async ({ 
   params: { locale }
 }:  { 
   params: { locale: string }
-}): Promise<Metadata> {
+}): Promise<Metadata> => {
 
   const [ dataResult ] = await Promise.allSettled([ getMetadataSite(locale) ]);
 

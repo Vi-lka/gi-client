@@ -59,8 +59,7 @@ export default async function getMetadataAdditionalPage(locale: string, slug: st
                 : null
             }
           }
-        },
-        revalidate: false
+        }
     })
     const data = ParentPagesMetaT.parse(json.data.additionalPages.data[0].attributes);
     const i18 = i18NLocales.parse(json.data.i18NLocales.data);

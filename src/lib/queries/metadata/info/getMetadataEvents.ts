@@ -47,8 +47,7 @@ export default async function getMetadataEvents(locale: string): Promise<{
         error: "Failed to fetch Metadata Events",
         variables: {
           locale
-        },
-        revalidate: false
+        }
     })
     const data = ParentPagesMetaT.parse(json.data.eventsPage.data.attributes);
     const i18 = i18NLocales.parse(json.data.i18NLocales.data);
