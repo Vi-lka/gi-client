@@ -3,7 +3,7 @@ import type { MetadataRoute } from "next"
 
 type DataT = {
     data: { 
-        news: {
+        events: {
             data: {
                 attributes: {
                     slug: string,
@@ -16,8 +16,8 @@ type DataT = {
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const query = /* GraphGL */ `
-      query NewsMap($pagination: PaginationArg) {
-        news(pagination: $pagination) {
+      query EventsMap($pagination: PaginationArg) {
+        events(pagination: $pagination) {
           data {
             attributes {
               slug
@@ -30,23 +30,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     const json = await fetchData<DataT>({ 
         query, 
-        error: "Failed to fetch News Map", 
+        error: "Failed to fetch Events Map", 
         variables: {
             // Google's limit is 50,000 URLs per sitemap
             pagination: { pageSize: 50000 },
         }
     })
 
-    const news = json.data.news.data.map(item => item.attributes)
+    const events = json.data.events.data.map(item => item.attributes)
 
-    return news.map((item) => ({
-        url: (process.env.NEXT_PUBLIC_URL ?? "https://hi.sfu-kras.ru") + `/info/news/${item.slug}`,
+    return events.map((item) => ({
+        url: (process.env.NEXT_PUBLIC_URL ?? "https://hi.sfu-kras.ru") + `/info/events/${item.slug}`,
         lastModified: new Date(item.updatedAt),
         changeFrequency: 'daily',
         alternates: {
             languages: {
-                ru: (process.env.NEXT_PUBLIC_URL ?? "https://hi.sfu-kras.ru") + "/ru" + `/info/news/${item.slug}`,
-                en: (process.env.NEXT_PUBLIC_URL ?? "https://hi.sfu-kras.ru") + "/en" + `/info/news/${item.slug}`,
+                ru: (process.env.NEXT_PUBLIC_URL ?? "https://hi.sfu-kras.ru") + "/ru" + `/info/events/${item.slug}`,
+                en: (process.env.NEXT_PUBLIC_URL ?? "https://hi.sfu-kras.ru") + "/en" + `/info/events/${item.slug}`,
             },
         },
         priority: 0.6,

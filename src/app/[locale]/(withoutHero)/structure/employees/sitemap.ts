@@ -3,7 +3,7 @@ import type { MetadataRoute } from "next"
 
 type DataT = {
     data: { 
-        news: {
+        employees: {
             data: {
                 attributes: {
                     slug: string,
@@ -16,8 +16,8 @@ type DataT = {
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const query = /* GraphGL */ `
-      query NewsMap($pagination: PaginationArg) {
-        news(pagination: $pagination) {
+      query EmployeesMap($pagination: PaginationArg) {
+        employees(pagination: $pagination) {
           data {
             attributes {
               slug
@@ -30,23 +30,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     const json = await fetchData<DataT>({ 
         query, 
-        error: "Failed to fetch News Map", 
+        error: "Failed to fetch Employees Map", 
         variables: {
             // Google's limit is 50,000 URLs per sitemap
             pagination: { pageSize: 50000 },
         }
     })
 
-    const news = json.data.news.data.map(item => item.attributes)
+    const employees = json.data.employees.data.map(item => item.attributes)
 
-    return news.map((item) => ({
-        url: (process.env.NEXT_PUBLIC_URL ?? "https://hi.sfu-kras.ru") + `/info/news/${item.slug}`,
+    return employees.map((item) => ({
+        url: (process.env.NEXT_PUBLIC_URL ?? "https://hi.sfu-kras.ru") + `/structure/employees/${item.slug}`,
         lastModified: new Date(item.updatedAt),
-        changeFrequency: 'daily',
+        changeFrequency: 'monthly',
         alternates: {
             languages: {
-                ru: (process.env.NEXT_PUBLIC_URL ?? "https://hi.sfu-kras.ru") + "/ru" + `/info/news/${item.slug}`,
-                en: (process.env.NEXT_PUBLIC_URL ?? "https://hi.sfu-kras.ru") + "/en" + `/info/news/${item.slug}`,
+                ru: (process.env.NEXT_PUBLIC_URL ?? "https://hi.sfu-kras.ru") + "/ru" + `/structure/employees/${item.slug}`,
+                en: (process.env.NEXT_PUBLIC_URL ?? "https://hi.sfu-kras.ru") + "/en" + `/structure/employees/${item.slug}`,
             },
         },
         priority: 0.6,

@@ -3,7 +3,7 @@ import type { MetadataRoute } from "next"
 
 type DataT = {
     data: { 
-        news: {
+        departments: {
             data: {
                 attributes: {
                     slug: string,
@@ -16,8 +16,8 @@ type DataT = {
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const query = /* GraphGL */ `
-      query NewsMap($pagination: PaginationArg) {
-        news(pagination: $pagination) {
+      query DepartmentsMap($pagination: PaginationArg) {
+        departments(pagination: $pagination) {
           data {
             attributes {
               slug
@@ -30,25 +30,25 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     const json = await fetchData<DataT>({ 
         query, 
-        error: "Failed to fetch News Map", 
+        error: "Failed to fetch Departments Map", 
         variables: {
             // Google's limit is 50,000 URLs per sitemap
             pagination: { pageSize: 50000 },
         }
     })
 
-    const news = json.data.news.data.map(item => item.attributes)
+    const departments = json.data.departments.data.map(item => item.attributes)
 
-    return news.map((item) => ({
-        url: (process.env.NEXT_PUBLIC_URL ?? "https://hi.sfu-kras.ru") + `/info/news/${item.slug}`,
+    return departments.map((item) => ({
+        url: (process.env.NEXT_PUBLIC_URL ?? "https://hi.sfu-kras.ru") + `/structure/${item.slug}`,
         lastModified: new Date(item.updatedAt),
-        changeFrequency: 'daily',
+        changeFrequency: 'monthly',
         alternates: {
             languages: {
-                ru: (process.env.NEXT_PUBLIC_URL ?? "https://hi.sfu-kras.ru") + "/ru" + `/info/news/${item.slug}`,
-                en: (process.env.NEXT_PUBLIC_URL ?? "https://hi.sfu-kras.ru") + "/en" + `/info/news/${item.slug}`,
+                ru: (process.env.NEXT_PUBLIC_URL ?? "https://hi.sfu-kras.ru") + "/ru" + `/structure/${item.slug}`,
+                en: (process.env.NEXT_PUBLIC_URL ?? "https://hi.sfu-kras.ru") + "/en" + `/structure/${item.slug}`,
             },
         },
-        priority: 0.6,
+        priority: 0.7,
     }))
 }
