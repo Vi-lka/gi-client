@@ -111,7 +111,7 @@ export const generateMetadata = async ({
       description: metadata.description,
       url: new URL(process.env.NEXT_PUBLIC_URL ?? "https://hi.sfu-kras.ru"),
       siteName: metadata.title,
-      images: metadata.image.data ? metadata.image.data.attributes.url : "https://hi.sfu-kras.ru/hero-image.jpeg",
+      images: metadata.image.data ? metadata.image.data.attributes.url : "/hero-image.jpeg",
       locale: locale,
       type: 'website',
     },
