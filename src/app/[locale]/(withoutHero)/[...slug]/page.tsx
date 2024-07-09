@@ -32,7 +32,7 @@ export async function generateMetadata({
     openGraph: {
       title: metadata.title,
       description: metadata.navBarConfig?.navBarDescription ? metadata.navBarConfig?.navBarDescription : undefined,
-      images: metadata.navBarConfig?.navBarImage.data?.attributes.url,
+      images: metadata.navBarConfig?.navBarImage.data?.attributes.url ?? "/hero-image.jpeg",
       locale: params.locale,
     },
   }

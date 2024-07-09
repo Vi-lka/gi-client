@@ -47,7 +47,8 @@ export default async function getMetadataAdmission(locale: string): Promise<{
         error: "Failed to fetch Metadata Admission",
         variables: {
           locale
-        }
+        },
+        revalidate: false
     })
     const data = ParentPagesMetaT.parse(json.data.entrancePage.data.attributes);
     const i18 = i18NLocales.parse(json.data.i18NLocales.data);

@@ -38,7 +38,8 @@ export default async function getMetadataStructureSingle(locale: string, slug: s
               eqi: slug
             }
           }
-        }
+        },
+        revalidate: false
     })
     const data = ChildPagesMetaT.parse(json.data.departments.data[0].attributes);
 

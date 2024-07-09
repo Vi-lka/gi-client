@@ -39,7 +39,8 @@ export default async function getMetadataDpoCourse(locale: string, slug: string)
               eqi: slug
             }
           }
-        }
+        },
+        revalidate: false
     })
     const data = ChildPagesMetaT.parse(json.data.dpoCourses.data[0].attributes);
 

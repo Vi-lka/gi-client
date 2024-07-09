@@ -29,7 +29,7 @@ export async function generateMetadata({
     openGraph: {
       title: metadata.title,
       description: metadata.description ? metadata.description : undefined,
-      images: metadata.image.data?.attributes.url,
+      images: metadata.image.data?.attributes.url ?? "/hero-image.jpeg",
       locale: locale,
     }
   }

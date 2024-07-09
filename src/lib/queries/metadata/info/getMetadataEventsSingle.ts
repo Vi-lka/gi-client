@@ -38,7 +38,8 @@ export default async function getMetadataEventsSingle(locale: string, slug: stri
               eqi: slug
             }
           }
-        }
+        },
+        revalidate: false
     })
     const data = ChildPagesMetaT.parse(json.data.events.data[0].attributes);
 

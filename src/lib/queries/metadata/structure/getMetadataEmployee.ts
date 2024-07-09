@@ -39,7 +39,8 @@ export default async function getMetadataEmployee(locale: string, slug: string):
               eqi: slug
             }
           }
-        }
+        },
+        revalidate: false
     })
     const data = ChildPagesMetaT.parse(json.data.employees.data[0].attributes);
 
