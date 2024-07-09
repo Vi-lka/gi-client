@@ -84,7 +84,24 @@ export const generateMetadata = async ({
 
   const [ dataResult ] = await Promise.allSettled([ getMetadataSite(locale) ]);
 
-  if (dataResult.status === "rejected") return {}
+  if (dataResult.status === "rejected") {
+    console.error(dataResult.reason)
+    return {
+      title: {
+        template: `%s | ГИ СФУ`,
+        default: "Гуманитарный институт СФУ",
+      },
+      metadataBase: new URL(process.env.NEXT_PUBLIC_URL ?? "https://hi.sfu-kras.ru"),
+      openGraph: {
+        title: "Гуманитарный институт СФУ",
+        url: new URL(process.env.NEXT_PUBLIC_URL ?? "https://hi.sfu-kras.ru"),
+        siteName: "Гуманитарный институт СФУ",
+        images: "/hero-image.jpeg",
+        locale: locale,
+        type: 'website',
+      }
+    }
+  }
 
   const metadata = dataResult.value.data
   const i18 = dataResult.value.i18

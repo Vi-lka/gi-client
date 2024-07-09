@@ -25,7 +25,10 @@ export async function generateMetadata({
 
   const [ dataResult ] = await Promise.allSettled([ getMetadataNewsSingle(locale, slug) ]);
 
-  if (dataResult.status === "rejected") return {}
+  if (dataResult.status === "rejected") {
+    console.error(dataResult.reason)
+    return {}
+  }
 
   const metadata = dataResult.value
 

@@ -10,7 +10,17 @@ export async function generateMetadata({
   
     const [ dataResult ] = await Promise.allSettled([ getMetadataStructure(locale) ]);
   
-    if (dataResult.status === "rejected") return {}
+    if (dataResult.status === "rejected") {
+      console.error(dataResult.reason)
+      return {
+        title: "Структура",
+        openGraph: {
+          title: "Структура",
+          images: "/hero-image.jpeg",
+          locale: locale,
+        }
+      }
+    }
   
     const metadata = dataResult.value.data
     const i18 = dataResult.value.i18

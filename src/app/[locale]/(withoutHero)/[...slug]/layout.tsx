@@ -13,7 +13,10 @@ export async function generateMetadata({
 
   const [ dataResult ] = await Promise.allSettled([ getMetadataAdditionalPage(params.locale, lastSlug, remainingSlugs) ]);
 
-  if (dataResult.status === "rejected") return {}
+  if (dataResult.status === "rejected") {
+    console.error(dataResult.reason)
+    return {}
+  }
 
   const metadata = dataResult.value.data
   const i18 = dataResult.value.i18
