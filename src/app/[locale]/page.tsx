@@ -14,6 +14,8 @@ import { Loader2 } from "lucide-react";
 import getMetadataSite from "@/lib/queries/metadata/getMetadataSite";
 import type { Metadata } from "next";
 
+export const dynamic = 'force-dynamic';
+
 export async function generateMetadata({ 
   params: { locale }
 }:  { 
