@@ -5,10 +5,8 @@ import ErrorHandler from '@/components/errors/ErrorHandler';
 import { TypographyH1 } from '@/components/typography';
 import { dynamicContentQuery } from '@/lib/dynamicContentQuery';
 import fetchData from '@/lib/queries/fetchData';
-import getMetadataAdditionalPage from '@/lib/queries/metadata/additional-pages/getMetadataAdditionalPage';
 import type { AdditionalPageSingleT } from '@/lib/types/pages';
 import { AdditionalPagesT } from '@/lib/types/pages';
-import type { Metadata } from 'next';
 import {notFound} from 'next/navigation';
 
  
