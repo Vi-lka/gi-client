@@ -13,6 +13,14 @@ export async function generateMetadata({
   if (dataResult.status === "rejected") return {}
 
   const metadata = dataResult.value.data
+  const i18 = dataResult.value.i18
+
+  const languages = {} as { [key: string]: string }
+
+  i18.map(item => {
+    const key = item.attributes.code
+    languages[key] = (process.env.NEXT_PUBLIC_URL ?? "https://hi.sfu-kras.ru") + `/${key}/admission`;
+  })
 
   return {
     title: metadata.title,
@@ -23,6 +31,10 @@ export async function generateMetadata({
       images: metadata.navBarConfig?.navBarImage.data?.attributes.url ?? "/hero-image.jpeg",
       locale: locale,
     },
+    alternates: {
+      canonical: (process.env.NEXT_PUBLIC_URL ?? "https://hi.sfu-kras.ru") + "/admission",
+      languages: languages
+    }
   }
 }
 
