@@ -2,10 +2,6 @@ import getMetadataEvents from '@/lib/queries/metadata/info/getMetadataEvents';
 import type { Metadata } from 'next';
 import type {ReactNode} from 'react';
 
-type Props = {
-  children: ReactNode;
-};
-
 export async function generateMetadata({ 
     params: { locale }
   }:  { 
@@ -29,6 +25,10 @@ export async function generateMetadata({
       }
     }
 }
+
+type Props = {
+  children: ReactNode;
+};
 
 export default function EventsLayout({children}: Props) {
   return children;

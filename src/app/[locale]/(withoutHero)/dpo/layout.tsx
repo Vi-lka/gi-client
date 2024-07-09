@@ -2,10 +2,6 @@ import getMetadataDPO from '@/lib/queries/metadata/dpo/getMetadataDPO';
 import type { Metadata } from 'next';
 import type {ReactNode} from 'react';
 
-type Props = {
-  children: ReactNode;
-};
-
 export async function generateMetadata({ 
     params: { locale }
   }:  { 
@@ -29,6 +25,10 @@ export async function generateMetadata({
       }
     }
 }
+
+type Props = {
+  children: ReactNode;
+};
 
 export default function DPOLayout({children}: Props) {
   return children;
