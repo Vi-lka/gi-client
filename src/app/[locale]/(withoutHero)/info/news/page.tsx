@@ -9,6 +9,7 @@ import { NewsPageT } from '@/lib/types/pages';
 import { notFound } from 'next/navigation';
 import React from 'react'
 
+
 export default async function NewsPage({
   params: { locale },
   searchParams,
