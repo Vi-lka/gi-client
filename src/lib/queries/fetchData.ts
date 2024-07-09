@@ -25,7 +25,7 @@ export default async function fetchData<T>({
     next: {
       tags: ["strapi"],
       // Next.js issue: if fetch in the component, not on the page, the cache is always MISS with tags, but with Time-based Revalidation both works correctly
-      revalidate: revalidate !== undefined ? revalidate : 3600,
+      revalidate: revalidate,
     },
   });
     

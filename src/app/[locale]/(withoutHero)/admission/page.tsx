@@ -8,6 +8,32 @@ import { dynamicContentQuery } from '@/lib/dynamicContentQuery'
 import Anchors from '@/components/Anchors'
 import { EntrancePageT } from '@/lib/types/pages'
 import fetchData from '@/lib/queries/fetchData'
+import type { Metadata } from 'next';
+import getMetadataAdmission from '@/lib/queries/metadata/admission/getMetadataAdmission';
+
+export async function generateMetadata({ 
+  params: { locale }
+}:  { 
+  params: { locale: string }
+}): Promise<Metadata> {
+
+  const [ dataResult ] = await Promise.allSettled([ getMetadataAdmission(locale) ]);
+
+  if (dataResult.status === "rejected") return {}
+
+  const metadata = dataResult.value.data
+
+  return {
+    title: metadata.title,
+    description: metadata.navBarConfig?.navBarDescription,
+    openGraph: {
+      title: metadata.title,
+      description: metadata.navBarConfig?.navBarDescription ? metadata.navBarConfig?.navBarDescription : undefined,
+      images: metadata.navBarConfig?.navBarImage.data?.attributes.url ?? "/hero-image.jpeg",
+      locale: locale,
+    },
+  }
+}
 
 export default async function AdmissionPage({
   params: { locale },

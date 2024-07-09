@@ -49,7 +49,8 @@ export default async function getMetadataSite(locale: string): Promise<{
         error: "Failed to fetch Site Description",
         variables: {
           locale
-        }
+        },
+        revalidate: false
     })
     const data = SiteDescriptionT.parse(json.data.siteDescription.data.attributes);
     const i18 = i18NLocales.parse(json.data.i18NLocales.data);

@@ -47,7 +47,8 @@ export default async function getMetadataNews(locale: string): Promise<{
         error: "Failed to fetch Metadata News",
         variables: {
           locale
-        }
+        },
+        revalidate: false
     })
     const data = ParentPagesMetaT.parse(json.data.newsPage.data.attributes);
     const i18 = i18NLocales.parse(json.data.i18NLocales.data);

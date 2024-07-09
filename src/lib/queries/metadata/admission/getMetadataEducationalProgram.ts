@@ -38,7 +38,8 @@ export default async function getMetadataEducationalProgram(locale: string, slug
               eqi: slug
             }
           }
-        }
+        },
+        revalidate: false
     })
     const data = ChildPagesMetaT.parse(json.data.educationalPrograms.data[0].attributes);
 

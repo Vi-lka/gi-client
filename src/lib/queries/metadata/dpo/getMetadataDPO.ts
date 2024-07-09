@@ -47,7 +47,8 @@ export default async function getMetadataDPO(locale: string): Promise<{
         error: "Failed to fetch Metadata DPO",
         variables: {
           locale
-        }
+        },
+        revalidate: false
     })
     const data = ParentPagesMetaT.parse(json.data.dpo.data.attributes);
     const i18 = i18NLocales.parse(json.data.i18NLocales.data);
