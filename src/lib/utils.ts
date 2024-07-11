@@ -2,7 +2,7 @@ import { clsx } from "clsx"
 import type {ClassValue} from "clsx";
 import { twMerge } from "tailwind-merge"
 import type { DictionariesType } from "./getDictionary";
-import { formatInTimeZone } from "date-fns-tz";
+import { formatInTimeZone, fromZonedTime } from "date-fns-tz";
 import { ru, enUS } from "date-fns/locale";
 import { eachDayOfInterval } from "date-fns";
 import React from "react";
@@ -127,9 +127,16 @@ export function dateRange(start:  Date | string, end: Date | string) {
 
 
 
-export function getDateIndx<T>(date: Date, array: T[]) {
-  return array.map(Number).indexOf(+date);
-  //          ^^^^^^^^^^^^         ^ serialisation steps
+export function getDateIndx(date: Date, array: Date[]) {
+  // prevent timezones
+  const formatedDate = fromZonedTime(date, "Asia/Krasnoyarsk")
+  const formatedArray = array.map(item => fromZonedTime(item, "Asia/Krasnoyarsk"))
+  // prevent timezones
+
+  const dateTime = formatedDate.getTime()
+  const times = formatedArray.map(item => item.getTime())
+
+  return times.indexOf(dateTime);
 }
 
 

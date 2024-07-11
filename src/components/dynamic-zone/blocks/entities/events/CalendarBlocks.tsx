@@ -73,23 +73,14 @@ export default function CalendarBlocks({
     setLoading(false)
   }, [date, datesByEventId, eventId, setEventId])
 
-  // prevent timezones
-  const formatedDates = dates.map(date => {
-    const formated = fromZonedTime(date, "Asia/Krasnoyarsk")
-    return formated
-  })
-
   const handleSelectDate: SelectSingleEventHandler = (_, selectedDay) => {
     setDate(selectedDay)
 
-    // prevent timezones
-    const formatedSelectedDay = fromZonedTime(selectedDay, "Asia/Krasnoyarsk")
-
-    const indx = getDateIndx(formatedSelectedDay, formatedDates)
+    const indx = getDateIndx(selectedDay, dates)
 
     console.log("indx: ", indx)
-    console.log("SelectedDate: ", formatedSelectedDay)
-    console.log("Dates: ", formatedDates)
+    console.log("SelectedDate: ", selectedDay)
+    console.log("Dates: ", dates)
 
     carouselApi?.scrollTo(indx)
   }
