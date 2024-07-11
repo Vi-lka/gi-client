@@ -4,6 +4,7 @@ import React from 'react'
 import CalendarBlocks from './CalendarBlocks'
 import type { EventsT } from '@/lib/types/entities'
 import { dateRange, getDateIndx, matrixToArray } from '@/lib/utils'
+import { fromZonedTime } from 'date-fns-tz'
 
 export default function EventsCalendar({
   events
@@ -46,12 +47,14 @@ export default function EventsCalendar({
   .sort((a,b) => {
     return a.getTime() - b.getTime();
   })
-  const datesUniq = allDates.filter((item, index) => 
-    getDateIndx(item, allDates) === index
+  const formatedDates = allDates.map(date => fromZonedTime(date, "Asia/Krasnoyarsk"))
+  
+  const datesUniq = formatedDates.filter((item, index) => 
+    getDateIndx(item, formatedDates) === index
   );
 
-  const duplicatesDates = allDates.filter((item, index) => 
-    allDates.some((elem, idx) => elem.toDateString() === item.toDateString() && idx !== index)
+  const duplicatesDates = formatedDates.filter((item, index) => 
+    formatedDates.some((elem, idx) => elem.toDateString() === item.toDateString() && idx !== index)
   )
   const duplicatesUniq = duplicatesDates.filter((item, index) => 
     getDateIndx(item, duplicatesDates) !== index
