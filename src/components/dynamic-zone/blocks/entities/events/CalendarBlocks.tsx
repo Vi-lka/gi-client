@@ -58,8 +58,8 @@ export default function CalendarBlocks({
   const firstDate = thisMonthDates[0] as Date | undefined
 
   useEffect(() => {
-    setDate(firstDate ?? dates[0])
-    setMonth(firstDate ?? dates[0])
+    setDate(dates[0])
+    setMonth(dates[0])
   }, [dates, setDate, setMonth])
 
   useEffect(() => {

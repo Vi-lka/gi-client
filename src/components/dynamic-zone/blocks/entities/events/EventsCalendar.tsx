@@ -48,14 +48,14 @@ export default function EventsCalendar({
     return a.getTime() - b.getTime();
   })
 
-  const formatedDates = allDates.map(date => fromZonedTime(date, "Asia/Krasnoyarsk"))
+  // const formatedDates = allDates.map(date => fromZonedTime(date, "Asia/Krasnoyarsk"))
   
-  const datesUniq = formatedDates.filter((item, index) => 
-    getDateIndx(item, formatedDates) === index
+  const datesUniq = allDates.filter((item, index) => 
+    getDateIndx(item, allDates) === index
   );
 
-  const duplicatesDates = formatedDates.filter((item, index) => 
-    formatedDates.some((elem, idx) => elem.toDateString() === item.toDateString() && idx !== index)
+  const duplicatesDates = allDates.filter((item, index) => 
+    allDates.some((elem, idx) => elem.toDateString() === item.toDateString() && idx !== index)
   )
   const duplicatesUniq = duplicatesDates.filter((item, index) => 
     getDateIndx(item, duplicatesDates) !== index
