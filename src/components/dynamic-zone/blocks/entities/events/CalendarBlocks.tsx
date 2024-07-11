@@ -11,6 +11,7 @@ import TextSegment from './segments/TextSegment'
 import { dateAtom, eventIdAtom, monthAtom } from '@/lib/hooks/atoms'
 import { useAtom } from 'jotai'
 import CalendarBlocksLoading from '@/components/loadings/CalendarBlocksLoading'
+import { fromZonedTime } from 'date-fns-tz'
 
 export default function CalendarBlocks({
   dates,
@@ -38,6 +39,7 @@ export default function CalendarBlocks({
     dates: Date[];
   }[]
 }) {
+
   const [loading, setLoading] = useState(true)
   
   const [eventId, setEventId] = useAtom(eventIdAtom)
@@ -71,14 +73,25 @@ export default function CalendarBlocks({
     setLoading(false)
   }, [date, datesByEventId, eventId, setEventId])
 
+  // prevent timezones
+  const formatedDates = dates.map(date => {
+    const formated = fromZonedTime(date, "Asia/Krasnoyarsk")
+    return formated
+  })
+
   const handleSelectDate: SelectSingleEventHandler = (_, selectedDay) => {
     setDate(selectedDay)
-    if (!carouselApi) {
-      return
-    }
 
-    const indx = getDateIndx(selectedDay, dates)
-    carouselApi.scrollTo(indx)
+    // prevent timezones
+    const formatedSelectedDay = fromZonedTime(selectedDay, "Asia/Krasnoyarsk")
+
+    const indx = getDateIndx(formatedSelectedDay, formatedDates)
+
+    console.log("indx: ", indx)
+    console.log("SelectedDate: ", formatedSelectedDay)
+    console.log("Dates: ", formatedDates)
+
+    carouselApi?.scrollTo(indx)
   }
 
   if (!date && loading) return <CalendarBlocksLoading />
