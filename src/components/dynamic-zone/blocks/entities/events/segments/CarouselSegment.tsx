@@ -5,7 +5,7 @@ import type { EventDayT } from '@/lib/types/entities'
 import React from 'react'
 import { WheelGesturesPlugin } from 'embla-carousel-wheel-gestures'
 import type { CarouselApi } from '@/components/ui/carousel'
-import { cn } from '@/lib/utils'
+import { cn, getDateIndx } from '@/lib/utils'
 import CarouselItemMulti from './carousel-segment/CarouselItemMulti'
 import CarouselItemSingle from './carousel-segment/CarouselItemSingle'
 import getItemData from '../getItemData'
@@ -40,6 +40,17 @@ export default function CarouselSegment({
 }: Props) {
 
   const [active, setActive] = React.useState(true)
+
+  const thisMonthDates = data.dates.filter(date => {
+    const today = new Date();
+    const isThisYear = date.getFullYear() === today.getFullYear()
+    const isThisMonth = date.getMonth() === today.getMonth();
+  
+    return isThisYear && isThisMonth;
+  })
+
+  const firstDate = thisMonthDates[0] as Date | undefined
+  const indx = firstDate ? getDateIndx(firstDate, data.dates) : 0
  
   React.useEffect(() => {
     if (!api) {
@@ -62,7 +73,8 @@ export default function CarouselSegment({
         opts={{ 
           align: "center", 
           axis: "y",
-          watchDrag: active
+          watchDrag: active,
+          startIndex: indx
         }}
         plugins={[
           WheelGesturesPlugin({active})

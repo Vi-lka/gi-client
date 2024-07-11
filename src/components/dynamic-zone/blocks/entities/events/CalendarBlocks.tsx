@@ -47,9 +47,19 @@ export default function CalendarBlocks({
   const [month, setMonth] = useAtom(monthAtom)
   const [carouselApi, setCarouselApi] = React.useState<CarouselApi>()
 
+  const thisMonthDates = dates.filter(date => {
+    const today = new Date();
+    const isThisYear = date.getFullYear() === today.getFullYear()
+    const isThisMonth = date.getMonth() === today.getMonth();
+  
+    return isThisYear && isThisMonth;
+  })
+
+  const firstDate = thisMonthDates[0] as Date | undefined
+
   useEffect(() => {
-    setDate(dates[0])
-    setMonth(dates[0])
+    setDate(firstDate ?? dates[0])
+    setMonth(firstDate ?? dates[0])
   }, [dates, setDate, setMonth])
 
   useEffect(() => {

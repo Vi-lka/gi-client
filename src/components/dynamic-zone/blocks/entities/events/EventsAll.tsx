@@ -96,6 +96,7 @@ async function EventsAllContent({
       search, 
       page: Number(page), 
       pageSize: Number(pageSize),
+      sort: (data.eventsConfig?.view === "classic" || data.eventsConfig?.view === "bento") ? "dateStart:desc" : "dateStart:asc",
       filterBy: data.connected ? slug : undefined
     }) 
   ]);
