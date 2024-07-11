@@ -78,10 +78,6 @@ export default function CalendarBlocks({
 
     const indx = getDateIndx(selectedDay, dates)
 
-    console.log("indx: ", indx)
-    console.log("SelectedDate: ", selectedDay)
-    console.log("Dates: ", dates)
-
     carouselApi?.scrollTo(indx)
   }
 
