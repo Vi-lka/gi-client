@@ -116,11 +116,6 @@ export function formatDate(date: Date, locale: string) {
   return str
 }
 
-export function convertUTCDateToLocalDate(date: Date) {
-  return fromZonedTime(date.getTime() - date.getTimezoneOffset()*60*1000, "Asia/Krasnoyarsk");
-}
-
-
 
 
 
