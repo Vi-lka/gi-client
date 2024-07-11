@@ -47,8 +47,7 @@ export default function EventsCalendar({
   .sort((a,b) => {
     return a.getTime() - b.getTime();
   })
-  const UTCDateToLocal = allDates.map(date => convertUTCDateToLocalDate(date))
-  const formatedDates = UTCDateToLocal.map(date => fromZonedTime(date, "Asia/Krasnoyarsk"))
+  const formatedDates = allDates.map(date => fromZonedTime(date, "Asia/Krasnoyarsk"))
   
   const datesUniq = formatedDates.filter((item, index) => 
     getDateIndx(item, formatedDates) === index
