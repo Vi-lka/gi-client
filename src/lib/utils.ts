@@ -116,6 +116,10 @@ export function formatDate(date: Date, locale: string) {
   return str
 }
 
+export function convertUTCDateToLocalDate(date: Date) {
+  return new Date(date.getTime() - date.getTimezoneOffset()*60*1000);   
+}
+
 
 
 

@@ -3,7 +3,7 @@ import CalendarBlocksLoading from '@/components/loadings/CalendarBlocksLoading'
 import React from 'react'
 import CalendarBlocks from './CalendarBlocks'
 import type { EventsT } from '@/lib/types/entities'
-import { dateRange, getDateIndx, matrixToArray } from '@/lib/utils'
+import { convertUTCDateToLocalDate, dateRange, getDateIndx, matrixToArray } from '@/lib/utils'
 import { fromZonedTime } from 'date-fns-tz'
 
 export default function EventsCalendar({
@@ -47,7 +47,8 @@ export default function EventsCalendar({
   .sort((a,b) => {
     return a.getTime() - b.getTime();
   })
-  const formatedDates = allDates.map(date => fromZonedTime(date, "Asia/Krasnoyarsk"))
+  const UTCDateToLocal = allDates.map(date => convertUTCDateToLocalDate(date))
+  const formatedDates = UTCDateToLocal.map(date => fromZonedTime(date, "Asia/Krasnoyarsk"))
   
   const datesUniq = formatedDates.filter((item, index) => 
     getDateIndx(item, formatedDates) === index
@@ -71,3 +72,4 @@ export default function EventsCalendar({
     </ClientHydration>
   )
 }
+
