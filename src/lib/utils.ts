@@ -2,9 +2,8 @@ import { clsx } from "clsx"
 import type {ClassValue} from "clsx";
 import { twMerge } from "tailwind-merge"
 import type { DictionariesType } from "./getDictionary";
-import { formatInTimeZone, fromZonedTime } from "date-fns-tz";
+import { format } from "date-fns-tz";
 import { ru, enUS } from "date-fns/locale";
-import { eachDayOfInterval } from "date-fns";
 import React from "react";
 
 export function cn(...inputs: ClassValue[]) {
@@ -110,7 +109,7 @@ export function getDateLocale(locale: keyof DictionariesType) {
 
 
 export function formatDate(date: Date, locale: string) {
-  const str = formatInTimeZone(date, 'Asia/Krasnoyarsk', "P", { 
+  const str = format(date, "P", { 
     locale: getDateLocale(locale as keyof DictionariesType)
   })
   return str
@@ -118,26 +117,71 @@ export function formatDate(date: Date, locale: string) {
 
 
 
+export function convertUTCDateToLocalDate(date: Date, deleteTime?: boolean) {
+  const convertedDate = new Date(date.getTime() - date.getTimezoneOffset()*60*1000);
+  if (deleteTime) return new Date(convertedDate.getFullYear(), convertedDate.getMonth(), convertedDate.getDate());
+  else return convertedDate;
+}
 
-export function dateRange(start:  Date | string, end: Date | string) {
-  return eachDayOfInterval({ start, end })
+export function reConvertUTCDateToLocalDate(date: Date, deleteTime?: boolean) {
+  const convertedDate = new Date(date.getTime() + date.getTimezoneOffset()*60*1000);
+  if (deleteTime) return new Date(convertedDate.getFullYear(), convertedDate.getMonth(), convertedDate.getDate());
+  else return convertedDate;
+}
+
+// export function genDateID(date: Date | string | number) {
+//   const day = (new Date(date)).getDay().toString();
+//   const mounth = (new Date(date)).getMonth().toString();
+//   const year = (new Date(date)).getFullYear().toString();
+
+//   const id = "id" + day + mounth + year;
+//   return id
+// }
+
+export function dateRange(start: Date, end: Date) {
+  end.setDate(end.getDate()+1)
+  const arr = [];
+  for (const dt = start; dt <= end; dt.setDate(dt.getDate()+1)){
+    arr.push(new Date(dt));
+  }
+  return arr;
 };
 
 
+// export function dateRange(start:  Date | string, end: Date | string) {
+//   return eachDayOfInterval({ start, end })
+// };
 
 
-export function getDateIndx(date: Date, array: Date[]) {
-  // prevent timezones
-  const formatedDate = fromZonedTime(date, "Asia/Krasnoyarsk")
-  const formatedArray = array.map(item => fromZonedTime(item, "Asia/Krasnoyarsk"))
-  // prevent timezones
+export function filterUniqueDates(dates: Date[]) {
 
-  const dateTime = formatedDate.getTime()
-  const times = formatedArray.map(item => item.getTime())
+  const datesNoTime = dates.map(date => 
+    convertUTCDateToLocalDate(new Date(date.getFullYear(), date.getMonth(), date.getDate()))
+  )
 
-  return times.indexOf(dateTime);
+  const lookup = new Set();
+  
+  return datesNoTime.filter(date => {
+     const serialised = date.getTime();
+    if (lookup.has(serialised)) {
+      return false;
+    } else { 
+      lookup.add(serialised);
+      return true;
+    }
+  })
 }
 
+
+
+export function getDateIndx(
+  date: Date, 
+  array: Date[]
+) {
+  return array.findIndex(item => {
+    return item.getTime() === date.getTime()
+  });
+}
 
 
 

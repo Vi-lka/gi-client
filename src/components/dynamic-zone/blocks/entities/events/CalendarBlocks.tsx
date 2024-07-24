@@ -1,17 +1,16 @@
 "use client"
 
-import type { EventDayT } from '@/lib/types/entities'
 import React, { useEffect, useState } from 'react'
 import type { SelectSingleEventHandler } from 'react-day-picker'
 import CalendarSegment from './segments/CalendarSegment'
 import CarouselSegment from './segments/CarouselSegment'
-import { getDateIndx } from '@/lib/utils'
+import { reConvertUTCDateToLocalDate, getDateIndx } from '@/lib/utils'
 import type { CarouselApi } from '@/components/ui/carousel'
 import TextSegment from './segments/TextSegment'
 import { dateAtom, eventIdAtom, monthAtom } from '@/lib/hooks/atoms'
 import { useAtom } from 'jotai'
 import CalendarBlocksLoading from '@/components/loadings/CalendarBlocksLoading'
-import { fromZonedTime } from 'date-fns-tz'
+import type { EventDayT } from '@/lib/types/entities'
 
 export default function CalendarBlocks({
   dates,
@@ -39,6 +38,35 @@ export default function CalendarBlocks({
     dates: Date[];
   }[]
 }) {
+  const datesConverted = dates.map(item => reConvertUTCDateToLocalDate(item, true))
+  const duplicatesConverted = duplicates.map(item => reConvertUTCDateToLocalDate(item, true))
+
+  const eventsDaysConverted = eventsDays.map(item => {
+    const daysConverted = item.days.map(day => {
+      const {date, ...rest} = day
+      return { date: reConvertUTCDateToLocalDate(date, true), ...rest }
+    })
+    return {eventId: item.eventId, days: daysConverted }
+  })
+  const datesByEventIdConverted = datesByEventId.map(item => {
+    const { dates, eventData, ...restItem } = item
+    const { dateStart, dateEnd, ...restEventData } = eventData
+
+    const itemDatesConverted = dates.map(item => reConvertUTCDateToLocalDate(item, true))
+    const dateStartConverted = reConvertUTCDateToLocalDate(dateStart, true)
+    const dateEndConverted = dateEnd ? reConvertUTCDateToLocalDate(dateEnd, true) : dateEnd
+    const eventDataConverted = {
+      dateStart: dateStartConverted,
+      dateEnd: dateEndConverted,
+      ...restEventData
+    }
+
+    return {
+      dates: itemDatesConverted,
+      eventData: eventDataConverted,
+      ...restItem
+    }
+  })
 
   const [loading, setLoading] = useState(true)
   
@@ -47,23 +75,30 @@ export default function CalendarBlocks({
   const [month, setMonth] = useAtom(monthAtom)
   const [carouselApi, setCarouselApi] = React.useState<CarouselApi>()
 
-  const thisMonthDates = dates.filter(date => {
+  const thisMonthDates = datesConverted.filter(item => {
     const today = new Date();
-    const isThisYear = date.getFullYear() === today.getFullYear()
-    const isThisMonth = date.getMonth() === today.getMonth();
+    const isThisYear = item.getFullYear() === today.getFullYear()
+    const isThisMonth = item.getMonth() === today.getMonth();
   
     return isThisYear && isThisMonth;
   })
 
-  const firstDate = thisMonthDates[0] as Date | undefined
+  const firstDate = thisMonthDates[0] ? thisMonthDates[0] : undefined
+  
+  useEffect(() => {
+    setDate(firstDate ?? datesConverted[0])
+    setMonth(firstDate ?? datesConverted[0])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   useEffect(() => {
-    setDate(dates[0])
-    setMonth(dates[0])
-  }, [dates, setDate, setMonth])
+    if (!carouselApi) return
+    carouselApi.scrollTo(firstDate ? getDateIndx(firstDate, datesConverted) : 0)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [carouselApi])
 
   useEffect(() => {
-    const eventsInCurrentDate = datesByEventId.map(item => {
+    const eventsInCurrentDate = datesByEventIdConverted.map(item => {
       if (!date) return undefined
   
       const finded = item.dates.find(item => item.toDateString() === date.toDateString())
@@ -81,39 +116,50 @@ export default function CalendarBlocks({
     if (!include) setEventId(eventsInCurrentDate[0])
 
     setLoading(false)
-  }, [date, datesByEventId, eventId, setEventId])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [date])
 
   const handleSelectDate: SelectSingleEventHandler = (_, selectedDay) => {
     setDate(selectedDay)
 
-    const indx = getDateIndx(selectedDay, dates)
+    const indx = getDateIndx(selectedDay, datesConverted)
 
     carouselApi?.scrollTo(indx)
   }
 
   if (!date && loading) return <CalendarBlocksLoading />
 
+  console.log(date)
+
   return (
     <div className='flex flex-wrap justify-between gap-6 md:mt-10'>
       <CalendarSegment 
-        data={{ dates, duplicates, eventsDays, datesByEventId }}
+        data={{ 
+          dates: datesConverted, 
+          duplicates: duplicatesConverted, 
+          eventsDays: eventsDaysConverted, 
+          datesByEventId: datesByEventIdConverted
+        }}
         date={date}
         month={month}
         onSelect={handleSelectDate}
-        setMonth={setMonth}
         className="xl:w-[calc(33%-1.5rem)] md:w-[calc(50%-1.5rem)] sm:w-full w-full p-0"
       />
 
       <CarouselSegment
-        data={{ dates, duplicates, eventsDays, datesByEventId }}
+        data={{ 
+          dates: datesConverted, 
+          duplicates: duplicatesConverted, 
+          eventsDays: eventsDaysConverted, 
+          datesByEventId: datesByEventIdConverted
+        }}
         api={carouselApi}
         setApi={setCarouselApi}
-        setDate={setDate}
-        setMonth={setMonth}
         className='xl:w-[calc(33%-1.5rem)] md:w-[calc(50%-1.5rem)] max-w-none'
       />
 
-      <TextSegment datesByEventId={datesByEventId} className='xl:w-[calc(33%-2.5rem)]' />
+      <TextSegment datesByEventId={datesByEventIdConverted} className='xl:w-[calc(33%-2.5rem)]' />
     </div>
   )
 }
+

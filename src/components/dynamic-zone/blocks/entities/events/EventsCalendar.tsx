@@ -3,8 +3,7 @@ import CalendarBlocksLoading from '@/components/loadings/CalendarBlocksLoading'
 import React from 'react'
 import CalendarBlocks from './CalendarBlocks'
 import type { EventsT } from '@/lib/types/entities'
-import { dateRange, getDateIndx, matrixToArray } from '@/lib/utils'
-import { fromZonedTime } from 'date-fns-tz'
+import { dateRange, filterUniqueDates, matrixToArray } from '@/lib/utils'
 
 export default function EventsCalendar({
   events
@@ -21,8 +20,15 @@ export default function EventsCalendar({
 
     let dates: Date[]
 
-    if (event.attributes.dateEnd) dates = dateRange(event.attributes.dateStart, event.attributes.dateEnd);
-    else dates = [event.attributes.dateStart]
+    if (event.attributes.dateEnd) {
+      dates = dateRange(
+        event.attributes.dateStart, 
+        event.attributes.dateEnd,
+      )
+    }
+    else dates = [
+      event.attributes.dateStart
+    ]
 
     return (
       { 
@@ -47,19 +53,13 @@ export default function EventsCalendar({
   .sort((a,b) => {
     return a.getTime() - b.getTime();
   })
-
-  // const formatedDates = allDates.map(date => fromZonedTime(date, "Asia/Krasnoyarsk"))
   
-  const datesUniq = allDates.filter((item, index) => 
-    getDateIndx(item, allDates) === index
-  );
+  const datesUniq = filterUniqueDates(allDates)
 
-  const duplicatesDates = allDates.filter((item, index) => 
+  const duplicatesDates = datesUniq.filter((item, index) => 
     allDates.some((elem, idx) => elem.toDateString() === item.toDateString() && idx !== index)
   )
-  const duplicatesUniq = duplicatesDates.filter((item, index) => 
-    getDateIndx(item, duplicatesDates) !== index
-  );
+  const duplicatesUniq = filterUniqueDates(duplicatesDates)
 
   return (
     <ClientHydration fallback={<CalendarBlocksLoading />}>

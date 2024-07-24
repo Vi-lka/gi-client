@@ -88,6 +88,7 @@ export default async function EventsSinglePage({
               text
               dateStart dateEnd
               days(sort: "date:asc") {
+                id
                 title
                 date
                 points(sort: "time:asc") {

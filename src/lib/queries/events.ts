@@ -47,6 +47,7 @@ export const getEvents = async ({
             dateStart
             dateEnd
             days(sort: "date:asc") {
+              id
               title
               date
               points(sort: "time:asc") {

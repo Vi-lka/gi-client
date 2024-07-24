@@ -30,7 +30,7 @@ export default function TextSegment({
       text: unknown;
     };
     dates: Date[];
-  }[],
+  }[]
   className?: string
 }) {
 

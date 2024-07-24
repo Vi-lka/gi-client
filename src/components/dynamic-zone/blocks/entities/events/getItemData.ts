@@ -7,17 +7,18 @@ export default function getItemData({
   datesByEventId,
   eventsDays
 }:{
-  currentDate: Date, 
+  currentDate: Date,
   duplicates: Date[],
-  datesByEventId: {
-    id: string;
-    dates: Date[];
-  }[],
   eventsDays: {
     eventId: string;
     days: EventDayT[]
   }[],
+  datesByEventId: {
+    id: string;
+    dates: Date[];
+  }[]
 }) {
+
   const duplicateIndx = getDateIndx(currentDate, duplicates);
 
   const eventsInCurrentDate = datesByEventId.map(item => {

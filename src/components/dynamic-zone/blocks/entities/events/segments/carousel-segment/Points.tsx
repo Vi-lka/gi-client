@@ -9,23 +9,25 @@ import { IoCalendarOutline } from "react-icons/io5";
 import AddToCalendar from './AddToCalendar';
 import CredenzaPopup from '@/components/CredenzaPopup';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
+import { useSetAtom } from 'jotai';
+import { activeCarouselAtom } from '@/lib/hooks/atoms';
 
 export default function Points({
   date,
   eventId,
-  itemData,
-  setActive
+  itemData
 }: {
   date: Date;
   eventId: string | undefined;
   itemData: EventDayT | undefined;
-  setActive: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const locale = useLocale()
 
   const dict = useDictionary()
 
   const scrollRef = createRef<HTMLDivElement>();
+
+  const setActive = useSetAtom(activeCarouselAtom)
 
   const handleActive = (active: boolean) => {
     if (scrollRef.current && (scrollRef.current.scrollHeight <= scrollRef.current.clientHeight)) {

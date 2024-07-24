@@ -85,7 +85,7 @@ export default async function Footer() {
     )
     const year = new Date()
 
-    const yearFormat = formatInTimeZone(year, 'Asia/Krasnoyarsk', "yyyy", { 
+    const yearFormat = formatInTimeZone(year, 'UTC', "yyyy", { 
         locale: getDateLocale(header_locale as keyof DictionariesType)
     })
 

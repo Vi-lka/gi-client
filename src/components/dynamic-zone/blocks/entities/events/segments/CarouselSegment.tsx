@@ -1,14 +1,16 @@
 "use client"
 
 import { Carousel, CarouselContent, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
-import type { EventDayT } from '@/lib/types/entities'
 import React from 'react'
 import { WheelGesturesPlugin } from 'embla-carousel-wheel-gestures'
 import type { CarouselApi } from '@/components/ui/carousel'
-import { cn, getDateIndx } from '@/lib/utils'
+import { cn } from '@/lib/utils'
 import CarouselItemMulti from './carousel-segment/CarouselItemMulti'
 import CarouselItemSingle from './carousel-segment/CarouselItemSingle'
 import getItemData from '../getItemData'
+import type { EventDayT } from '@/lib/types/entities'
+import { useAtomValue, useSetAtom } from 'jotai'
+import { activeCarouselAtom, dateAtom, monthAtom } from '@/lib/hooks/atoms'
 
 type Props = {
   data: {
@@ -20,13 +22,20 @@ type Props = {
     }[],
     datesByEventId: {
       id: string;
+      eventData: {
+        slug: string;
+        title: string;
+        location: string;
+        online: string | null;
+        dateStart: Date;
+        dateEnd: Date | null;
+        text: unknown;
+      };
       dates: Date[];
     }[]
   },
   api: CarouselApi,
-  setApi: React.Dispatch<React.SetStateAction<CarouselApi>>
-  setDate: React.Dispatch<React.SetStateAction<Date | undefined>>,
-  setMonth: React.Dispatch<React.SetStateAction<Date | undefined>>,
+  setApi: React.Dispatch<React.SetStateAction<CarouselApi>>,
   className?: string,
 }
 
@@ -34,31 +43,15 @@ export default function CarouselSegment({
   data,
   api,
   setApi,
-  setDate,
-  setMonth,
   className,
 }: Props) {
 
-  const [active, setActive] = React.useState(true)
-
-  const thisMonthDates = data.dates.filter(date => {
-    const today = new Date();
-    const isThisYear = date.getFullYear() === today.getFullYear()
-    const isThisMonth = date.getMonth() === today.getMonth();
-  
-    return isThisYear && isThisMonth;
-  })
-
-  const firstDate = thisMonthDates[0] as Date | undefined
-  const indx = firstDate ? getDateIndx(firstDate, data.dates) : 0
+  const setDate = useSetAtom(dateAtom)
+  const setMonth = useSetAtom(monthAtom)
+  const active = useAtomValue(activeCarouselAtom)
  
   React.useEffect(() => {
-    if (!api) {
-      return
-    }
- 
-    setDate(data.dates[api.selectedScrollSnap()])
-    setMonth(data.dates[api.selectedScrollSnap()])
+    if (!api) return
  
     api.on("select", () => {
       setDate(data.dates[api.selectedScrollSnap()])
@@ -74,7 +67,7 @@ export default function CarouselSegment({
           align: "center", 
           axis: "y",
           watchDrag: active,
-          startIndex: indx
+          // startIndex: indx,
         }}
         plugins={[
           WheelGesturesPlugin({active})
@@ -83,7 +76,7 @@ export default function CarouselSegment({
         className={cn("w-full max-w-lg md:mt-0 mt-6", className)}
       >
         <CarouselContent className="-mt-8 h-[300px]" classNameOverflow='py-6 px-2'>
-          {data.dates.map((dateItem, indx) => {
+          {data.dates.map((dateItem, index) => {
             const { duplicateIndx, items } = getItemData({
               currentDate: dateItem,
               duplicates: data.duplicates,
@@ -91,20 +84,18 @@ export default function CarouselSegment({
               eventsDays: data.eventsDays
             })
             // If duplicates
-            if (duplicateIndx >= 0) return (
+            if ((duplicateIndx >= 0) && (items.length > 1)) return (
               <CarouselItemMulti 
-                key={indx} 
+                key={index} 
                 date={dateItem} 
                 items={items} 
-                setActive={setActive} 
               />
             )
             else return (
               <CarouselItemSingle 
-                key={indx} 
+                key={index} 
                 date={dateItem} 
                 data={items[0]} 
-                setActive={setActive} 
               />
             )
           })}

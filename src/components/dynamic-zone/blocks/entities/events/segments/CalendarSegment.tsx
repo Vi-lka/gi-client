@@ -5,8 +5,10 @@ import { useLocale } from '@/lib/hooks/useLocale'
 import React from 'react'
 import { useDayPicker } from 'react-day-picker'
 import type {Matcher, SelectSingleEventHandler} from 'react-day-picker';
-import type { EventDayT } from '@/lib/types/entities'
 import getItemData from '../getItemData'
+import type { EventDayT } from '@/lib/types/entities'
+import { useSetAtom } from 'jotai'
+import { monthAtom } from '@/lib/hooks/atoms'
 
 type Props = {
   data: {
@@ -18,13 +20,21 @@ type Props = {
     }[],
     datesByEventId: {
       id: string;
+      eventData: {
+        slug: string;
+        title: string;
+        location: string;
+        online: string | null;
+        dateStart: Date;
+        dateEnd: Date | null;
+        text: unknown;
+      };
       dates: Date[];
     }[]
   }
   date: Date | undefined,
   month: Date | undefined,
-  onSelect: SelectSingleEventHandler | undefined
-  setMonth: React.Dispatch<React.SetStateAction<Date | undefined>>
+  onSelect: SelectSingleEventHandler | undefined,
   className?: string,
 }
 
@@ -33,9 +43,10 @@ export default function CalendarSegment({
   date,
   month,
   onSelect,
-  setMonth,
   className
 }: Props) {
+
+  const setMonth = useSetAtom(monthAtom)
 
   const locale = useLocale()
 
@@ -76,8 +87,9 @@ export default function CalendarSegment({
             datesByEventId: data.datesByEventId,
             eventsDays: data.eventsDays
           })
+
           // If duplicates
-          if (duplicateIndx >= 0) return (
+          if ((duplicateIndx >= 0) && (items.length > 1)) return (
             <p className='relative'>
               {formatDay(props.date, { locale })}
               <sup className='absolute text-[10px] top-1 -right-1.5'>

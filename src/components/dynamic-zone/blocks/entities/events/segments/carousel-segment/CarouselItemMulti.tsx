@@ -12,14 +12,12 @@ import { useAtom } from "jotai";
 export default function CarouselItemMulti({
   date,
   items,
-  setActive
 }: {
   date: Date;
   items: {
     eventId: string;
     itemData: EventDayT | undefined;
   }[];
-  setActive: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
 
   const [selectedTab, setSelectedTab] = useAtom(eventIdAtom);
@@ -63,7 +61,6 @@ export default function CarouselItemMulti({
                     date={date} 
                     eventId={item.eventId} 
                     itemData={item.itemData}
-                    setActive={setActive}
                   />
                 </CardContent>
               </Card>
@@ -78,7 +75,6 @@ export default function CarouselItemMulti({
                 date={date} 
                 eventId={undefined}
                 itemData={undefined}
-                setActive={setActive}
               />
             </CardContent>
           </Card>
