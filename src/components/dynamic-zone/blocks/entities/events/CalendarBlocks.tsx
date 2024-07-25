@@ -134,8 +134,6 @@ export default function CalendarBlocks({
 
   if (!date && loading) return <CalendarBlocksLoading />
 
-  console.log(date)
-
   return (
     <div className='flex flex-wrap justify-between gap-6 md:mt-10'>
       <CalendarSegment 
@@ -163,7 +161,7 @@ export default function CalendarBlocks({
         className='xl:w-[calc(33%-1.5rem)] md:w-[calc(50%-1.5rem)] max-w-none'
       />
 
-      <TextSegment datesByEventId={datesByEventIdConverted} className='xl:w-[calc(33%-2.5rem)]' />
+      <TextSegment datesByEventId={datesByEventIdConverted} className='xl:w-[calc(33%-2.5rem)] xl:mt-0 mt-3' />
     </div>
   )
 }
