@@ -92,12 +92,12 @@ export default function CarouselSegment({
               />
             )
             else return (
-              <CarouselItemSingle 
-                key={index} 
-                date={dateItem} 
-                data={items[0]} 
-              />
-            )
+                <CarouselItemSingle 
+                  key={index} 
+                  date={dateItem} 
+                  data={items[0]} 
+                />
+              )
           })}
         </CarouselContent>
         <CarouselPrevious className='disabled:opacity-20 md:-top-8 -top-6 border-none shadow-none transition-all duration-200' />

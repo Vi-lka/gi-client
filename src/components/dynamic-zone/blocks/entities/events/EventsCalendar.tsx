@@ -3,7 +3,7 @@ import CalendarBlocksLoading from '@/components/loadings/CalendarBlocksLoading'
 import React from 'react'
 import CalendarBlocks from './CalendarBlocks'
 import type { EventsT } from '@/lib/types/entities'
-import { dateRange, filterUniqueDates, matrixToArray } from '@/lib/utils'
+import { convertUTCDateToLocalDate, dateRange, filterUniqueDates, matrixToArray } from '@/lib/utils'
 
 export default function EventsCalendar({
   events
@@ -27,7 +27,9 @@ export default function EventsCalendar({
       )
     }
     else dates = [
-      event.attributes.dateStart
+      convertUTCDateToLocalDate(
+        new Date(event.attributes.dateStart.getFullYear(), event.attributes.dateStart.getMonth(), event.attributes.dateStart.getDate())
+      )
     ]
 
     return (
@@ -38,8 +40,14 @@ export default function EventsCalendar({
           title: event.attributes.title,
           location: event.attributes.location,
           online: event.attributes.online,
-          dateStart: event.attributes.dateStart,
-          dateEnd: event.attributes.dateEnd,
+          dateStart: convertUTCDateToLocalDate(
+            new Date(event.attributes.dateStart.getFullYear(), event.attributes.dateStart.getMonth(), event.attributes.dateStart.getDate())
+          ),
+          dateEnd: event.attributes.dateEnd
+            ? convertUTCDateToLocalDate(
+              new Date(event.attributes.dateEnd.getFullYear(), event.attributes.dateEnd.getMonth(), event.attributes.dateEnd.getDate())
+            ) 
+            : event.attributes.dateEnd,
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           text: event.attributes.text,
         },
@@ -54,12 +62,12 @@ export default function EventsCalendar({
     return a.getTime() - b.getTime();
   })
   
-  const datesUniq = filterUniqueDates(allDates)
+  const datesUniq = filterUniqueDates(allDates, false)
 
-  const duplicatesDates = datesUniq.filter((item, index) => 
+  const duplicatesDates = allDates.filter((item, index) => 
     allDates.some((elem, idx) => elem.toDateString() === item.toDateString() && idx !== index)
   )
-  const duplicatesUniq = filterUniqueDates(duplicatesDates)
+  const duplicatesUniq = filterUniqueDates(duplicatesDates, false)
 
   return (
     <ClientHydration fallback={<CalendarBlocksLoading />}>

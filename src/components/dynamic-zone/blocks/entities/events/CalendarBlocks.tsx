@@ -38,6 +38,7 @@ export default function CalendarBlocks({
     dates: Date[];
   }[]
 }) {
+
   const datesConverted = dates.map(item => reConvertUTCDateToLocalDate(item, true))
   const duplicatesConverted = duplicates.map(item => reConvertUTCDateToLocalDate(item, true))
 
@@ -50,7 +51,11 @@ export default function CalendarBlocks({
   })
   const datesByEventIdConverted = datesByEventId.map(item => {
     const { dates, eventData, ...restItem } = item
-    const { dateStart, dateEnd, ...restEventData } = eventData
+    const { 
+      dateStart, 
+      dateEnd, 
+      ...restEventData 
+    } = eventData
 
     const itemDatesConverted = dates.map(item => reConvertUTCDateToLocalDate(item, true))
     const dateStartConverted = reConvertUTCDateToLocalDate(dateStart, true)

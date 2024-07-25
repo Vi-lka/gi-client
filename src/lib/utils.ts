@@ -129,20 +129,15 @@ export function reConvertUTCDateToLocalDate(date: Date, deleteTime?: boolean) {
   else return convertedDate;
 }
 
-// export function genDateID(date: Date | string | number) {
-//   const day = (new Date(date)).getDay().toString();
-//   const mounth = (new Date(date)).getMonth().toString();
-//   const year = (new Date(date)).getFullYear().toString();
-
-//   const id = "id" + day + mounth + year;
-//   return id
-// }
-
 export function dateRange(start: Date, end: Date) {
-  end.setDate(end.getDate()+1)
+  // end.setDate(end.getDate()+1)
+  const endDt = convertUTCDateToLocalDate(new Date(end.getFullYear(), end.getMonth(), end.getDate()))
+  
+  const startDt = convertUTCDateToLocalDate(new Date(start.getFullYear(), start.getMonth(), start.getDate()))
+
   const arr = [];
-  for (const dt = start; dt <= end; dt.setDate(dt.getDate()+1)){
-    arr.push(new Date(dt));
+  for (startDt; startDt <= endDt; startDt.setDate(startDt.getDate()+1)){
+    arr.push(new Date(startDt));
   }
   return arr;
 };
@@ -153,10 +148,10 @@ export function dateRange(start: Date, end: Date) {
 // };
 
 
-export function filterUniqueDates(dates: Date[]) {
+export function filterUniqueDates(dates: Date[], convert?: boolean) {
 
   const datesNoTime = dates.map(date => 
-    convertUTCDateToLocalDate(new Date(date.getFullYear(), date.getMonth(), date.getDate()))
+    convert ? convertUTCDateToLocalDate(new Date(date.getFullYear(), date.getMonth(), date.getDate())) : date
   )
 
   const lookup = new Set();
