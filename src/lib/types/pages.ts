@@ -259,6 +259,7 @@ export const EventsPageT  = z.object({
 export type EventsPageT = z.infer<typeof EventsPageT>;
 
 export const EventsSinglePageT  = z.object({
+  id: z.string(),
   attributes: z.object({
     slug: z.string(),
     title: z.string(),

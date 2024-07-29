@@ -10,7 +10,7 @@ import { dynamicContentQuery } from '@/lib/dynamicContentQuery';
 import fetchData from '@/lib/queries/fetchData';
 import { EventsSinglePageT } from '@/lib/types/pages';
 import { formatDate } from '@/lib/utils';
-import { Globe, MapPin } from 'lucide-react';
+import { CalendarPlus, Globe, MapPin } from 'lucide-react';
 import { notFound } from 'next/navigation';
 import React from 'react'
 import { IoCalendarOutline } from "react-icons/io5";
@@ -19,6 +19,10 @@ import DynamicZone from '@/components/dynamic-zone/DynamicZone';
 import type { Metadata } from 'next';
 import getMetadataEventsSingle from '@/lib/queries/metadata/info/getMetadataEventsSingle';
 import ScheduleSection from './ScheduleSection';
+import CredenzaPopup from '@/components/CredenzaPopup';
+import { Button } from '@/components/ui/button';
+import AddToCalendar from '@/components/dynamic-zone/blocks/entities/events/segments/carousel-segment/AddToCalendar';
+import { getDictionary } from '@/lib/getDictionary';
 
 
 export async function generateMetadata({ 
@@ -54,6 +58,8 @@ export default async function EventsSinglePage({
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
 
+  const dict = await getDictionary(params.locale)
+
   const getEventBySlug = async (locale: string, slug: string) => {
     const query = /* GraphGL */ `
       query EventsBySlug($locale: I18NLocaleCode, $filters: EventFiltersInput) {
@@ -75,6 +81,7 @@ export default async function EventsSinglePage({
         }
         events(locale: $locale, filters: $filters) {
           data {
+            id
             attributes {
               title
               slug
@@ -196,38 +203,63 @@ export default async function EventsSinglePage({
             </ClientHydration>
           </div>
 
-          <div className='flex flex-wrap items-center gap-2 mb-6'>
-            <div className='flex items-center gap-2 dark:text-muted-foreground font-medium'>
-              <IoCalendarOutline className='w-auto h-5' />
-              <p className='flex-1'>
-                {formatDate(event.dateStart, params.locale)}
-                {event.dateEnd ? " - " + formatDate(event.dateEnd, params.locale) : ""}
-              </p>
-            </div>
-
-            <div className='flex items-center gap-2 dark:text-muted-foreground font-medium'>
-              <MapPin className='w-auto h-5' />
-              <NextLink 
-                href={`https://maps.yandex.ru/?text=${event.location}`}
-                target='__blank'
-                className='flex-1 hover:underline underline-offset-2 hover:underline-offset-4 transition-all transform-gpu duration-300'
-              >
-                {event.location}
-              </NextLink>
-            </div>
-
-            {event.online && (
+          <div className='flex gap-2 mb-6'>
+            <div className='flex flex-wrap items-center gap-2'>
               <div className='flex items-center gap-2 dark:text-muted-foreground font-medium'>
-                <Globe className='w-auto h-5' />
+                <IoCalendarOutline className='w-auto h-5' />
+                <p className='flex-1'>
+                  {formatDate(event.dateStart, params.locale)}
+                  {event.dateEnd ? " - " + formatDate(event.dateEnd, params.locale) : ""}
+                </p>
+              </div>
+
+              <div className='flex items-center gap-2 dark:text-muted-foreground font-medium'>
+                <MapPin className='w-auto h-5' />
                 <NextLink 
-                  href={event.online}
+                  href={`https://maps.yandex.ru/?text=${event.location}`}
                   target='__blank'
                   className='flex-1 hover:underline underline-offset-2 hover:underline-offset-4 transition-all transform-gpu duration-300'
                 >
-                  {new URL(event.online).hostname}
+                  {event.location}
                 </NextLink>
               </div>
-            )}
+
+              {event.online && (
+                <div className='flex items-center gap-2 dark:text-muted-foreground font-medium'>
+                  <Globe className='w-auto h-5' />
+                  <NextLink 
+                    href={event.online}
+                    target='__blank'
+                    className='flex-1 hover:underline underline-offset-2 hover:underline-offset-4 transition-all transform-gpu duration-300'
+                  >
+                    {new URL(event.online).hostname}
+                  </NextLink>
+                </div>
+              )}
+            </div>
+
+            <ClientHydration fallback={<Skeleton className='w-9 h-9 rounded-xl'/>}>
+              <CredenzaPopup
+                trigger={
+                  <Button
+                    variant="secondary"
+                    className='px-2 bg-primary text-primary-foreground dark:bg-accent dark:text-accent-foreground hover:text-primary transition-all duration-200 rounded-xl'
+                  >
+                    <CalendarPlus className='w-5 h-5' />
+                  </Button>
+                }
+                title={dict.Calendar.select}
+                description={dict.Calendar.selectDescription}
+              >
+                <AddToCalendar 
+                  type="credenza"
+                  date={dataResult.value.event.attributes.dateStart}
+                  eventId={dataResult.value.event.id}
+                  itemData={undefined}
+                  className='md:mb-1 mb-6'
+                />
+              </CredenzaPopup>
+            </ClientHydration>
           </div>
 
           <Anchors data={event.content} className='mb-6 lg:flex hidden'/>
