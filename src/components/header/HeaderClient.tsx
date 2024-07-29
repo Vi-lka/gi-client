@@ -21,7 +21,6 @@ export default function HeaderClient({
 
     const locale = useLocale()
 
-    const [sticky, setSticky] = useState(false)
     const [shadow, setShadow] = useState(false)
     const [scrollPosition, setScrollPosition] = useState(0);
     const [fixedTop, setFixedTop] = useState<number>();
@@ -46,10 +45,9 @@ export default function HeaderClient({
     useLayoutEffect(() => {
 
         if (pathname !== "/") {
-            setSticky(true)
 
             const fixedHeader = () => {
-                if (scrollPosition > 22) {
+                if (scrollPosition >= 3) {
                   setShadow(true)
                 } else {
                   setShadow(false)
@@ -62,16 +60,10 @@ export default function HeaderClient({
                 window.removeEventListener('scroll', fixedHeader);
             };
         } else {
-            if (!sticky) setFixedTop(stickyHeader.current?.offsetTop)
+            setFixedTop(stickyHeader.current?.offsetTop)
 
             const fixedHeader = () => {
-                if (fixedTop && scrollPosition > fixedTop - 2) {
-                    setSticky(true)
-                } else {
-                    setSticky(false)
-                }
-
-                if (fixedTop && scrollPosition > fixedTop + 132) {
+                if (fixedTop && scrollPosition > fixedTop - fixedTop/5) {
                     setShadow(true)
                 } else {
                     setShadow(false)
@@ -85,38 +77,30 @@ export default function HeaderClient({
             };
         }
 
-    }, [pathname, sticky, fixedTop, scrollPosition])
-
-    const handleScrollToTop = () => {
-        if (pathname !== "/") {
-          setSticky(false)
-        }
-    }
+    }, [pathname, fixedTop, scrollPosition])
 
     return (
-        <header className={cn(
-            'container md:w-5/6 mx-auto',
-            sticky || pathname !== "/" ? "[&[data-aria-hidden=true]>div]:pr-[var(--removed-body-scroll-bar-size)]" : ""
-        )}>
+        <header 
+            ref={stickyHeader} 
+            className={cn(
+                'w-full h-full sticky top-0 z-50',
+                pathname === "/" ? "-mb-[76px]" : "[&[data-aria-hidden=true]>div]:pr-[var(--removed-body-scroll-bar-size)]",
+                shadow ? "shadow-sm transition-[box-shadow]" : "transition-[box-shadow]",
+            )}
+        >
             <div 
-                ref={stickyHeader} 
                 className={cn(
-                    "bg-background z-50 py-6 duration-300",
-                    sticky || pathname !== "/" ? "fixed w-full top-0 left-1/2 -translate-x-1/2" : "relative -mb-[112px]",
-                    shadow ? "py-2 shadow-sm transition-[padding-top,padding-bottom,box-shadow]" : "transition-[padding-top,padding-bottom]"
+                    "container md:w-5/6 mx-auto bg-background py-6 duration-300",
+                    shadow ? "py-2 transition-[padding-top,padding-bottom]" : "transition-[padding-top,padding-bottom]"
                 )}
             >
-                <div className={cn(
-                    "relative",
-                    sticky || pathname !== "/" ? "container md:w-5/6 w-full" : ""
-                )}>
+                <div className="relative">
                     {/* Desktop */}
                     <div className='relative lg:flex hidden'>
                         <Link 
                           locale={locale}
                           href="/#top" 
                           className='absolute top-1/2 -translate-y-1/2 2xl:-left-20 -left-14' 
-                          onClick={handleScrollToTop}
                         >
                             <HiLogo className='w-10 h-10' />
                         </Link>
@@ -131,7 +115,7 @@ export default function HeaderClient({
 
                     {/* Mobile */}
                     <div className='lg:hidden flex items-center justify-between w-full'>
-                        <Link locale={locale} href="/#top" onClick={handleScrollToTop}>
+                        <Link locale={locale} href="/#top">
                             <HiLogo className='w-10 h-10' />
                         </Link>
 
