@@ -1,10 +1,10 @@
 "use client"
 
 import { sendEmail } from '@/app/[locale]/actions';
+import CredenzaPopup from '@/components/CredenzaPopup';
 import ContactForm from '@/components/forms/ContactForm';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useToast } from '@/components/ui/use-toast';
 import { getToEmail } from '@/lib/email';
@@ -71,8 +71,10 @@ export default function ButtonForm({
     }
 
     return (
-        <Dialog open={open} onOpenChange={setOpen}>
-            <DialogTrigger asChild>
+        <CredenzaPopup
+            open={open} 
+            onOpenChange={setOpen}
+            trigger={
                 <Button className={cn(
                     'w-full p-6 uppercase rounded-3xl text-primary bg-background border hover:border-background hover:text-background z-10',
                     "dark:text-background dark:bg-primary dark:hover:text-primary dark:hover:bg-transparent dark:hover:border-primary",
@@ -80,18 +82,15 @@ export default function ButtonForm({
                 )}>
                     {buttonTitle}
                 </Button>
-            </DialogTrigger>
-            <DialogContent className='!rounded-3xl md:p-8'>
-                <DialogHeader className='mb-1'>
-                    <DialogTitle>{formTitle}</DialogTitle>
-                    <DialogDescription className='whitespace-pre-wrap'>{formDescription}</DialogDescription>
-                </DialogHeader>
-                <ScrollArea type='scroll' className='max-h-[70vh]'>
-                    <div className='py-2 px-4'>
-                        <ContactForm handleAction={handleAction} />
-                    </div>
-                </ScrollArea>
-            </DialogContent>
-        </Dialog>
+            }
+            title={formTitle ?? dict.ContactForm.placeholder}
+            description={formDescription ?? ""}
+        >
+            <ScrollArea type='scroll' className='md:mb-1 mb-6' classNameViewport='max-h-[70vh]'>
+                <div className='py-2 px-4'>
+                    <ContactForm handleAction={handleAction} />
+                </div>
+            </ScrollArea>
+        </CredenzaPopup>
     )
 }

@@ -45,6 +45,7 @@
     }
   },
   "ContactForm": {
+    "placeholder": "Send Email",
     "form": {
       "name": "Name",
       "email": "E-mail",

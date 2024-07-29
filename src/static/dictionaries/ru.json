@@ -45,6 +45,7 @@
     }
   },
   "ContactForm": {
+    "placeholder": "Отправить Email",
     "form": {
       "name": "ФИО",
       "email": "E-mail",
