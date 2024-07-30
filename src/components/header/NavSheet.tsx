@@ -1,7 +1,7 @@
 "use client"
 
 import React from 'react'
-import { Sheet, SheetClose, SheetContent, SheetTrigger } from '../ui/sheet'
+import { Sheet, SheetClose, SheetContent, SheetDescription, SheetTitle, SheetTrigger } from '../ui/sheet'
 import { NavigationMenu, NavigationMenuList, navigationMenuTriggerStyle } from '../ui/navigation-menu'
 import { ScrollArea } from '../ui/scroll-area'
 import { cn } from '@/lib/utils'
@@ -34,6 +34,8 @@ export default function NavSheet({
       </SheetTrigger>
 
       <SheetContent>
+        <SheetTitle></SheetTitle>
+        <SheetDescription></SheetDescription>
         <NavigationMenu orientation="vertical" className="mx-auto">
           <NavigationMenuList className="flex flex-col items-center">
             <ScrollArea className="font-Raleway mt-[2vh] h-[90vh] w-full p-1">

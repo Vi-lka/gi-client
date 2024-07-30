@@ -11,6 +11,7 @@ import Menu from "./(hero)/Menu";
 import { Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Loader2 } from "lucide-react";
+import HeaderLoading from "@/components/loadings/main/HeaderLoading";
 
 export default async function Home({
   params: { locale },
@@ -22,7 +23,7 @@ export default async function Home({
 
 
   const getMainPage = async (locale: string): Promise<MainPageT> => {
-      const query = /* GraphGL */ `
+    const query = /* GraphGL */ `
       query MainPage($locale: I18NLocaleCode) {
         mainPage(locale: $locale) {
           data {
@@ -34,29 +35,27 @@ export default async function Home({
           }
         }
       }
-      `;
+    `;
 
-      const json = await fetchData<{ 
-        data: { 
-          mainPage: { 
-            data: MainPageT 
-          } 
-        }; 
-      }>({ 
-          query, 
-          error: "Failed to fetch Main Page",
-          variables: {
-            locale
-          }
-      })
+    const json = await fetchData<{ 
+      data: { 
+        mainPage: { 
+          data: MainPageT 
+        } 
+      }; 
+    }>({ 
+      query, 
+      error: "Failed to fetch Main Page",
+      variables: {
+        locale
+      }
+    })
 
-      // await new Promise((resolve) => setTimeout(resolve, 2000))
-
-      if (json.data.mainPage.data === null) notFound();
+    if (json.data.mainPage.data === null) notFound();
   
-      const mainPage = MainPageT.parse(json.data.mainPage.data);
+    const mainPage = MainPageT.parse(json.data.mainPage.data);
   
-      return mainPage;
+    return mainPage;
   };
 
   const [ dataResult ] = await Promise.allSettled([ getMainPage(locale) ]);
@@ -83,24 +82,28 @@ export default async function Home({
           </Suspense>
         }
       />
-      <Header />
+      <Suspense fallback={<HeaderLoading className="-mb-[76px]" />}>
+        <Header />
+      </Suspense>
       {dataResult.status !== "rejected"
         ? (
           <main className="flex flex-col items-center gap-12 container md:w-5/6 mx-auto lg:pt-36 pt-32">
             <div className='w-full -mt-16'>
               {dataResult.value.attributes.content.map((item, index) => (
-                  <section id={item.link ? item.link : undefined} key={index}>
-                      <DynamicZone item={item} searchParams={searchParams} headingBig />
-                  </section>
+                <section id={item.link ? item.link : undefined} key={index}>
+                  <DynamicZone item={item} searchParams={searchParams} headingBig />
+                </section>
               ))}
             </div>
           </main>
         )
-        : <ErrorHandler 
+        : (
+          <ErrorHandler 
             error={dataResult.reason as unknown} 
             place="Main Page"
             notFound={false}
           />
+        )
       }
     </>
   );

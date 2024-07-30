@@ -1,11 +1,12 @@
 import Link from '@/components/Link';
 import Header from '@/components/header/Header';
+import HeaderLoading from '@/components/loadings/main/HeaderLoading';
 import { Button } from '@/components/ui/button'
 import { getDictionary } from '@/lib/getDictionary';
 import { SquareArrowOutUpRight } from 'lucide-react';
 import { headers } from 'next/headers';
 // import { Undo2 } from 'lucide-react'
-import React from 'react'
+import React, { Suspense } from 'react'
 
 export default async function NotFound() {
 
@@ -16,7 +17,9 @@ export default async function NotFound() {
 
     return (
         <>
-            <Header />
+            <Suspense fallback={<HeaderLoading className='[&[data-aria-hidden=true]>div]:pr-[var(--removed-body-scroll-bar-size)]' />}>
+                <Header />
+            </Suspense>
             <div className="mx-auto my-10 flex flex-col items-center justify-center gap-10 text-center min-h-[60vh]">
                 <div className="flex flex-col items-center gap-4 text-center">
                     {/* <SearchX size={36} /> */}

@@ -204,7 +204,7 @@ export default async function EventsSinglePage({
           </div>
 
           <div className='flex gap-2 mb-6'>
-            <div className='flex flex-wrap items-center gap-2'>
+            <div className='flex flex-wrap items-center gap-2 flex-1'>
               <div className='flex items-center gap-2 dark:text-muted-foreground font-medium'>
                 <IoCalendarOutline className='w-auto h-5' />
                 <p className='flex-1'>
