@@ -22,8 +22,9 @@ export default function HeaderClient({
     const locale = useLocale()
 
     const [shadow, setShadow] = useState(false)
+    const [navPosition, setNavPosition] = useState<"top" | "bottom">("bottom")
     const [scrollPosition, setScrollPosition] = useState(0);
-    const [fixedTop, setFixedTop] = useState<number>();
+    const [offsetTop, setOffsetTop] = useState<number>();
 
     const pathname = usePathname()
 
@@ -45,7 +46,6 @@ export default function HeaderClient({
     useLayoutEffect(() => {
 
         if (pathname !== "/") {
-
             const fixedHeader = () => {
                 if (scrollPosition >= 3) {
                   setShadow(true)
@@ -60,13 +60,19 @@ export default function HeaderClient({
                 window.removeEventListener('scroll', fixedHeader);
             };
         } else {
-            setFixedTop(stickyHeader.current?.offsetTop)
+            setOffsetTop(stickyHeader.current?.offsetTop)
 
             const fixedHeader = () => {
-                if (fixedTop && scrollPosition > fixedTop - fixedTop/5) {
+                if (offsetTop && scrollPosition > offsetTop - offsetTop/5) {
                     setShadow(true)
                 } else {
                     setShadow(false)
+                }
+
+                if (offsetTop && scrollPosition > offsetTop - offsetTop/2) {
+                    setNavPosition("bottom")
+                } else {
+                    setNavPosition("top")
                 }
             }
 
@@ -77,7 +83,7 @@ export default function HeaderClient({
             };
         }
 
-    }, [pathname, fixedTop, scrollPosition])
+    }, [pathname, offsetTop, scrollPosition])
 
     return (
         <header 
@@ -105,7 +111,12 @@ export default function HeaderClient({
                             <HiLogo className='w-10 h-10' />
                         </Link>
 
-                        <NavMenu navBar={navBar} links={links} className='w-full max-w-none mx-auto justify-between lg:flex hidden nav-menu' />
+                        <NavMenu 
+                            navBar={navBar} 
+                            links={links} 
+                            side={navPosition}
+                            className='w-full max-w-none mx-auto justify-between lg:flex hidden nav-menu' 
+                        />
 
                         <div className='absolute top-1/2 -translate-y-1/2 2xl:-right-20 -right-16 h-full flex items-center'>
                           <MoreMenu />

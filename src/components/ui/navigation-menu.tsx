@@ -5,10 +5,15 @@ import { cva } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
 
+type NavigationMenuExtendT = {
+  side?: "top" | "bottom";
+};
+type NavigationMenuT = React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Root> & NavigationMenuExtendT;
+
 const NavigationMenu = React.forwardRef<
   React.ElementRef<typeof NavigationMenuPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Root>
->(({ className, children, ...props }, ref) => (
+  NavigationMenuT
+>(({ className, side, children, ...props }, ref) => (
   <NavigationMenuPrimitive.Root
     ref={ref}
     className={cn(
@@ -18,7 +23,7 @@ const NavigationMenu = React.forwardRef<
     {...props}
   >
     {children}
-    <NavigationMenuViewport />
+    <NavigationMenuViewport side={side} />
   </NavigationMenuPrimitive.Root>
 ))
 NavigationMenu.displayName = NavigationMenuPrimitive.Root.displayName
@@ -95,21 +100,32 @@ NavigationMenuContent.displayName = NavigationMenuPrimitive.Content.displayName
 
 const NavigationMenuLink = NavigationMenuPrimitive.Link
 
+type NavigationMenuViewportExtendT = {
+  side?: "top" | "bottom";
+};
+type NavigationMenuViewportT = React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Viewport> & NavigationMenuViewportExtendT;
+
 const NavigationMenuViewport = React.forwardRef<
   React.ElementRef<typeof NavigationMenuPrimitive.Viewport>,
-  React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Viewport>
->(({ className, ...props }, ref) => (
-  <div className={cn("absolute left-0 top-full flex justify-center")}>
-    <NavigationMenuPrimitive.Viewport
-      className={cn(
-        "origin-top-center relative mt-2 h-[var(--radix-navigation-menu-viewport-height)] w-full overflow-hidden rounded-2xl border border-primary/15 bg-popover text-popover-foreground shadow data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-90",
-        className
-      )}
-      ref={ref}
-      {...props}
-    />
-  </div>
-))
+  NavigationMenuViewportT
+>(({ className, side, ...props }, ref) => {
+
+  return (
+    <div className={cn(
+      "absolute left-0 flex justify-center",
+      side === "top" ? "bottom-full" : "top-full",
+    )}>
+      <NavigationMenuPrimitive.Viewport
+        className={cn(
+          "origin-top-center relative mt-2 h-[var(--radix-navigation-menu-viewport-height)] w-full overflow-hidden rounded-2xl border border-primary/15 bg-popover text-popover-foreground shadow data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-90",
+          className
+        )}
+        ref={ref}
+        {...props}
+      />
+    </div>
+  )
+})
 NavigationMenuViewport.displayName =
   NavigationMenuPrimitive.Viewport.displayName
 

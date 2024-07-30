@@ -10,10 +10,12 @@ import type { LinksT, NavBarT } from '@/lib/types/additional'
 export default function NavMenu({
   navBar,
   links,
+  side,
   className
 }: {
   navBar: NavBarT | null,
   links: LinksT,
+  side?: "top" | "bottom",
   className?: string
 }) {
 
@@ -59,7 +61,7 @@ export default function NavMenu({
   })
 
   return (
-    <NavigationMenu delayDuration={100} className={className}>
+    <NavigationMenu side={side} delayDuration={100} className={className}>
       <NavigationMenuList className='relative gap-2 flex-wrap justify-between items-center'>
         <NavMenuItem data={infoLinks} />
         <NavMenuItem data={structureLinks}/>
