@@ -21,12 +21,12 @@ export default function HeaderClient({
 
     const locale = useLocale()
 
+    const pathname = usePathname()
+
     const [shadow, setShadow] = useState(false)
-    const [navPosition, setNavPosition] = useState<"top" | "bottom">("bottom")
+    const [navPosition, setNavPosition] = useState<"top" | "bottom">(pathname === "/" ? "top" : "bottom")
     const [scrollPosition, setScrollPosition] = useState(0);
     const [offsetTop, setOffsetTop] = useState<number>();
-
-    const pathname = usePathname()
 
     const handleScroll = () => {
         const position = window.scrollY;
