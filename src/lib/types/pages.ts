@@ -279,6 +279,36 @@ export type EventsSinglePageT = z.infer<typeof EventsSinglePageT>;
 
 
 
+//.........................Education Page.........................//
+export const EducationPageT  = z.object({
+  attributes: z.object({
+    title: z.string(),
+    navBarConfig: z.object({ 
+      navBarTitle: z.string().nullable()
+    }).nullable(),
+    content: z.lazy(() => DynamicZoneT).array(),
+  }),
+})
+export type EducationPageT = z.infer<typeof EducationPageT>;
+
+export const EduEducationalProgramPageT  = z.object({
+  id: z.string(),
+  attributes: z.object({
+    slug: z.string(),
+    title: z.string(),
+    type: EducationalProgramTypeEnum,
+    code: z.string().nullable(),
+    mainName: z.string().nullable(),
+    mainCode: z.string().nullable(),
+    image: z.lazy(() => ImageT),
+    content: z.lazy(() => DynamicZoneT).array(),
+  }),
+})
+export type EduEducationalProgramPageT = z.infer<typeof EduEducationalProgramPageT>;
+
+
+
+
 //..................................................Additional Pages..................................................//
 export const AdditionalPageSingleT  = z.object({
   id: z.string(),

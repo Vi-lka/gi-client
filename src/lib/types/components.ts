@@ -447,6 +447,19 @@ export type FormBlockCompT = z.infer<typeof FormBlockCompT>;
 
 
 
+//.........................GroupCalendar.........................//
+export const GroupCalendarCompT = z.object({
+  __typename: z.literal("ComponentContentGroupCalendar"),
+  title: z.string().nullable(),
+  link: z.string().nullable(),
+  linkTitle: z.string().nullable(),
+  connected: z.boolean().nullable(),
+})
+export type GroupCalendarCompT = z.infer<typeof GroupCalendarCompT>;
+
+
+
+
 //..................................................DynamicZone..................................................//
 export const DynamicZoneT = z.discriminatedUnion("__typename", [
   TextCompT,
@@ -466,6 +479,7 @@ export const DynamicZoneT = z.discriminatedUnion("__typename", [
   AccordionCompT,
   BentoGridCompT,
   FormBlockCompT,
+  GroupCalendarCompT,
 ])
 export type DynamicZoneT = z.infer<typeof DynamicZoneT>;
 

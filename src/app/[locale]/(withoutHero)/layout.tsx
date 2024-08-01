@@ -13,7 +13,7 @@ export default function Layout({
             <Suspense fallback={<HeaderLoading className='[&[data-aria-hidden=true]>div]:pr-[var(--removed-body-scroll-bar-size)]' />}>
                 <Header />
             </Suspense>
-            <main className="flex flex-col items-center gap-12 container md:w-5/6 mx-auto lg:pt-36 pt-32">
+            <main className="flex flex-col items-center gap-12 container md:w-5/6 mx-auto lg:pt-16 pt-8">
                 {children}
             </main>
         </div>

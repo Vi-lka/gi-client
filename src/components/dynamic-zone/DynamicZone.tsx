@@ -89,6 +89,9 @@ const FormBlock = dynamic(
   )}
 )
 
+const GroupCalendar = dynamic(
+  () => import('./blocks/group-calendar/GroupCalendar'), {loading: () => <Loader2 className='animate-spin'/>}
+)
 
 export default function DynamicZone({
   item,
@@ -232,6 +235,14 @@ export default function DynamicZone({
 
     case "ComponentContentSliderEntity":
       return <SliderEntity 
+              key={`key-${item.__typename}-${item.link}`} 
+              data={item} 
+              headingBig={headingBig} 
+              className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} 
+            />
+
+    case "ComponentContentGroupCalendar":
+      return <GroupCalendar 
               key={`key-${item.__typename}-${item.link}`} 
               data={item} 
               headingBig={headingBig} 

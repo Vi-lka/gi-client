@@ -10,11 +10,13 @@ import React from 'react'
 export default function EducationalProgramsItem({
     locale,
     item,
-    buttonTitle
+    buttonTitle,
+    parentLink,
 }: {
     locale: string
     item: EducationalProgramSingleT,
     buttonTitle: string,
+    parentLink?: string,
 }) {
     return (
         <Card key={"edu-program" + item.id} className='min-w-0 shrink-0 grow-0 h-full group/card border-transparent dark:border-border/20 dark:hover:border-border hover:shadow-lg shadow-md rounded-3xl transition duration-300'>
@@ -22,7 +24,7 @@ export default function EducationalProgramsItem({
                 <ClientHydration fallback={<Skeleton className='w-full rounded-2xl aspect-[2/1]'/>}>
                     <Link 
                         locale={locale} 
-                        href={`/admission/${item.attributes.slug}`} 
+                        href={`/${parentLink ? parentLink : "admission"}/${item.attributes.slug}`} 
                         className='relative w-full aspect-[2/1] rounded-2xl overflow-hidden'
                     >
                         <ImageComp
@@ -42,13 +44,13 @@ export default function EducationalProgramsItem({
                     </div>
                     <div>
                         <p>{item.attributes.code}</p>
-                        <Link locale={locale} href={`/admission/${item.attributes.slug}`} className='w-fit'>
+                        <Link locale={locale} href={`/${parentLink ? parentLink : "admission"}/${item.attributes.slug}`} className='w-fit'>
                             <p className='font-bold'>{item.attributes.title}</p>
                         </Link>
                     </div>
                 </div>
 
-                <Link locale={locale} href={`/admission/${item.attributes.slug}`} className='w-fit mx-auto mb-3 md:mt-auto'>
+                <Link locale={locale} href={`/${parentLink ? parentLink : "admission"}/${item.attributes.slug}`} className='w-fit mx-auto mb-3 md:mt-auto'>
                     <Button className='uppercase font-medium px-10 py-5 rounded-3xl'>
                         {buttonTitle}
                     </Button>
