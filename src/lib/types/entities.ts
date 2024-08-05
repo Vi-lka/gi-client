@@ -307,3 +307,76 @@ export const EventsT  = z.object({
   data: EventSingleT.array(),
 })
 export type EventsT = z.infer<typeof EventsT>;
+
+
+
+//.........................Groups.........................//
+export const ExamT = z.object({
+  date: z.string().pipe( z.coerce.date() ),
+  name: z.string(),
+  address: z.string(),
+  teacher: z.object({
+    data: z.object({
+      id: z.string(),
+      attributes: z.object({ 
+        slug: z.string(),
+        title: z.string(),
+      })
+    }).nullable()
+  })
+});
+export type ExamT = z.infer<typeof ExamT>;
+
+export const DiplomaT = z.object({
+  date: z.string().pipe( z.coerce.date() ),
+  name: z.string(),
+  address: z.string(),
+  chairman: z.string(),
+});
+export type DiplomaT = z.infer<typeof DiplomaT>;
+
+export const HolidaysT = z.object({
+  dateStart: z.string().pipe( z.coerce.date() ),
+  dateEnd: z.string().pipe( z.coerce.date() ).nullable(),
+});
+export type HolidaysT = z.infer<typeof HolidaysT>;
+
+export const CourseEnumValues = [
+  "bachelor_1",
+  "bachelor_2",
+  "bachelor_3",
+  "bachelor_4",
+  "magistracy_1",
+  "magistracy_2",
+  "postgraduate_1",
+  "postgraduate_2",
+  "postgraduate_3",
+] as const;
+export const GroupCourseEnum = z.enum(CourseEnumValues);
+export type GroupCourseEnum = z.infer<typeof GroupCourseEnum>;
+
+export const GroupSingleT = z.object({
+  id: z.string(),
+  attributes: z.object({
+    title: z.string(),
+    course: GroupCourseEnum,
+    exams: ExamT.array(),
+    tests: ExamT.array(),
+    stateExams: DiplomaT.array(),
+    diplomas: DiplomaT.array(),
+    eduPractices: HolidaysT.array(),
+    internships: HolidaysT.array(),
+    holidays: HolidaysT.array(),
+  })
+});
+export type GroupSingleT = z.infer<typeof GroupSingleT>;
+
+export const GroupsT  = z.object({
+  meta: z.object({
+    pagination: z.object({
+      total: z.number(),
+    }),
+  }),
+  data: GroupSingleT.array(),
+})
+export type GroupsT = z.infer<typeof GroupsT>;

@@ -1,135 +1,81 @@
-import Breadcrumbs from '@/components/Breadcrumbs'
-import { TypographyH1 } from '@/components/typography'
+import TabsComp from '@/components/TabsComp';
+import ErrorHandler from '@/components/errors/ErrorHandler';
+import { getDictionary } from '@/lib/getDictionary';
+import { headers } from 'next/headers';
 import React, { Suspense } from 'react'
-import ErrorHandler from '@/components/errors/ErrorHandler'
-import { notFound } from 'next/navigation'
-import { dynamicContentQuery } from '@/lib/dynamicContentQuery'
-import { EducationPageT } from '@/lib/types/pages'
-import fetchData from '@/lib/queries/fetchData'
-import { getEduEducationalPrograms } from '@/lib/queries/educational-programs'
-import EducationalProgramsItem from '@/components/dynamic-zone/blocks/entities-cards/EducationalProgramsItem'
-import EducationalProgramsLoading from '@/components/loadings/EducationalProgramsLoading'
-import { ClientHydration } from '@/components/ClientHydration'
-import TabsComp from '@/components/TabsComp'
-import SearchField from '@/components/filters/SearchField'
-import DepartmentsFilter from '@/components/filters/entities/DepartmentsFilter'
-import { getDictionary } from '@/lib/getDictionary'
-import type { EducationalProgramSingleT } from '@/lib/types/entities'
+import EducationalProgramsItem from '../entities-cards/EducationalProgramsItem';
+import { getEduEducationalPrograms } from '@/lib/queries/educational-programs';
+import type { EducationalProgramSingleT } from '@/lib/types/entities';
+import EducationalProgramsLoading from '@/components/loadings/EducationalProgramsLoading';
+import { ClientHydration } from '@/components/ClientHydration';
+import type { CollectionAllCompT } from '@/lib/types/components';
+import dynamic from 'next/dynamic';
+import { Skeleton } from '@/components/ui/skeleton';
 
-export default async function EduEducationalProgramsPage({
-  params: { locale },
-  searchParams,
+const SearchField = dynamic(
+    () => import('@/components/filters/SearchField'), {loading: () => <Skeleton className='w-full h-10' />}
+)
+const DepartmentsFilter = dynamic(
+    () => import('@/components/filters/entities/DepartmentsFilter'), {loading: () => <Skeleton className='w-full h-10' />}
+)
+
+export default async function EducationalProgramsAll({
+    searchParams,
+    data,
 }: {
-  params: { locale: string },
-  searchParams: { [key: string]: string | string[] | undefined };
+    searchParams: { [key: string]: string | string[] | undefined };
+    data: CollectionAllCompT,
 }) {
+    const headersList = headers();
+    const locale = headersList.get('x-locale') || "";
+    const slug = headersList.get('x-slug') || undefined;
 
-  const dict = await getDictionary(locale)
+    const search = searchParams["search_edueduProg"] as string | undefined;
+    const departmentsParam = searchParams["departments"] as string | undefined;
 
-  const search = searchParams["search_eduProg"] as string | undefined;
-  const departmentsParam = searchParams["departments"] as string | undefined;
-  
+    const dict = await getDictionary(locale)
 
-  const getEducationPage = async (): Promise<EducationPageT> => {
-    const query = /* GraphGL */ `
-      query EducationPage($locale: I18NLocaleCode) {
-        educationPage(locale: $locale) {
-          data {
-            attributes {
-              title
-              navBarConfig { navBarTitle }
-              content {
-                ${dynamicContentQuery}
-              }
-            }
-          }
-        }
-      }
-    `;
-
-    const json = await fetchData<{ 
-      data: { 
-        educationPage: { 
-          data: EducationPageT 
-        } 
-      }; 
-    }>({ 
-      query, 
-      error: "Failed to fetch Education Page",
-      variables: {
-        locale
-      }
-    })
-
-    // await new Promise((resolve) => setTimeout(resolve, 2000))
-
-    if (json.data.educationPage.data === null) notFound();
-    
-    const educationPage = EducationPageT.parse(json.data.educationPage.data);
-    
-    return educationPage;
-  };
-  
-
-  const [ dataResult ] = await Promise.allSettled([ getEducationPage() ]);
-  if (dataResult.status === "rejected") return (
-    <ErrorHandler 
-      error={dataResult.reason as unknown} 
-      place="Education Page"
-      notFound={false}
-    />
-  )
-
-  const breadcrumbsTitle = dataResult.value.attributes.navBarConfig?.navBarTitle 
-    ? dataResult.value.attributes.navBarConfig.navBarTitle 
-    : dataResult.value.attributes.title
-
-  return (
-    <div className='w-full'>
-      <Breadcrumbs data={[
-        { title: breadcrumbsTitle, slug: "education" }, 
-        { title: dict.EduEducationalProgramsPage.title, slug: "programs" }
-      ]} />
-
-      <TypographyH1 className='font-semibold text-primary my-6'>
-        {dict.EduEducationalProgramsPage.title}
-      </TypographyH1>
-
-      <div className='w-full pt-4'>
-        <div className='flex sm:flex-row flex-col gap-3 items-center mb-6'>
-            <div className='sm:w-1/2 w-full'>
-              <SearchField placeholder={dict.Inputs.search} param='search_edueduProg' className='' />
-            </div>
-            <div className='sm:w-1/2 w-full'>
-              <DepartmentsFilter searchParams={searchParams} />
-            </div>
-        </div>
-        <Suspense 
-          key={`search_edueduProg=${search}&departments=${departmentsParam}`} 
-          fallback={<EducationalProgramsLoading />}
-        >
-          <EducationalProgramsAllContent locale={locale} dict={dict} searchParams={searchParams} />
-        </Suspense>
-      </div>
-    </div>
-  )
+    return (
+        <>
+            {data.showSearch && (
+                <div className='w-full'>
+                    <SearchField placeholder={dict.Inputs.search} param='search_edueduProg' className='mb-3' />
+                </div>
+            )}
+            {data.showFilters && (
+                <div className='mb-6'>
+                    <DepartmentsFilter searchParams={searchParams} />
+                </div>
+            )}
+            <Suspense 
+                key={`search_edueduProg=${search}&departments=${departmentsParam}`} 
+                fallback={<EducationalProgramsLoading />}
+            >
+                <EducationalProgramsAllContent locale={locale} slug={slug} dict={dict} searchParams={searchParams} connected={data.connected} />
+            </Suspense>
+        </>
+    )
 }
 
 async function EducationalProgramsAllContent({
     locale,
+    slug,
     dict,
     searchParams,
+    connected,
 }: {
     locale: string,
+    slug: string | undefined,
     dict: Dictionary,
     searchParams: { [key: string]: string | string[] | undefined };
+    connected?: boolean | null;
 }) {
     const search = searchParams["search_edueduProg"] as string | undefined;
     const departmentsParam = searchParams["departments"] as string | undefined;
 
     const departments = departmentsParam?.split("_or_")
 
-    const sameParams = { locale, search, departments }
+    const sameParams = { locale, search, departments, filterBy: connected ? slug : undefined }
     const [ 
         bachelorsResult,
         magistracyResult,

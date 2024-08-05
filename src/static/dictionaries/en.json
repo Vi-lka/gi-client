@@ -85,6 +85,19 @@
   "Inputs": {
     "search": "Search",
     "departments": "Search by department",
+    "group": "Select group",
+    "course": {
+      "title": "Select course",
+      "bachelor_1": "Bachelor 1",
+      "bachelor_2": "Bachelor 2",
+      "bachelor_3": "Bachelor 3",
+      "bachelor_4": "Bachelor 4",
+      "magistracy_1": "Magistracy 1",
+      "magistracy_2": "Magistracy 2",
+      "postgraduate_1": "Postgraduate 1",
+      "postgraduate_2": "Postgraduate 2",
+      "postgraduate_3": "Postgraduate 3"
+    },
     "hashtags": "Search by hashtag"
   },
   "NotFound": {

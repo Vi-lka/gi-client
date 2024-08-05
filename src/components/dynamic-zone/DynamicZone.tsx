@@ -245,6 +245,7 @@ export default function DynamicZone({
       return <GroupCalendar 
               key={`key-${item.__typename}-${item.link}`} 
               data={item} 
+              searchParams={searchParams}
               headingBig={headingBig} 
               className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} 
             />

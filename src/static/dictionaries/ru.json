@@ -85,6 +85,19 @@
   "Inputs": {
     "search": "Поиск",
     "departments": "Поиск по структуре",
+    "group": "Выберите группу",
+    "course": {
+      "title": "Выберите курс",
+      "bachelor_1": "Бакалавриат 1",
+      "bachelor_2": "Бакалавриат 2",
+      "bachelor_3": "Бакалавриат 3",
+      "bachelor_4": "Бакалавриат 4",
+      "magistracy_1": "Магистратура 1",
+      "magistracy_2": "Магистратура 2",
+      "postgraduate_1": "Аспирантура 1",
+      "postgraduate_2": "Аспирантура 2",
+      "postgraduate_3": "Аспирантура 3"
+    },
     "hashtags": "Поиск по хэштегу"
   },
   "NotFound": {

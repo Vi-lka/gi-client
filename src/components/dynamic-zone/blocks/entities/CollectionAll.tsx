@@ -14,6 +14,9 @@ import CalendarBlocksLoading from '@/components/loadings/CalendarBlocksLoading';
 const EducationalProgramsAll = dynamic(
     () => import('./EducationalProgramsAll'), {loading: () => <EducationalProgramsLoading />}
 )
+const EduEducationalProgramsAll = dynamic(
+    () => import('./EduEducationalProgramsAll'), {loading: () => <EducationalProgramsLoading />}
+)
 const DpoCoursesAll = dynamic(
     () => import('./DpoCoursesAll'), {loading: () => <DpoCoursesLoading />}
 )
@@ -61,6 +64,9 @@ export default function CollectionAll({
                 switch (item) {
                     case "educational-programs":
                         return <EducationalProgramsAll key={index} searchParams={searchParams} data={data} />;
+                        
+                    case "edu-educational-programs":
+                        return <EduEducationalProgramsAll key={index} searchParams={searchParams} data={data} />;
                     
                     case "dpo-courses":
                         return <DpoCoursesAll key={index} searchParams={searchParams} data={data} />;

@@ -118,6 +118,7 @@ export type CollectionAllViewEnum = z.infer<typeof CollectionAllViewEnum>;
 
 export const CollectionAllEnum = z.enum([
   "educational-programs", 
+  "edu-educational-programs",
   "dpo-courses", 
   "graduates",
   "employees",
