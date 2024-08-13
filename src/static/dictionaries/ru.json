@@ -76,6 +76,19 @@
     "file": "файл",
     "schedule": "Расписание"
   },
+  "CalendarGroups": {
+    "exams": "Экзамены",
+    "tests": "Зачеты",
+    "stateExams": "Гос. экзамены",
+    "diplomas": "Дипломы",
+    "eduPractices": "Учебная практика",
+    "internships": "Производственная практика",
+    "holidays": "Каникулы",
+    "notFound": "Информации по данному дню не\u00A0найдено.",
+    "address": "Адрес",
+    "chairman": "Председатель",
+    "teacher": "Экзаменатор"
+  },
   "Buttons": {
     "more": "Подробнее",
     "allNews": "Все Новости",

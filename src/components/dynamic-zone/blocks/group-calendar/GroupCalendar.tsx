@@ -2,15 +2,17 @@ import ErrorHandler from '@/components/errors/ErrorHandler'
 import CourseFilter from '@/components/filters/CourseFilter'
 import GroupFilter from '@/components/filters/entities/GroupFilter'
 import { TypographyH2 } from '@/components/typography'
-import { getDictionary } from '@/lib/getDictionary'
-import { getGroupById, getGroups } from '@/lib/queries/groups'
+import { getGroupById } from '@/lib/queries/groups'
 import type { GroupCalendarCompT } from '@/lib/types/components'
-import { GroupCourseEnum } from '@/lib/types/entities'
+import type { GroupCourseEnum } from '@/lib/types/entities'
 import { cn } from '@/lib/utils'
 import { headers } from 'next/headers'
 import React, { Suspense } from 'react'
+import { getGroupCalendarData, getGroupCalendarDates } from './getCalendarData'
+import { ClientHydration } from '@/components/ClientHydration'
+import CalendarSegment from './CalendarSegment'
 
-export default async function GroupCalendar({
+export default function GroupCalendar({
     data,
     searchParams,
     headingBig,
@@ -28,8 +30,6 @@ export default async function GroupCalendar({
     const course = searchParams["course"] as GroupCourseEnum | undefined;
     const group = searchParams["group"] as string | undefined;
 
-    const dict = await getDictionary(locale)
-
     return (
         <div className={cn("w-full", className)}>
             {data.title && (
@@ -42,7 +42,7 @@ export default async function GroupCalendar({
                     {data.title}
                 </TypographyH2>
             )}
-            <div className='flex sm:flex-row flex-col gap-3 items-center justify-between mb-6'>
+            <div className='flex sm:flex-row flex-col gap-3 items-center justify-between mb-3'>
                 {data.connected 
                     ? null
                     : (
@@ -61,7 +61,6 @@ export default async function GroupCalendar({
             >
               <GroupCalendarContent
                 locale={locale}
-                dict={dict}
                 searchParams={searchParams}
               />
             </Suspense>
@@ -71,11 +70,9 @@ export default async function GroupCalendar({
 
 async function GroupCalendarContent({
     locale,
-    dict,
     searchParams,
 }: {
     locale: string,
-    dict: Dictionary,
     searchParams: { [key: string]: string | string[] | undefined };
 }) {
     const group = searchParams["group"] as string | undefined;
@@ -94,5 +91,14 @@ async function GroupCalendarContent({
         />
     )
 
-    return (<>GroupCalendar</>)
+    const dates = getGroupCalendarDates(dataResult.value)
+    const groupsData = getGroupCalendarData(dataResult.value)
+
+    return (
+        <ClientHydration fallback={"...ClientHydration"}>
+            <div className='w-full mb-12'>
+                <CalendarSegment dates={dates} groupsData={groupsData} />
+            </div>
+        </ClientHydration>
+    )
 }

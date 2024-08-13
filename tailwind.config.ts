@@ -52,7 +52,35 @@ const config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        apricot: "hsl(var(--apricot))"
+        apricot: "hsl(var(--apricot))",
+        exams: {
+          DEFAULT: "hsl(var(--exams))",
+          foreground: "hsl(var(--exams-foreground))",
+        },
+        tests: {
+          DEFAULT: "hsl(var(--tests))",
+          foreground: "hsl(var(--tests-foreground))",
+        },
+        stateExams: {
+          DEFAULT: "hsl(var(--stateExams))",
+          foreground: "hsl(var(--stateExams-foreground))",
+        },
+        diplomas: {
+          DEFAULT: "hsl(var(--diplomas))",
+          foreground: "hsl(var(--diplomas-foreground))",
+        },
+        eduPractices: {
+          DEFAULT: "hsl(var(--eduPractices))",
+          foreground: "hsl(var(--eduPractices-foreground))",
+        },
+        internships: {
+          DEFAULT: "hsl(var(--internships))",
+          foreground: "hsl(var(--internships-foreground))",
+        },
+        holidays: {
+          DEFAULT: "hsl(var(--holidays))",
+          foreground: "hsl(var(--holidays-foreground))",
+        }
       },
       borderRadius: {
         lg: "var(--radius)",

@@ -21,7 +21,7 @@ export default function CredenzaPopup({
       <CredenzaTrigger asChild>
         {trigger}
       </CredenzaTrigger>
-      <CredenzaContent className='sm:rounded-3xl rounded-3xl md:p-8'>
+      <CredenzaContent className='rounded-3xl md:p-8'>
         <CredenzaHeader className='mb-1'>
           <CredenzaTitle>{title}</CredenzaTitle>
           <CredenzaDescription className='whitespace-pre-wrap'>
