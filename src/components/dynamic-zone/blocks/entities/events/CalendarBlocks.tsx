@@ -88,7 +88,20 @@ export default function CalendarBlocks({
     return isThisYear && isThisMonth;
   })
 
-  const firstDate = thisMonthDates[0] ? thisMonthDates[0] : undefined
+  const nextMonthsDates = datesConverted.filter(item => {
+    const today = new Date();
+    const isNextMonths = new Date(item.getFullYear(), item.getMonth(), today.getDay()) > today
+  
+    return isNextMonths;
+  })
+
+  console.log(nextMonthsDates)
+
+  const firstDate = thisMonthDates[0] 
+    ? thisMonthDates[0] 
+    : nextMonthsDates[0]
+      ? nextMonthsDates[0]
+      : undefined
   
   useEffect(() => {
     setDate(firstDate ?? datesConverted[0])
