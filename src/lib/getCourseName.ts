@@ -1,4 +1,4 @@
-import { GroupCourseEnum } from "./types/entities";
+import type { GroupCourseEnum } from "./types/entities";
 
 export default function getCourseName(course: GroupCourseEnum, dict: Dictionary) {
     switch (course) {
