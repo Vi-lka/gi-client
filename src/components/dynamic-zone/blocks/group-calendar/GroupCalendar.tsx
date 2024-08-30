@@ -11,6 +11,7 @@ import React, { Suspense } from 'react'
 import { getGroupCalendarData, getGroupCalendarDates } from './getCalendarData'
 import { ClientHydration } from '@/components/ClientHydration'
 import CalendarSegment from './CalendarSegment'
+import GroupCalendarLoading from '@/components/loadings/GroupCalendarLoading'
 
 export default function GroupCalendar({
     data,
@@ -43,11 +44,11 @@ export default function GroupCalendar({
                 </TypographyH2>
             )}
             <div className='flex sm:flex-row flex-col gap-3 items-center justify-between mb-3'>
-                {data.connected 
+                {data.connected
                     ? null
                     : (
                         <div className='sm:w-1/2 w-full'>
-                            <CourseFilter />
+                            <CourseFilter disabled={(!!group && group.length > 0)} />
                         </div>
                     )
                 }
@@ -55,15 +56,17 @@ export default function GroupCalendar({
                     <GroupFilter searchParams={searchParams} connected={data.connected} slug={slug} />
                 </div>
             </div>
-            <Suspense 
-                key={`course=${course}&group=${group}`} 
-                fallback={"GroupCalendar Loading..."}
-            >
-              <GroupCalendarContent
-                locale={locale}
-                searchParams={searchParams}
-              />
-            </Suspense>
+            <div className='w-full mb-12'>
+                <Suspense 
+                    key={`course=${course}&group=${group}`} 
+                    fallback={<GroupCalendarLoading/>}
+                >
+                  <GroupCalendarContent
+                    locale={locale}
+                    searchParams={searchParams}
+                  />
+                </Suspense>
+            </div>
         </div>
     )
 }
@@ -95,10 +98,8 @@ async function GroupCalendarContent({
     const groupsData = getGroupCalendarData(dataResult.value)
 
     return (
-        <ClientHydration fallback={"...ClientHydration"}>
-            <div className='w-full mb-12'>
-                <CalendarSegment dates={dates} groupsData={groupsData} />
-            </div>
+        <ClientHydration fallback={<GroupCalendarLoading/>}>
+            <CalendarSegment dates={dates} groupsData={groupsData} />
         </ClientHydration>
     )
 }

@@ -4,7 +4,7 @@ import { getGroups } from '@/lib/queries/groups';
 import { headers } from 'next/headers';
 import React from 'react'
 import { Select } from '../Select';
-import { GroupCourseEnum } from '@/lib/types/entities';
+import type { GroupCourseEnum } from '@/lib/types/entities';
 
 export default async function GroupFilter({
     searchParams,

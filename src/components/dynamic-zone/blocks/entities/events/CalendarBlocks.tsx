@@ -94,9 +94,7 @@ export default function CalendarBlocks({
   
     return isNextMonths;
   })
-
-  console.log(nextMonthsDates)
-
+  
   const firstDate = thisMonthDates[0] 
     ? thisMonthDates[0] 
     : nextMonthsDates[0]

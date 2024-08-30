@@ -5,7 +5,11 @@ import { Select } from './Select';
 import { CourseEnumValues } from '@/lib/types/entities';
 import getCourseName from '@/lib/getCourseName';
 
-export default async function CourseFilter() {
+export default async function CourseFilter({
+    disabled,
+}: {
+    disabled?: boolean;
+}) {
 
     const headersList = headers();
     const locale = headersList.get('x-locale') || "";
@@ -17,6 +21,14 @@ export default async function CourseFilter() {
     ))
 
     return (
-        <Select isMulti={false} values={values} param='course' placeholder={dict.Inputs.course.title} align="center" className='max-w-none'/>
+        <Select 
+            isMulti={false} 
+            values={values} 
+            param='course' 
+            placeholder={dict.Inputs.course.title} 
+            align="center" 
+            disabled={disabled}
+            className='max-w-none'
+        />
     )
 }

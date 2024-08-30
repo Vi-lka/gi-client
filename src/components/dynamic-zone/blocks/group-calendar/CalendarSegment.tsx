@@ -12,6 +12,7 @@ import { getCalendarLabels, getDayData } from './getCalendarData';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
 import DayComponent from './DayComponent';
 import type { DiplomaT, ExamT } from '@/lib/types/entities';
+import { BigCalendarLoading } from '@/components/loadings/GroupCalendarLoading';
 
 type Props = {
   dates: {
@@ -139,7 +140,7 @@ export default function CalendarSegment({
         </Button>
       </div>
       {isPendingMonth 
-        ? ("...isPendingMonth")
+        ? (<BigCalendarLoading />)
         : (
           <Calendar
             mode="single"

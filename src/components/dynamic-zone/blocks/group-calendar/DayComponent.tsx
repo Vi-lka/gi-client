@@ -51,7 +51,10 @@ export default function DayComponent(props: Props) {
       return (
         <Button name="day" ref={buttonRef} {...restProps}>
           {children}
-          <Loader2 className='w-3 h-3 absolute top-0.5 right-0.5'/>
+          <Loader2 className={cn(
+            '2xl:w-3 2xl:h-3 min-[1140px]:w-2 min-[1140px]:h-2 min-[940px]:w-3 min-[940px]:h-3 sm:w-2 sm:h-2 min-[400px]:w-3 min-[400px]:h-3 w-2 h-2',
+            'absolute top-[0.2rem] left-[0.2rem] animate-spin'
+          )}/>
         </Button>
       ) 
     }

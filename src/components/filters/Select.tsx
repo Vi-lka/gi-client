@@ -36,6 +36,7 @@ export function Select({
   icon = false,
   side = "bottom",
   align = "start",
+  disabled,
   className,
 }: {
   isMulti: boolean;
@@ -48,6 +49,7 @@ export function Select({
   icon?: boolean;
   side?: "bottom" | "top" | "right" | "left";
   align?: "end" | "center" | "start";
+  disabled?: boolean;
   className?: string;
 }) {
   const inputRef = React.useRef<HTMLInputElement>(null);
@@ -207,11 +209,12 @@ export function Select({
     <div className={cn("relative max-w-[280px] popper-fit", className)}>
       <Popover open={openCombobox} onOpenChange={onComboboxOpenChange}>
         <div className="flex items-center gap-1">
-          <PopoverTrigger asChild>
+          <PopoverTrigger asChild disabled={disabled}>
             <Button
               variant={icon ? "ghost" : "outline"}
               role="combobox"
               aria-expanded={openCombobox}
+              disabled={disabled}
               className={cn(
                 "flex-1 text-muted-foreground hover:text-background relative justify-between border-border h-10 rounded-3xl",
                 selectedValues.length > 0 ? "w-[90%]" : "w-full",
@@ -251,6 +254,7 @@ export function Select({
                 placeholder={dict.Inputs.search}
                 value={inputSearch}
                 onValueChange={(input) => handleSearch(input)}
+                disabled={disabled}
               />
               {isPendingSearch ? (
                 <div className="absolute right-2 top-[10px]">
@@ -290,6 +294,7 @@ export function Select({
                             : "cursor-pointer opacity-100",
                         )}
                         onSelect={() => toggleItem(item)}
+                        disabled={disabled}
                       >
                         <Check
                           className={cn(

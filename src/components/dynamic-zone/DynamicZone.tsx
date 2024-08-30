@@ -18,6 +18,7 @@ import CollectionAllLoading from '../loadings/CollectionAllLoading';
 import BentoLoading from '../loadings/BentoLoading';
 import ListGridLoading from '../loadings/ListGridLoading';
 import SliderVideo from './blocks/sliders/SliderVideo';
+import GroupCalendarLoading from '../loadings/GroupCalendarLoading';
  
 const RichText = dynamic(
   () => import('./blocks/RichText'), {loading: () => <TextLoading />}
@@ -90,7 +91,7 @@ const FormBlock = dynamic(
 )
 
 const GroupCalendar = dynamic(
-  () => import('./blocks/group-calendar/GroupCalendar'), {loading: () => <Loader2 className='animate-spin'/>}
+  () => import('./blocks/group-calendar/GroupCalendar'), {loading: () => <GroupCalendarLoading />}
 )
 
 export default function DynamicZone({
