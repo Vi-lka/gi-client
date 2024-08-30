@@ -160,11 +160,11 @@ export function getDayData({
 }) {
   switch (type) {
     case "exam":
-      const findedExam = cardsData.exams.find(item => item.date.toDateString() === date.toDateString())
+      const findedExam = cardsData.exams.filter(item => item.date.toDateString() === date.toDateString())
       return findedExam;
 
     case "test":
-      const findedTest = cardsData.tests.find(item => item.date.toDateString() === date.toDateString())
+      const findedTest = cardsData.tests.filter(item => item.date.toDateString() === date.toDateString())
       return findedTest;
 
     case "stateExam":

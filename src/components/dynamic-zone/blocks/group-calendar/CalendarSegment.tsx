@@ -6,8 +6,9 @@ import { useLocale } from '@/lib/hooks/useLocale';
 import { cn, reConvertUTCDateToLocalDate } from '@/lib/utils';
 import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons"
 import React, { useState, useTransition } from 'react'
+import {useActiveModifiers, useDayPicker } from 'react-day-picker';
 import type {Matcher} from 'react-day-picker';
-import { getCalendarLabels } from './getCalendarData';
+import { getCalendarLabels, getDayData } from './getCalendarData';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
 import DayComponent from './DayComponent';
 import type { DiplomaT, ExamT } from '@/lib/types/entities';
@@ -176,7 +177,29 @@ export default function CalendarSegment({
               day_outside: "",
             }}
             components={{
-              Day: (props) => <DayComponent cardsData={cardsData} {...props} />
+              Day: (props) => <DayComponent cardsData={cardsData} {...props} />,
+              DayContent: ({ ...props }) => {
+                const {
+                  locale,
+                  formatters: { formatDay }
+                } = useDayPicker();
+                const modifiers =  useActiveModifiers(props.date, props.displayMonth)
+
+                // If tests
+                if (modifiers.testsDates) {
+                  const data = getDayData({date: props.date, cardsData, type: "test"}) as ExamT[]
+                  if (data.length > 1) return (
+                    <p className='relative'>
+                      {formatDay(props.date, { locale })}
+                      <sup className='absolute text-[10px] top-1 -right-1.5'>
+                        {data.length}
+                      </sup>
+                    </p>
+                  )
+                  else return <p>{formatDay(props.date, { locale })}</p>;
+                }
+                else return <p>{formatDay(props.date, { locale })}</p>;
+              },
             }}
           />
         )
