@@ -12,6 +12,7 @@ import { getGroupCalendarData, getGroupCalendarDates } from './getCalendarData'
 import { ClientHydration } from '@/components/ClientHydration'
 import CalendarSegment from './CalendarSegment'
 import GroupCalendarLoading from '@/components/loadings/GroupCalendarLoading'
+import { getDictionary } from '@/lib/getDictionary'
 
 export default function GroupCalendar({
     data,
@@ -78,9 +79,16 @@ async function GroupCalendarContent({
     locale: string,
     searchParams: { [key: string]: string | string[] | undefined };
 }) {
+
+    const dict = await getDictionary(locale)
+
     const group = searchParams["group"] as string | undefined;
 
-    if (!group) return (<>Select Group</>)
+    if (!group) return (
+        <div className='w-full mt-6'>
+            <p className='text-center font-semibold text-lg'>{dict.CalendarGroups.select}</p>
+        </div>
+    )
 
     const [ dataResult ] = await Promise.allSettled([ 
         getGroupById(locale, group)

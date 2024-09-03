@@ -87,7 +87,8 @@
     "notFound": "There is no information for this day",
     "address": "Address",
     "chairman": "Chairman",
-    "teacher": "The examiner"
+    "teacher": "The examiner",
+    "select": "Select Group"
   },
   "Buttons": {
     "more": "More",
