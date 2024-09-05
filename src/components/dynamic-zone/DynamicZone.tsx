@@ -19,6 +19,7 @@ import BentoLoading from '../loadings/BentoLoading';
 import ListGridLoading from '../loadings/ListGridLoading';
 import SliderVideo from './blocks/sliders/SliderVideo';
 import GroupCalendarLoading from '../loadings/GroupCalendarLoading';
+import ButtonsBlockLoading from '../loadings/ButtonsBlockLoading';
  
 const RichText = dynamic(
   () => import('./blocks/RichText'), {loading: () => <TextLoading />}
@@ -92,6 +93,10 @@ const FormBlock = dynamic(
 
 const GroupCalendar = dynamic(
   () => import('./blocks/group-calendar/GroupCalendar'), {loading: () => <GroupCalendarLoading />}
+)
+
+const ButtonsBlock = dynamic(
+  () => import('./blocks/ButtonsBlock'), {loading: () => <ButtonsBlockLoading />}
 )
 
 export default function DynamicZone({
@@ -250,8 +255,18 @@ export default function DynamicZone({
               headingBig={headingBig} 
               className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} 
             />
+
+    case "ComponentContentButtonsBlock":
+      return <ButtonsBlock
+              key={`key-${item.__typename}-${item.link}`} 
+              data={item} 
+              headingBig={headingBig} 
+              className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} 
+            />
+      
       
     default:
-      return null;
+      const exhaustiveCheck = item;
+      throw new Error(`Unhandled case: ${exhaustiveCheck}`);
   }
 }

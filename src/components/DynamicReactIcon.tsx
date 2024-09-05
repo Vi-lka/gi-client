@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 "use client"
 
+import { cn } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
 import dynamic from "next/dynamic";
 import type { IconType } from "react-icons/lib";
@@ -25,7 +26,7 @@ const DynamicReactIcon = ({
         // @ts-expect-error
         return mod[icon];
       },
-      { loading: () => <Loader2 className="animate-spin" /> }
+      { loading: () => <Loader2 className={cn("animate-spin", className)} /> }
     ),
     si: dynamic(
       async () => {
@@ -33,7 +34,7 @@ const DynamicReactIcon = ({
         // @ts-expect-error
         return mod[icon];
       },
-      { loading: () => <Loader2 className="animate-spin" /> }
+      { loading: () => <Loader2 className={cn("animate-spin", className)} /> }
     ),
     ci: dynamic(
       async () => {
@@ -41,7 +42,7 @@ const DynamicReactIcon = ({
         // @ts-expect-error
         return mod[icon];
       },
-      { loading: () => <Loader2 className="animate-spin" /> }
+      { loading: () => <Loader2 className={cn("animate-spin", className)} /> }
     ),
     fa: dynamic(
       async () => {
@@ -49,7 +50,7 @@ const DynamicReactIcon = ({
         // @ts-expect-error
         return mod[icon];
       },
-      { loading: () => <Loader2 className="animate-spin" /> }
+      { loading: () => <Loader2 className={cn("animate-spin", className)} /> }
     ),
     io: dynamic(
       async () => {
@@ -57,7 +58,7 @@ const DynamicReactIcon = ({
         // @ts-expect-error
         return mod[icon];
       },
-      { loading: () => <Loader2 className="animate-spin" /> }
+      { loading: () => <Loader2 className={cn("animate-spin", className)} /> }
     ),
     rx: dynamic(
       async () => {
@@ -65,7 +66,7 @@ const DynamicReactIcon = ({
         // @ts-expect-error
         return mod[icon];
       },
-      { loading: () => <Loader2 className="animate-spin" /> }
+      { loading: () => <Loader2 className={cn("animate-spin", className)} /> }
     ),
     md: dynamic(
       async () => {
@@ -73,7 +74,7 @@ const DynamicReactIcon = ({
         // @ts-expect-error
         return mod[icon];
       },
-      { loading: () => <Loader2 className="animate-spin" /> }
+      { loading: () => <Loader2 className={cn("animate-spin", className)} /> }
     ),
     ti: dynamic(
       async () => {
@@ -81,7 +82,7 @@ const DynamicReactIcon = ({
         // @ts-expect-error
         return mod[icon];
       },
-      { loading: () => <Loader2 className="animate-spin" /> }
+      { loading: () => <Loader2 className={cn("animate-spin", className)} /> }
     ),
     go: dynamic(
       async () => {
@@ -89,7 +90,7 @@ const DynamicReactIcon = ({
         // @ts-expect-error
         return mod[icon];
       },
-      { loading: () => <Loader2 className="animate-spin" /> }
+      { loading: () => <Loader2 className={cn("animate-spin", className)} /> }
     ),
     ai: dynamic(
       async () => {
@@ -97,7 +98,7 @@ const DynamicReactIcon = ({
         // @ts-expect-error
         return mod[icon];
       },
-      { loading: () => <Loader2 className="animate-spin" /> }
+      { loading: () => <Loader2 className={cn("animate-spin", className)} /> }
     ),
     bs: dynamic(
       async () => {
@@ -105,7 +106,7 @@ const DynamicReactIcon = ({
         // @ts-expect-error
         return mod[icon];
       },
-      { loading: () => <Loader2 className="animate-spin" /> }
+      { loading: () => <Loader2 className={cn("animate-spin", className)} /> }
     ),
     ri: dynamic(
       async () => {
@@ -113,7 +114,7 @@ const DynamicReactIcon = ({
         // @ts-expect-error
         return mod[icon];
       },
-      { loading: () => <Loader2 className="animate-spin" /> }
+      { loading: () => <Loader2 className={cn("animate-spin", className)} /> }
     ),
     gr: dynamic(
       async () => {
@@ -121,7 +122,7 @@ const DynamicReactIcon = ({
         // @ts-expect-error
         return mod[icon];
       },
-      { loading: () => <Loader2 className="animate-spin" /> }
+      { loading: () => <Loader2 className={cn("animate-spin", className)} /> }
     ),
     hi: dynamic(
       async () => {
@@ -135,7 +136,7 @@ const DynamicReactIcon = ({
         // @ts-expect-error
         return mod[icon];
       },
-      { loading: () => <Loader2 className="animate-spin" /> }
+      { loading: () => <Loader2 className={cn("animate-spin", className)} /> }
     ),
     sl: dynamic(
       async () => {
@@ -143,7 +144,7 @@ const DynamicReactIcon = ({
         // @ts-expect-error
         return mod[icon];
       },
-      { loading: () => <Loader2 className="animate-spin" /> }
+      { loading: () => <Loader2 className={cn("animate-spin", className)} /> }
     ),
     im: dynamic(
       async () => {
@@ -151,7 +152,7 @@ const DynamicReactIcon = ({
         // @ts-expect-error
         return mod[icon];
       },
-      { loading: () => <Loader2 className="animate-spin" /> }
+      { loading: () => <Loader2 className={cn("animate-spin", className)} /> }
     ),
     bi: dynamic(
       async () => {
@@ -159,7 +160,7 @@ const DynamicReactIcon = ({
         // @ts-expect-error
         return mod[icon];
       },
-      { loading: () => <Loader2 className="animate-spin" /> }
+      { loading: () => <Loader2 className={cn("animate-spin", className)} /> }
     ),
     cg: dynamic(
       async () => {
@@ -167,7 +168,7 @@ const DynamicReactIcon = ({
         // @ts-expect-error
         return mod[icon];
       },
-      { loading: () => <Loader2 className="animate-spin" /> }
+      { loading: () => <Loader2 className={cn("animate-spin", className)} /> }
     ),
     vsc: dynamic(
       async () => {
@@ -175,7 +176,7 @@ const DynamicReactIcon = ({
         // @ts-expect-error
         return mod[icon];
       },
-      { loading: () => <Loader2 className="animate-spin" /> }
+      { loading: () => <Loader2 className={cn("animate-spin", className)} /> }
     ),
     tfi: dynamic(
       async () => {
@@ -183,7 +184,7 @@ const DynamicReactIcon = ({
         // @ts-expect-error
         return mod[icon];
       },
-      { loading: () => <Loader2 className="animate-spin" /> }
+      { loading: () => <Loader2 className={cn("animate-spin", className)} /> }
     ),
     fi: dynamic(
       async () => {
@@ -191,7 +192,7 @@ const DynamicReactIcon = ({
         // @ts-expect-error
         return mod[icon];
       },
-      { loading: () => <Loader2 className="animate-spin" /> }
+      { loading: () => <Loader2 className={cn("animate-spin", className)} /> }
     )
   };
 

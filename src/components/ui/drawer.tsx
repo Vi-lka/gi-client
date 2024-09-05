@@ -46,6 +46,7 @@ const DrawerContent = React.forwardRef<
         "fixed inset-x-0 bottom-0 z-50 mt-24 flex h-auto flex-col rounded-t-[10px] !rounded-b-none border-t bg-background",
         className
       )}
+      onOpenAutoFocus={(e) => e.preventDefault()}
       {...props}
     >
       <div className="mx-auto mt-4 h-1 w-[100px] rounded-full bg-muted" />

@@ -461,6 +461,38 @@ export type GroupCalendarCompT = z.infer<typeof GroupCalendarCompT>;
 
 
 
+//.........................ButtonsBlock.........................//
+export const AlignButtonsEnum = z.enum([
+  "left", 
+  "right", 
+  "center",
+  "between",
+  "around",
+  "evenly"
+]);
+export type AlignButtonsEnum = z.infer<typeof AlignButtonsEnum>;
+
+export const ButtonsBlockItemT = z.object({
+  title: z.string(),
+  link: z.string(),
+  icon: z.string().nullable(),
+})
+export type ButtonsBlockItemT = z.infer<typeof ButtonsBlockItemT>;
+
+export const ButtonsBlockCompT = z.object({
+  __typename: z.literal("ComponentContentButtonsBlock"),
+  title: z.string().nullable(),
+  link: z.string().nullable(),
+  linkTitle: z.string().nullable(),
+  alignButtons: AlignButtonsEnum,
+  items: ButtonsBlockItemT.array()
+})
+export type ButtonsBlockCompT = z.infer<typeof ButtonsBlockCompT>;
+
+
+
+
+
 //..................................................DynamicZone..................................................//
 export const DynamicZoneT = z.discriminatedUnion("__typename", [
   TextCompT,
@@ -481,6 +513,7 @@ export const DynamicZoneT = z.discriminatedUnion("__typename", [
   BentoGridCompT,
   FormBlockCompT,
   GroupCalendarCompT,
+  ButtonsBlockCompT,
 ])
 export type DynamicZoneT = z.infer<typeof DynamicZoneT>;
 

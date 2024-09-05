@@ -318,6 +318,17 @@ export const dynamicContentQuery = `
     linkTitle
     connected
   }
+  ...on ComponentContentButtonsBlock {
+    title
+    link
+    linkTitle
+    alignButtons
+    items {
+      title
+      link
+      icon
+    }
+  }
 `
 
 //.........................LINKS.........................//
@@ -385,6 +396,9 @@ export const dynamicContentLinksQuery = `
     ${sameFields}
   }
   ...on ComponentContentGroupCalendar {
+    ${sameFields}
+  }
+  ...on ComponentContentButtonsBlock {
     ${sameFields}
   }
 `
