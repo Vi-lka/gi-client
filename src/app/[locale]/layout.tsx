@@ -99,7 +99,10 @@ export const generateMetadata = async ({
         images: "/hero-image.jpeg",
         locale: locale,
         type: 'website',
-      }
+      },
+      other: {
+        'google-site-verification': 'ML1di3QC2b-gJnCfwzk7JkJIn85VokcXy8lBy6jPaPg',
+      },
     }
   }
 
@@ -135,7 +138,10 @@ export const generateMetadata = async ({
     alternates: {
       canonical: new URL(process.env.NEXT_PUBLIC_URL ?? "https://hi.sfu-kras.ru"),
       languages: languages
-    }
+    },
+    other: {
+      'google-site-verification': 'ML1di3QC2b-gJnCfwzk7JkJIn85VokcXy8lBy6jPaPg',
+    },
   }
 }
 
