@@ -309,6 +309,41 @@ export type EduEducationalProgramPageT = z.infer<typeof EduEducationalProgramPag
 
 
 
+
+//.........................Projects Page.........................//
+export const ProjectsPageT  = z.object({
+  attributes: z.object({
+    title: z.string(),
+    navBarConfig: z.object({ 
+      navBarTitle: z.string().nullable()
+    }).nullable(),
+    content: z.lazy(() => DynamicZoneT).array(),
+  }),
+})
+export type ProjectsPageT = z.infer<typeof ProjectsPageT>;
+
+
+//.........................Project Single Page.........................//
+export const ProjectSinglePageT  = z.object({
+  id: z.string(),
+  attributes: z.object({
+    slug: z.string(),
+    title: z.string(),
+    year: z.number().nullable(),
+    head: z.object({
+      title: z.string(),
+      link: z.string().nullable(),
+    }).nullable(),
+    image: z.lazy(() => ImageT),
+    text: z.any(),
+    content: z.lazy(() => DynamicZoneT).array(),
+  }),
+})
+export type ProjectSinglePageT = z.infer<typeof ProjectSinglePageT>;
+
+
+
+
 //..................................................Additional Pages..................................................//
 export const AdditionalPageSingleT  = z.object({
   id: z.string(),

@@ -18,6 +18,7 @@ import BentoLoading from '@/components/loadings/BentoLoading'
 import NewLoading from '@/components/loadings/items/NewLoading'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
+import ProjectsItem from '../entities-cards/ProjectsItem'
 
 const EducationalProgramsItem = dynamic(
     () => import('../entities-cards/EducationalProgramsItem'), {loading: () => <EducationalProgramLoading />}
@@ -41,7 +42,7 @@ const DepartmentsBento = dynamic(
 )
 
 type CountType = {
-    label: "educational_programs" | "dpo_courses" | "departments" | "employees" | "graduates" | "news";
+    label: "educational_programs" | "dpo_courses" | "departments" | "employees" | "graduates" | "news" | "projects";
     count: number;
 }
 
@@ -66,7 +67,8 @@ export default async function SliderEntity({
         {label: "departments", count: data.departments.data.length},
         {label: "employees", count: data.employees.data.length},
         {label: "graduates", count: data.graduates.data.length},
-        {label: "news", count: data.news.data.length}
+        {label: "news", count: data.news.data.length},
+        {label: "projects", count: data.projects.data.length},
     ]
 
     const withMostCount = counts.reduce(
@@ -94,6 +96,9 @@ export default async function SliderEntity({
 
             case "news":
                 return "/info/news";
+
+            case "projects":
+                return "/projects";
 
             default:
                 return "/";
@@ -169,6 +174,15 @@ export default async function SliderEntity({
                 <ClientHydration fallback={<SliderGraduatesLoading />}>
                     <SliderSplit data={data.graduates.data} />
                 </ClientHydration>
+            )}
+            {data.projects.data.length > 0 && (
+                <CarouselComp className='lg:-ml-8 -ml-4'>
+                    {data.projects.data.map(item => (
+                        <CarouselItem key={"project" + item.id} className='lg:basis-1/2 lg:pl-8 pl-4'>
+                            <ProjectsItem locale={locale} item={item} dict={dict} />
+                        </CarouselItem>
+                    ))}
+                </CarouselComp>
             )}
             {data.titleAll && (
                 <Link locale={locale} href={hrefToMostCount} className='flex w-fit mx-auto mt-6'>

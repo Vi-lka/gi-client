@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { EducationalProgramSingleT, EmployeeSingleT, GraduateSingleT, DpoCoursesSingleT, StructureCategoryEnum, DepartmentSingleT, NewSingleT } from "./entities";
+import { EducationalProgramSingleT, EmployeeSingleT, GraduateSingleT, DpoCoursesSingleT, StructureCategoryEnum, DepartmentSingleT, NewSingleT, ProjectsSingleT } from "./entities";
 
 //.........................FORMS.........................//
 const phoneRegex = new RegExp(
@@ -124,7 +124,8 @@ export const CollectionAllEnum = z.enum([
   "employees",
   "departments",
   "news",
-  "events"
+  "events",
+  "projects"
 ]);
 export type CollectionAllEnum = z.infer<typeof CollectionAllEnum>;
 
@@ -233,6 +234,9 @@ export const SliderEntityCompT = z.object({
   }),
   news: z.object({
     data: z.lazy(() => NewSingleT).array()
+  }),
+  projects: z.object({
+    data: z.lazy(() => ProjectsSingleT).array()
   }),
   departmentsConfig: z.object({
     viewStyle: CollectionAllViewEnum,

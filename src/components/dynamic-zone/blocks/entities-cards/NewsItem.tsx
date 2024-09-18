@@ -18,6 +18,9 @@ export default function NewsItem({
     item: NewSingleT,
     buttonTitle: string,
 }) {
+    const publishedAt = item.attributes.publishedAt
+    publishedAt.setTime(publishedAt.getTime() + (7*60*60*1000)) // Kras time
+
     return (
         <Card key={"new" + item.id} className='min-w-0 shrink-0 grow-0 h-full group/card border-transparent dark:border-border/20 dark:hover:border-border hover:shadow-lg shadow-md rounded-3xl transition duration-300'>
             <CardContent className="w-full h-full flex flex-col xl:gap-8 gap-6 md:justify-normal justify-between p-3">
@@ -41,12 +44,12 @@ export default function NewsItem({
                     <div className='flex items-center justify-between'>
                         <div className='flex items-center gap-2 dark:text-muted-foreground font-medium'>
                             <CalendarDays className='w-auto h-5' />
-                            <p>{formatDate(item.attributes.publishedAt, locale)}</p>
+                            <p>{formatDate(publishedAt, locale)}</p>
                         </div>
 
                         <div className='flex items-center gap-1 dark:text-muted-foreground font-medium'>
                             <Clock3 className='w-auto h-5' />
-                            <p>{item.attributes.publishedAt.getHours() + ":" + item.attributes.publishedAt.getMinutes()}</p>
+                            <p>{publishedAt.getHours() + ":" + publishedAt.getMinutes()}</p>
                         </div>
                     </div>
                     <div className='md:translate-y-1.5 group-hover/card:translate-y-0 transition duration-300 transform-gpu'>

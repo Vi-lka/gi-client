@@ -192,3 +192,28 @@ export const news = `
     }
   }
 `
+
+export const projects = `
+  projects {
+    data {
+      id
+      attributes {
+        title
+        slug
+        description
+        year
+        head {
+          title
+          link
+        }
+        image {
+          data {
+            attributes {
+              url
+            }
+          }
+        }
+      }
+    }
+  }
+`

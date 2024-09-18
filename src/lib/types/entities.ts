@@ -380,3 +380,34 @@ export const GroupsT  = z.object({
   data: GroupSingleT.array(),
 })
 export type GroupsT = z.infer<typeof GroupsT>;
+
+
+
+
+
+//.........................Projects.........................//
+export const ProjectsSingleT  = z.object({
+  id: z.string(),
+  attributes: z.object({
+    slug: z.string(),
+    title: z.string(),
+    description: z.string().nullable(),
+    year: z.number().nullable(),
+    head: z.object({
+      title: z.string(),
+      link: z.string().nullable(),
+    }).nullable(),
+    image: z.lazy(() => ImageT),
+  }),
+})
+export type ProjectsSingleT = z.infer<typeof ProjectsSingleT>;
+
+export const ProjectsT  = z.object({
+  meta: z.object({
+    pagination: z.object({
+      total: z.number(),
+    }),
+  }),
+  data: ProjectsSingleT.array(),
+})
+export type ProjectsT = z.infer<typeof ProjectsT>;

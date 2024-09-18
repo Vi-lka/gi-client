@@ -45,6 +45,9 @@
     },
     "Structure": {
       "contacts": "Контакты"
+    },
+    "Projects": {
+      "year": "г."
     }
   },
   "ContactForm": {
