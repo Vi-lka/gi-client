@@ -16,7 +16,7 @@ const SearchField = dynamic(
 
 const DEFAULT_PAGE_SIZE = 12;
 
-export default async function DpoCoursesAll({
+export default async function ProjectsAll({
     searchParams,
     data,
 }: {

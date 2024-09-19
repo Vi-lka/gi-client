@@ -47,7 +47,8 @@
       "contacts": "Контакты"
     },
     "Projects": {
-      "year": "г."
+      "year": "г.",
+      "head": "Руководитель"
     }
   },
   "ContactForm": {

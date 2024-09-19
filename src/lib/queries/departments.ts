@@ -101,6 +101,12 @@ export const getDepartments = async ({
         }},
         {events: {
           slug: { eqi: filterBy }
+        }},
+        {eduEducationalPrograms: {
+          slug: { eqi: filterBy }
+        }},
+        {projects: {
+          slug: { eqi: filterBy }
         }}
       ]
     } : undefined;

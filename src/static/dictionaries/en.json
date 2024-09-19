@@ -47,7 +47,8 @@
       "contacts": "Contacts"
     },
     "Projects": {
-      "year": ""
+      "year": "",
+      "head": "Head"
     }
   },
   "ContactForm": {

@@ -5,14 +5,16 @@ import { ClientHydration } from '@/components/ClientHydration';
 import DynamicZone from '@/components/dynamic-zone/DynamicZone';
 import ErrorHandler from '@/components/errors/ErrorHandler';
 import ImageComp from '@/components/ImageComp';
-import { TypographyH1 } from '@/components/typography';
+import MoreButton from '@/components/MoreButton';
+import { TypographyH1, TypographyH2 } from '@/components/typography';
+import { Card, CardContent } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { dynamicContentQuery } from '@/lib/dynamicContentQuery';
 import { getDictionary } from '@/lib/getDictionary';
 import fetchData from '@/lib/queries/fetchData';
 import getMetadataProject from '@/lib/queries/metadata/projects/getMetadataProject';
 import { ProjectSinglePageT } from '@/lib/types/pages';
-import { CalendarDays, CircleUser } from 'lucide-react';
+import { CalendarDays, ChevronRight, CircleUser } from 'lucide-react';
 import type { Metadata } from 'next';
 import NextLink from 'next/link';
 import { notFound } from 'next/navigation';
@@ -53,7 +55,7 @@ export default async function ProjectSinglePage({
     searchParams: { [key: string]: string | string[] | undefined },
 }) {
 
-    const dict = getDictionary(params.locale)
+    const dict = await getDictionary(params.locale)
 
     const getProjectBySlug = async (locale: string, slug: string) => {
         const query = /* GraphGL */ `
@@ -76,6 +78,14 @@ export default async function ProjectSinglePage({
                   head {
                     title
                     link
+                    description
+                    image {
+                      data {
+                        attributes {
+                          url
+                        }
+                      }
+                    }
                   }
                   image {
                     data {
@@ -173,7 +183,7 @@ export default async function ProjectSinglePage({
               <div className='flex flex-wrap gap-2 items-center justify-between mb-6'>
                 <div className='flex items-center gap-2 dark:text-muted-foreground font-medium'>
                   <CalendarDays className='w-auto h-5' />
-                  <p className='flex-1'>{project.year + " " + (await dict).Entities.Projects.year}</p>
+                  <p className='flex-1'>{project.year + " " + dict.Entities.Projects.year}</p>
                 </div>
                 {project.head && (
                   <div className='flex items-center gap-2 dark:text-muted-foreground font-medium'>
@@ -206,6 +216,78 @@ export default async function ProjectSinglePage({
             <BlocksRendererStrapi content={project.text} />
           </div>
         </div>
+
+        {project.head && (
+          <div className='w-full lg:pt-28 pt-20'>
+            <TypographyH2 className='font-semibold text-primary mb-6 border-none'>
+              {dict.Entities.Projects.head}
+            </TypographyH2>
+            <Card className='h-full group/card border-transparent dark:border-border/20 dark:hover:border-border hover:shadow-lg shadow-md rounded-3xl transition duration-300'>
+              <CardContent className="relative w-full h-full flex lg:flex-row flex-col lg:items-center xl:gap-8 gap-6 xl:px-8 p-6 overflow-hidden">
+                <ClientHydration fallback={<Skeleton className='rounded-full aspect-square w-32 lg:mx-0 mx-auto'/>}>
+                  {project.head.link 
+                    ? (
+                      <NextLink href={project.head.link} target='__blank'>
+                        <ImageComp
+                          src={project.head.image.data?.attributes.url}
+                          alt="Image"
+                          fill={false}
+                          width={128}
+                          height={128}
+                          className='object-cover rounded-full aspect-square max-h-32 lg:mx-0 mx-auto'
+                        />
+                      </NextLink>
+                    ) : (
+                      <ImageComp 
+                        src={project.head.image.data?.attributes.url}
+                        alt="Image"
+                        fill={false}
+                        width={128}
+                        height={128}
+                        className='object-cover rounded-full aspect-square max-h-32 lg:mx-0 mx-auto'
+                      />
+                    )
+                  }
+                </ClientHydration>
+
+                  <div className='h-full flex flex-col flex-1 lg:justify-center gap-4 text-primary'>
+                    <div className='lg:mt-auto lg:pt-3'>
+                      {project.head.link 
+                        ? (
+                          <NextLink href={project.head.link} className='w-fit' target='__blank'>
+                            <h4 className='text-lg font-bold line-clamp-5 md:translate-y-1.5 group-hover/card:translate-y-0 transition duration-300 transform-gpu'>
+                              {project.head.title}
+                            </h4>
+                          </NextLink>  
+                        ) : (
+                          <h4 className='text-lg font-bold line-clamp-5 md:translate-y-1.5 group-hover/card:translate-y-0 transition duration-300 transform-gpu'>
+                            {project.head.title}
+                          </h4>
+                        )
+                      }
+                    </div>   
+                    {project.head.description && (
+                      <p className='text-sm text-foreground dark:text-muted-foreground lg:line-clamp-3 line-clamp-5 whitespace-pre-wrap'>
+                        {project.head.description}
+                      </p>
+                    )}
+                    {project.head.link && (
+                      <div className='w-full flex mt-auto'>
+                        <MoreButton 
+                          href={project.head.link}
+                          target='__blank'
+                          variant="link"
+                          className='h-6 p-0 text-xs'
+                        >
+                          <ChevronRight size={20} />
+                        </MoreButton>
+                      </div>
+                    )}
+                  </div>
+              </CardContent>
+            </Card>
+          </div>
+        )}
   
         <div className='w-full lg:float-left'>
           {project.content.map((item, index) => (

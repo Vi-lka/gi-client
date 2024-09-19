@@ -53,6 +53,9 @@ export const getNews = async ({
     or: [
       {events: {
         slug: { eqi: filterBy }
+      }},
+      {projects: {
+        slug: { eqi: filterBy }
       }}
     ]
   } : undefined;

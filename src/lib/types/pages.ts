@@ -333,6 +333,8 @@ export const ProjectSinglePageT  = z.object({
     head: z.object({
       title: z.string(),
       link: z.string().nullable(),
+      description: z.string().nullable(),
+      image: z.lazy(() => ImageT),
     }).nullable(),
     image: z.lazy(() => ImageT),
     text: z.any(),

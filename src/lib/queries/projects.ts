@@ -56,7 +56,7 @@ export const getProjects = async ({
   const connectedFilter = (filterBy && filterBy.length > 0) 
   ? {
     or: [
-      {department: {
+      {departments: {
         slug: { eqi: filterBy }
       }},
       {employees: {

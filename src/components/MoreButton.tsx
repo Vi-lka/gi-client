@@ -9,11 +9,13 @@ import { cn } from '@/lib/utils'
 
 export default function MoreButton({ 
     href,
+    target,
     variant = "default",
     children,
     className 
 }: { 
     href: string,
+    target?: React.HTMLAttributeAnchorTarget,
     variant?: "link" | "default" | "destructive" | "outline" | "secondary" | "ghost" | null,
     children?: React.ReactNode,
     className?: string,
@@ -22,7 +24,7 @@ export default function MoreButton({
     const locale = useLocale()
 
     return (
-        <Link locale={locale} href={href} className='w-fit sm:ml-auto sm:mr-0 ml-auto mr-auto'>
+        <Link locale={locale} href={href} target={target} className='w-fit sm:ml-auto sm:mr-0 ml-auto mr-auto'>
             <Button variant={variant} className={cn('uppercase font-medium px-10 py-5 rounded-3xl', className)} >
                 {dict.Buttons.more} 
                 {children}

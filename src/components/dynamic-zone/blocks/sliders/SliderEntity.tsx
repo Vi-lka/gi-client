@@ -18,7 +18,6 @@ import BentoLoading from '@/components/loadings/BentoLoading'
 import NewLoading from '@/components/loadings/items/NewLoading'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
-import ProjectsItem from '../entities-cards/ProjectsItem'
 
 const EducationalProgramsItem = dynamic(
     () => import('../entities-cards/EducationalProgramsItem'), {loading: () => <EducationalProgramLoading />}
@@ -31,6 +30,9 @@ const DepartmentsItem = dynamic(
 )
 const NewsItem = dynamic(
     () => import('../entities-cards/NewsItem'), {loading: () => <NewLoading />}
+)
+const ProjectsItem = dynamic(
+    () => import('../entities-cards/ProjectsItem'), {loading: () => <DpoCourseLoading />}
 )
 
 const SliderSplit = dynamic(

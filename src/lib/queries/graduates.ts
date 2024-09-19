@@ -11,7 +11,7 @@ export const getGraduates = async ({
   locale,
   page,
   pageSize,
-  sort = "title:asc",
+  sort = "order:asc",
   search,
   filterBy,
 }: {
@@ -71,6 +71,12 @@ export const getGraduates = async ({
             slug: { eqi: filterBy }
           }
         }},
+        {eduEducationalPrograms: {
+          slug: { eqi: filterBy }
+        }},
+        {projects: {
+          slug: { eqi: filterBy }
+        }}
       ]
     } : undefined;
 
