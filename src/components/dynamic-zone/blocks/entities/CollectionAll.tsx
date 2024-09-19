@@ -38,6 +38,9 @@ const EventsAll = dynamic(
 const ProjectsAll = dynamic(
     () => import('./ProjectsAll'), {loading: () => <DpoCoursesLoading />}
 )
+const JournalsAll = dynamic(
+    () => import('./JournalsAll'), {loading: () => <DpoCoursesLoading />}
+)
 
 export default function CollectionAll({ 
     data,
@@ -91,6 +94,9 @@ export default function CollectionAll({
                     
                     case "projects":
                         return <ProjectsAll key={index} searchParams={searchParams} data={data} />;
+
+                    case "journals":
+                        return <JournalsAll key={index} searchParams={searchParams} data={data} />;
                 
                     default:
                         return null;

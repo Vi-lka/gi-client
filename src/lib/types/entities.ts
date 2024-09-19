@@ -411,3 +411,29 @@ export const ProjectsT  = z.object({
   data: ProjectsSingleT.array(),
 })
 export type ProjectsT = z.infer<typeof ProjectsT>;
+
+
+
+
+
+//.........................Journals.........................//
+export const JournalsSingleT  = z.object({
+  id: z.string(),
+  attributes: z.object({
+    slug: z.string(),
+    title: z.string(),
+    description: z.string().nullable(),
+    image: z.lazy(() => ImageT),
+  }),
+})
+export type JournalsSingleT = z.infer<typeof JournalsSingleT>;
+
+export const JournalsT  = z.object({
+  meta: z.object({
+    pagination: z.object({
+      total: z.number(),
+    }),
+  }),
+  data: JournalsSingleT.array(),
+})
+export type JournalsT = z.infer<typeof JournalsT>;

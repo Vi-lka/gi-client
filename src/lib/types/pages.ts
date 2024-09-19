@@ -346,6 +346,33 @@ export type ProjectSinglePageT = z.infer<typeof ProjectSinglePageT>;
 
 
 
+//.........................Journals Page.........................//
+export const JournalsPageT  = z.object({
+  attributes: z.object({
+    title: z.string(),
+    navBarConfig: z.object({ 
+      navBarTitle: z.string().nullable()
+    }).nullable(),
+    content: z.lazy(() => DynamicZoneT).array(),
+  }),
+})
+export type JournalsPageT = z.infer<typeof JournalsPageT>;
+
+
+//.........................Journal Single Page.........................//
+export const JournalSinglePageT  = z.object({
+  id: z.string(),
+  attributes: z.object({
+    slug: z.string(),
+    title: z.string(),
+    content: z.lazy(() => DynamicZoneT).array(),
+  }),
+})
+export type JournalSinglePageT = z.infer<typeof JournalSinglePageT>;
+
+
+
+
 //..................................................Additional Pages..................................................//
 export const AdditionalPageSingleT  = z.object({
   id: z.string(),
