@@ -90,12 +90,21 @@ export default function CalendarBlocks({
 
   const nextMonthsDates = datesConverted.filter(item => {
     const today = new Date();
-    const isNextMonths = new Date(item.getFullYear(), item.getMonth(), today.getDay()) > today
+    const isNextMonths = new Date(item.getFullYear(), item.getMonth(), today.getDay()) > today;
   
     return isNextMonths;
   })
-  
-  const firstDate = thisMonthDates[0] 
+
+  const biggerThanTodayDates = thisMonthDates.filter(item => {
+    const today = new Date();
+    const isBiggerThanToday = item > today;
+
+    return isBiggerThanToday;
+  })
+
+  const firstDate = biggerThanTodayDates[0] 
+  ? biggerThanTodayDates[0] 
+  : thisMonthDates[0] 
     ? thisMonthDates[0] 
     : nextMonthsDates[0]
       ? nextMonthsDates[0]
