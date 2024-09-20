@@ -34,6 +34,9 @@ const NewsItem = dynamic(
 const ProjectsItem = dynamic(
     () => import('../entities-cards/ProjectsItem'), {loading: () => <DpoCourseLoading />}
 )
+const JournalsItem = dynamic(
+    () => import('../entities-cards/JournalsItem'), {loading: () => <DpoCourseLoading />}
+)
 
 const SliderSplit = dynamic(
     () => import('./SliderSplit'), {loading: () => <SliderSplitLoading />}
@@ -44,7 +47,7 @@ const DepartmentsBento = dynamic(
 )
 
 type CountType = {
-    label: "educational_programs" | "dpo_courses" | "departments" | "employees" | "graduates" | "news" | "projects";
+    label: "educational_programs" | "dpo_courses" | "departments" | "employees" | "graduates" | "news" | "projects" | "journals";
     count: number;
 }
 
@@ -71,6 +74,7 @@ export default async function SliderEntity({
         {label: "graduates", count: data.graduates.data.length},
         {label: "news", count: data.news.data.length},
         {label: "projects", count: data.projects.data.length},
+        {label: "journals", count: data.journals.data.length},
     ]
 
     const withMostCount = counts.reduce(
@@ -101,6 +105,9 @@ export default async function SliderEntity({
 
             case "projects":
                 return "/projects";
+
+            case "journals":
+                return "/journals";
 
             default:
                 return "/";
@@ -182,6 +189,15 @@ export default async function SliderEntity({
                     {data.projects.data.map(item => (
                         <CarouselItem key={"project" + item.id} className='lg:basis-1/2 lg:pl-8 pl-4'>
                             <ProjectsItem locale={locale} item={item} dict={dict} />
+                        </CarouselItem>
+                    ))}
+                </CarouselComp>
+            )}
+            {data.journals.data.length > 0 && (
+                <CarouselComp className='lg:-ml-8 -ml-4'>
+                    {data.journals.data.map(item => (
+                        <CarouselItem key={"journal" + item.id} className='lg:basis-1/2 lg:pl-8 pl-4'>
+                            <JournalsItem locale={locale} item={item} dict={dict} />
                         </CarouselItem>
                     ))}
                 </CarouselComp>

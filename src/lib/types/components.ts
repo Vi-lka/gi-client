@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { EducationalProgramSingleT, EmployeeSingleT, GraduateSingleT, DpoCoursesSingleT, StructureCategoryEnum, DepartmentSingleT, NewSingleT, ProjectsSingleT } from "./entities";
+import { EducationalProgramSingleT, EmployeeSingleT, GraduateSingleT, DpoCoursesSingleT, StructureCategoryEnum, DepartmentSingleT, NewSingleT, ProjectsSingleT, JournalsSingleT } from "./entities";
 
 //.........................FORMS.........................//
 const phoneRegex = new RegExp(
@@ -238,6 +238,9 @@ export const SliderEntityCompT = z.object({
   }),
   projects: z.object({
     data: z.lazy(() => ProjectsSingleT).array()
+  }),
+  journals: z.object({
+    data: z.lazy(() => JournalsSingleT).array()
   }),
   departmentsConfig: z.object({
     viewStyle: CollectionAllViewEnum,

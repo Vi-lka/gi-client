@@ -217,3 +217,23 @@ export const projects = `
     }
   }
 `
+
+export const journals = `
+  journals {
+    data {
+      id
+      attributes {
+        title
+        slug
+        description
+        image {
+          data {
+            attributes {
+              url
+            }
+          }
+        }
+      }
+    }
+  }
+`

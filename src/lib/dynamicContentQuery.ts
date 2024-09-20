@@ -1,4 +1,4 @@
-import { departments, dpo_courses, educationalPrograms, employees, graduates, news, projects } from "./contentQueries"
+import { departments, dpo_courses, educationalPrograms, employees, graduates, journals, news, projects } from "./contentQueries"
 
 //.........................dynamicContentQuery.........................//
 export const dynamicContentQuery = `
@@ -96,6 +96,7 @@ export const dynamicContentQuery = `
     ${departments}
     ${news}
     ${projects}
+    ${journals}
     departmentsConfig {
       viewStyle
     }
