@@ -36,26 +36,29 @@
 
     --apricot: 23 76% 85%;
 
-    --exams: 142.1 76.2% 36.3%;
-    --exams-foreground: 355.7 100% 97.3%;
-
-    --tests: 30 25% 87%;
+    --tests: 32 89% 53%;
     --tests-foreground: 265 11% 43%;
 
-    --stateExams: 221.2 83.2% 53.3%;
-    --stateExams-foreground: 210 40% 98%;
+    --exams: 32 89% 53%;
+    --exams-foreground: 355.7 100% 97.3%;
 
-    --diplomas: 0 72.2% 50.6%;
+    --stateExams: 12 81% 45%;
+    --stateExams-foreground: 265 11% 43%;
+
+    --diplomas: 12 81% 45%;
     --diplomas-foreground: 0 85.7% 97.3%;
 
-    --eduPractices: 222.2 47.4% 11.2%;
-    --eduPractices-foreground: 210 40% 98%;
+    --eduPractices: 265 11% 43%;
+    --eduPractices-foreground: 265 11% 43%;
 
-    --internships: 47.9 95.8% 53.1%;
-    --internships-foreground: 26 83.3% 14.1%;
+    --internships: 204 62% 48%;
+    --internships-foreground: 265 11% 43%;
 
-    --holidays: 24.6 95% 53.1%;
-    --holidays-foreground: 60 9.1% 97.8%;
+    --preGraduatePractices: 74 53% 36%;
+    --preGraduatePractices-foreground: 265 11% 43%;
+
+    --holidays: 32 89% 53%;
+    --holidays-foreground: 32 89% 53%;
 
   }
  
@@ -91,26 +94,29 @@
 
     --apricot: 263 84% 52%;
 
-    --exams: 142.1 70.6% 45.3%;
-    --exams-foreground: 144.9 80.4% 10%;
-
-    --tests: 263 27% 31%;
+    --tests: 41 96% 53%;
     --tests-foreground: 264 12% 92%;
 
-    --stateExams: 217.2 91.2% 59.8%;
-    --stateExams-foreground: 222.2 47.4% 11.2%;
+    --exams: 41 96% 53%;
+    --exams-foreground: 144.9 80.4% 10%;
 
-    --diplomas: 0 72.2% 50.6%;
+    --stateExams: 13 86% 48%;
+    --stateExams-foreground: 264 12% 92%;
+
+    --diplomas: 13 86% 48%;
     --diplomas-foreground: 0 85.7% 97.3%;
     
-    --eduPractices: 210 40% 98%;
-    --eduPractices-foreground: 222.2 47.4% 11.2%;
+    --eduPractices: 264 12% 92%;
+    --eduPractices-foreground: 264 12% 92%;
 
-    --internships: 47.9 95.8% 53.1%;
-    --internships-foreground: 26 83.3% 14.1%;
+    --internships: 206 63% 65%;
+    --internships-foreground: 264 12% 92%;
 
-    --holidays: 20.5 90.2% 48.2%;
-    --holidays-foreground: 60 9.1% 97.8%;
+    --preGraduatePractices: 69 62% 39%;
+    --preGraduatePractices-foreground: 264 12% 92%;
+
+    --holidays: 41 96% 53%;
+    --holidays-foreground: 41 96% 53%;
 
   }
 }

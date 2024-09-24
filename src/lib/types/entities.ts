@@ -323,7 +323,8 @@ export const ExamT = z.object({
         title: z.string(),
       })
     }).nullable()
-  })
+  }),
+  description: z.string().nullable()
 });
 export type ExamT = z.infer<typeof ExamT>;
 
@@ -332,14 +333,24 @@ export const DiplomaT = z.object({
   name: z.string(),
   address: z.string(),
   chairman: z.string(),
+  description: z.string().nullable()
 });
 export type DiplomaT = z.infer<typeof DiplomaT>;
 
 export const HolidaysT = z.object({
   dateStart: z.string().pipe( z.coerce.date() ),
   dateEnd: z.string().pipe( z.coerce.date() ).nullable(),
+  description: z.string().nullable()
 });
 export type HolidaysT = z.infer<typeof HolidaysT>;
+
+export const RangeDatesT = z.object({
+  date: z.string().pipe( z.coerce.date() ),
+  description: z.string().nullable(),
+  dateStart: z.string().pipe( z.coerce.date() ),
+  dateEnd: z.string().pipe( z.coerce.date() ).nullable(),
+})
+export type RangeDatesT = z.infer<typeof RangeDatesT>;
 
 export const CourseEnumValues = [
   "bachelor_1",
@@ -367,6 +378,7 @@ export const GroupSingleT = z.object({
     eduPractices: HolidaysT.array(),
     internships: HolidaysT.array(),
     holidays: HolidaysT.array(),
+    preGraduatePractices: HolidaysT.array(),
   })
 });
 export type GroupSingleT = z.infer<typeof GroupSingleT>;
@@ -437,3 +449,14 @@ export const JournalsT  = z.object({
   data: JournalsSingleT.array(),
 })
 export type JournalsT = z.infer<typeof JournalsT>;
+
+
+
+
+//.........................Weekends.........................//
+export const WeekendsT = z.object({
+  attributes: z.object({
+    days: HolidaysT.array(),
+  })
+});
+export type WeekendsT = z.infer<typeof WeekendsT>;

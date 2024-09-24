@@ -4,9 +4,8 @@ import { getDayData } from '../getCalendarData';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
 import { formatDate } from '@/lib/utils';
 import { useLocale } from '@/lib/hooks/useLocale';
-import NextLink from "next/link";
 
-export default function DiplomaCard({
+export default function RangeDatesCard({
   date,
   cardsData,
   type,
@@ -22,12 +21,12 @@ export default function DiplomaCard({
     preGraduatePractices: RangeDatesT[];
     holidays: RangeDatesT[];
   },
-  type: "stateExam" | "diploma"
+  type: "eduPractice" | "internship" | "preGraduatePractices" | "holiday"
 }) {
   const locale = useLocale()
   const dict = useDictionary()
 
-  const data = getDayData({date, cardsData, type}) as DiplomaT | undefined
+  const data = getDayData({date, cardsData, type}) as RangeDatesT | undefined
 
   if (!data) return (
     <div className='flex items-center justify-center text-center'>
@@ -39,34 +38,24 @@ export default function DiplomaCard({
     <div className='flex flex-col items-center justify-center gap-2'>
       <div className='flex flex-col items-center justify-center text-center'>
         <h6 className='font-medium'>
-          {type === "stateExam" && dict.CalendarGroups.stateExams}
-          {type === "diploma" && dict.CalendarGroups.diplomas}
+          {type === "eduPractice" && dict.CalendarGroups.eduPractices}
+          {type === "internship" && dict.CalendarGroups.internships}
+          {type === "preGraduatePractices" && dict.CalendarGroups.preGraduatePractices}
+          {type === "holiday" && dict.CalendarGroups.holidays}
         </h6>
         <p className='text-sm'>
-          {formatDate(data.date, locale)}
+          {data.dateEnd 
+            ? `${formatDate(data.dateStart, locale)} - ${formatDate(data.dateEnd, locale)}`
+            : formatDate(data.date, locale)
+          }
         </p>
       </div>
 
-      <div className='w-full flex flex-col gap-1.5'>
-        <p className=''>{data.name}</p>
-        <NextLink 
-          href={`https://maps.yandex.ru/?text=${data.address}`} 
-          target='__blank'
-          className='group/card'
-        >
-          <p className='font-medium'>{dict.CalendarGroups.address}:</p>
-          <p className='text-sm underline-offset-2 group-hover/card:underline group-hover/card:underline-offset-4 transition-all transform-gpu duration-300'>
-            {data.address}
-          </p>
-        </NextLink>
-        <div className=''>
-          <p className='font-medium'>{dict.CalendarGroups.chairman}:</p>
-          <p className='text-sm'>{data.chairman}</p>
-        </div>
-        {data.description && (
+      {data.description && (
+        <div className='w-full flex flex-col gap-1.5'>
           <p className='mt-2 text-sm'>{data.description}</p>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   )
 }

@@ -191,6 +191,33 @@ export function matrixToArray<T>(matrix: T[][]) {
 }
 
 
+export function matrixObjectsToArray(matrix: {
+  dates: Date[];
+  description: string | null;
+  dateStart: Date;
+  dateEnd: Date | null;
+}[]) {
+  const array: {
+    date: Date;
+    description: string | null;
+    dateStart: Date;
+    dateEnd: Date | null;
+  }[] = [];
+  for (let i = 0; i < matrix.length; i++) {
+    for (let j = 0; j < matrix[i].dates.length; j++) {
+      array.push(
+        { 
+          date: matrix[i].dates[j], 
+          description: matrix[i].description,
+          dateStart: matrix[i].dateStart,
+          dateEnd: matrix[i].dateEnd
+        }
+      );
+    }
+  }
+  return array
+}
+
 
 
 export function shortUrl(url: string | null | undefined) {

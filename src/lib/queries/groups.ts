@@ -47,6 +47,7 @@ export const getGroups = async ({
                   attributes { slug title }
                 }
               }
+              description
             }
             exams {
               date 
@@ -58,22 +59,42 @@ export const getGroups = async ({
                   attributes { slug title }
                 }
               }
+              description
             }
             stateExams {
               date
               name
               address
               chairman
+              description
             }
             diplomas {
               date
               name
               address
               chairman
+              description
             }
-            eduPractices { dateStart dateEnd }
-            internships { dateStart dateEnd }
-            holidays { dateStart dateEnd }
+            eduPractices { 
+              dateStart 
+              dateEnd 
+              description
+            }
+            internships { 
+              dateStart 
+              dateEnd 
+              description
+            }
+            preGraduatePractices { 
+              dateStart 
+              dateEnd 
+              description 
+            }
+            holidays { 
+              dateStart 
+              dateEnd 
+              description 
+            }
           }
         }
       }
@@ -161,6 +182,7 @@ export const getGroupById = async (locale: string, id: string): Promise<GroupSin
                   attributes { slug title }
                 }
               }
+              description
             }
             exams {
               date 
@@ -172,22 +194,42 @@ export const getGroupById = async (locale: string, id: string): Promise<GroupSin
                   attributes { slug title }
                 }
               }
+              description
             }
             stateExams {
               date
               name
               address
               chairman
+              description
             }
             diplomas {
               date
               name
               address
               chairman
+              description
             }
-            eduPractices { dateStart dateEnd }
-            internships { dateStart dateEnd }
-            holidays { dateStart dateEnd }
+            eduPractices { 
+              dateStart 
+              dateEnd 
+              description
+            }
+            internships { 
+              dateStart 
+              dateEnd 
+              description
+            }
+            preGraduatePractices { 
+              dateStart 
+              dateEnd 
+              description 
+            }
+            holidays { 
+              dateStart 
+              dateEnd 
+              description 
+            }
           }
         }
       }

@@ -77,6 +77,10 @@ const config = {
           DEFAULT: "hsl(var(--internships))",
           foreground: "hsl(var(--internships-foreground))",
         },
+        preGraduatePractices: {
+          DEFAULT: "hsl(var(--preGraduatePractices))",
+          foreground: "hsl(var(--preGraduatePractices-foreground))",
+        },
         holidays: {
           DEFAULT: "hsl(var(--holidays))",
           foreground: "hsl(var(--holidays-foreground))",

@@ -6,13 +6,14 @@ import { useLocale } from '@/lib/hooks/useLocale';
 import { cn, reConvertUTCDateToLocalDate } from '@/lib/utils';
 import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons"
 import React, { useState, useTransition } from 'react'
-import {useActiveModifiers, useDayPicker } from 'react-day-picker';
 import type {Matcher} from 'react-day-picker';
-import { getCalendarLabels, getDayData } from './getCalendarData';
+import { getCalendarLabels } from './getCalendarData';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
 import DayComponent from './DayComponent';
-import type { DiplomaT, ExamT } from '@/lib/types/entities';
+import type { DiplomaT, ExamT, RangeDatesT } from '@/lib/types/entities';
 import { BigCalendarLoading } from '@/components/loadings/GroupCalendarLoading';
+import DayContentComponent from './DayContentComponent';
+import { Info } from 'lucide-react';
 
 type Props = {
   dates: {
@@ -22,19 +23,26 @@ type Props = {
     diplomasDates: Date[];
     eduPracticesDates: Date[];
     internshipsDates: Date[];
+    preGraduatePracticesDates: Date[];
     holidaysDates: Date[];
   },
+  weekends: Date[],
   groupsData: {
     exams: ExamT[];
     tests: ExamT[];
     stateExams: DiplomaT[];
     diplomas: DiplomaT[];
+    eduPractices: RangeDatesT[];
+    internships: RangeDatesT[];
+    preGraduatePractices: RangeDatesT[];
+    holidays: RangeDatesT[];
   },
   className?: string
 }
 
 export default function CalendarSegment({
   dates,
+  weekends,
   groupsData,
   className
 }: Props) {
@@ -44,7 +52,10 @@ export default function CalendarSegment({
   const diplomasDates = dates.diplomasDates.map(item => reConvertUTCDateToLocalDate(item, true))
   const eduPracticesDates = dates.eduPracticesDates.map(item => reConvertUTCDateToLocalDate(item, true))
   const internshipsDates = dates.internshipsDates.map(item => reConvertUTCDateToLocalDate(item, true))
+  const preGraduatePracticesDates = dates.preGraduatePracticesDates.map(item => reConvertUTCDateToLocalDate(item, true))
   const holidaysDates = dates.holidaysDates.map(item => reConvertUTCDateToLocalDate(item, true))
+
+  const weekendsDates = weekends.map(item => reConvertUTCDateToLocalDate(item, true))
 
   const allDates = [
     ...examsDates, 
@@ -53,6 +64,7 @@ export default function CalendarSegment({
     ...diplomasDates,
     ...eduPracticesDates,
     ...internshipsDates,
+    ...preGraduatePracticesDates,
     ...holidaysDates
   ]
 
@@ -88,19 +100,76 @@ export default function CalendarSegment({
       ...rest
     }
   })
+  const eduPractices = groupsData.eduPractices.map(item => {
+    const {date, dateStart, dateEnd, ...rest} = item
+    const reConvertedDate = reConvertUTCDateToLocalDate(date)
+    const reConvertedStart = reConvertUTCDateToLocalDate(dateStart)
+    const reConvertedEnd = dateEnd ? reConvertUTCDateToLocalDate(dateEnd) : null
+    return {
+      date: reConvertedDate,
+      dateStart: reConvertedStart,
+      dateEnd: reConvertedEnd,
+      ...rest
+    }
+  })
+  const internships = groupsData.internships.map(item => {
+    const {date, dateStart, dateEnd, ...rest} = item
+    const reConvertedDate = reConvertUTCDateToLocalDate(date)
+    const reConvertedStart = reConvertUTCDateToLocalDate(dateStart)
+    const reConvertedEnd = dateEnd ? reConvertUTCDateToLocalDate(dateEnd) : null
+    return {
+      date: reConvertedDate,
+      dateStart: reConvertedStart,
+      dateEnd: reConvertedEnd,
+      ...rest
+    }
+  })
+  const preGraduatePractices = groupsData.preGraduatePractices.map(item => {
+    const {date, dateStart, dateEnd, ...rest} = item
+    const reConvertedDate = reConvertUTCDateToLocalDate(date)
+    const reConvertedStart = reConvertUTCDateToLocalDate(dateStart)
+    const reConvertedEnd = dateEnd ? reConvertUTCDateToLocalDate(dateEnd) : null
+    return {
+      date: reConvertedDate,
+      dateStart: reConvertedStart,
+      dateEnd: reConvertedEnd,
+      ...rest
+    }
+  })
+  const holidays = groupsData.holidays.map(item => {
+    const {date, dateStart, dateEnd, ...rest} = item
+    const reConvertedDate = reConvertUTCDateToLocalDate(date)
+    const reConvertedStart = reConvertUTCDateToLocalDate(dateStart)
+    const reConvertedEnd = dateEnd ? reConvertUTCDateToLocalDate(dateEnd) : null
+    return {
+      date: reConvertedDate,
+      dateStart: reConvertedStart,
+      dateEnd: reConvertedEnd,
+      ...rest
+    }
+  })
 
   const cardsData = {
     exams,
     tests,
     stateExams,
     diplomas,
-    eduPractices: eduPracticesDates,
-    internships: internshipsDates,
-    holidays: holidaysDates,
+    eduPractices,
+    internships,
+    preGraduatePractices,
+    holidays,
   }
 
   const disabledMatcher: Matcher = (day: Date) => {
-    return !Boolean(allDates.find(item => item.toDateString() === day.toDateString()));
+    return (
+      !Boolean(
+        allDates.find(item => item.toDateString() === day.toDateString())
+      )
+      // ||
+      // Boolean(
+        // holidays.find(item => item.date.toDateString() === day.toDateString())
+      // )
+    );
   };
 
   const locale = useLocale()
@@ -110,6 +179,10 @@ export default function CalendarSegment({
   const currentYear = new Date()
   const [month, setMonth] = useState(new Date(currentYear.getFullYear(), 0, 1))
   const [isPendingMonth, startTransitionMonth] = useTransition()
+
+  function weekendsDays(day: Date) {
+    return ((day.getDay() === 0));
+  }
 
   return (
     <>
@@ -156,16 +229,20 @@ export default function CalendarSegment({
               diplomasDates,
               eduPracticesDates,
               internshipsDates,
-              holidaysDates
+              preGraduatePracticesDates,
+              holidaysDates,
+              weekendsDates,
+              weekendsDays
             }}
             modifiersClassNames={{
-              examsDates: "!w-full aria-selected:bg-accent bg-exams/90 text-exams-foreground aria-selected:hover:bg-accent aria-selected:hover:text-accent-foreground rounded-xl",
-              testsDates: "!w-full aria-selected:bg-accent bg-tests/90 text-tests-foreground aria-selected:hover:bg-accent aria-selected:hover:text-accent-foreground rounded-xl",
-              stateExamsDates: "!w-full aria-selected:bg-accent bg-stateExams/90 text-stateExams-foreground aria-selected:hover:bg-accent aria-selected:hover:text-accent-foreground rounded-xl",
-              diplomasDates: "!w-full aria-selected:bg-accent bg-diplomas/90 text-diplomas-foreground aria-selected:hover:bg-accent aria-selected:hover:text-accent-foreground rounded-xl",
-              eduPracticesDates: "!w-full aria-selected:bg-accent bg-eduPractices/90 text-eduPractices-foreground aria-selected:hover:bg-accent aria-selected:hover:text-accent-foreground rounded-xl",
-              internshipsDates: "!w-full aria-selected:bg-accent bg-internships/90 text-internships-foreground aria-selected:hover:bg-accent aria-selected:hover:text-accent-foreground rounded-xl",
-              holidaysDates: "!w-full aria-selected:bg-accent bg-holidays/90 text-holidays-foreground aria-selected:hover:bg-accent aria-selected:hover:text-accent-foreground rounded-xl",
+              testsDates: "!w-full aria-selected:bg-accent border-[3px] border-tests text-tests-foreground aria-selected:hover:bg-accent aria-selected:hover:!text-accent-foreground aria-selected:!text-accent-foreground hover:!text-background rounded-xl !opacity-100",
+              examsDates: "!w-full aria-selected:bg-accent bg-exams text-exams-foreground aria-selected:hover:bg-accent aria-selected:hover:!text-accent-foreground aria-selected:!text-accent-foreground hover:!text-background rounded-xl !opacity-100",
+              stateExamsDates: "!w-full aria-selected:bg-accent border-[3px] border-stateExams text-stateExams-foreground aria-selected:hover:bg-accent aria-selected:hover:!text-accent-foreground aria-selected:!text-accent-foreground hover:!text-background rounded-xl !opacity-100",
+              diplomasDates: "!w-full aria-selected:bg-accent bg-diplomas text-diplomas-foreground aria-selected:hover:bg-accent aria-selected:hover:!text-accent-foreground aria-selected:!text-accent-foreground hover:!text-background rounded-xl !opacity-100",
+              eduPracticesDates: "!w-full aria-selected:bg-accent border-[3px] border-dashed border-eduPractices text-eduPractices-foreground aria-selected:hover:bg-accent aria-selected:hover:!text-accent-foreground aria-selected:!text-accent-foreground hover:!text-background rounded-xl !opacity-100",
+              internshipsDates: "!w-full aria-selected:bg-accent border-[3px] border-dashed border-internships text-internships-foreground aria-selected:hover:bg-accent aria-selected:hover:!text-accent-foreground aria-selected:!text-accent-foreground hover:!text-background rounded-xl !opacity-100",
+              preGraduatePracticesDates: "!w-full aria-selected:bg-accent border-[3px] border-dashed border-preGraduatePractices text-preGraduatePractices-foreground aria-selected:hover:bg-accent aria-selected:hover:!text-accent-foreground aria-selected:!text-accent-foreground hover:!text-background rounded-xl !opacity-100",
+              holidaysDates: "!w-full aria-selected:bg-accent text-holidays-foreground aria-selected:hover:bg-accent aria-selected:hover:!text-accent-foreground aria-selected:!text-accent-foreground hover:!text-background rounded-xl !opacity-100",
             }}
             disabled={disabledMatcher}
             month={month}
@@ -179,28 +256,7 @@ export default function CalendarSegment({
             }}
             components={{
               Day: (props) => <DayComponent cardsData={cardsData} {...props} />,
-              DayContent: ({ ...props }) => {
-                const {
-                  locale,
-                  formatters: { formatDay }
-                } = useDayPicker();
-                const modifiers =  useActiveModifiers(props.date, props.displayMonth)
-
-                // If tests
-                if (modifiers.testsDates) {
-                  const data = getDayData({date: props.date, cardsData, type: "test"}) as ExamT[]
-                  if (data.length > 1) return (
-                    <p className='relative'>
-                      {formatDay(props.date, { locale })}
-                      <sup className='absolute text-[10px] top-1 -right-1.5'>
-                        {data.length}
-                      </sup>
-                    </p>
-                  )
-                  else return <p>{formatDay(props.date, { locale })}</p>;
-                }
-                else return <p>{formatDay(props.date, { locale })}</p>;
-              },
+              DayContent: (props) => <DayContentComponent cardsData={cardsData} {...props}/>,
             }}
           />
         )
@@ -209,7 +265,7 @@ export default function CalendarSegment({
         <Button 
           variant="outline" 
           disabled={isPendingMonth}
-          className='w-fit px-2 rounded-xl' 
+          className='w-fit px-2 rounded-xl'
           onClick={() => 
             startTransitionMonth(() => {
               setMonth(new Date(month.getFullYear()-1, 0, 1))
@@ -231,13 +287,22 @@ export default function CalendarSegment({
           <ChevronRightIcon className="h-5 w-5" />
         </Button>
       </div>
-      <div className='flex flex-wrap gap-x-6 gap-y-3 mt-3'>
-        {getCalendarLabels(dict).map(item => (
-          <p key={item.title} className='flex items-center gap-1'>
-            <span className={cn("w-5 h-5 rounded-full", item.color)}/>
-            <span>-</span>
-            <span>{item.title}</span>
-          </p>
+      <div className='flex md:justify-around flex-wrap gap-x-6 md:gap-y-6 gap-y-8 mt-3'>
+        {getCalendarLabels(dict).map((arr, indx) => (
+          <div key={indx} className='flex flex-col gap-4'>
+            {arr.map(item => (
+              <p key={item.title} className='flex items-center gap-1'>
+                {item.color === "info"
+                  ? <Info className='w-6 h-6'/>
+                  : item.number 
+                    ? <span className={cn("font-medium", item.color)}>31</span>
+                    : <span className={cn("w-6 h-6 rounded-full", item.color)}/>
+                }
+                <span>-</span>
+                <span>{item.title}</span>
+              </p>
+            ))}
+          </div>
         ))}
       </div>
     </>

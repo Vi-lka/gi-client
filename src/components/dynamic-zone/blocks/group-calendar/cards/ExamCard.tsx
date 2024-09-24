@@ -1,6 +1,6 @@
 "use client"
 
-import type { DiplomaT, ExamT } from '@/lib/types/entities';
+import type { DiplomaT, ExamT, RangeDatesT } from '@/lib/types/entities';
 import React, { useState } from 'react'
 import { getDayData } from '../getCalendarData';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
@@ -22,9 +22,10 @@ export default function ExamCard({
     tests: ExamT[];
     stateExams: DiplomaT[];
     diplomas: DiplomaT[];
-    eduPractices: Date[];
-    internships: Date[];
-    holidays: Date[];
+    eduPractices: RangeDatesT[];
+    internships: RangeDatesT[];
+    preGraduatePractices: RangeDatesT[];
+    holidays: RangeDatesT[];
   },
   type: "exam" | "test"
 }) {
@@ -102,6 +103,9 @@ export default function ExamCard({
                   </p>
                 </Link>
               )}
+              {item.description && (
+                <p className='mt-2 text-sm'>{item.description}</p>
+              )}
             </div>
           </div>
         </TabsContent>
@@ -142,6 +146,9 @@ export default function ExamCard({
               {data[0].teacher.data.attributes.title}
             </p>
           </Link>
+        )}
+        {data[0].description && (
+          <p className='mt-2 text-sm'>{data[0].description}</p>
         )}
       </div>
     </div>

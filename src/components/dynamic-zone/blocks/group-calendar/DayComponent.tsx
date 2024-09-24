@@ -1,7 +1,7 @@
 "use client"
 
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import type { DiplomaT, ExamT } from '@/lib/types/entities';
+import type { DiplomaT, ExamT, RangeDatesT } from '@/lib/types/entities';
 import { cn } from '@/lib/utils';
 import { Loader2 } from 'lucide-react';
 import React, { useRef, useState, useTransition } from 'react'
@@ -9,7 +9,7 @@ import { Button, useActiveModifiers, useDayRender } from 'react-day-picker'
 import type {DayProps} from 'react-day-picker';
 import ExamCard from './cards/ExamCard';
 import DiplomaCard from './cards/DiplomaCard';
-import OnlyDateCard from './cards/OnlyDateCard';
+import RangeDatesCard from './cards/RangeDatesCard';
 
 type Props = {
   cardsData: {
@@ -17,9 +17,10 @@ type Props = {
     tests: ExamT[];
     stateExams: DiplomaT[];
     diplomas: DiplomaT[];
-    eduPractices: Date[];
-    internships: Date[];
-    holidays: Date[];
+    eduPractices: RangeDatesT[];
+    internships: RangeDatesT[];
+    preGraduatePractices: RangeDatesT[];
+    holidays: RangeDatesT[];
   }
 } & DayProps
 
@@ -66,7 +67,7 @@ export default function DayComponent(props: Props) {
                 name="day" 
                 ref={buttonRef} 
                 className={cn(
-                    open ? "!bg-accent !text-accent-foreground" : "", 
+                    open ? "!bg-accent !text-accent-foreground !border-accent" : "", 
                     className
                 )}
                 {...restProps}
@@ -77,9 +78,10 @@ export default function DayComponent(props: Props) {
             {modifiers.testsDates ? <ExamCard date={props.date} cardsData={props.cardsData} type="test" /> : null}
             {modifiers.stateExamsDates ? <DiplomaCard date={props.date} cardsData={props.cardsData} type="stateExam" /> : null}
             {modifiers.diplomasDates ? <DiplomaCard date={props.date} cardsData={props.cardsData} type="diploma" /> : null}
-            {modifiers.eduPracticesDates ? <OnlyDateCard date={props.date} cardsData={props.cardsData} type="eduPractice" /> : null}
-            {modifiers.internshipsDates ? <OnlyDateCard date={props.date} cardsData={props.cardsData} type="internship" /> : null}
-            {modifiers.holidaysDates ? <OnlyDateCard date={props.date} cardsData={props.cardsData} type="holiday" /> : null}
+            {modifiers.eduPracticesDates ? <RangeDatesCard date={props.date} cardsData={props.cardsData} type="eduPractice" /> : null}
+            {modifiers.internshipsDates ? <RangeDatesCard date={props.date} cardsData={props.cardsData} type="internship" /> : null}
+            {modifiers.preGraduatePracticesDates ? <RangeDatesCard date={props.date} cardsData={props.cardsData} type="preGraduatePractices" /> : null}
+            {modifiers.holidaysDates ? <RangeDatesCard date={props.date} cardsData={props.cardsData} type="holiday" /> : null}
           </PopoverContent>
         </Popover>
     );

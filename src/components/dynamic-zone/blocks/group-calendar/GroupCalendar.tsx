@@ -5,7 +5,7 @@ import { TypographyH2 } from '@/components/typography'
 import { getGroupById } from '@/lib/queries/groups'
 import type { GroupCalendarCompT } from '@/lib/types/components'
 import type { GroupCourseEnum } from '@/lib/types/entities'
-import { cn } from '@/lib/utils'
+import { cn, convertUTCDateToLocalDate, dateRange, matrixToArray } from '@/lib/utils'
 import { headers } from 'next/headers'
 import React, { Suspense } from 'react'
 import { getGroupCalendarData, getGroupCalendarDates } from './getCalendarData'
@@ -13,6 +13,7 @@ import { ClientHydration } from '@/components/ClientHydration'
 import CalendarSegment from './CalendarSegment'
 import GroupCalendarLoading from '@/components/loadings/GroupCalendarLoading'
 import { getDictionary } from '@/lib/getDictionary'
+import { getWeekends } from '@/lib/queries/weekends'
 
 export default function GroupCalendar({
     data,
@@ -90,8 +91,9 @@ async function GroupCalendarContent({
         </div>
     )
 
-    const [ dataResult ] = await Promise.allSettled([ 
-        getGroupById(locale, group)
+    const [ dataResult, dataWeekends ] = await Promise.allSettled([ 
+        getGroupById(locale, group),
+        getWeekends()
     ]);
     if (dataResult.status === "rejected") return (
         <ErrorHandler
@@ -105,9 +107,31 @@ async function GroupCalendarContent({
     const dates = getGroupCalendarDates(dataResult.value)
     const groupsData = getGroupCalendarData(dataResult.value)
 
+    const weekendsDatesMatrix = dataWeekends.status === "fulfilled" 
+        ? dataWeekends.value.attributes.days.map(item => {
+            let dates: Date[]
+        
+            if (item.dateEnd) {
+              dates = dateRange(
+                item.dateStart, 
+                item.dateEnd,
+              )
+            }
+            else dates = [
+              convertUTCDateToLocalDate(
+                new Date(item.dateStart.getFullYear(), item.dateStart.getMonth(), item.dateStart.getDate())
+              )
+            ]
+            return dates
+          })
+        : [[]]
+
+    const weekendsDates = matrixToArray(weekendsDatesMatrix)
+    .sort((a,b) => a.getTime() - b.getTime())
+
     return (
         <ClientHydration fallback={<GroupCalendarLoading/>}>
-            <CalendarSegment dates={dates} groupsData={groupsData} />
+            <CalendarSegment dates={dates} weekends={weekendsDates} groupsData={groupsData} />
         </ClientHydration>
     )
 }
