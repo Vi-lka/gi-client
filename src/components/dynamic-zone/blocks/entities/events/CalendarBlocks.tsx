@@ -102,13 +102,17 @@ export default function CalendarBlocks({
     return isBiggerThanToday;
   })
 
-  const firstDate = biggerThanTodayDates[0] 
-  ? biggerThanTodayDates[0] 
-  : thisMonthDates[0] 
-    ? thisMonthDates[0] 
-    : nextMonthsDates[0]
-      ? nextMonthsDates[0]
-      : undefined
+  const today = thisMonthDates.find((item) => item.getDate() === (new Date()).getDate())
+
+  const firstDate = today
+  ? today
+  : biggerThanTodayDates[0] 
+    ? biggerThanTodayDates[0] 
+    : thisMonthDates[0] 
+      ? thisMonthDates[0] 
+      : nextMonthsDates[0]
+        ? nextMonthsDates[0]
+        : undefined
   
   useEffect(() => {
     setDate(firstDate ?? datesConverted[0])
