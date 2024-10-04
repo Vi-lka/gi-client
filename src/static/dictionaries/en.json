@@ -48,7 +48,8 @@
     },
     "Projects": {
       "year": "",
-      "head": "Head"
+      "head": "Head",
+      "members": "Members"
     }
   },
   "ContactForm": {

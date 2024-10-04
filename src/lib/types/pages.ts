@@ -324,6 +324,36 @@ export type ProjectsPageT = z.infer<typeof ProjectsPageT>;
 
 
 //.........................Project Single Page.........................//
+export const ProjectMember = z.object({
+  __typename: z.literal("ComponentProjectsProjectMember"),
+  description: z.string().nullable(),
+  member: z.object({
+    data: z.object({
+      attributes: z.object({
+        title: z.string(),
+        slug: z.string(),
+        image: z.lazy(() => ImageT),
+      })
+    }).nullable()
+  })
+})
+export type ProjectMember = z.infer<typeof ProjectMember>;
+
+export const ProjectMemberOutSide = z.object({
+  __typename: z.literal("ComponentProjectsProjectMemberOutSide"),
+  title: z.string(),
+  description: z.string().nullable(),
+  link: z.string().nullable(),
+  image: z.lazy(() => ImageT),
+})
+export type ProjectMemberOutSide = z.infer<typeof ProjectMemberOutSide>;
+
+export const ProjectDynamicMemberT = z.discriminatedUnion("__typename", [
+  ProjectMember,
+  ProjectMemberOutSide
+])
+export type ProjectDynamicMemberT = z.infer<typeof ProjectDynamicMemberT>;
+
 export const ProjectSinglePageT  = z.object({
   id: z.string(),
   attributes: z.object({
@@ -338,6 +368,7 @@ export const ProjectSinglePageT  = z.object({
     }).nullable(),
     image: z.lazy(() => ImageT),
     text: z.any(),
+    members: ProjectDynamicMemberT.array(),
     content: z.lazy(() => DynamicZoneT).array(),
   }),
 })

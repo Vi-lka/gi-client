@@ -52,7 +52,6 @@ export default function EmployeesItem(props: EmployeesItemT) {
         } else {
             postData = employee.attributes.meta.posts[0]
         }
-    
     }
 
     const degreeShort = employee.attributes.meta?.degreeShort ? employee.attributes.meta.degreeShort : ""

@@ -19,6 +19,7 @@ import type { Metadata } from 'next';
 import NextLink from 'next/link';
 import { notFound } from 'next/navigation';
 import React from 'react'
+import MembersArray from './MembersArray';
 
 export async function generateMetadata({ 
   params: { locale, slug }
@@ -75,6 +76,14 @@ export default async function ProjectSinglePage({
                   title
                   slug
                   year
+                  image {
+                    data {
+                      attributes {
+                        url
+                      }
+                    }
+                  }
+                  text
                   head {
                     title
                     link
@@ -87,14 +96,40 @@ export default async function ProjectSinglePage({
                       }
                     }
                   }
-                  image {
-                    data {
-                      attributes {
-                        url
+                  members {
+                    ...on ComponentProjectsProjectMember {
+                      __typename
+                      description
+                      member {
+                        data {
+                        	attributes {
+                          	title
+                          	slug
+                            image {
+                              data {
+                                attributes {
+                                  url
+                                }
+                              }
+                            }
+                        	} 
+                        }
+                      }
+                    }
+                    ...on ComponentProjectsProjectMemberOutSide {
+                      __typename
+                      title
+                      description
+                      link
+                      image {
+                        data {
+                          attributes {
+                            url
+                          }
+                        }
                       }
                     }
                   }
-                  text
                   content {
                     ${dynamicContentQuery}
                   }
@@ -288,6 +323,8 @@ export default async function ProjectSinglePage({
             </Card>
           </div>
         )}
+
+        <MembersArray dict={dict} locale={params.locale} data={project.members} />
   
         <div className='w-full lg:float-left'>
           {project.content.map((item, index) => (
