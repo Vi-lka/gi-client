@@ -27,6 +27,18 @@ export function getGroupCalendarDates(data: GroupSingleT) {
   ).sort((a,b) => a.getTime() - b.getTime())
 
 
+  // RESCHEDULING //
+  const reschedulingDates = data.attributes.rescheduling.map(item => 
+    convertUTCDateToLocalDate(new Date(item.date.getFullYear(), item.date.getMonth(), item.date.getDate()))
+  ).sort((a,b) => a.getTime() - b.getTime())
+
+  
+  // RETAKES //
+  const retakesDates = data.attributes.retakes.map(item => 
+    convertUTCDateToLocalDate(new Date(item.date.getFullYear(), item.date.getMonth(), item.date.getDate()))
+  ).sort((a,b) => a.getTime() - b.getTime())
+
+
   // EDU PRACTICES //
   const eduPracticesDatesMatrix = data.attributes.eduPractices.map(item => {
     let dates: Date[]
@@ -115,6 +127,8 @@ export function getGroupCalendarDates(data: GroupSingleT) {
     testsDates,
     stateExamsDates,
     diplomasDates,
+    reschedulingDates,
+    retakesDates,
     eduPracticesDates,
     internshipsDates,
     preGraduatePracticesDates,
@@ -126,10 +140,12 @@ export function getGroupCalendarDates(data: GroupSingleT) {
 
 
 export function getGroupCalendarData(data: GroupSingleT): {
-  exams: ExamT[]
-  tests: ExamT[]
-  stateExams: DiplomaT[]
+  exams: ExamT[],
+  tests: ExamT[],
+  stateExams: DiplomaT[],
   diplomas: DiplomaT[],
+  rescheduling: ExamT[],
+  retakes: ExamT[],
   eduPractices: RangeDatesT[],
   internships: RangeDatesT[],
   preGraduatePractices: RangeDatesT[],
@@ -171,6 +187,28 @@ export function getGroupCalendarData(data: GroupSingleT): {
 
   // DIPLOMAS //
   const diplomas = data.attributes.diplomas.map(item => {
+    const {date, ...rest} = item
+    const convertedDate = convertUTCDateToLocalDate(new Date(date.getFullYear(), date.getMonth(), date.getDate()))
+    return {
+      date: convertedDate,
+      ...rest
+    }
+  })
+
+
+  // RESCHEDULING //
+  const rescheduling = data.attributes.rescheduling.map(item => {
+    const {date, ...rest} = item
+    const convertedDate = convertUTCDateToLocalDate(new Date(date.getFullYear(), date.getMonth(), date.getDate()))
+    return {
+      date: convertedDate,
+      ...rest
+    }
+  })
+
+
+  // RETAKES //
+  const retakes = data.attributes.retakes.map(item => {
     const {date, ...rest} = item
     const convertedDate = convertUTCDateToLocalDate(new Date(date.getFullYear(), date.getMonth(), date.getDate()))
     return {
@@ -276,6 +314,8 @@ export function getGroupCalendarData(data: GroupSingleT): {
     tests,
     stateExams,
     diplomas,
+    rescheduling,
+    retakes,
     eduPractices,
     internships,
     preGraduatePractices,
@@ -296,12 +336,14 @@ export function getDayData({
     tests: ExamT[];
     stateExams: DiplomaT[];
     diplomas: DiplomaT[];
+    rescheduling: ExamT[];
+    retakes: ExamT[];
     eduPractices: RangeDatesT[];
     preGraduatePractices: RangeDatesT[];
     internships: RangeDatesT[];
     holidays: RangeDatesT[];
   },
-  type: "exam" | "test" | "stateExam" | "diploma" | "eduPractice" | "internship" | "preGraduatePractices" | "holiday"
+  type: "exam" | "test" | "stateExam" | "diploma" | "rescheduling" | "retakes" | "eduPractice" | "internship" | "preGraduatePractices" | "holiday"
 }): ExamT[] | DiplomaT | RangeDatesT | undefined {
   switch (type) {
     case "exam":
@@ -319,6 +361,14 @@ export function getDayData({
     case "diploma":
       const findedDiploma = cardsData.diplomas.find(item => item.date.toDateString() === date.toDateString())
       return findedDiploma;
+
+    case "rescheduling":
+      const findedRescheduling = cardsData.rescheduling.filter(item => item.date.toDateString() === date.toDateString())
+      return findedRescheduling;
+
+    case "retakes":
+      const findedRetakes = cardsData.retakes.filter(item => item.date.toDateString() === date.toDateString())
+      return findedRetakes;
 
     case "eduPractice":
       const findedEduPractice = cardsData.eduPractices.find(dt => dt.date.toDateString() === date.toDateString())
@@ -350,6 +400,10 @@ export function getCalendarLabels(dict: Dictionary) {
       {title: dict.CalendarGroups.exams, color: "bg-exams"},
       {title: dict.CalendarGroups.stateExams, color: "border-4 border-stateExams"},
       {title: dict.CalendarGroups.diplomas, color: "bg-diplomas"},
+    ],
+    [
+      {title: dict.CalendarGroups.rescheduling, color: "border-4 border-internships"},
+      {title: dict.CalendarGroups.retakes, color: "bg-internships"},
     ],
     [
       {title: dict.CalendarGroups.eduPractices, color: "border-[3px] border-dashed border-eduPractices"},

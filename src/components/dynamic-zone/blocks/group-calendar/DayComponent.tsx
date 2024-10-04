@@ -7,9 +7,18 @@ import { Loader2 } from 'lucide-react';
 import React, { useRef, useState, useTransition } from 'react'
 import { Button, useActiveModifiers, useDayRender } from 'react-day-picker'
 import type {DayProps} from 'react-day-picker';
-import ExamCard from './cards/ExamCard';
-import DiplomaCard from './cards/DiplomaCard';
-import RangeDatesCard from './cards/RangeDatesCard';
+import dynamic from 'next/dynamic';
+import CalendarCardLoading from './cards/CalendarCardLoading';
+
+const ExamCard = dynamic(
+  () => import('./cards/ExamCard'), {loading: () => <CalendarCardLoading />}
+)
+const DiplomaCard = dynamic(
+  () => import('./cards/DiplomaCard'), {loading: () => <CalendarCardLoading />}
+)
+const RangeDatesCard = dynamic(
+  () => import('./cards/RangeDatesCard'), {loading: () => <CalendarCardLoading />}
+)
 
 type Props = {
   cardsData: {
@@ -17,6 +26,8 @@ type Props = {
     tests: ExamT[];
     stateExams: DiplomaT[];
     diplomas: DiplomaT[];
+    rescheduling: ExamT[];
+    retakes: ExamT[];
     eduPractices: RangeDatesT[];
     internships: RangeDatesT[];
     preGraduatePractices: RangeDatesT[];
@@ -78,6 +89,8 @@ export default function DayComponent(props: Props) {
             {modifiers.testsDates ? <ExamCard date={props.date} cardsData={props.cardsData} type="test" /> : null}
             {modifiers.stateExamsDates ? <DiplomaCard date={props.date} cardsData={props.cardsData} type="stateExam" /> : null}
             {modifiers.diplomasDates ? <DiplomaCard date={props.date} cardsData={props.cardsData} type="diploma" /> : null}
+            {modifiers.reschedulingDates ? <ExamCard date={props.date} cardsData={props.cardsData} type="rescheduling" /> : null}
+            {modifiers.retakesDates ? <ExamCard date={props.date} cardsData={props.cardsData} type="retakes" /> : null}
             {modifiers.eduPracticesDates ? <RangeDatesCard date={props.date} cardsData={props.cardsData} type="eduPractice" /> : null}
             {modifiers.internshipsDates ? <RangeDatesCard date={props.date} cardsData={props.cardsData} type="internship" /> : null}
             {modifiers.preGraduatePracticesDates ? <RangeDatesCard date={props.date} cardsData={props.cardsData} type="preGraduatePractices" /> : null}

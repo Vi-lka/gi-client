@@ -17,6 +17,8 @@ export default function DiplomaCard({
     tests: ExamT[];
     stateExams: DiplomaT[];
     diplomas: DiplomaT[];
+    rescheduling: ExamT[];
+    retakes: ExamT[];
     eduPractices: RangeDatesT[];
     internships: RangeDatesT[];
     preGraduatePractices: RangeDatesT[];

@@ -375,6 +375,8 @@ export const GroupSingleT = z.object({
     tests: ExamT.array(),
     stateExams: DiplomaT.array(),
     diplomas: DiplomaT.array(),
+    rescheduling: ExamT.array(),
+    retakes: ExamT.array(),
     eduPractices: HolidaysT.array(),
     internships: HolidaysT.array(),
     holidays: HolidaysT.array(),

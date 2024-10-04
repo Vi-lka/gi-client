@@ -4,6 +4,12 @@ import { ChevronLeftIcon, ChevronRightIcon } from '@radix-ui/react-icons'
 import { Skeleton } from '../ui/skeleton';
 
 export default function GroupCalendarLoading() {
+  const labels = [
+    [ 1, 2, 3, 4 ],
+    [ 5, 6 ],
+    [ 7, 8, 9 ],
+    [ 10, 11, 12 ]
+  ]
   return (
     <>
       <div className='w-full flex gap-6 items-center justify-between mb-3'>
@@ -41,12 +47,17 @@ export default function GroupCalendarLoading() {
           <ChevronRightIcon className="h-5 w-5" />
         </Button>
       </div>
-      <div className='flex flex-wrap gap-x-6 gap-y-3 mt-3'>
-        {Array.from({ length: 7 }).map((_, indx) => (
-          <div key={indx} className='flex items-center gap-1'>
-            <Skeleton className='w-5 h-5 rounded-full'/>
-            <span>-</span>
-            <Skeleton className='w-24 h-6 rounded-xl'/>
+
+      <div className='flex md:justify-around flex-wrap gap-x-6 md:gap-y-6 gap-y-8 mt-3'>
+        {labels.map((arr, indx) => (
+          <div key={indx} className='flex flex-col gap-4'>
+            {arr.map(item => (
+              <div key={item} className='flex items-center gap-1'>
+                <Skeleton className='w-7 h-7 rounded-full'/>
+                <span>-</span>
+                <Skeleton className='w-24 h-6 rounded-xl'/>
+              </div>
+            ))}
           </div>
         ))}
       </div>

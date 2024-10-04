@@ -21,6 +21,8 @@ type Props = {
     testsDates: Date[];
     stateExamsDates: Date[];
     diplomasDates: Date[];
+    reschedulingDates: Date[];
+    retakesDates: Date[];
     eduPracticesDates: Date[];
     internshipsDates: Date[];
     preGraduatePracticesDates: Date[];
@@ -32,6 +34,8 @@ type Props = {
     tests: ExamT[];
     stateExams: DiplomaT[];
     diplomas: DiplomaT[];
+    rescheduling: ExamT[];
+    retakes: ExamT[];
     eduPractices: RangeDatesT[];
     internships: RangeDatesT[];
     preGraduatePractices: RangeDatesT[];
@@ -50,6 +54,8 @@ export default function CalendarSegment({
   const testsDates = dates.testsDates.map(item => reConvertUTCDateToLocalDate(item, true))
   const stateExamsDates = dates.stateExamsDates.map(item => reConvertUTCDateToLocalDate(item, true))
   const diplomasDates = dates.diplomasDates.map(item => reConvertUTCDateToLocalDate(item, true))
+  const reschedulingDates = dates.reschedulingDates.map(item => reConvertUTCDateToLocalDate(item, true))
+  const retakesDates = dates.retakesDates.map(item => reConvertUTCDateToLocalDate(item, true))
   const eduPracticesDates = dates.eduPracticesDates.map(item => reConvertUTCDateToLocalDate(item, true))
   const internshipsDates = dates.internshipsDates.map(item => reConvertUTCDateToLocalDate(item, true))
   const preGraduatePracticesDates = dates.preGraduatePracticesDates.map(item => reConvertUTCDateToLocalDate(item, true))
@@ -62,6 +68,8 @@ export default function CalendarSegment({
     ...testsDates,
     ...stateExamsDates,
     ...diplomasDates,
+    ...reschedulingDates,
+    ...retakesDates,
     ...eduPracticesDates,
     ...internshipsDates,
     ...preGraduatePracticesDates,
@@ -93,6 +101,22 @@ export default function CalendarSegment({
     }
   })
   const diplomas = groupsData.diplomas.map(item => {
+    const {date, ...rest} = item
+    const reConvertedDate = reConvertUTCDateToLocalDate(date)
+    return {
+      date: reConvertedDate,
+      ...rest
+    }
+  })
+  const rescheduling = groupsData.rescheduling.map(item => {
+    const {date, ...rest} = item
+    const reConvertedDate = reConvertUTCDateToLocalDate(date)
+    return {
+      date: reConvertedDate,
+      ...rest
+    }
+  })
+  const retakes = groupsData.retakes.map(item => {
     const {date, ...rest} = item
     const reConvertedDate = reConvertUTCDateToLocalDate(date)
     return {
@@ -154,6 +178,8 @@ export default function CalendarSegment({
     tests,
     stateExams,
     diplomas,
+    rescheduling,
+    retakes,
     eduPractices,
     internships,
     preGraduatePractices,
@@ -227,6 +253,8 @@ export default function CalendarSegment({
               testsDates, 
               stateExamsDates,
               diplomasDates,
+              reschedulingDates,
+              retakesDates,
               eduPracticesDates,
               internshipsDates,
               preGraduatePracticesDates,
@@ -239,6 +267,8 @@ export default function CalendarSegment({
               examsDates: "!w-full aria-selected:bg-accent bg-exams text-exams-foreground aria-selected:hover:bg-accent aria-selected:hover:!text-accent-foreground aria-selected:!text-accent-foreground hover:!text-background rounded-xl !opacity-100",
               stateExamsDates: "!w-full aria-selected:bg-accent border-[3px] border-stateExams text-stateExams-foreground aria-selected:hover:bg-accent aria-selected:hover:!text-accent-foreground aria-selected:!text-accent-foreground hover:!text-background rounded-xl !opacity-100",
               diplomasDates: "!w-full aria-selected:bg-accent bg-diplomas text-diplomas-foreground aria-selected:hover:bg-accent aria-selected:hover:!text-accent-foreground aria-selected:!text-accent-foreground hover:!text-background rounded-xl !opacity-100",
+              reschedulingDates: "!w-full aria-selected:bg-accent border-[3px] border-internships text-internships-foreground aria-selected:hover:bg-accent aria-selected:hover:!text-accent-foreground aria-selected:!text-accent-foreground hover:!text-background rounded-xl !opacity-100",
+              retakesDates: "!w-full aria-selected:bg-accent bg-internships text-exams-foreground aria-selected:hover:bg-accent aria-selected:hover:!text-accent-foreground aria-selected:!text-accent-foreground hover:!text-background rounded-xl !opacity-100",
               eduPracticesDates: "!w-full aria-selected:bg-accent border-[3px] border-dashed border-eduPractices text-eduPractices-foreground aria-selected:hover:bg-accent aria-selected:hover:!text-accent-foreground aria-selected:!text-accent-foreground hover:!text-background rounded-xl !opacity-100",
               internshipsDates: "!w-full aria-selected:bg-accent border-[3px] border-dashed border-internships text-internships-foreground aria-selected:hover:bg-accent aria-selected:hover:!text-accent-foreground aria-selected:!text-accent-foreground hover:!text-background rounded-xl !opacity-100",
               preGraduatePracticesDates: "!w-full aria-selected:bg-accent border-[3px] border-dashed border-preGraduatePractices text-preGraduatePractices-foreground aria-selected:hover:bg-accent aria-selected:hover:!text-accent-foreground aria-selected:!text-accent-foreground hover:!text-background rounded-xl !opacity-100",

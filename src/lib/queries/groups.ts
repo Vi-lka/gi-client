@@ -75,6 +75,30 @@ export const getGroups = async ({
               chairman
               description
             }
+            rescheduling {
+              date
+              name
+              address
+              teacher {
+                data {
+                  id
+                  attributes { slug title }
+                }
+              }
+              description
+            }
+            retakes {
+              date
+              name
+              address
+              teacher {
+                data {
+                  id
+                  attributes { slug title }
+                }
+              }
+              description
+            }
             eduPractices { 
               dateStart 
               dateEnd 
@@ -208,6 +232,30 @@ export const getGroupById = async (locale: string, id: string): Promise<GroupSin
               name
               address
               chairman
+              description
+            }
+            rescheduling {
+              date
+              name
+              address
+              teacher {
+                data {
+                  id
+                  attributes { slug title }
+                }
+              }
+              description
+            }
+            retakes {
+              date
+              name
+              address
+              teacher {
+                data {
+                  id
+                  attributes { slug title }
+                }
+              }
               description
             }
             eduPractices { 

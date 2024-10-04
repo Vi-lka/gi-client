@@ -16,6 +16,8 @@ export default function DayContentComponent(props: {
         tests: ExamT[];
         stateExams: DiplomaT[];
         diplomas: DiplomaT[];
+        rescheduling: ExamT[];
+        retakes: ExamT[];
         eduPractices: RangeDatesT[];
         preGraduatePractices: RangeDatesT[];
         internships: RangeDatesT[];
@@ -30,12 +32,14 @@ export default function DayContentComponent(props: {
 
       const matchWeekendsDates = modifiers.weekendsDates && !(
         modifiers.examsDates || modifiers.testsDates || modifiers.stateExamsDates || modifiers.diplomasDates || 
-        modifiers.eduPracticesDates || modifiers.internshipsDates || modifiers.preGraduatePracticesDates || modifiers.holidaysDates
+        modifiers.eduPracticesDates || modifiers.internshipsDates || modifiers.preGraduatePracticesDates || modifiers.holidaysDates ||
+        modifiers.reschedulingDates || modifiers.retakesDates
       ) as true
 
       const matchWeekendsDays = modifiers.weekendsDays && !(
         modifiers.examsDates || modifiers.testsDates || modifiers.stateExamsDates || modifiers.diplomasDates || 
-        modifiers.eduPracticesDates || modifiers.internshipsDates || modifiers.preGraduatePracticesDates || modifiers.holidaysDates
+        modifiers.eduPracticesDates || modifiers.internshipsDates || modifiers.preGraduatePracticesDates || modifiers.holidaysDates ||
+        modifiers.reschedulingDates || modifiers.retakesDates
       ) as true
 
       switch (true) {
@@ -80,6 +84,28 @@ export default function DayContentComponent(props: {
                     locale={locale} 
                     formatDay={formatDay} 
                     type="diploma" 
+                />
+            );
+
+        case modifiers.reschedulingDates:
+            return (
+                <MultiDayContent 
+                    date={props.date} 
+                    cardsData={props.cardsData} 
+                    locale={locale} 
+                    formatDay={formatDay} 
+                    type="rescheduling" 
+                />
+            );
+
+        case modifiers.retakesDates:
+            return (
+                <MultiDayContent 
+                    date={props.date} 
+                    cardsData={props.cardsData} 
+                    locale={locale} 
+                    formatDay={formatDay} 
+                    type="retakes" 
                 />
             );
 
@@ -152,6 +178,8 @@ function SingleDayContent({
         tests: ExamT[];
         stateExams: DiplomaT[];
         diplomas: DiplomaT[];
+        rescheduling: ExamT[];
+        retakes: ExamT[];
         eduPractices: RangeDatesT[];
         preGraduatePractices: RangeDatesT[];
         internships: RangeDatesT[];
@@ -191,12 +219,14 @@ function MultiDayContent({
         tests: ExamT[];
         stateExams: DiplomaT[];
         diplomas: DiplomaT[];
+        rescheduling: ExamT[];
+        retakes: ExamT[];
         eduPractices: RangeDatesT[];
         preGraduatePractices: RangeDatesT[];
         internships: RangeDatesT[];
         holidays: RangeDatesT[];
     };
-    type: "test" | "exam";
+    type: "test" | "exam" | "rescheduling" | "retakes";
     locale: Locale | undefined;
     formatDay: DateFormatter
 }) {
