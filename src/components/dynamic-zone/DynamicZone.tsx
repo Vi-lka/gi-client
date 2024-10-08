@@ -91,6 +91,16 @@ const FormBlock = dynamic(
   )}
 )
 
+const DocRequestFormBlock = dynamic(
+  () => import('./blocks/form-block/DocRequestFormBlock'), {loading: () => (
+    <div className='w-full lg:pt-14 pt-10'>
+      <Skeleton className='w-full aspect-[4/1] flex items-center justify-center'>
+        <Loader2 className='animate-spin'/>
+      </Skeleton>
+    </div>
+  )}
+)
+
 const GroupCalendar = dynamic(
   () => import('./blocks/group-calendar/GroupCalendar'), {loading: () => <GroupCalendarLoading />}
 )
@@ -233,6 +243,14 @@ export default function DynamicZone({
 
     case "ComponentContentFormBlock":
       return <FormBlock 
+              key={`key-${item.__typename}-${item.link}`} 
+              data={item} 
+              headingBig={headingBig} 
+              className={cn(item.title ? "lg:pt-28 pt-20" : "lg:pt-14 pt-10")} 
+            />;
+
+    case "ComponentContentDocRequestForm":
+      return <DocRequestFormBlock
               key={`key-${item.__typename}-${item.link}`} 
               data={item} 
               headingBig={headingBig} 

@@ -45,7 +45,7 @@ export default function ContactForm({
                         <FormItem>
                             <FormControl>
                                 <InputField 
-                                    placeholder={dict.ContactForm.form.name}
+                                    placeholder={dict.ContactForm.form.fio}
                                     disabled={form.formState.isSubmitting}
                                     className='bg-input rounded-3xl border-border shadow-sm'
                                     {...field}

@@ -314,6 +314,11 @@ export const dynamicContentQuery = `
     formTitle
     formDescription
   }
+  ...on ComponentContentDocRequestForm {
+    title
+    link
+    linkTitle
+  }
   ...on ComponentContentGroupCalendar {
     title
     link
@@ -395,6 +400,9 @@ export const dynamicContentLinksQuery = `
     ${sameFields}
   }
   ... on ComponentContentFormBlock {
+    ${sameFields}
+  }
+  ...on ComponentContentDocRequestForm {
     ${sameFields}
   }
   ...on ComponentContentGroupCalendar {

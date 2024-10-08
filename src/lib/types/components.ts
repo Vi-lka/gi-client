@@ -5,6 +5,9 @@ import { EducationalProgramSingleT, EmployeeSingleT, GraduateSingleT, DpoCourses
 const phoneRegex = new RegExp(
   /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/
 );
+const customEmailRegex = new RegExp(
+  /^([a-zA-Z0-9._-])+$/
+)
 
 export const ContactFormT = z.object({
   path: z.string().optional(),
@@ -17,6 +20,62 @@ export const ContactFormT = z.object({
   text: z.string(),
 })
 export type ContactFormT = z.infer<typeof ContactFormT>;
+
+export const EmailStudEnum = z.enum(["@sfu-kras.ru", "@stud.sfu-kras.ru"]);
+export type EmailStudEnum = z.infer<typeof EmailStudEnum>;
+
+export const DocRequestFormWithPatronymicT = z.object({
+  path: z.string().optional(),
+  to: z.string().optional(),
+  name: z.string().min(2, {
+    message: "min2symbols",
+  }),
+  lastname: z.string().min(2, {
+    message: "min2symbols",
+  }),
+  noPatronymic: z.literal(false),
+  patronymic: z.string().min(2, {
+    message: "min2symbols",
+  }),
+  group: z.string().min(2, {
+    message: "group",
+  }),
+  email: z.string().regex(customEmailRegex, "email"),
+  emailStud: EmailStudEnum,
+  phone: z.string().regex(phoneRegex, 'phone'),
+  request: z.string().min(2, {
+    message: "request",
+  }),
+})
+export type DocRequestFormWithPatronymicT = z.infer<typeof DocRequestFormWithPatronymicT>;
+
+export const DocRequestFormNoPatronymicT = z.object({
+  path: z.string().optional(),
+  to: z.string().optional(),
+  name: z.string().min(2, {
+    message: "min2symbols",
+  }),
+  lastname: z.string().min(2, {
+    message: "min2symbols",
+  }),
+  noPatronymic: z.literal(true),
+  group: z.string().min(2, {
+    message: "group",
+  }),
+  email: z.string().regex(customEmailRegex, "email"),
+  emailStud: EmailStudEnum,
+  phone: z.string().regex(phoneRegex, 'phone'),
+  request: z.string().min(2, {
+    message: "request",
+  }),
+})
+export type DocRequestFormNoPatronymicT = z.infer<typeof DocRequestFormNoPatronymicT>;
+
+export const DocRequestFormT = z.union([
+  DocRequestFormWithPatronymicT,
+  DocRequestFormNoPatronymicT
+])
+export type DocRequestFormT = z.infer<typeof DocRequestFormT>;
 
 
 
@@ -456,6 +515,18 @@ export type FormBlockCompT = z.infer<typeof FormBlockCompT>;
 
 
 
+//.........................DocRequestForm.........................//
+export const DocRequestFormCompT = z.object({
+  __typename: z.literal("ComponentContentDocRequestForm"),
+  title: z.string().nullable(),
+  link: z.string().nullable(),
+  linkTitle: z.string().nullable()
+})
+export type DocRequestFormCompT = z.infer<typeof DocRequestFormCompT>;
+
+
+
+
 //.........................GroupCalendar.........................//
 export const GroupCalendarCompT = z.object({
   __typename: z.literal("ComponentContentGroupCalendar"),
@@ -520,6 +591,7 @@ export const DynamicZoneT = z.discriminatedUnion("__typename", [
   AccordionCompT,
   BentoGridCompT,
   FormBlockCompT,
+  DocRequestFormCompT,
   GroupCalendarCompT,
   ButtonsBlockCompT,
 ])

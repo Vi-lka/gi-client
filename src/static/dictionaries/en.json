@@ -55,7 +55,13 @@
   "ContactForm": {
     "placeholder": "Send Email",
     "form": {
+      "fio": "Name",
       "name": "Name",
+      "lastname": "Surname",
+      "noPatronymic": "Without a patronymic",
+      "patronymic": "Patronymic",
+      "group": "Group",
+      "request": "Request",
       "email": "E-mail",
       "phone": "Phone",
       "text": "Your question:",
@@ -137,7 +143,9 @@
     "zod": {
       "email": "Invalid email address",
       "phone": "Invalid phone number",
-      "min2symbols": "Must be 2 or more characters long"
+      "min2symbols": "Must be 2 or more characters long",
+      "group":"Select group",
+      "request":"Select Request"
     }
   }
 }
