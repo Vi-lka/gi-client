@@ -9,6 +9,7 @@ import { localesCodes } from '@/static/locales';
 import { cn } from '@/lib/utils';
 import { useTheme } from 'next-themes';
 import Link from 'next/link';
+import SearchAll from './SearchAll';
 
 export default function MoreMenu() {
 
@@ -41,10 +42,17 @@ export default function MoreMenu() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="flex flex-col gap-1 w-fit min-w-[60px] text-foreground rounded-2xl">
-        
-        <DropdownMenuItem className='flex aspect-square justify-center rounded-xl'>
-          <Search className='w-5 h-5' />
-        </DropdownMenuItem>
+
+        <DropdownMenuSub>
+          <DropdownMenuSubTrigger icon={false} className='flex aspect-square justify-center rounded-xl'>
+            <Search className='w-5 h-5'/>
+          </DropdownMenuSubTrigger>
+          <DropdownMenuPortal>
+            <DropdownMenuSubContent collisionPadding={40} sideOffset={6} alignOffset={0} className="w-fit min-w-0 rounded-2xl z-[100]">
+              <SearchAll />
+            </DropdownMenuSubContent>
+          </DropdownMenuPortal>
+        </DropdownMenuSub>
 
         <DropdownMenuSub>
           <DropdownMenuSubTrigger icon={false} className='flex aspect-square justify-center font-medium uppercase text-base sm:text-sm rounded-xl'>
@@ -54,7 +62,7 @@ export default function MoreMenu() {
             }
           </DropdownMenuSubTrigger>
           <DropdownMenuPortal>
-            <DropdownMenuSubContent collisionPadding={100} sideOffset={6} alignOffset={-6} className="w-fit rounded-2xl min-w-[50px] z-[100]">
+            <DropdownMenuSubContent collisionPadding={100} sideOffset={6} alignOffset={0} className="w-fit rounded-2xl min-w-[50px] z-[100]">
               {themes.map((item, index) => (
                   <div
                     key={index}
@@ -84,7 +92,7 @@ export default function MoreMenu() {
             {localeCurrent === "ru" ? "ру" : localeCurrent}
           </DropdownMenuSubTrigger>
           <DropdownMenuPortal>
-            <DropdownMenuSubContent collisionPadding={100} sideOffset={6} alignOffset={-6} className="w-fit rounded-2xl min-w-[50px] z-[100]">
+            <DropdownMenuSubContent collisionPadding={50} sideOffset={6} alignOffset={0} className="w-fit rounded-2xl min-w-[50px] z-[100]">
               {localesCodes.map((locale, index) => (
                   <Link
                       key={index}

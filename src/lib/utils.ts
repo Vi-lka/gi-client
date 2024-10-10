@@ -279,11 +279,19 @@ export function resetPaginationts(params: URLSearchParams) {
   const hasPageEmployees = params.has("page_employees");
   const hasPageDpo = params.has("page_dpo");
   const hasPageDepartments = params.has("page_departments");
+  const hasPageJournals = params.has("page_journals");
+  const hasPageNews = params.has("page_news");
+  const hasPageProjects = params.has("page_projects");
+  const hasPageEvents = params.has("page_events");
 
   if (hasPage) params.set("page", "1");
   if (hasPageEmployees) params.set("page_employees", "1");
   if (hasPageDpo) params.set("page_dpo", "1");
   if (hasPageDepartments) params.set("page_departments", "1");
+  if (hasPageJournals) params.set("page_journals", "1");
+  if (hasPageNews) params.set("page_news", "1");
+  if (hasPageProjects) params.set("page_projects", "1");
+  if (hasPageEvents) params.set("page_events", "1");
 }
 
 
@@ -341,6 +349,46 @@ export function genSearchFilter<T extends object>(key: string, newValue: string 
 }
 
 
+
+
+export function findAllRecursive<T extends Object>(objects: readonly T[], searchTerm: string) {
+  
+  const finded = objects.filter(item => {
+    const results: T[] = []
+
+    function searchItem(item: T | null) {
+      if (item === null) return
+      Object.keys(item).forEach(key => {
+
+        if (typeof item[key as keyof T] === "object") {
+          searchItem(item[key as keyof T] as T)
+        }
+      
+        if (typeof item[key as keyof T] === "string") {
+          const searchAsRegEx = new RegExp(searchTerm, "gi");
+          if ((item[key as keyof T] as string).match(searchAsRegEx)) {
+            results.push(item)
+          }
+        }
+        // 
+      })
+    }
+
+    searchItem(item)
+
+    return results.length > 0
+  })
+
+  return finded
+}
+
+
+
+
+export function paginate<T>(array: Array<T>, page_size: number, page_number: number) {
+  // human-readable page numbers usually start with 1, so we reduce 1 in the first argument
+  return array.slice((page_number - 1) * page_size, page_number * page_size);
+}
 
 
 export const grayscale = "lg:dark:grayscale-[60%] lg:dark:contrast-[1.2] dark:grayscale-[30%] dark:contrast-[1.05] dark:hover:grayscale-0 dark:hover:contrast-100 transition-[filter] duration-200 ease-in"

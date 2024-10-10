@@ -145,7 +145,8 @@
       "phone": "Invalid phone number",
       "min2symbols": "Must be 2 or more characters long",
       "group":"Select group",
-      "request":"Select Request"
+      "request":"Select Request",
+      "searchMin": "The request must have at least 2 characters."
     }
   }
 }

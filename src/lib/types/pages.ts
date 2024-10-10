@@ -3,10 +3,27 @@ import { DynamicZoneT, ImageT, ImagesArrayT } from "./components";
 import { EducationalProgramTypeEnum, EventDayT, HashtagSingleT } from "./entities";
 
 //..................................................Pages..................................................//
+export const PagesEnum = z.enum([
+  "/", 
+  "/admission", 
+  "/dpo",
+  "/education",
+  "/education/programs",
+  "/info",
+  "/info/events",
+  "/info/news",
+  "/journals",
+  "/projects",
+  "/structure",
+  "/structure/employees",
+]);
+export type PagesEnum = z.infer<typeof PagesEnum>;
+
 
 //.........................Main Page.........................//
 export const MainPageT  = z.object({
   attributes: z.object({
+    slug: PagesEnum.extract(["/"]).optional(),
     content: z.lazy(() => DynamicZoneT).array(),
   }),
 })
@@ -30,6 +47,7 @@ export type JustWaitPageT = z.infer<typeof JustWaitPageT>;
 //.........................Entrance Page.........................//
 export const EntrancePageT  = z.object({
   attributes: z.object({
+    slug: PagesEnum.extract(["/admission"]).optional(),
     title: z.string(),
     navBarConfig: z.object({ 
       navBarTitle: z.string().nullable()
@@ -64,6 +82,7 @@ export type EducationalProgramPageT = z.infer<typeof EducationalProgramPageT>;
 //.........................DPO Page.........................//
 export const DpoPageT  = z.object({
   attributes: z.object({
+    slug: PagesEnum.extract(["/dpo"]).optional(),
     title: z.string(),
     navBarConfig: z.object({ 
       navBarTitle: z.string().nullable()
@@ -99,6 +118,7 @@ export type DpoCoursePageT = z.infer<typeof DpoCoursePageT>;
 //.........................Structure Page.........................//
 export const StructurePageT  = z.object({
   attributes: z.object({
+    slug: PagesEnum.extract(["/structure"]).optional(),
     title: z.string(),
     navBarConfig: z.object({
       navBarTitle: z.string().nullable()
@@ -145,6 +165,7 @@ export type DepartmentSinglePageT = z.infer<typeof DepartmentSinglePageT>;
 //.........................Employees Page.........................//
 export const EmployeesPageT  = z.object({
   attributes: z.object({
+    slug: PagesEnum.extract(["/structure/employees"]).optional(),
     title: z.string(),
     navBarConfig: z.object({
       navBarTitle: z.string().nullable()
@@ -207,6 +228,7 @@ export type EmployeeSinglePageT = z.infer<typeof EmployeeSinglePageT>;
 //.........................Info Page.........................//
 export const InfoPageT  = z.object({
   attributes: z.object({
+    slug: PagesEnum.extract(["/info"]).optional(),
     title: z.string(),
     navBarConfig: z.object({
       navBarTitle: z.string().nullable()
@@ -222,6 +244,7 @@ export type InfoPageT = z.infer<typeof InfoPageT>;
 //.........................News Page.........................//
 export const NewsPageT  = z.object({
   attributes: z.object({
+    slug: PagesEnum.extract(["/info/news"]).optional(),
     title: z.string(),
     navBarConfig: z.object({
       navBarTitle: z.string().nullable()
@@ -249,6 +272,7 @@ export type NewsSinglePageT = z.infer<typeof NewsSinglePageT>;
 //.........................News Page.........................//
 export const EventsPageT  = z.object({
   attributes: z.object({
+    slug: PagesEnum.extract(["/info/events"]).optional(),
     title: z.string(),
     navBarConfig: z.object({
       navBarTitle: z.string().nullable()
@@ -282,6 +306,7 @@ export type EventsSinglePageT = z.infer<typeof EventsSinglePageT>;
 //.........................Education Page.........................//
 export const EducationPageT  = z.object({
   attributes: z.object({
+    slug: PagesEnum.extract(["/education"]).optional(),
     title: z.string(),
     navBarConfig: z.object({ 
       navBarTitle: z.string().nullable()
@@ -313,6 +338,7 @@ export type EduEducationalProgramPageT = z.infer<typeof EduEducationalProgramPag
 //.........................Projects Page.........................//
 export const ProjectsPageT  = z.object({
   attributes: z.object({
+    slug: PagesEnum.extract(["/projects"]).optional(),
     title: z.string(),
     navBarConfig: z.object({ 
       navBarTitle: z.string().nullable()
@@ -380,6 +406,7 @@ export type ProjectSinglePageT = z.infer<typeof ProjectSinglePageT>;
 //.........................Journals Page.........................//
 export const JournalsPageT  = z.object({
   attributes: z.object({
+    slug: PagesEnum.extract(["/journals"]).optional(),
     title: z.string(),
     navBarConfig: z.object({ 
       navBarTitle: z.string().nullable()

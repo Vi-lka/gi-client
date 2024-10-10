@@ -96,8 +96,6 @@ export const getJournals = async ({
   })
   
   // await new Promise((resolve) => setTimeout(resolve, 2000))
-
-  console.log(json.data)
   
   if (
     json.data.journals.meta.pagination.total === 0 ||

@@ -19,7 +19,7 @@ export default async function DpoPage({
     const getDpoPage = async (): Promise<DpoPageT> => {
         const query = /* GraphGL */ `
         query DpoPage($locale: I18NLocaleCode) {
-            dpo(locale: $locale) {
+          dpo(locale: $locale) {
             data {
               attributes {
                 title

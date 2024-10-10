@@ -10,10 +10,14 @@ import { cn, resetPaginationts } from "@/lib/utils";
 export default function SearchField({ 
   placeholder, 
   param,
+  defaultValue,
+  debouncedDelay = 300,
   className
 }: { 
   placeholder: string, 
   param: string,
+  defaultValue?: string,
+  debouncedDelay?: number,
   className?: string
 }) {
   const [inputValue, setInputValue] = React.useState<string>("");
@@ -56,7 +60,7 @@ export default function SearchField({
     const params = new URLSearchParams(window.location.search);
     const searchQuery = params.get(param) ?? "";
     setInputValue(searchQuery);
-  }, [param]);
+  }, [param, defaultValue]);
 
   // EFFECT: Set Mounted
   React.useEffect(() => {
@@ -69,12 +73,12 @@ export default function SearchField({
   React.useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedValue(inputValue);
-    }, 300);
+    }, debouncedDelay);
 
     return () => {
       clearTimeout(timer);
     };
-  }, [inputValue]);
+  }, [debouncedDelay, inputValue]);
 
   // EFFECT: Search Params
   React.useEffect(() => {
@@ -87,7 +91,7 @@ export default function SearchField({
         ref={inputRef}
         value={inputValue}
         onChange={(e) => {
-          setInputValue(e.target.value);
+          if (!isPending) setInputValue(e.target.value);
         }}
         onFocus={() => setFocus(true)}
         onBlur={() => setFocus(false)}
