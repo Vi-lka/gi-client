@@ -5,6 +5,7 @@ import type { DictionariesType } from "./getDictionary";
 import { format } from "date-fns-tz";
 import { ru, enUS } from "date-fns/locale";
 import React from "react";
+import { AlignButtonsEnum, CollectionAllEnum } from "./types/components";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -349,28 +350,49 @@ export function genSearchFilter<T extends object>(key: string, newValue: string 
 }
 
 
+function isExeption(key: string, value: string) {
+  const isCollectionEnum = CollectionAllEnum.safeParse(value).success
+  const isAlignEnum = AlignButtonsEnum.safeParse(value).success
+
+  if (isCollectionEnum || isAlignEnum) return true;
+
+  switch (key) {
+    case "__typename": return true;
+    case "url": return true;
+    case "link": return true;
+    case "entity": return true;
+    case "slug": return true;
+    case "type": return true;
+    case "format": return true;
+    case "id": return true;
+    case "online": return true;
+    case "image": return true;
+    case "view": return true;
+    case "viewStyle": return true;
+    case "count": return true;
+    case "category": return true;
+    default: return false;
+  }
+}
 
 
 export function findAllRecursive<T extends Object>(objects: readonly T[], searchTerm: string) {
-  
   const finded = objects.filter(item => {
     const results: T[] = []
 
     function searchItem(item: T | null) {
       if (item === null) return
       Object.keys(item).forEach(key => {
-
-        if (typeof item[key as keyof T] === "object") {
+        if ((typeof item[key as keyof T] === "object")) {
           searchItem(item[key as keyof T] as T)
         }
-      
-        if (typeof item[key as keyof T] === "string") {
+
+        if ((typeof item[key as keyof T] === "string") && !isExeption(key, item[key as keyof T] as string)) {
           const searchAsRegEx = new RegExp(searchTerm, "gi");
           if ((item[key as keyof T] as string).match(searchAsRegEx)) {
             results.push(item)
           }
         }
-        // 
       })
     }
 
@@ -382,6 +404,44 @@ export function findAllRecursive<T extends Object>(objects: readonly T[], search
   return finded
 }
 
+
+export function findElementRecursive<T extends Object>(objects: readonly T[], searchTerm: string) {
+  const finded = objects.map(item => {
+    const results: T[keyof T][] = []
+
+    function searchItem(item: T | null) {
+      if (item === null) return
+      Object.keys(item).forEach(key => {
+        if (typeof item[key as keyof T] === "object") {
+          searchItem(item[key as keyof T] as T)
+        }
+      
+        if ((typeof item[key as keyof T] === "string") && !isExeption(key, item[key as keyof T] as string)) {
+          const searchAsRegEx = new RegExp(searchTerm, "gi");
+          if ((item[key as keyof T] as string).match(searchAsRegEx)) {
+            results.push(item[key as keyof T])
+          }
+        }
+      })
+    }
+
+    searchItem(item)
+
+    const uniqueResults = [...new Set(results)];
+
+    if (uniqueResults.length > 0) return {element: item, text: uniqueResults}
+  }).filter(item => !!item)
+
+  // function onlyUnique(value, index, array) {
+  //   return array.indexOf(value) === index;
+  // }
+
+  const uniqueFinded = finded.filter((item, indx) => {
+    return !(item.text.toString() === finded[indx+1]?.text.toString())
+  });
+
+  return uniqueFinded
+}
 
 
 

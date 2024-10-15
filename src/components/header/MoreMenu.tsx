@@ -16,6 +16,8 @@ export default function MoreMenu() {
   const pathname = usePathname();
   const pathnameNoLocale = pathname.split("/").slice(2).join("/")
 
+  console.log(pathnameNoLocale)
+
   const { resolvedTheme, setTheme } = useTheme()
 
   const themes = ["light", "dark"]
@@ -44,7 +46,7 @@ export default function MoreMenu() {
       <DropdownMenuContent className="flex flex-col gap-1 w-fit min-w-[60px] text-foreground rounded-2xl">
 
         <DropdownMenuSub>
-          <DropdownMenuSubTrigger icon={false} className='flex aspect-square justify-center rounded-xl'>
+          <DropdownMenuSubTrigger icon={false} disabled={pathnameNoLocale === "search"} className='flex aspect-square justify-center rounded-xl'>
             <Search className='w-5 h-5'/>
           </DropdownMenuSubTrigger>
           <DropdownMenuPortal>

@@ -20,7 +20,7 @@ export default function SearchField({
   debouncedDelay?: number,
   className?: string
 }) {
-  const [inputValue, setInputValue] = React.useState<string>("");
+  const [inputValue, setInputValue] = React.useState<string>(defaultValue ?? "");
   const [debouncedValue, setDebouncedValue] = React.useState<string>("");
   const [mounted, setMounted] = React.useState<boolean>(false);
 
@@ -60,7 +60,7 @@ export default function SearchField({
     const params = new URLSearchParams(window.location.search);
     const searchQuery = params.get(param) ?? "";
     setInputValue(searchQuery);
-  }, [param, defaultValue]);
+  }, [param]);
 
   // EFFECT: Set Mounted
   React.useEffect(() => {
@@ -91,7 +91,8 @@ export default function SearchField({
         ref={inputRef}
         value={inputValue}
         onChange={(e) => {
-          if (!isPending) setInputValue(e.target.value);
+          // if (!isPending) setInputValue(e.target.value);
+          setInputValue(e.target.value);
         }}
         onFocus={() => setFocus(true)}
         onBlur={() => setFocus(false)}

@@ -19,9 +19,25 @@ export const PagesEnum = z.enum([
 ]);
 export type PagesEnum = z.infer<typeof PagesEnum>;
 
+export const PageTypeNameEnum = z.enum([
+  "MainPageEntity", 
+  "EntrancePageEntity",
+  "DpoEntity",
+  "StructureEntity",
+  "EmployeesPageEntity",
+  "InfoEntity",
+  "NewsPageEntity",
+  "EventsPageEntity",
+  "EducationPageEntity",
+  "ProjectsPageEntity",
+  "JournalsPageEntity",
+]);
+export type PageTypeNameEnum = z.infer<typeof PageTypeNameEnum>;
+
 
 //.........................Main Page.........................//
 export const MainPageT  = z.object({
+  __typename: PageTypeNameEnum.extract(["MainPageEntity"]).optional(),
   attributes: z.object({
     slug: PagesEnum.extract(["/"]).optional(),
     content: z.lazy(() => DynamicZoneT).array(),
@@ -46,6 +62,7 @@ export type JustWaitPageT = z.infer<typeof JustWaitPageT>;
 
 //.........................Entrance Page.........................//
 export const EntrancePageT  = z.object({
+  __typename: PageTypeNameEnum.extract(["EntrancePageEntity"]).optional(),
   attributes: z.object({
     slug: PagesEnum.extract(["/admission"]).optional(),
     title: z.string(),
@@ -81,6 +98,7 @@ export type EducationalProgramPageT = z.infer<typeof EducationalProgramPageT>;
 
 //.........................DPO Page.........................//
 export const DpoPageT  = z.object({
+  __typename: PageTypeNameEnum.extract(["DpoEntity"]).optional(),
   attributes: z.object({
     slug: PagesEnum.extract(["/dpo"]).optional(),
     title: z.string(),
@@ -117,6 +135,7 @@ export type DpoCoursePageT = z.infer<typeof DpoCoursePageT>;
 
 //.........................Structure Page.........................//
 export const StructurePageT  = z.object({
+  __typename: PageTypeNameEnum.extract(["StructureEntity"]).optional(),
   attributes: z.object({
     slug: PagesEnum.extract(["/structure"]).optional(),
     title: z.string(),
@@ -164,6 +183,7 @@ export type DepartmentSinglePageT = z.infer<typeof DepartmentSinglePageT>;
 
 //.........................Employees Page.........................//
 export const EmployeesPageT  = z.object({
+  __typename: PageTypeNameEnum.extract(["EmployeesPageEntity"]).optional(),
   attributes: z.object({
     slug: PagesEnum.extract(["/structure/employees"]).optional(),
     title: z.string(),
@@ -227,6 +247,7 @@ export type EmployeeSinglePageT = z.infer<typeof EmployeeSinglePageT>;
 
 //.........................Info Page.........................//
 export const InfoPageT  = z.object({
+  __typename: PageTypeNameEnum.extract(["InfoEntity"]).optional(),
   attributes: z.object({
     slug: PagesEnum.extract(["/info"]).optional(),
     title: z.string(),
@@ -243,6 +264,7 @@ export type InfoPageT = z.infer<typeof InfoPageT>;
 
 //.........................News Page.........................//
 export const NewsPageT  = z.object({
+  __typename: PageTypeNameEnum.extract(["NewsPageEntity"]).optional(),
   attributes: z.object({
     slug: PagesEnum.extract(["/info/news"]).optional(),
     title: z.string(),
@@ -271,6 +293,7 @@ export type NewsSinglePageT = z.infer<typeof NewsSinglePageT>;
 
 //.........................News Page.........................//
 export const EventsPageT  = z.object({
+  __typename: PageTypeNameEnum.extract(["EventsPageEntity"]).optional(),
   attributes: z.object({
     slug: PagesEnum.extract(["/info/events"]).optional(),
     title: z.string(),
@@ -305,6 +328,7 @@ export type EventsSinglePageT = z.infer<typeof EventsSinglePageT>;
 
 //.........................Education Page.........................//
 export const EducationPageT  = z.object({
+  __typename: PageTypeNameEnum.extract(["EducationPageEntity"]).optional(),
   attributes: z.object({
     slug: PagesEnum.extract(["/education"]).optional(),
     title: z.string(),
@@ -337,6 +361,7 @@ export type EduEducationalProgramPageT = z.infer<typeof EduEducationalProgramPag
 
 //.........................Projects Page.........................//
 export const ProjectsPageT  = z.object({
+  __typename: PageTypeNameEnum.extract(["ProjectsPageEntity"]).optional(),
   attributes: z.object({
     slug: PagesEnum.extract(["/projects"]).optional(),
     title: z.string(),
@@ -405,6 +430,7 @@ export type ProjectSinglePageT = z.infer<typeof ProjectSinglePageT>;
 
 //.........................Journals Page.........................//
 export const JournalsPageT  = z.object({
+  __typename: PageTypeNameEnum.extract(["JournalsPageEntity"]).optional(),
   attributes: z.object({
     slug: PagesEnum.extract(["/journals"]).optional(),
     title: z.string(),
@@ -433,6 +459,7 @@ export type JournalSinglePageT = z.infer<typeof JournalSinglePageT>;
 
 //..................................................Additional Pages..................................................//
 export const AdditionalPageSingleT  = z.object({
+  __typename: z.literal("AdditionalPageEntity").optional(),
   id: z.string(),
   attributes: z.object({
     slug: z.string(),

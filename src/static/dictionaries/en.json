@@ -13,7 +13,10 @@
     "nav": {
       "main": "Home",
       "info": "Information",
+      "news": "News",
+      "events": "Events",
       "structure": "Structure",
+      "employees": "Employees",
       "education": "Education",
       "admission": "Admission",
       "dpo": "Courses",

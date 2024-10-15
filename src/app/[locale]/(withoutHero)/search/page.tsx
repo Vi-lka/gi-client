@@ -5,6 +5,9 @@ import PaginationControls from '@/components/PaginationControls';
 import { getDictionary } from '@/lib/getDictionary';
 import { getSearchAll } from '@/lib/queries/search-all';
 import React, { Suspense } from 'react'
+import PageCard from './cards/entities/PageCard';
+import AdditionalPageCard from './cards/entities/AdditionalPageCard';
+import SingleEntity from './cards/entities/SingleEntity';
 
 const DEFAULT_PAGE_SIZE = 10;
 
@@ -68,10 +71,50 @@ async function SearchContent({
     />
   )
 
+  if (!search_all || search_all.length < 2) return dict.Error.zod.min2symbols;
+
   return (
     <>
-      <div key={`search_all=${search_all}&page=${page}&per=${pageSize}`} id="search" className=''>
-        SearchContent
+      <div key={`search_all=${search_all}&page=${page}&per=${pageSize}`} id="search" className="grid lg:grid-cols-2 grid-cols-1 lg:gap-8 gap-6">
+        {dataResult.value.data.map((item, index) => {
+          switch (item.__typename) {
+            case "MainPageEntity":
+            case "DpoEntity":
+            case "EducationPageEntity":
+            case "EmployeesPageEntity":
+            case "EntrancePageEntity":
+            case "EventsPageEntity":
+            case "InfoEntity":
+            case "JournalsPageEntity":
+            case "NewsPageEntity":
+            case "ProjectsPageEntity":
+            case "StructureEntity":
+              return <PageCard key={index} locale={locale} dict={dict} data={item} searchTerm={search_all} />;
+            case "AdditionalPageEntity":
+              return <AdditionalPageCard key={index} locale={locale} dict={dict} data={item} searchTerm={search_all} />;
+            case "EducationalProgramEntity":
+              return <SingleEntity key={index} locale={locale} dict={dict} data={item} searchTerm={search_all} parentHref="/admission/" />;
+            case "EduEducationalProgramEntity":
+              return <SingleEntity key={index} locale={locale} dict={dict} data={item} searchTerm={search_all} parentHref='/education/programs/' />;
+            case "DpoCourseEntity":
+              return <SingleEntity key={index} locale={locale} dict={dict} data={item} searchTerm={search_all} parentHref='/dpo/' />;
+            case "DepartmentEntity":
+              return <SingleEntity key={index} locale={locale} dict={dict} data={item} searchTerm={search_all} parentHref='/structure/' />;
+            case "EmployeeEntity":
+              return <SingleEntity key={index} locale={locale} dict={dict} data={item} searchTerm={search_all} parentHref='/structure/employees/' />;
+            case "EventEntity":
+              return <SingleEntity key={index} locale={locale} dict={dict} data={item} searchTerm={search_all} parentHref='/info/events/' />;
+            case "NewEntity":
+              return <SingleEntity key={index} locale={locale} dict={dict} data={item} searchTerm={search_all} parentHref='/info/news/' />;
+            case "ProjectEntity":
+              return <SingleEntity key={index} locale={locale} dict={dict} data={item} searchTerm={search_all} parentHref='/projects/' />;
+            case "JournalEntity":
+              return <SingleEntity key={index} locale={locale} dict={dict} data={item} searchTerm={search_all} parentHref='/journals/' />;
+        
+            default:
+              return null;
+          }
+        })}
       </div>
       <div className="mt-6">
         <PaginationControls

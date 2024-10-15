@@ -22,6 +22,7 @@ export const getSearchAll = async ({
     query SearchAll($locale: I18NLocaleCode) {
       mainPage(locale: $locale) {
         data {
+          __typename
           attributes {
             content {
               ${dynamicContentQuery}
@@ -31,6 +32,7 @@ export const getSearchAll = async ({
       }
       entrancePage(locale: $locale) {
         data {
+          __typename
           attributes {
             title
             navBarConfig { navBarTitle }
@@ -42,6 +44,7 @@ export const getSearchAll = async ({
       }
       dpo(locale: $locale) {
         data {
+          __typename
           attributes {
             title
             navBarConfig { navBarTitle }
@@ -53,6 +56,7 @@ export const getSearchAll = async ({
       }
       structure(locale: $locale) {
         data {
+          __typename
           attributes {
             title
             navBarConfig { navBarTitle }
@@ -64,6 +68,7 @@ export const getSearchAll = async ({
       }
       employeesPage(locale: $locale) {
         data {
+          __typename
           attributes {
             title
             navBarConfig { navBarTitle }
@@ -75,6 +80,7 @@ export const getSearchAll = async ({
       }
       info(locale: $locale) {
         data {
+          __typename
           attributes {
             title
             navBarConfig { navBarTitle }
@@ -86,6 +92,7 @@ export const getSearchAll = async ({
       }
       newsPage(locale: $locale) {
         data {
+          __typename
           attributes {
             title
             navBarConfig { navBarTitle }
@@ -97,6 +104,7 @@ export const getSearchAll = async ({
       }
       eventsPage(locale: $locale) {
         data {
+          __typename
           attributes {
             title
             navBarConfig { navBarTitle }
@@ -108,6 +116,7 @@ export const getSearchAll = async ({
       }
       educationPage(locale: $locale) {
         data {
+          __typename
           attributes {
             title
             navBarConfig { navBarTitle }
@@ -119,6 +128,7 @@ export const getSearchAll = async ({
       }
       projectsPage(locale: $locale) {
         data {
+          __typename
           attributes {
             title
             navBarConfig { navBarTitle }
@@ -130,6 +140,7 @@ export const getSearchAll = async ({
       }
       journalsPage(locale: $locale) {
         data {
+          __typename
           attributes {
             title
             navBarConfig { navBarTitle }
@@ -147,6 +158,7 @@ export const getSearchAll = async ({
           }
         }
         data {
+          __typename
           id
           attributes {
             slug
@@ -170,6 +182,7 @@ export const getSearchAll = async ({
 
       educationalPrograms(locale: $locale) {
         data {
+          __typename
           attributes {
             slug
             title
@@ -192,6 +205,7 @@ export const getSearchAll = async ({
 
       eduEducationalPrograms(locale: $locale) {
         data {
+          __typename
           attributes {
             slug
             title
@@ -214,6 +228,7 @@ export const getSearchAll = async ({
 
       dpoCourses(locale: $locale) {
         data {
+          __typename
           attributes {
             title
             slug
@@ -239,6 +254,7 @@ export const getSearchAll = async ({
 
       employees(locale: $locale) {
         data {
+          __typename
           attributes {
             slug
             title
@@ -305,6 +321,7 @@ export const getSearchAll = async ({
 
       departments(locale: $locale) {
         data {
+          __typename
           attributes {
             slug
             title
@@ -341,6 +358,7 @@ export const getSearchAll = async ({
 
       news(locale: $locale) {
         data {
+          __typename
           attributes {
             slug
             title
@@ -362,6 +380,7 @@ export const getSearchAll = async ({
 
       events(locale: $locale) {
         data {
+          __typename
           attributes {
             slug
             title
@@ -396,6 +415,7 @@ export const getSearchAll = async ({
 
       projects(locale: $locale) {
         data {
+          __typename
           attributes {
             slug
             title
@@ -464,6 +484,7 @@ export const getSearchAll = async ({
 
       journals(locale: $locale) {
         data {
+          __typename
           attributes {
             slug
             title

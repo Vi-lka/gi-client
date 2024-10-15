@@ -22,6 +22,7 @@ import { DynamicZoneT, ImageT } from "./components";
 
 //.........................Educational Programs.........................//
 export const EducationalProgramSearchT = z.object({
+    __typename: z.literal("EducationalProgramEntity").optional(),
     attributes: z.object({
         slug: z.string(),
         title: z.string(),
@@ -34,8 +35,23 @@ export const EducationalProgramSearchT = z.object({
 })
 export type EducationalProgramSearchT = z.infer<typeof EducationalProgramSearchT>;
 
+export const EduEducationalProgramSearchT = z.object({
+    __typename: z.literal("EduEducationalProgramEntity").optional(),
+    attributes: z.object({
+        slug: z.string(),
+        title: z.string(),
+        code: z.string().nullable(),
+        mainName: z.string().nullable(),
+        mainCode: z.string().nullable(),
+        image: z.lazy(() => ImageT),
+        content: z.lazy(() => DynamicZoneT).array(),
+    }),
+})
+export type EduEducationalProgramSearchT = z.infer<typeof EduEducationalProgramSearchT>;
+
 //.........................Dpo Courses.........................//
 export const DpoCourseSearchT = z.object({
+    __typename: z.literal("DpoCourseEntity").optional(),
     attributes: z.object({
         slug: z.string(),
         title: z.string(),
@@ -53,6 +69,7 @@ export type DpoCourseSearchT = z.infer<typeof DpoCourseSearchT>;
 
 //.........................Employees.........................//
 export const EmployeeSearchT = z.object({
+    __typename: z.literal("EmployeeEntity").optional(),
     attributes: z.object({
         slug: z.string(),
         title: z.string(),
@@ -107,6 +124,7 @@ export type EmployeeSearchT = z.infer<typeof EmployeeSearchT>;
 
 //.........................Departments.........................//
 export const DepartmentSearchT = z.object({
+    __typename: z.literal("DepartmentEntity").optional(),
     attributes: z.object({
         slug: z.string(),
         title: z.string(),
@@ -135,6 +153,7 @@ export type DepartmentsSearchT = z.infer<typeof DepartmentSearchT>;
 
 //.........................News.........................//
 export const NewsSearchT = z.object({
+    __typename: z.literal("NewEntity").optional(),
     attributes: z.object({
         slug: z.string(),
         title: z.string(),
@@ -148,6 +167,7 @@ export type NewsSearchT = z.infer<typeof NewsSearchT>;
 
 //.........................Events.........................//
 export const EventSearchT = z.object({
+    __typename: z.literal("EventEntity").optional(),
     attributes: z.object({
         slug: z.string(),
         title: z.string(),
@@ -165,6 +185,7 @@ export type EventSearchT = z.infer<typeof EventSearchT>;
 
 //.........................Projects.........................//
 export const ProjectSearchT = z.object({
+    __typename: z.literal("ProjectEntity").optional(),
     attributes: z.object({
         slug: z.string(),
         title: z.string(),
@@ -186,6 +207,7 @@ export type ProjectSearchT = z.infer<typeof ProjectSearchT>;
 
 //.........................Journals.........................//
 export const JournalSearchT = z.object({
+    __typename: z.literal("JournalEntity").optional(),
     attributes: z.object({
         slug: z.string(),
         title: z.string(),
@@ -236,7 +258,7 @@ export const SearchAllResultT = z.object({
         data: EducationalProgramSearchT.array()
     }),
     eduEducationalPrograms: z.object({
-        data: EducationalProgramSearchT.array()
+        data: EduEducationalProgramSearchT.array()
     }),
     dpoCourses: z.object({
         data: DpoCourseSearchT.array()
