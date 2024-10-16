@@ -542,7 +542,7 @@ export const getSearchAll = async ({
     variables: { locale }
   })
   
-  // await new Promise((resolve) => setTimeout(resolve, 2000))
+  await new Promise((resolve) => setTimeout(resolve, 2000))
 
   const result = SearchAllResultT.parse(json.data);
 

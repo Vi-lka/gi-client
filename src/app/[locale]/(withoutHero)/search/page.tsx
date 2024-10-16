@@ -10,6 +10,7 @@ import AdditionalPageCard from './cards/entities/AdditionalPageCard';
 import SingleEntity from './cards/entities/SingleEntity';
 import MasonryGrid from '@/components/ui/masonry/MasonryGrid';
 import { ClientHydration } from '@/components/ClientHydration';
+import MasonrySkeleton from '@/components/loadings/main/MasonrySkeleton';
 
 const DEFAULT_PAGE_SIZE = 10;
 
@@ -34,7 +35,7 @@ export default async function SearchPage({
 
         <Suspense 
           key={`search_all=${search_all}&page=${page}&per=${pageSize}`} 
-          fallback={"Loading..."}
+          fallback={<MasonrySkeleton />}
         >
           <SearchContent locale={locale} dict={dict} searchParams={searchParams} />
         </Suspense>
@@ -78,9 +79,10 @@ async function SearchContent({
   return (
     <>
       <div key={`search_all=${search_all}&page=${page}&per=${pageSize}`} id="search">
-        <ClientHydration fallback={"Loading..."}>
+        <ClientHydration fallback={<MasonrySkeleton />}>
           <MasonryGrid
             breakpointCols={{
+              default: 2,
               1024: 2,
               768: 1
             }}
