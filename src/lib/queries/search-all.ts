@@ -541,8 +541,6 @@ export const getSearchAll = async ({
     error: "Failed to fetch Search All", 
     variables: { locale }
   })
-  
-  await new Promise((resolve) => setTimeout(resolve, 2000))
 
   const result = SearchAllResultT.parse(json.data);
 
