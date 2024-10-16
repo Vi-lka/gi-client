@@ -83,7 +83,7 @@ export default function PageCard({
   const href = data.attributes.slug
 
   return (
-    <Card key={"page_" + data.__typename + Math.random().toString()} className='min-w-0 h-full group/card border-transparent dark:border-border/20 dark:hover:border-border hover:shadow-lg shadow-md rounded-3xl transition duration-300'>
+    <Card key={"page_" + data.__typename + Math.random().toString()} className='min-w-0 group/card border-transparent dark:border-border/20 dark:hover:border-border hover:shadow-lg shadow-md rounded-3xl transition duration-300'>
       <CardContent className="w-full h-full flex lg:flex-row flex-col xl:gap-8 gap-6 justify-between p-3">
         <div className='flex-1 lg:w-[55%] w-full flex flex-col gap-6 justify-between text-primary'>
           <div>

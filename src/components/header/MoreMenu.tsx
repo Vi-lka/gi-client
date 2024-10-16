@@ -16,8 +16,6 @@ export default function MoreMenu() {
   const pathname = usePathname();
   const pathnameNoLocale = pathname.split("/").slice(2).join("/")
 
-  console.log(pathnameNoLocale)
-
   const { resolvedTheme, setTheme } = useTheme()
 
   const themes = ["light", "dark"]
