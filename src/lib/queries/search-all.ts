@@ -505,37 +505,6 @@ export const getSearchAll = async ({
     }
   `;
 
-//   const searchFilter = genSearchFilter(
-//     "containsi",
-//     search_all,
-//     {or: [
-//       {title: {
-//         containsi: search_all
-//       }},
-//       {shortTitle: {
-//         containsi: search_all
-//       }},
-//       {description: {
-//         containsi: search_all
-//       }},
-//       {type: {
-//         title: { containsi: search_all }
-//       }},
-//       {contacts: {
-//         url: { containsi: search_all }
-//       }},
-//       {contacts: {
-//         phone: { containsi: search_all }
-//       }},
-//       {contacts: {
-//         email: { containsi: search_all }
-//       }},
-//       {contacts: {
-//         location: { containsi: search_all }
-//       }}
-//     ]}
-//   )
-
   const json = await fetchData<{ data: SearchAllResultT; }>({ 
     query, 
     error: "Failed to fetch Search All", 
