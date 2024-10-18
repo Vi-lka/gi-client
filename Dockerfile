@@ -78,6 +78,10 @@ ENV NODE_ENV production
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
+# Set the correct permission for prerender cache
+RUN mkdir .next
+RUN chown nextjs:nodejs .next
+
 COPY --from=builder /app/next.config.js .
 COPY --from=builder /app/global.d.ts .
 COPY --from=builder /app/sentry.client.config.ts .
