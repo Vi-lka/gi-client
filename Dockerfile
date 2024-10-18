@@ -62,6 +62,9 @@ RUN pnpm install
 
 RUN pnpm i --config.arch=x64 --config.platform=linux --config.libc=musl sharp@0.33.3
 
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+
 ENV NEXT_PRIVATE_STANDALONE true
 
 # Build Next.js based on the preferred package manager
