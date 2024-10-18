@@ -1,17 +1,26 @@
 FROM node:alpine AS base
 
+# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
 RUN apk add --no-cache libc6-compat python3 g++ make
 RUN apk update
 
-# Step 1. Rebuild the source code only when needed
-FROM base AS builder
-
+# Install dependencies only when needed
+FROM base AS deps
 WORKDIR /app
 
 # Install dependencies based on the preferred package manager
 COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
 # Omit --production flag for TypeScript devDependencies
 RUN yarn global add pnpm
+
+RUN pnpm install
+
+RUN pnpm i --config.arch=x64 --config.platform=linux --config.libc=musl sharp@0.33.3
+
+# Step 1. Rebuild the source code only when needed
+FROM base AS builder
+
+WORKDIR /app
 
 COPY src ./src
 COPY public ./public
@@ -22,6 +31,9 @@ COPY sentry.server.config.ts .
 COPY sentry.edge.config.ts .
 COPY tsconfig.json .
 COPY tailwind.config.ts postcss.config.js ./
+
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
 
 # Environment variables must be present at build time
 # https://github.com/vercel/next.js/discussions/14030
@@ -57,13 +69,6 @@ ENV SMTP_FROM_EMAIL=${SMTP_FROM_EMAIL}
 # Next.js collects completely anonymous telemetry data about general usage. Learn more here: https://nextjs.org/telemetry
 # Uncomment the following line to disable telemetry at build time
 # ENV NEXT_TELEMETRY_DISABLED 1
-
-RUN pnpm install
-
-RUN pnpm i --config.arch=x64 --config.platform=linux --config.libc=musl sharp@0.33.3
-
-COPY ./node_modules ./node_modules
-COPY . .
 
 ENV NEXT_PRIVATE_STANDALONE true
 
