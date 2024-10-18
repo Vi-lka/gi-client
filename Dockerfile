@@ -72,6 +72,7 @@ ENV SMTP_FROM_EMAIL=${SMTP_FROM_EMAIL}
 
 ENV NEXT_PRIVATE_STANDALONE true
 
+RUN yarn global add pnpm
 # Build Next.js based on the preferred package manager
 RUN pnpm build
 
