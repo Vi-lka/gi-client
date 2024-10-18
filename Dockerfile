@@ -73,17 +73,24 @@ FROM base AS runner
 WORKDIR /app
 
 ENV NODE_ENV production
+# Disable NextJS telemetry during runtime.
+ENV NEXT_TELEMETRY_DISABLED 1
 
 # Don't run production as root
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
+COPY --from=builder /app/public ./public
 COPY --from=builder /app/next.config.js .
 COPY --from=builder /app/global.d.ts .
 COPY --from=builder /app/sentry.client.config.ts .
 COPY --from=builder /app/sentry.server.config.ts .
 COPY --from=builder /app/sentry.edge.config.ts .
 COPY --from=builder /app/package.json .
+
+# Set the correct permission for prerender cache
+RUN mkdir .next
+RUN chown nextjs:nodejs .next
 
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
