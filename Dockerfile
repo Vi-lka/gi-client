@@ -62,6 +62,8 @@ RUN pnpm install
 
 RUN pnpm i --config.arch=x64 --config.platform=linux --config.libc=musl sharp@0.33.3
 
+ENV NEXT_PRIVATE_STANDALONE true
+
 # Build Next.js based on the preferred package manager
 RUN pnpm build
 
@@ -91,7 +93,6 @@ RUN chown nextjs:nodejs .next
 
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
-COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 COPY --from=builder --chown=nextjs:nodejs /app/.next/cache ./.next/cache
