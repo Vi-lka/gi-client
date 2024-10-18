@@ -22,9 +22,10 @@ services:
         SMTP_FROM_EMAIL: ${SMTP_FROM_EMAIL}
     restart: always
     volumes:
-      - client_next_standalone:/app/.next/standalone
-      - client_next_static:/app/.next/static
       - client_next_cache:/app/.next/cache
+      - .:/app
+      - /app/node_modules
+      - /app/.next
     ports:
       - 3000:3000
     networks:
@@ -40,9 +41,5 @@ networks:
     external: true
 
 volumes:
-  client_next_standalone:
-    external: true
-  client_next_static:
-    external: true
   client_next_cache:
     external: true

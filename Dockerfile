@@ -1,17 +1,32 @@
 FROM node:alpine AS base
 
+# Install dependencies only when needed
+FROM base AS deps
+# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
 RUN apk add --no-cache libc6-compat python3 g++ make
 RUN apk update
-
-# Step 1. Rebuild the source code only when needed
-FROM base AS builder
-
 WORKDIR /app
 
 # Install dependencies based on the preferred package manager
 COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
 # Omit --production flag for TypeScript devDependencies
 RUN yarn global add pnpm
+
+RUN pnpm install
+
+RUN pnpm i --config.arch=x64 --config.platform=linux --config.libc=musl sharp@0.33.3
+
+
+# Step 2. Rebuild the source code only when needed
+FROM base AS builder
+
+WORKDIR /app
+
+# Omit --production flag for TypeScript devDependencies
+RUN yarn global add pnpm
+
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
 
 COPY src ./src
 COPY public ./public
@@ -56,16 +71,12 @@ ENV SMTP_FROM_EMAIL=${SMTP_FROM_EMAIL}
 
 # Next.js collects completely anonymous telemetry data about general usage. Learn more here: https://nextjs.org/telemetry
 # Uncomment the following line to disable telemetry at build time
-# ENV NEXT_TELEMETRY_DISABLED 1
-
-RUN pnpm install
-
-RUN pnpm i --config.arch=x64 --config.platform=linux --config.libc=musl sharp@0.33.3
-
+ENV NEXT_TELEMETRY_DISABLED 1
+ENV NEXT_PRIVATE_STANDALONE true
 # Build Next.js based on the preferred package manager
-RUN pnpm build
+RUN NEXT_PRIVATE_STANDALONE=true pnpm build
 
-# Note: It is not necessary to add an intermediate step that does a full copy of `node_modules` here
+COPY . .
 
 # Step 2. Production image, copy all the files and run next
 FROM base AS runner
@@ -80,7 +91,6 @@ ENV NEXT_TELEMETRY_DISABLED 1
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-COPY --from=builder /app/public ./public
 COPY --from=builder /app/next.config.js .
 COPY --from=builder /app/global.d.ts .
 COPY --from=builder /app/sentry.client.config.ts .
