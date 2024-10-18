@@ -54,6 +54,8 @@ ENV SMTP_PASSWORD=${SMTP_PASSWORD}
 ARG SMTP_FROM_EMAIL
 ENV SMTP_FROM_EMAIL=${SMTP_FROM_EMAIL}
 
+ENV NEXT_PRIVATE_STANDALONE true
+
 # Next.js collects completely anonymous telemetry data about general usage. Learn more here: https://nextjs.org/telemetry
 # Uncomment the following line to disable telemetry at build time
 # ENV NEXT_TELEMETRY_DISABLED 1
@@ -89,7 +91,7 @@ COPY --from=builder /app/package.json .
 # https://nextjs.org/docs/advanced-features/output-file-tracing
 COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-# COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 COPY --from=builder --chown=nextjs:nodejs /app/.next/cache ./.next/cache
 COPY --from=builder --chown=nextjs:nodejs /app/public ./public
 
