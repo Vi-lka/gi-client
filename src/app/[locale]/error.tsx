@@ -8,19 +8,22 @@ import { useEffect } from 'react'
 import * as Sentry from "@sentry/nextjs";
 import { ToastAction } from '@/components/ui/toast'
 import { useRouter } from 'next/navigation'
+import HawkCatcher from '@hawk.so/javascript';
  
 export default function Error({
   error,
 }: {
   error: Error & { digest?: string }
 }) {
-
   const { toast } = useToast();
   const router = useRouter();
 
   useEffect(() => {
+    const hawk = new HawkCatcher(process.env.HAWK_TOKEN as string);
+    hawk.send(error);
+
     Sentry.captureException(error);
-    console.error("Error: ", error.message);
+    console.error("ErrorPage: ", error.message);
   
     toast({
       variant: "destructive",

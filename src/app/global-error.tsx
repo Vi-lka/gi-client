@@ -5,6 +5,7 @@ import { getShortText } from '@/lib/utils'
 import { CircleAlert, Repeat } from 'lucide-react'
 import { useEffect } from 'react'
 import * as Sentry from "@sentry/nextjs";
+import HawkCatcher from '@hawk.so/javascript';
  
 export default function GlobalError({
   error,
@@ -15,6 +16,9 @@ export default function GlobalError({
 }) {
 
   useEffect(() => {
+    const hawk = new HawkCatcher(process.env.HAWK_TOKEN as string);
+    hawk.send(error);
+    
     Sentry.captureException(error);
 
     console.error("GlobalError: ", error.message);

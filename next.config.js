@@ -6,16 +6,16 @@ const nextConfig = {
   output: "standalone",
   experimental: {
     instrumentationHook: true,
+    webpackBuildWorker: true
   },
   reactStrictMode: true,
-  disableServerWebpackPlugin: true,
-  disableClientWebpackPlugin: true,
   eslint: { ignoreDuringBuilds: true },
   env: {
     // Reference a variable that was defined in the .env file and make it available at Build Time
     NEXT_PUBLIC_URL: process.env.NEXT_PUBLIC_URL,
     NEXT_PUBLIC_STRAPI_API_URL: process.env.NEXT_PUBLIC_STRAPI_API_URL,
     NEXT_PUBLIC_STRAPI_DOMAIN: process.env.NEXT_PUBLIC_STRAPI_DOMAIN,
+    HAWK_TOKEN: process.env.HAWK_TOKEN,
   },
   images: {
     remotePatterns: [
@@ -24,6 +24,18 @@ const nextConfig = {
         hostname: process.env.NEXT_PUBLIC_STRAPI_DOMAIN,
       },
     ],
+  },
+  webpack(config) {
+    config.resolve.fallback = {
+
+      // if you miss it, all the other options in fallback, specified
+      // by next.js will be dropped.
+      ...config.resolve.fallback,  
+
+      fs: false, // the solution
+    };
+    
+    return config;
   },
   async rewrites() {
     return [
@@ -68,4 +80,4 @@ const sentryConfig = withSentryConfig(nextConfig, {
   disableLogger: true,
 });
 
-module.exports = nextConfig
+module.exports = sentryConfig

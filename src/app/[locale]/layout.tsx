@@ -8,6 +8,7 @@ import Providers from "@/components/providers/Providers";
 import { ViewTransitions } from 'next-view-transitions'
 import getMetadataSite from "@/lib/queries/metadata/getMetadataSite";
 import type { Metadata } from 'next';
+import HawkCatcher from '@hawk.so/nodejs';
 
 const din = localFont({
   variable: "--Din",
@@ -153,6 +154,8 @@ export default async function Layout({
   children: React.ReactNode;
 }>) {
 
+  HawkCatcher.init(process.env.HAWK_TOKEN as string);
+
   const dict = await getDictionary(params.locale);
 
   return (
@@ -163,6 +166,8 @@ export default async function Layout({
       className={`${din.variable} ${cera.variable} scroll-smooth`}
     >
       <body className='font-Din relative flex flex-col justify-between min-h-screen bg-background antialiased'>
+        <script>
+        </script>
         {/* Yandex.Metrika counter */}
         <Script
           id="ymetrika"
@@ -219,6 +224,7 @@ export default async function Layout({
                   get: e
                 }), _T_));
               }(Object);
+              global = globalThis
           `,
           }}
         ></Script>

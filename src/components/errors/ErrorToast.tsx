@@ -11,6 +11,7 @@ import { Button } from "../ui/button";
 import * as Sentry from "@sentry/nextjs";
 import { useRouter } from "next/navigation";
 import { useDictionary } from "../providers/DictionaryProvider";
+import HawkCatcher from '@hawk.so/javascript';
 
 export default function ErrorToast({
   error,
@@ -42,6 +43,9 @@ export default function ErrorToast({
   );
 
   React.useEffect(() => {
+    const hawk = new HawkCatcher(process.env.HAWK_TOKEN as string);
+    hawk.send(new Error(messageError));
+
     Sentry.captureException(error);
 
     console.error("ErrorToast: ", messageError);
