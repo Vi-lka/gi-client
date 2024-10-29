@@ -78,8 +78,6 @@ export const DocRequestFormT = z.union([
 export type DocRequestFormT = z.infer<typeof DocRequestFormT>;
 
 
-
-
 //.........................IMAGES.........................//
 export const ImageT = z.object({
   data: z

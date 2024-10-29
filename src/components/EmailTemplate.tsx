@@ -16,6 +16,7 @@ import * as React from "react";
 
 interface EmailTemplateProps {
   path?: string;
+  pathName?: string;
   username?: string;
   email?: string;
   phone?: string;
@@ -28,6 +29,7 @@ const baseUrl = process.env.NEXT_PUBLIC_URL
 
 export const EmailTemplate = ({
   path,
+  pathName,
   username,
   email,
   phone,
@@ -80,13 +82,15 @@ export const EmailTemplate = ({
             </Text>
             <Hr className="border border-solid border-[#eaeaea] my-[26px] mx-0 w-full" />
             <Text className="text-[#666666] text-[12px] leading-[24px]">
-              Открыть страницу с которой было отправлено данное сообщение:{" "}
+              Cтраницa с которой было отправлено данное сообщение:{" "}
+            </Text>
+            <Text className="text-[#666666] text-[12px] leading-[24px]">
               <Link
                 href={`${baseUrl}${path}`}
                 className="text-blue-600 underline"
               >
-                Открыть
-              </Link>.
+                {pathName ?? `${baseUrl}${path}`}
+              </Link>
             </Text>
           </Container>
         </Body>

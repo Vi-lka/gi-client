@@ -5,6 +5,8 @@ import { render } from "@react-email/render"
 import { v4 as uuid } from 'uuid';
 import type { ContactFormT, DocRequestFormT } from "@/lib/types/components";
 import { smtpOptions } from "@/lib/email";
+import { headers } from "next/headers";
+import { getAnyBySlug } from "@/lib/queries/getAnyBySlug";
 
 interface State {
   error: string | null
@@ -12,8 +14,25 @@ interface State {
 }
 
 export const sendEmail = async (prevState: State, formData: ContactFormT) => {
+
+  const headersList = headers();
+  const locale = headersList.get('x-locale') || "";
+  const headersPathName = headersList.get('x-pathname') || "";
+
+  const [ dataResult ] = await Promise.allSettled([ 
+      getAnyBySlug({ 
+        locale,
+        pathName: headersPathName
+      }) 
+  ]);
+  
+  const pathNameTitle = dataResult.status === "fulfilled" 
+      ? dataResult.value
+      : undefined
+
   const to = formData.to as string
   const path = formData.path
+  const pathName = pathNameTitle
   const username = formData.username
   const email = formData.email
   const phone = formData.phone
@@ -28,7 +47,7 @@ export const sendEmail = async (prevState: State, formData: ContactFormT) => {
       from: process.env.SMTP_FROM_EMAIL,
       to,
       subject: 'Запрос на Сайте Гуманитарного Института',
-      html: render(EmailTemplate({ path, username, email, phone, text })),
+      html: render(EmailTemplate({ path, pathName, username, email, phone, text })),
       headers: {
         'X-Entity-Ref-ID': uuid(),
       },
@@ -48,8 +67,24 @@ export const sendEmail = async (prevState: State, formData: ContactFormT) => {
 
 
 export const sendRequest = async (prevState: State, formData: DocRequestFormT) => {
+  const headersList = headers();
+  const locale = headersList.get('x-locale') || "";
+  const headersPathName = headersList.get('x-pathname') || "";
+
+  const [ dataResult ] = await Promise.allSettled([ 
+      getAnyBySlug({ 
+        locale,
+        pathName: headersPathName
+      }) 
+  ]);
+  
+  const pathNameTitle = dataResult.status === "fulfilled" 
+      ? dataResult.value
+      : undefined
+
   const to = formData.to as string
   const path = formData.path
+  const pathName = pathNameTitle
   const username = `${formData.lastname} ${formData.name} ${formData.noPatronymic ? "" : formData.patronymic} (${formData.group})`
   const email = formData.email + formData.emailStud
   const phone = formData.phone
@@ -64,7 +99,7 @@ export const sendRequest = async (prevState: State, formData: DocRequestFormT) =
       from: process.env.SMTP_FROM_EMAIL,
       to,
       subject: 'Запрос документов на Сайте Гуманитарного Института',
-      html: render(EmailTemplate({ path, username, email, phone, text })),
+      html: render(EmailTemplate({ path, pathName, username, email, phone, text })),
       headers: {
         'X-Entity-Ref-ID': uuid(),
       },

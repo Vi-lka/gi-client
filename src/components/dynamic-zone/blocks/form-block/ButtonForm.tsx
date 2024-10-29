@@ -32,7 +32,7 @@ export default function ButtonForm({
 
     const { toast } = useToast();
 
-    const pathname = usePathname();
+    const path = usePathname();
 
     const [sendEmailState, sendEmailAction] = useFormState(sendEmail, {
         error: null,
@@ -61,8 +61,8 @@ export default function ButtonForm({
 
     const handleAction = (formData: FormData) => {
         sendEmailAction({
-            to: getToEmail(pathname),
-            path: pathname,
+            to: getToEmail(path),
+            path,
             username: formData.get("username") as string,
             email: formData.get("email") as string,
             phone: formData.get("phone") as string,

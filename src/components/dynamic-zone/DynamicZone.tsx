@@ -242,7 +242,7 @@ export default function DynamicZone({
             />
 
     case "ComponentContentFormBlock":
-      return <FormBlock 
+      return <FormBlock
               key={`key-${item.__typename}-${item.link}`} 
               data={item} 
               headingBig={headingBig} 

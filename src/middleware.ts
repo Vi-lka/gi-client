@@ -64,6 +64,7 @@ export function middleware(request: NextRequest) {
     const slug = pathname.split("/")[pathnameArray.length - 1]
 
     requestHeaders.set('x-url', request.url);
+    requestHeaders.set('x-pathname', pathname);
     requestHeaders.set('x-locale', locale);
     requestHeaders.set('x-slug', slug);
 
