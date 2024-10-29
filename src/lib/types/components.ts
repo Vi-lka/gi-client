@@ -507,6 +507,7 @@ export const FormBlockCompT = z.object({
   inNewTab: z.boolean().nullable(),
   formTitle: z.string().nullable(),
   formDescription: z.string().nullable(),
+  textPlaceholder: z.string().nullable(),
 })
 export type FormBlockCompT = z.infer<typeof FormBlockCompT>;
 

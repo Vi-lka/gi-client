@@ -14,9 +14,11 @@ import { AutosizeTextareaField } from './AutosizeTextareaField'
 
 export default function ContactForm({
     handleAction,
+    textPlaceholder,
     className,
 }: {
     handleAction: (formData: FormData) => void,
+    textPlaceholder: string | null,
     className?: string,
 }) {
     const dict = useDictionary()
@@ -96,7 +98,7 @@ export default function ContactForm({
                         <FormItem className='w-full'>
                           <FormControl>
                             <AutosizeTextareaField
-                                placeholder={dict.ContactForm.form.text}
+                                placeholder={textPlaceholder ?? dict.ContactForm.form.text}
                                 disabled={form.formState.isSubmitting}
                                 minHeight={58}
                                 maxHeight={200}

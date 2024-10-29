@@ -313,6 +313,7 @@ export const dynamicContentQuery = `
     inNewTab
     formTitle
     formDescription
+    textPlaceholder
   }
   ...on ComponentContentDocRequestForm {
     title

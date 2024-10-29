@@ -132,6 +132,7 @@ export default function FormBlock({
                             listLength={data.list.length}
                             formTitle={data.formTitle}
                             formDescription={data.formDescription}
+                            textPlaceholder={data.textPlaceholder}
                         />
                     )
                 }

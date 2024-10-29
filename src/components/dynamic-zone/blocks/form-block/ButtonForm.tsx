@@ -18,6 +18,7 @@ type Props = {
     listLength: number,
     formTitle: string | null,
     formDescription: string | null,
+    textPlaceholder: string | null,
 }
 
 export default function ButtonForm({
@@ -25,6 +26,7 @@ export default function ButtonForm({
     listLength,
     formTitle,
     formDescription,
+    textPlaceholder,
 }: Props) {
     const dict = useDictionary()
 
@@ -88,7 +90,7 @@ export default function ButtonForm({
         >
             <ScrollArea type='scroll' className='md:mb-1 mb-6' classNameViewport='max-h-[70vh]'>
                 <div className='py-2 px-4'>
-                    <ContactForm handleAction={handleAction} />
+                    <ContactForm textPlaceholder={textPlaceholder} handleAction={handleAction} />
                 </div>
             </ScrollArea>
         </CredenzaPopup>

@@ -52,6 +52,6 @@ export default function FormFooter() {
     }
 
     return (
-        <ContactForm handleAction={handleAction} className='w-full' />
+        <ContactForm textPlaceholder={null} handleAction={handleAction} className='w-full' />
     )
 }
