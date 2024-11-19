@@ -80,4 +80,4 @@ const sentryConfig = withSentryConfig(nextConfig, {
   disableLogger: true,
 });
 
-module.exports = sentryConfig
+module.exports = nextConfig
