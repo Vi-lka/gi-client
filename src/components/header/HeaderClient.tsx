@@ -105,7 +105,7 @@ export default function HeaderClient({
                     <div className='relative lg:flex hidden'>
                         <Link 
                           locale={locale}
-                          href="/#top" 
+                          href="/" 
                           className='absolute top-1/2 -translate-y-1/2 2xl:-left-20 -left-14' 
                         >
                             <HiLogo className='w-10 h-10' />
@@ -126,7 +126,7 @@ export default function HeaderClient({
 
                     {/* Mobile */}
                     <div className='lg:hidden flex items-center justify-between w-full'>
-                        <Link locale={locale} href="/#top">
+                        <Link locale={locale} href="/">
                             <HiLogo className='w-10 h-10' />
                         </Link>
 
