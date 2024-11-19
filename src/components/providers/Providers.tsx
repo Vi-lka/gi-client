@@ -5,9 +5,7 @@ import DictionaryProvider from './DictionaryProvider'
 import ThemeProvider from './ThemeProvider'
 import { SWRProvider } from './SWRProvider'
 import { Provider as JotaiProvider } from "jotai"
-import dynamic from 'next/dynamic'
-
-const ScrollToAnchor = dynamic(() => import('./ScrollToAnchor'), { ssr: false })
+import ScrollToAnchor from './ScrollToAnchor'
 
 export default function Providers({
     dictionary,
