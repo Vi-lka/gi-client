@@ -6,7 +6,7 @@ const nextConfig = {
   output: "standalone",
   experimental: {
     instrumentationHook: true,
-    // webpackBuildWorker: true
+    webpackBuildWorker: true
   },
   reactStrictMode: true,
   eslint: { ignoreDuringBuilds: true },
@@ -25,18 +25,18 @@ const nextConfig = {
       },
     ],
   },
-  // webpack(config) {
-  //   config.resolve.fallback = {
+  webpack(config) {
+    config.resolve.fallback = {
 
-  //     // if you miss it, all the other options in fallback, specified
-  //     // by next.js will be dropped.
-  //     ...config.resolve.fallback,  
+      // if you miss it, all the other options in fallback, specified
+      // by next.js will be dropped.
+      ...config.resolve.fallback,  
 
-  //     fs: false, // the solution
-  //   };
+      fs: false, // the solution
+    };
     
-  //   return config;
-  // },
+    return config;
+  },
   async rewrites() {
     return [
       {
@@ -80,4 +80,4 @@ const sentryConfig = withSentryConfig(nextConfig, {
   disableLogger: true,
 });
 
-module.exports = nextConfig
+module.exports = sentryConfig

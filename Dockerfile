@@ -75,7 +75,6 @@ ENV SMTP_FROM_EMAIL=${SMTP_FROM_EMAIL}
 # Next.js collects completely anonymous telemetry data about general usage. Learn more here: https://nextjs.org/telemetry
 # Uncomment the following line to disable telemetry at build time
 ENV NEXT_TELEMETRY_DISABLED 1
-ENV NEXT_PRIVATE_STANDALONE true
 # Build Next.js based on the preferred package manager
 RUN pnpm build
 
