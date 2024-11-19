@@ -6,7 +6,7 @@ const nextConfig = {
   output: "standalone",
   experimental: {
     instrumentationHook: true,
-    webpackBuildWorker: true
+    // webpackBuildWorker: true
   },
   reactStrictMode: true,
   eslint: { ignoreDuringBuilds: true },
