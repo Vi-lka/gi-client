@@ -25,6 +25,9 @@ export default function NavMenu({
   const dpoTitle = getLinkTitle(links.dpo.data?.attributes, dict.Header.nav.dpo)
   const structureTitle = getLinkTitle(links.structure.data?.attributes, dict.Header.nav.structure)
   const infoTitle = getLinkTitle(links.info.data?.attributes, dict.Header.nav.info)
+  const educationTitle = getLinkTitle(links.educationPage.data?.attributes, dict.Header.nav.education)
+  const projectsTitle = getLinkTitle(links.projectsPage.data?.attributes, dict.Header.nav.projects)
+  const journalsTitle = getLinkTitle(links.journalsPage.data?.attributes, dict.Header.nav.journals)
   
 
   const entranceLinks = getSubLinks({
@@ -59,18 +62,43 @@ export default function NavMenu({
     navBarData: navBar?.info?.subLinks,
     linksData: links.info.data?.attributes.content
   })
+  const educationLinks = getSubLinks({
+    title: educationTitle,
+    href: "/education",
+    image: links.educationPage.data?.attributes.navBarConfig?.navBarImage,
+    description: links.educationPage.data?.attributes.navBarConfig?.navBarDescription,
+    navBarData: navBar?.education?.subLinks,
+    linksData: links.educationPage.data?.attributes.content
+  })
+  const projectsLinks = getSubLinks({
+    title: projectsTitle,
+    href: "/projects",
+    image: links.projectsPage.data?.attributes.navBarConfig?.navBarImage,
+    description: links.projectsPage.data?.attributes.navBarConfig?.navBarDescription,
+    navBarData: navBar?.projects?.subLinks,
+    linksData: links.projectsPage.data?.attributes.content
+  })
+  const journalsLinks = getSubLinks({
+    title: journalsTitle,
+    href: "/journals",
+    image: links.journalsPage.data?.attributes.navBarConfig?.navBarImage,
+    description: links.journalsPage.data?.attributes.navBarConfig?.navBarDescription,
+    navBarData: navBar?.journals?.subLinks,
+    linksData: links.journalsPage.data?.attributes.content
+  })
+
 
   return (
     <NavigationMenu side={side} delayDuration={100} className={className}>
       <NavigationMenuList className='relative gap-2 flex-wrap justify-between items-center'>
         <NavMenuItem data={infoLinks} />
         <NavMenuItem data={structureLinks}/>
-        <NavMenuItem data={{title: dict.Header.nav.education, href: '/education'}} />
+        <NavMenuItem data={educationLinks} />
         <NavMenuItem data={entranceLinks} />
         <NavMenuItem data={dpoLinks} />
         <NavMenuItem data={{title: dict.Header.nav.science, href: '/science'}} />
-        <NavMenuItem data={{title: dict.Header.nav.projects, href: '/projects'}} />
-        <NavMenuItem data={{title: dict.Header.nav.journals, href: '/journals'}} />
+        <NavMenuItem data={projectsLinks} />
+        <NavMenuItem data={journalsLinks} />
       </NavigationMenuList>
     </NavigationMenu>
   )

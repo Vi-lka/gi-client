@@ -84,6 +84,9 @@ export const getLinks = async (locale: string): Promise<LinksT> => {
       dpo${sameFields}
       structure${sameFields}
       info${sameFields}
+      educationPage${sameFields}
+      projectsPage${sameFields}
+      journalsPage${sameFields}
     }
   `;
 

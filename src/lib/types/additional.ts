@@ -80,7 +80,22 @@ export const LinksT  = z.object({
     data: z.object({
       attributes: LinksItemT
     }).nullable()
-  })
+  }),
+  educationPage: z.object({
+    data: z.object({
+      attributes: LinksItemT
+    }).nullable()
+  }),
+  projectsPage: z.object({
+    data: z.object({
+      attributes: LinksItemT
+    }).nullable()
+  }),
+  journalsPage: z.object({
+    data: z.object({
+      attributes: LinksItemT
+    }).nullable()
+  }),
 })
 export type LinksT = z.infer<typeof LinksT>;
 
