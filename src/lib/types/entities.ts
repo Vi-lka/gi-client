@@ -362,6 +362,7 @@ export const CourseEnumValues = [
   "postgraduate_1",
   "postgraduate_2",
   "postgraduate_3",
+  "postgraduate_4",
 ] as const;
 export const GroupCourseEnum = z.enum(CourseEnumValues);
 export type GroupCourseEnum = z.infer<typeof GroupCourseEnum>;

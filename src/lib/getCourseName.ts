@@ -11,6 +11,7 @@ export default function getCourseName(course: GroupCourseEnum, dict: Dictionary)
         case "postgraduate_1": return dict.Inputs.course.postgraduate_1
         case "postgraduate_2": return dict.Inputs.course.postgraduate_2
         case "postgraduate_3": return dict.Inputs.course.postgraduate_3
+        case "postgraduate_4": return dict.Inputs.course.postgraduate_4
     
         default: return "";
     }

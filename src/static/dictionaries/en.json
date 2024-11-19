@@ -121,15 +121,16 @@
     "group": "Select group",
     "course": {
       "title": "Select course",
-      "bachelor_1": "Bachelor 1",
-      "bachelor_2": "Bachelor 2",
-      "bachelor_3": "Bachelor 3",
-      "bachelor_4": "Bachelor 4",
-      "magistracy_1": "Magistracy 1",
-      "magistracy_2": "Magistracy 2",
-      "postgraduate_1": "Postgraduate 1",
-      "postgraduate_2": "Postgraduate 2",
-      "postgraduate_3": "Postgraduate 3"
+      "bachelor_1": "Bachelor 1 year",
+      "bachelor_2": "Bachelor 2 year",
+      "bachelor_3": "Bachelor 3 year",
+      "bachelor_4": "Bachelor 4 year",
+      "magistracy_1": "Magistracy 1 year",
+      "magistracy_2": "Magistracy 2 year",
+      "postgraduate_1": "Postgraduate 1 year",
+      "postgraduate_2": "Postgraduate 2 year",
+      "postgraduate_3": "Postgraduate 3 year",
+      "postgraduate_4": "Postgraduate 4 year"
     },
     "hashtags": "Search by hashtag"
   },
