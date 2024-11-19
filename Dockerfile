@@ -77,7 +77,7 @@ ENV SMTP_FROM_EMAIL=${SMTP_FROM_EMAIL}
 ENV NEXT_TELEMETRY_DISABLED 1
 ENV NEXT_PRIVATE_STANDALONE true
 # Build Next.js based on the preferred package manager
-RUN NEXT_PRIVATE_STANDALONE=true pnpm build
+RUN pnpm build
 
 COPY . .
 
