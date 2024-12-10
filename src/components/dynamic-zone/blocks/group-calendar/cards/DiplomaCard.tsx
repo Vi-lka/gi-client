@@ -2,7 +2,7 @@ import type { DiplomaT, ExamT, RangeDatesT } from '@/lib/types/entities';
 import React from 'react'
 import { getDayData } from '../getCalendarData';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
-import { formatDate } from '@/lib/utils';
+import { formatDate, formatTime } from '@/lib/utils';
 import { useLocale } from '@/lib/hooks/useLocale';
 import NextLink from "next/link";
 
@@ -46,6 +46,7 @@ export default function DiplomaCard({
         </h6>
         <p className='text-sm'>
           {formatDate(data.date, locale)}
+          {!!data.time && ` - ${formatTime(data.time)}`}
         </p>
       </div>
 

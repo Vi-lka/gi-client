@@ -8,7 +8,7 @@ import { motion } from 'framer-motion';
 import React, { useState } from 'react'
 import NextLink from "next/link";
 import Link from '@/components/Link'
-import { formatDate } from '@/lib/utils';
+import { formatDate, formatTime } from '@/lib/utils';
 
 export default function ExamCardTabs({
   date,
@@ -61,6 +61,7 @@ export default function ExamCardTabs({
               </h6>
               <p className='text-sm'>
                 {formatDate(item.date, locale)}
+                {!!item.time && ` - ${formatTime(item.time)}`}
               </p>
             </div>
             <div className='w-full flex flex-col gap-1.5 animate-fade animate-duration-500 animate-ease-in-out'>

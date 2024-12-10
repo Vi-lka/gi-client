@@ -198,6 +198,7 @@ export const getGroupById = async (locale: string, id: string): Promise<GroupSin
             course
             tests {
               date
+              time
               name
               address
               teacher {
@@ -209,7 +210,8 @@ export const getGroupById = async (locale: string, id: string): Promise<GroupSin
               description
             }
             exams {
-              date 
+              date
+              time
               name
               address
               teacher {
@@ -222,6 +224,7 @@ export const getGroupById = async (locale: string, id: string): Promise<GroupSin
             }
             stateExams {
               date
+              time
               name
               address
               chairman
@@ -229,6 +232,7 @@ export const getGroupById = async (locale: string, id: string): Promise<GroupSin
             }
             diplomas {
               date
+              time
               name
               address
               chairman
@@ -236,6 +240,7 @@ export const getGroupById = async (locale: string, id: string): Promise<GroupSin
             }
             rescheduling {
               date
+              time
               name
               address
               teacher {
@@ -248,6 +253,7 @@ export const getGroupById = async (locale: string, id: string): Promise<GroupSin
             }
             retakes {
               date
+              time
               name
               address
               teacher {

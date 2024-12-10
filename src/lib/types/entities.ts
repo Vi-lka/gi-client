@@ -313,6 +313,7 @@ export type EventsT = z.infer<typeof EventsT>;
 //.........................Groups.........................//
 export const ExamT = z.object({
   date: z.string().pipe( z.coerce.date() ),
+  time: z.string().nullable().optional(),
   name: z.string(),
   address: z.string(),
   teacher: z.object({
@@ -330,6 +331,7 @@ export type ExamT = z.infer<typeof ExamT>;
 
 export const DiplomaT = z.object({
   date: z.string().pipe( z.coerce.date() ),
+  time: z.string().nullable().optional(),
   name: z.string(),
   address: z.string(),
   chairman: z.string(),

@@ -116,6 +116,11 @@ export function formatDate(date: Date, locale: string) {
   return str
 }
 
+export function formatTime(time: string) {
+  const str = time.substring(0,5)
+  return str
+}
+
 
 
 export function convertUTCDateToLocalDate(date: Date, deleteTime?: boolean) {
