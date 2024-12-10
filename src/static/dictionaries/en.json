@@ -70,6 +70,10 @@
       "text": "Your question:",
       "send": "Send"
     },
+    "politic": {
+      "message": "By clicking 'send' you agree to the",
+      "title": "Privacy policy"
+    },
     "sendMessage": {
       "success": {
         "title": "Success!",
