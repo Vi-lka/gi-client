@@ -29,6 +29,9 @@ export default function MenuClient({
     const dpoTitle = data.links.dpo.data ? data.links.dpo.data.attributes.title : dict.Header.nav.dpo
     const structureTitle = data.links.structure.data ? data.links.structure.data.attributes.title : dict.Header.nav.structure
     const infoTitle = data.links.info.data ? data.links.info.data.attributes.title : dict.Header.nav.info
+    const educationTitle = data.links.educationPage.data ? data.links.educationPage.data.attributes.title : dict.Header.nav.education
+    // const scienceTitle = data.links.
+    const projectsTitle = data.links.projectsPage.data ? data.links.projectsPage.data.attributes.title : dict.Header.nav.projects
 
     const entranceLinks = getSubLinks({
         title: entranceTitle,
@@ -54,42 +57,37 @@ export default function MenuClient({
         navBarData: data.navBar?.info?.subLinks,
         linksData: data.links.info.data?.attributes.content
     })
+    const educationLinks = getSubLinks({
+        title: educationTitle,
+        href: "/education",
+        navBarData: data.navBar?.education?.subLinks,
+        linksData: data.links.educationPage.data?.attributes.content
+    })
+    const projectsLinks = getSubLinks({
+        title: projectsTitle,
+        href: "/projects",
+        navBarData: data.navBar?.projects?.subLinks,
+        linksData: data.links.projectsPage.data?.attributes.content
+
+    })
 
     const links = [
         infoLinks,
         structureLinks,
-        {
-            title: dict.Header.nav.education,
-            href: "/education",
-            subLinks: [
-                { title: "Календарный график", link: "/education/schedule" },
-                { title: "Стипендии и премии", link: "/education/scholarships-awards" },
-                { title: "Бланки заявлений", link: "/education/application-forms" },
-                { title: "Форма запроса документов", link: "/education/document-request" },
-                { title: "Образовательные программы", link: "/education/programs" },
-                { title: "Расписание переноса занятий", link: "/education/postponement" },
-                { title: "Правовые документы", link: "/education/law" },
-            ]
-        },
+        educationLinks,
         entranceLinks,
         dpoLinks,
         {
             title: dict.Header.nav.science,
             href: "/science",
-            subLinks: [
-                { title: "Научные показатели", link: "/science/indicators" },
-                { title: "Исследовательские коллективы", link: "/science/research-teams" },
-                { title: "Журналы", link: "/science/journals" },
-                { title: "Конференции", link: "/science/conferences" },
-            ]
+            // subLinks: [
+            //     { title: "Научные показатели", link: "/science/indicators" },
+            //     { title: "Исследовательские коллективы", link: "/science/research-teams" },
+            //     { title: "Журналы", link: "/science/journals" },
+            //     { title: "Конференции", link: "/science/conferences" },
+            // ]
         },
-        {
-            title: dict.Header.nav.projects,
-            href: "/projects",
-            subLinks: [],
-            secondTitle: dict.Header.nav.journals,
-            secondHref: "/journals",
-        },
+        projectsLinks
     ]
 
     const containerVariants = {
